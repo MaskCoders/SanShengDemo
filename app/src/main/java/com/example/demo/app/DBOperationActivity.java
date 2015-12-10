@@ -1,6 +1,5 @@
 package com.example.demo.app;
 
-import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -15,7 +14,7 @@ import android.widget.ListView;
 /**
  * Created by sunshaogang on 12/9/15.
  */
-public class DBOperationActivity extends Activity implements LoaderCallbacks<Cursor>, ListView.OnScrollListener, PullListView.OnLoadMoreListener {
+public class DBOperationActivity extends BaseActivity implements LoaderCallbacks<Cursor>, ListView.OnScrollListener, PullListView.OnLoadMoreListener {
 
     private View mEmptyView;
     private PullListView mListView;
@@ -34,6 +33,7 @@ public class DBOperationActivity extends Activity implements LoaderCallbacks<Cur
         mAdapter = new MeterListAdapter(this, null);
         mListView.setAdapter(mAdapter);
         getLoaderManager().initLoader(LOADER_ID_FILTER_DEFAULT, null, this);
+        setActionBar(DATABASE_VIEW);
     }
 
     @Override

@@ -1,10 +1,12 @@
-<resources>
-    <string name="app_name">Demo</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+<resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
+    <string name="app_name">SanShengDemo</string>
+    <string name="company_name">三圣凯瑞</string>
     <string name="load_more">"加载更多"</string>
-    <string name="circle_no_more_message">没有更多了</string>
-    <string name="circle_click_head_more_content">点击账号头像查看更多精彩内容</string>
-    <string name="circle_sync_error">同步错误,稍后重试</string>
+    <string name="no_more_meter">数据已全部显示</string>
+    <string name="date_message_received_today">"今天<xliff:g id="TIME">%1$s</xliff:g>"</string>
+    <string name="date_message_received_yesterday">"昨天<xliff:g id="TIME">%1$s</xliff:g>"</string>
+    <string name="date_message_received">"<xliff:g id="DAY_AND_DATE">%1$s</xliff:g>&#160;&#160;<xliff:g id="TIME">%2$s</xliff:g>"</string>
+
+    <!--<string name="circle_click_head_more_content">点击账号头像查看更多精彩内容</string>-->
+    <!--<string name="circle_sync_error">同步错误,稍后重试</string>-->
 </resources>

@@ -42,7 +42,7 @@ public class SocketDemo extends Activity implements Runnable {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.home_layout);
 
         tv_msg = (TextView) findViewById(R.id.tv);
         ed_msg = (EditText) findViewById(R.id.et);

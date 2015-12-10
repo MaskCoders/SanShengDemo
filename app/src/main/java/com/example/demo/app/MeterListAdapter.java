@@ -85,13 +85,13 @@ public class MeterListAdapter extends SimpleCursorAdapter {
         } else {
             holder.vip.setVisibility(View.GONE);
         }
-        holder.meterName.setText(meter.mMeterName);
-        holder.meterId.setText(String.valueOf(meter.mMeterID));
+        holder.meterName.setText("电表名称:" + meter.mMeterName);
+        holder.meterId.setText("电表ID:" + String.valueOf(meter.mMeterID));
         String type = meter.mDataType == 1 ? "日冻结" : "实时数据";
-        holder.dataType.setText(type);
-        holder.valueTime.setText(String.valueOf(meter.mValueTime));
-        holder.readTime.setText(String.valueOf(meter.mReadTime));
-        holder.readTime.setText(String.valueOf(meter.mValz));
+        holder.dataType.setText("数据类型:" + type);
+        holder.valueTime.setText("数据时标:" + MeterUtilies.getSanShengDate(meter.mValueTime));
+        holder.readTime.setText("读取时间:" + MeterUtilies.getSanShengDate(meter.mReadTime));
+        holder.meterValue.setText("电表值:" + String.valueOf(meter.mValz));
     }
     public static class ViewHolder {
         public RelativeLayout infoLayout;

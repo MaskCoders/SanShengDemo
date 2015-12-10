@@ -58,10 +58,6 @@ public class Utility {
 	public static final Charset GB2312 = Charset.forName("GB2312");
 	public static final Charset GB18030 = Charset.forName("GB18030");
 
-    public static final String[] EMPTY_STRINGS = new String[0];
-    public static final Long[] EMPTY_LONGS = new Long[0];
-    
-    public static final int TOAST_DURATION_TWO_SECOND = 2000;
     private static Toast mToast;
 
     // "GMT" + "+" or "-" + 4 digits
@@ -70,13 +66,8 @@ public class Utility {
 
     private static Handler sMainThreadHandler;
     
-    public static String SERVICE_SYNCMAIL= "com.kingsoft.email.service.sysnmail";
-
-    public static final String ARG_MESSAGE = "message";
-    public static final String ARG_BODY = "body";
-
     /**
-     * @return a {@link Handler} tied to the main thread.
+     * @return a {@link Handler} tied to the home_layout thread.
      */
     public static Handler getMainThreadHandler() {
         if (sMainThreadHandler == null) {
@@ -211,23 +202,6 @@ public class Utility {
         catch (UnsupportedEncodingException uee) {
             return null;
         }
-    }
-
-
-
-    /**
-     * Generate a random message-id header for locally-generated messages.
-     */
-    public static String generateMessageId() {
-        StringBuffer sb = new StringBuffer();
-        sb.append("<");
-        for (int i = 0; i < 24; i++) {
-            sb.append(Integer.toString((int) (Math.random() * 35), 36));
-        }
-        sb.append(".");
-        sb.append(Long.toString(System.currentTimeMillis()));
-        sb.append("@email.kingsoft.com>");
-        return sb.toString();
     }
 
     /**

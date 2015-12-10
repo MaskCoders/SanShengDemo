@@ -66,7 +66,7 @@ public class PullListView extends ListView implements OnScrollListener {
     void init(Context context) {
         getInstance().setOnScrollListener(this);
         LayoutInflater inflater = LayoutInflater.from(context);
-        footerView = (LinearLayout) inflater.inflate(R.layout.circle_refresh_list_footer, null);
+        footerView = (LinearLayout) inflater.inflate(R.layout.refresh_list_footer, null);
         mLoadMoreProgressBar = (ProgressBar) footerView.findViewById(R.id.lvFooterProgressBar);
         mLoadMoreInfoTxt = (TextView)footerView.findViewById(R.id.lvFooterInfoTxt);
         measureView(footerView);
@@ -135,17 +135,7 @@ public class PullListView extends ListView implements OnScrollListener {
                 footerView.setPadding(0, 0, 0, 0);
                 break;
             case LOAD_MORE_STATUE_NO_MORE:
-                mLoadMoreInfoTxt.setText(R.string.circle_no_more_message);
-                mLoadMoreProgressBar.setVisibility(GONE);
-                footerView.setPadding(0, 0, 0, 0);
-                break;
-            case LOAD_MORE_STATUE_HOME_PAGE:
-                mLoadMoreInfoTxt.setText(R.string.circle_click_head_more_content);
-                mLoadMoreProgressBar.setVisibility(GONE);
-                footerView.setPadding(0, 0, 0, 0);
-                break;
-            case LOAD_MORE_STATUE_SYNC_ERROR:
-                mLoadMoreInfoTxt.setText(R.string.circle_sync_error);
+                mLoadMoreInfoTxt.setText(R.string.no_more_meter);
                 mLoadMoreProgressBar.setVisibility(GONE);
                 footerView.setPadding(0, 0, 0, 0);
                 break;
