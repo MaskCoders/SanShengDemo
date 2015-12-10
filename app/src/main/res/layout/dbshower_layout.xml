@@ -1,0 +1,88 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#f5f5f5" >
+
+    <!--<com.example.demo.app.base.ZrcListView-->
+            <!--android:id="@+id/zListView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" >-->
+    <!--</com.example.demo.app.base.ZrcListView>-->
+    <com.example.demo.app.PullListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:listSelector="@android:color/transparent"
+            android:focusable="true"
+            android:scrollbars="none"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="#ffffff"
+            android:divider="#f2f6f9"
+            android:dividerHeight="10dp"
+            android:scrollbarStyle="insideOverlay"
+            android:clickable="false"/>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical"
+            android:background="#ccffffff" >
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/query"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="8dp"
+                android:text="查询数据"
+                android:textSize="20sp" />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#cccccc" />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/insert"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="8dp"
+                android:text="插入测试数据数据"
+                android:textSize="20sp" />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#cccccc" />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/update"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="8dp"
+                android:text="更新数据库"
+                android:textSize="20sp" />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#cccccc" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/delete"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="8dp"
+                android:text="删除数据"
+                android:textSize="20sp" />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#cccccc" />
+
+    </LinearLayout>
+
+</RelativeLayout>
