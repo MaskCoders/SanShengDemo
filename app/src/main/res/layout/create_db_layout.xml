@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#ffffff">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical"
+            android:background="#ccffffff" >
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/query"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="8dp"
+                android:text="查询数据"
+                android:textSize="20sp" />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#cccccc" />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/insert"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="8dp"
+                android:text="插入测试数据数据"
+                android:textSize="20sp" />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#cccccc" />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/update"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="8dp"
+                android:text="更新数据库"
+                android:textSize="20sp" />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#cccccc" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/delete"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="8dp"
+                android:text="删除数据"
+                android:textSize="20sp" />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#cccccc" />
+
+    </LinearLayout>
+</LinearLayout>

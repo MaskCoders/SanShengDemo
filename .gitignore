@@ -1,0 +1,11 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/
+SanShengDemo.iml
+.gradle
+app/build
+build
+app/app.iml
+/app/src/main/main.iml
+/app/src/androidTest/androidTest.iml
+.idea/misc.xml
+.idea/workspace.xml

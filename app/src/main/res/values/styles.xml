@@ -1,8 +1,40 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="ComposeActionBar" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:displayOptions">showCustom</item>
+        <item name="android:height">45dp</item>
+        <item name="android:background">@drawable/custom_actionbar_bg</item>
+    </style>
+    <style name="CloseButton" parent="@android:style/Widget.ActionButton.CloseMode">
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingTop">12dp</item>
+    </style>
+    <style name="CustomActionMode" parent="@android:style/Widget.Holo.ActionMode">
+        <item name="android:displayOptions">showCustom</item>
+        <item name="android:height">45dp</item>
+        <item name="android:actionModeCloseButtonStyle">@style/CloseButton</item>
+    </style>
+    <style name="UnifiedEmailTheme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:actionBarStyle">@style/ComposeActionBar</item>
+        <item name="android:textCursorDrawable">@drawable/text_cursor_drawable</item>
+        <item name="android:actionModeStyle">@style/CustomActionMode</item>
+        <item name="android:windowFullscreen">true</item>
+        <!--<item name="android:windowNoTitle">true</item>-->
     </style>
 
+    <style name="actionbar_back_button">
+        <item name="android:src">@drawable/action_bar_back_btn</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
+    <!-- No change in the default case. -->
+    <style name="AccountSpinnerAnchorTextPrimary" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/actionbar_main_title</item>
+        <item name="android:background">@color/custom_action_bar_bg</item>
+        <item name="android:layout_marginBottom">0.5dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <!--     <item name="android:textStyle">bold</item> -->
+    </style>
 </resources>

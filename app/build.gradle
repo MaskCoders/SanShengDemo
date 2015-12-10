@@ -13,15 +13,13 @@ repositories {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 17//设置编译时用的Android版本
+    buildToolsVersion '19.1.0'//设置编译时使用的构建工具的版本
 
-    defaultConfig {
+    defaultConfig {//设置一些默认属性，其可用属性是buildTypes和ProductFlavors之和
         applicationId "com.example.demo.app"
-        minSdkVersion 9
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion 14 //设置兼容的最小版本
+        targetSdkVersion 17 //设置目标SDK版本
     }
 
     compileOptions {
@@ -38,5 +36,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.1.0'
+//    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:support-v4:21.0.3'
 }

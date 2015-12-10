@@ -1,0 +1,39 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff" >
+
+    <com.example.demo.app.PullListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:listSelector="@android:color/transparent"
+            android:focusable="true"
+            android:scrollbars="none"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="#ffffff"
+            android:divider="#f2f6f9"
+            android:dividerHeight="5dp"
+            android:scrollbarStyle="insideOverlay"
+            android:clickable="false"/>
+
+    <LinearLayout android:id="@+id/empty_view_group"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:gravity="center"
+                  android:visibility="gone"
+                  android:orientation="vertical">
+
+        <TextView android:id="@+id/empty_view_text"
+                  android:layout_marginTop="9dp"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:gravity="center"
+                  android:layout_gravity="center"
+                  android:textColor="#e0e0e0"
+                  android:alpha="0.5"
+                  android:textSize="16sp"
+                  android:text="无数据"/>
+    </LinearLayout>
+</FrameLayout>
