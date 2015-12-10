@@ -1,4 +1,4 @@
-package com.example.demo.app;
+package com.example.demo.view;
 
 import android.content.Context;
 import android.os.SystemClock;
@@ -12,6 +12,8 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.*;
 import android.widget.AbsListView.OnScrollListener;
+import com.example.demo.R;
+import com.example.demo.util.Utility;
 
 public class PullListView extends ListView implements OnScrollListener {
     private float mInitialMotionY, mLastMotionY, moveY_1, moveY_2;
@@ -79,7 +81,7 @@ public class PullListView extends ListView implements OnScrollListener {
             mScrollAnimationInterpolator = new DecelerateInterpolator();
         }
 
-        mMaxTop = Utility.dip2Px(context,100);
+        mMaxTop = Utility.dip2Px(context, 100);
     }
 
     public void setPullHeaderView(View v) {

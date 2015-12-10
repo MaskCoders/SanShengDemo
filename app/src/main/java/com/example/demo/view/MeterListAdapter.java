@@ -1,4 +1,4 @@
-package com.example.demo.app;
+package com.example.demo.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import com.example.demo.mode.Meter;
+import com.example.demo.R;
+import com.example.demo.util.MeterUtilies;
 
 /**
  * Created by sunshaogang on 12/9/15.

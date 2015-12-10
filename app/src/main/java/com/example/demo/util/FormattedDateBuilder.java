@@ -14,12 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.demo.app;
+package com.example.demo.util;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.text.format.DateUtils;
 import android.text.format.Time;
+import com.example.demo.R;
 
 import java.util.Formatter;
 

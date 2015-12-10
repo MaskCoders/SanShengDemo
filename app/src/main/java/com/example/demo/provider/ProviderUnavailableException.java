@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.demo.app;
+package com.example.demo.provider;
 
 public class ProviderUnavailableException extends RuntimeException {
     private static final long serialVersionUID = 1L;

@@ -1,10 +1,12 @@
-package com.example.demo.app;
+package com.example.demo.mode;
 
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import com.example.demo.util.Utility;
+import com.example.demo.provider.ProviderUnavailableException;
 
 /**
  * Created by sunshaogang on 12/9/15.
@@ -17,7 +19,7 @@ public abstract class Content {
     public static Uri mBaseUri;
     private Uri mUri;
     public static String AUTHORITY;
-    protected static Uri CONTENT_URI;
+    public static Uri CONTENT_URI;
     private static String EMAIL_PACKAGE_NAME;
     public static final String[] COUNT_COLUMNS = new String[]{"count(*)"};
     public static String PARAMETER_LIMIT = "limit";

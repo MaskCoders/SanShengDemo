@@ -1,10 +1,13 @@
-package com.example.demo.app;
+package com.example.demo.view;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import com.example.demo.util.CustomThreadPoolFactory;
+import com.example.demo.mode.Meter;
+import com.example.demo.R;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

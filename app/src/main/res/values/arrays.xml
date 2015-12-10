@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="chat_bottom_option_button">
+        <item>@string/function_socket</item>
+        <item>@string/function_db_operation</item>
+        <item>@string/function_create_data</item>
+    </string-array>
+</resources>

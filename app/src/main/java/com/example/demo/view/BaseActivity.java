@@ -1,5 +1,4 @@
-package com.example.demo.app;
-
+package com.example.demo.view;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -8,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.example.demo.R;
 
 /**
  * Created by sunshaogang on 12/10/15.

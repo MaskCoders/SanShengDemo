@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.demo.app;
+package com.example.demo.util;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -37,6 +37,7 @@ import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.example.demo.mode.Content;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;

@@ -1,4 +1,4 @@
-package com.example.demo.app;
+package com.example.demo.view;
 
 
 import java.io.BufferedReader;
@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.example.demo.R;
 
 public class SocketDemo extends Activity implements Runnable {
     private TextView tv_msg = null;
