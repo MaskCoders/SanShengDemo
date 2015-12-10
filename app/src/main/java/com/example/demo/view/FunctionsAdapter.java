@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2015. Kingsoft Office Software. All rights reserved.
- */
-
 package com.example.demo.view;
 
 import android.app.Activity;
