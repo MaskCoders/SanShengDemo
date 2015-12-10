@@ -55,7 +55,6 @@ public class ProgressDailog extends Dialog {
 		}
 	}
 	
-	/**该方法必须在dialog show()方法之前调用*/
 	public void setActivity(Activity ac){
 		mActivity = ac;
 	}
