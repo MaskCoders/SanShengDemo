@@ -216,16 +216,12 @@ public class EquipmentProvider extends ContentProvider {
     //query
     private String buildMeterQuery(String[] projection, String selection, String sortOrder) {
         StringBuilder builder = new StringBuilder();
-
         builder.append("SELECT * FROM ");
         builder.append(Meter.TABLE_NAME).append(" WHERE ").append(selection);
-        if (TextUtils.isEmpty(sortOrder)) {
-            builder.append(")");
-        } else {
-            builder.append(") ORDER BY ");
+        if (!TextUtils.isEmpty(sortOrder)) {
+            builder.append(" ORDER BY ");
             builder.append(sortOrder);
         }
-
         return builder.toString();
     }
 

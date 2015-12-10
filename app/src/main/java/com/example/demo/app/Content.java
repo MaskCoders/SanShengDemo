@@ -138,7 +138,7 @@ public abstract class Content {
 
     public static synchronized void init(Context context) {
         EMAIL_PACKAGE_NAME = context.getPackageName();
-        AUTHORITY = EMAIL_PACKAGE_NAME + ".provider.Meter";
+        AUTHORITY = EMAIL_PACKAGE_NAME + ".provider.Equipment";
         CONTENT_URI = Uri.parse("content://" + AUTHORITY);
         Meter.init();
     }
@@ -152,6 +152,7 @@ public abstract class Content {
         public static final String DATA_TYPE = "dataType";
         public static final String VALZ = "valz";
         public static final String IMPORTANT = "important";
+        public static final String UPDATE_TIME = "updateTime";
     }
 
     static public Uri uriWithLimit(Uri uri, int limit) {

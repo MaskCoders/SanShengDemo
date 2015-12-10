@@ -3,12 +3,13 @@ package com.example.demo.app;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 /**
  * Created by sunshaogang on 12/9/15.
@@ -16,7 +17,6 @@ import java.util.ArrayList;
 public class MeterListAdapter extends SimpleCursorAdapter {
     private Activity mActivity;
     private Context mContext;
-    private ArrayList<String> msgs;
 
     public MeterListAdapter(Context context, Cursor cursor) {
         super(context, android.R.layout.simple_list_item_1, cursor, Meter.CONTENT_PROJECTION,
@@ -26,29 +26,82 @@ public class MeterListAdapter extends SimpleCursorAdapter {
 
     @Override
     public int getCount() {
-        return msgs == null ? 0 : msgs.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return msgs.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
+        return super.getCount();
+//        int cursorCount = super.getCount();
+//        if (cursorCount == 0) {
+//            return 0;
+//        }
+//        if (allCount) {
+//            return cursorCount;
+//        }
+//        if (mInitalCount) {
+//            maxCount = maxCount < cursorCount ? maxCount : cursorCount;
+//            mInitalCount = false;
+//        }
+//        if (maxCount < INITAL_MAX_ITEMS) {
+//            maxCount = INITAL_MAX_ITEMS < cursorCount ? INITAL_MAX_ITEMS : cursorCount;
+//        }
+//        return maxCount;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView textView;
-        if (convertView == null) {
-            textView = (TextView) mActivity.getLayoutInflater().inflate(android.R.layout.simple_list_item_1, null);
-        } else {
-            textView = (TextView) convertView;
+        ViewHolder viewHolder = null;
+        Cursor cursor = getCursor();
+        if (convertView != null) {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-        textView.setText(msgs.get(position));
-        return textView;
+        if (viewHolder == null) {
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.meter_item_layout, null);
+            viewHolder = new ViewHolder();
+            initViewHolder(viewHolder, convertView);
+            convertView.setTag(viewHolder);
+        }
+        fillDataToViewHolder(cursor, viewHolder);
+        return convertView;
+    }
+    @Override
+    public void bindView(View view, Context context, Cursor cursor) {
+        //do nothing
+    }
+
+    ViewHolder initViewHolder(final ViewHolder holder, View view) {
+        holder.infoLayout = (RelativeLayout) view.findViewById(R.id.meter_item_info);
+        holder.vip = (ImageView) view.findViewById(R.id.meter_vip);
+        holder.meterName = (TextView) view.findViewById(R.id.meter_name);
+        holder.meterId = (TextView) view.findViewById(R.id.meter_id);
+        holder.dataType = (TextView) view.findViewById(R.id.meter_type);
+        holder.valueTime = (TextView) view.findViewById(R.id.meter_value_time);
+        holder.readTime = (TextView) view.findViewById(R.id.meter_read_time);
+        holder.meterValue = (TextView) view.findViewById(R.id.meter_value);
+        return holder;
+    }
+
+    private void fillDataToViewHolder(final Cursor cursor, final ViewHolder holder) {
+        final Meter meter = new Meter();
+        meter.restore(cursor);
+        if (meter.isImportant) {
+            holder.vip.setVisibility(View.VISIBLE);
+        } else {
+            holder.vip.setVisibility(View.GONE);
+        }
+        holder.meterName.setText(meter.mMeterName);
+        holder.meterId.setText(String.valueOf(meter.mMeterID));
+        String type = meter.mDataType == 1 ? "日冻结" : "实时数据";
+        holder.dataType.setText(type);
+        holder.valueTime.setText(String.valueOf(meter.mValueTime));
+        holder.readTime.setText(String.valueOf(meter.mReadTime));
+        holder.readTime.setText(String.valueOf(meter.mValz));
+    }
+    public static class ViewHolder {
+        public RelativeLayout infoLayout;
+        public ImageView vip;
+        public TextView meterName;
+        public TextView meterId;
+        public TextView dataType;
+        public TextView valueTime;
+        public TextView readTime;
+        public TextView meterValue;
     }
 }
 

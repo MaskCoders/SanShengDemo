@@ -8,10 +8,11 @@
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:screenOrientation="sensorLandscape">
+            >
         <activity
                 android:name=".MainActivity"
-                android:label="@string/app_name">
+                android:label="@string/app_name"
+                android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -19,8 +20,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SocketDemo"/>
-        <activity android:name=".DBOperationActivity">
+        <activity android:name=".SocketDemo"
+                  android:screenOrientation="sensorLandscape"/>
+        <activity android:name=".DBOperationActivity"
+                  android:screenOrientation="sensorLandscape">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".CreateDBActivity"
+                  android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
@@ -28,7 +37,7 @@
 
         <provider
                 android:name=".EquipmentProvider"
-                android:authorities="${applicationId}.provider.Circle"
+                android:authorities="${applicationId}.provider.Equipment"
                 android:exported="false">
             <grant-uri-permission android:pathPattern=".*"/>
         </provider>

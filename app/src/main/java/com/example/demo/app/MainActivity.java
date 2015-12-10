@@ -12,6 +12,7 @@ import android.widget.Button;
 public class MainActivity extends Activity {
     private Button sb;
     private Button db;
+    private Button cb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +20,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         sb = (Button) findViewById(R.id.socket);
         db = (Button) findViewById(R.id.dbshower);
+        cb = (Button) findViewById(R.id.create_db);
         sb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -32,6 +34,14 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, DBOperationActivity.class);
+                startActivity(intent);
+            }
+        });
+        cb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, CreateDBActivity.class);
                 startActivity(intent);
             }
         });

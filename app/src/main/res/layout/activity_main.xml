@@ -15,5 +15,8 @@
     <Button android:layout_width="fill_parent" android:layout_height="wrap_content"
             android:text="dbshower"
             android:id="@+id/dbshower"/>
+    <Button android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:text="createDB"
+            android:id="@+id/create_db"/>
 
 </LinearLayout>

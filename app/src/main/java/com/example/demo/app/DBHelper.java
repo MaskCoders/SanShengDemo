@@ -17,13 +17,14 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private String createMsgTable = "CREATE TABLE IF NOT EXISTS `" + Meter.TABLE_NAME +"` (\n" +
             "  `"+ Content.MeterColumns.ID + "` integer primary key autoincrement,\n" +
-            "  `"+ Content.MeterColumns.METER_ID + "` integer default -1,\n" +
+            "  `"+ Content.MeterColumns.METER_ID + "` integer not null default 0,\n" +
             "  `"+ Content.MeterColumns.METER_NAME + "` text not null,\n" +
-            "  `"+ Content.MeterColumns.VALUE_TIME + "` bigInteger not null,\n" +
-            "  `"+ Content.MeterColumns.READ_TIME + "` bigInteger default null,\n" +
-            "  `"+ Content.MeterColumns.DATA_TYPE + "` integer not null,\n" +
-            "  `"+ Content.MeterColumns.VALZ + "` real default 0  ,\n" +
-            "  `"+ Content.MeterColumns.IMPORTANT + "` integer default 0 \n" +
+            "  `"+ Content.MeterColumns.VALUE_TIME + "` bigInteger not null default 0,\n" +
+            "  `"+ Content.MeterColumns.READ_TIME + "` bigInteger not null default 0,\n" +
+            "  `"+ Content.MeterColumns.DATA_TYPE + "` integer not null default 1,\n" +
+            "  `"+ Content.MeterColumns.VALZ + "` text not null default 0,\n" +
+            "  `"+ Content.MeterColumns.IMPORTANT + "` integer not null  default 0,\n" +
+            "  `"+ Content.MeterColumns.UPDATE_TIME + "` integer not null default 0\n" +
             ")";
 
     public DBHelper(Context context, String name) {
