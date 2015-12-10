@@ -1,4 +1,4 @@
-package com.example.demo.app;
+package com.example.demo.provider;
 
 /**
  * Created by sunshaogang on 12/9/15.
@@ -7,6 +7,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import com.example.demo.mode.Content;
+import com.example.demo.mode.Meter;
 
 public class DBHelper extends SQLiteOpenHelper {
 

@@ -1,4 +1,4 @@
-package com.example.demo.app;
+package com.example.demo.mode;
 
 import android.annotation.TargetApi;
 import android.content.ContentValues;
@@ -6,7 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
-import com.example.demo.app.Content.MeterColumns;
+import com.example.demo.mode.Content.MeterColumns;
 
 /**
  * Created by sunshaogang on 12/9/15.

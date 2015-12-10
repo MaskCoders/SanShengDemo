@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.demo.app"
+          package="com.example.demo"
           android:versionCode="100000" android:versionName="1.0.0">
     <uses-sdk
             android:minSdkVersion="17" android:targetSdkVersion="21"/>
@@ -11,7 +11,7 @@
             android:theme="@style/UnifiedEmailTheme"
             >
         <activity
-                android:name=".MainActivity"
+                android:name=".view.LauncherActivity"
                 android:label="@string/app_name"
                 android:screenOrientation="sensorLandscape">
             <intent-filter>
@@ -21,15 +21,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SocketDemo"
+        <activity android:name=".view.SocketDemo"
                   android:screenOrientation="sensorLandscape"/>
-        <activity android:name=".DBOperationActivity"
+        <activity android:name=".view.DBOperationActivity"
                   android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
-        <activity android:name=".CreateDBActivity"
+        <activity android:name=".view.CreateDBActivity"
                   android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -37,7 +37,7 @@
         </activity>
 
         <provider
-                android:name=".EquipmentProvider"
+                android:name=".provider.EquipmentProvider"
                 android:authorities="${applicationId}.provider.Equipment"
                 android:exported="false">
             <grant-uri-permission android:pathPattern=".*"/>

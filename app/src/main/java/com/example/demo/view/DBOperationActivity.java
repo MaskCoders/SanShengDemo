@@ -1,4 +1,4 @@
-package com.example.demo.app;
+package com.example.demo.view;
 
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import com.example.demo.*;
+import com.example.demo.mode.Content;
+import com.example.demo.mode.Meter;
 
 /**
  * Created by sunshaogang on 12/9/15.

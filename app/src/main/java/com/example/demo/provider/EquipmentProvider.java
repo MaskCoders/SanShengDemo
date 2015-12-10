@@ -1,4 +1,4 @@
-package com.example.demo.app;
+package com.example.demo.provider;
 
 import android.content.*;
 import android.database.Cursor;
@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
+import com.example.demo.mode.Content;
+import com.example.demo.mode.Meter;
 
 /**
  * Created by sunshaogang on 12/9/15.
