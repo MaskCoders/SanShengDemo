@@ -111,7 +111,7 @@ public class LaucherAdapter extends BaseAdapter {
     private class InsertDataTask extends AsyncTask<Void, Void, Integer> {
         @Override
         protected Integer doInBackground(Void... params) {
-            for (int i = 0; i < 50; i++) {
+            for (int i = 1; i < 51; i++) {
                 Meter meter = new Meter(true, i);
                 meter.save(mContext);
             }
