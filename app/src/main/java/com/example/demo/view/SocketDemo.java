@@ -19,7 +19,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class SocketDemo extends Activity implements View.OnClickListener {
+public class SocketDemo extends BaseActivity implements View.OnClickListener {
     private TextView tv_msg = null;
     private TextView tv_info = null;
     private EditText ed_msg = null;
@@ -85,7 +85,7 @@ public class SocketDemo extends Activity implements View.OnClickListener {
         btn_send.setOnClickListener(this);
         btn_conn.setOnClickListener(this);
         btn_cls.setOnClickListener(this);
-        //启动线程，接收服务器发送过来的数据
+        setActionBar(SOCKET_VIEW);
     }
 
     private Message getMessage(String content,int type){

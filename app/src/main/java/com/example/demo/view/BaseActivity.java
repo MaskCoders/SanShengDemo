@@ -71,6 +71,7 @@ public class BaseActivity extends Activity {
                     case MODIFY_DETAIL_VIEW:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText("修改电表数据");
                         break;
+
                     default:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(R.string.company_name);
                 }
