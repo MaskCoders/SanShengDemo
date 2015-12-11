@@ -34,7 +34,7 @@ public class MeterListAdapter extends SimpleCursorAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
-        Cursor cursor = getCursor();
+        Cursor cursor = (Cursor)getItem(position);
         if (convertView != null) {
             viewHolder = (ViewHolder) convertView.getTag();
         }
@@ -44,8 +44,6 @@ public class MeterListAdapter extends SimpleCursorAdapter {
             initViewHolder(viewHolder, convertView);
             convertView.setTag(viewHolder);
         }
-        Log.e("ssg", "position = " + position);
-        Log.e("ssg", "cursor.getPosition() = " + cursor.getPosition());
         fillDataToViewHolder(cursor, viewHolder);
         return convertView;
     }
@@ -72,7 +70,6 @@ public class MeterListAdapter extends SimpleCursorAdapter {
         if (meter.mId == 0) {//无此条数据
             return;
         }
-        Log.e("ssg", "position = " + meter.toString());
         if (meter.isImportant == 0) {
             holder.vip.setVisibility(View.VISIBLE);
         } else {

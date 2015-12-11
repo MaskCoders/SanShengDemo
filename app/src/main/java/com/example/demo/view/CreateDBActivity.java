@@ -34,13 +34,11 @@ public class CreateDBActivity extends BaseActivity{
         mQueryText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("ssg", "mQueryText");
             }
         });
         mInsertText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("ssg", "mInsertText");
                 InsertDataTask task = new InsertDataTask();
                 task.executeOnExecutor(sThreadPool);
             }
@@ -48,13 +46,11 @@ public class CreateDBActivity extends BaseActivity{
         mUpdateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("ssg", "mUpdateText");
             }
         });
         mDeleteText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("ssg", "mDeleteText");
             }
         });
     }
