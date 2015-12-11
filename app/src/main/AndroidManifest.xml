@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.demo"
           android:versionCode="100000" android:versionName="1.0.0">
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-sdk
             android:minSdkVersion="17" android:targetSdkVersion="21"/>
     <application
@@ -22,7 +25,7 @@
         </activity>
 
         <activity android:name=".view.SocketDemo"
-                  android:screenOrientation="sensorLandscape"/>
+                  android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name=".view.DBOperationActivity"
                   android:screenOrientation="sensorLandscape">
             <intent-filter>

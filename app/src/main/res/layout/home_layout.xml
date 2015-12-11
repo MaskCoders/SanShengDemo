@@ -3,7 +3,43 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-<TextView android:id="@+id/tv" android:layout_height="500dp" android:layout_width="fill_parent"></TextView>
-<EditText android:id="@+id/et" android:layout_width="wrap_content" android:layout_height="fill_parent"/>
-<Button android:id="@+id/btn" android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="SEND"/>
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="0dp" android:layout_weight="1"
+                  android:orientation="horizontal">
+        <TextView android:id="@+id/info" android:layout_height="wrap_content" android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:background="@drawable/recipient_cc_chip_background"
+                  android:ellipsize="marquee"
+                  android:singleLine="true"
+                  android:layout_marginLeft="10dp"
+                  android:textSize="16sp"
+                />
+        <EditText android:id="@+id/et" android:layout_width="0dp" android:layout_height="fill_parent"
+                  android:layout_weight="1"
+                  android:focusable="true"
+                  android:focusableInTouchMode="true"
+                  android:imeOptions="flagNoExtractUi"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="0dp" android:layout_weight="4">
+        <TextView android:id="@+id/log" android:layout_height="fill_parent" android:layout_width="0dp"
+                  android:layout_weight="8"
+                  android:background="@drawable/btn_default_disabled_holo_light"
+                  android:singleLine="false"
+                  android:scrollbars="vertical"
+                />
+        <LinearLayout android:layout_width="0dp" android:layout_height="fill_parent" android:layout_weight="4"
+                      android:orientation="vertical">
+
+            <Button android:id="@+id/send" android:layout_width="wrap_content" android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="SEND" android:background="@drawable/send"/>
+            <Button android:id="@+id/conn" android:layout_width="wrap_content" android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="CONN" android:background="@drawable/send"/>
+            <Button android:id="@+id/cls" android:layout_width="wrap_content" android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="CLEAR" android:background="@drawable/send"/>
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>

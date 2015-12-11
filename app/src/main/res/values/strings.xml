@@ -1,5 +1,5 @@
 <resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
-    <string name="app_name">SanShengDemo</string>
+    <string name="app_name">三圣凯瑞</string>
     <string name="company_name">三圣凯瑞</string>
     <string name="load_more">"加载更多"</string>
     <string name="no_more_meter">数据已全部显示</string>
