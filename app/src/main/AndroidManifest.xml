@@ -4,7 +4,6 @@
           android:versionCode="100000" android:versionName="1.0.0">
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-sdk
             android:minSdkVersion="17" android:targetSdkVersion="21"/>
     <application
@@ -26,7 +25,7 @@
 
         <activity android:name=".view.SocketDemo"
                   android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <activity android:name=".view.DBOperationActivity"
+        <activity android:name=".view.MeterListActivity"
                   android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

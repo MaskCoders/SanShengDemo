@@ -6,8 +6,23 @@
     <string name="date_message_received_today">"今天<xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="date_message_received_yesterday">"昨天<xliff:g id="TIME">%1$s</xliff:g>"</string>
     <string name="date_message_received">"<xliff:g id="DAY_AND_DATE">%1$s</xliff:g>&#160;&#160;<xliff:g id="TIME">%2$s</xliff:g>"</string>
+    <string name="ok">"确定"</string>
+    <string name="save">"保存"</string>
+    <string name="cancel">"取消"</string>
 
     <string name="function_socket">socket</string>
     <string name="function_db_operation">数据库操作</string>
     <string name="function_create_data">生成测试数据</string>
+
+    <string name="meter_detail_id_title">电报标识</string>
+    <string name="meter_detail_name_title">电表名称</string>
+    <string name="meter_detail_value_time_title">数据时标</string>
+    <string name="meter_detail_read_time_title">读取时间</string>
+    <string name="meter_detail_data_type_title">数据类型</string>
+    <string name="meter_detail_value_title">电表数值</string>
+    <string name="meter_detail_important_title">是否重要</string>
+    <string name="meter_detail_default_content"></string>
+
+    <string name="date_time_done">完成</string>
+
 </resources>
