@@ -182,23 +182,19 @@ public class EquipmentProvider extends ContentProvider {
         int table = match >> BASE_SHIFT;
         String tableName = TABLE_NAMES.valueAt(table);
         int result = 0;
-        String id = uri.getQueryParameter(Content.PARAMETER_IDS);
-        if (id != null) {
-            selection = whereWithId(id, selection);
-        }
-
         try {
             switch (match) {
                 case METER_BASE:
                     break;
                 case METER_ID:
+                    String id = uri.getLastPathSegment();
+                    selection = whereWithId(id, selection);
                     break;
             }
             result = db.update(tableName, values, selection, selectionArgs);
         } catch (Exception e) {
             return 0;
         }
-
         return result;
     }
 

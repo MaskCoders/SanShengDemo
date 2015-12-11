@@ -9,14 +9,14 @@ import com.example.demo.R;
 
 public class LauncherActivity extends BaseActivity {
     private GridView mFunctionGridView;
-    private FunctionsAdapter mFunctionAdapter;
+    private LaucherAdapter mFunctionAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.launcher_layout);
         mFunctionGridView = (GridView) findViewById(R.id.operation_panel);
-        mFunctionAdapter = new FunctionsAdapter(this);
+        mFunctionAdapter = new LaucherAdapter(this);
         mFunctionGridView.setAdapter(mFunctionAdapter);
         setActionBar(GENERAL_VIEW);
     }

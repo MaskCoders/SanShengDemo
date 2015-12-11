@@ -1,8 +1,8 @@
 package com.example.demo.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,41 +10,25 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import com.example.demo.mode.Meter;
 import com.example.demo.R;
+import com.example.demo.mode.Meter;
 import com.example.demo.util.MeterUtilies;
 
 /**
  * Created by sunshaogang on 12/9/15.
  */
 public class MeterListAdapter extends SimpleCursorAdapter {
-    private Activity mActivity;
-    private Context mContext;
+    private MeterListActivity mActivity;
 
-    public MeterListAdapter(Context context, Cursor cursor) {
+    public MeterListAdapter(MeterListActivity context, Cursor cursor) {
         super(context, android.R.layout.simple_list_item_1, cursor, Meter.CONTENT_PROJECTION,
                 Meter.ID_INDEX_PROJECTION, 0);
-        this.mContext = context;
+        this.mActivity = context;
     }
 
     @Override
     public int getCount() {
         return super.getCount();
-//        int cursorCount = super.getCount();
-//        if (cursorCount == 0) {
-//            return 0;
-//        }
-//        if (allCount) {
-//            return cursorCount;
-//        }
-//        if (mInitalCount) {
-//            maxCount = maxCount < cursorCount ? maxCount : cursorCount;
-//            mInitalCount = false;
-//        }
-//        if (maxCount < INITAL_MAX_ITEMS) {
-//            maxCount = INITAL_MAX_ITEMS < cursorCount ? INITAL_MAX_ITEMS : cursorCount;
-//        }
-//        return maxCount;
     }
 
     @Override
@@ -55,11 +39,13 @@ public class MeterListAdapter extends SimpleCursorAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         if (viewHolder == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.meter_item_layout, null);
+            convertView = LayoutInflater.from(mActivity).inflate(R.layout.meter_item_layout, null);
             viewHolder = new ViewHolder();
             initViewHolder(viewHolder, convertView);
             convertView.setTag(viewHolder);
         }
+        Log.e("ssg", "position = " + position);
+        Log.e("ssg", "cursor.getPosition() = " + cursor.getPosition());
         fillDataToViewHolder(cursor, viewHolder);
         return convertView;
     }
@@ -83,7 +69,11 @@ public class MeterListAdapter extends SimpleCursorAdapter {
     private void fillDataToViewHolder(final Cursor cursor, final ViewHolder holder) {
         final Meter meter = new Meter();
         meter.restore(cursor);
-        if (meter.isImportant) {
+        if (meter.mId == 0) {//无此条数据
+            return;
+        }
+        Log.e("ssg", "position = " + meter.toString());
+        if (meter.isImportant == 0) {
             holder.vip.setVisibility(View.VISIBLE);
         } else {
             holder.vip.setVisibility(View.GONE);
@@ -95,6 +85,12 @@ public class MeterListAdapter extends SimpleCursorAdapter {
         holder.valueTime.setText("数据时标:" + MeterUtilies.getSanShengDate(meter.mValueTime));
         holder.readTime.setText("读取时间:" + MeterUtilies.getSanShengDate(meter.mReadTime));
         holder.meterValue.setText("电表值:" + String.valueOf(meter.mValz));
+        holder.infoLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActivity.showDetailFragment(meter);
+            }
+        });
     }
     public static class ViewHolder {
         public RelativeLayout infoLayout;

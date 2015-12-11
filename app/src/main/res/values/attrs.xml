@@ -60,4 +60,9 @@
         <!-- Drawable to draw below list content. -->
         <attr name="android:overScrollFooter"/>
     </declare-styleable>
+
+    <declare-styleable name="ModifyView">
+        <attr name="title" format="string"/>
+        <attr name="content" format="string"/>
+    </declare-styleable>
 </resources>

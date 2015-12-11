@@ -23,7 +23,7 @@
 
         <activity android:name=".view.SocketDemo"
                   android:screenOrientation="sensorLandscape"/>
-        <activity android:name=".view.DBOperationActivity"
+        <activity android:name=".view.MeterListActivity"
                   android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

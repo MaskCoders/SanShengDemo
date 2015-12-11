@@ -1,23 +1,24 @@
 package com.example.demo.view;
 
+import android.app.FragmentTransaction;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
-import com.example.demo.*;
+import com.example.demo.R;
 import com.example.demo.mode.Content;
 import com.example.demo.mode.Meter;
+import com.example.demo.util.MeterUtilies;
 
 /**
  * Created by sunshaogang on 12/9/15.
  */
-public class DBOperationActivity extends BaseActivity implements LoaderCallbacks<Cursor>, ListView.OnScrollListener, PullListView.OnLoadMoreListener {
+public class MeterListActivity extends BaseActivity implements LoaderCallbacks<Cursor>, ListView.OnScrollListener, PullListView.OnLoadMoreListener {
 
     private View mEmptyView;
     private PullListView mListView;
@@ -31,12 +32,12 @@ public class DBOperationActivity extends BaseActivity implements LoaderCallbacks
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.equipment_layout);
+        setContentView(R.layout.meter_list_layout);
         initView();
         mAdapter = new MeterListAdapter(this, null);
         mListView.setAdapter(mAdapter);
         getLoaderManager().initLoader(LOADER_ID_FILTER_DEFAULT, null, this);
-        setActionBar(DATABASE_VIEW);
+        setActionBar(METER_LIST_VIEW);
     }
 
     @Override
@@ -48,11 +49,6 @@ public class DBOperationActivity extends BaseActivity implements LoaderCallbacks
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {//加载更多。
-        Log.e("ssg", "onLoadFinished cursor.getCount() = " + data.getCount());
-        if ((data == null || !data.moveToFirst()) && mListView != null) {
-            mListView.setEmptyView(mEmptyView);
-            return;
-        }
         if (mAdapter.getCount() != 0 && data != null && mAdapter.getCount() == data.getCount()) {
             mListView.setNoMoreData();
             mAdapter.swapCursor(data);
@@ -65,6 +61,10 @@ public class DBOperationActivity extends BaseActivity implements LoaderCallbacks
                 mListView.onCompleteLoadMore(PullListView.LOAD_MORE_STATUS_USELESS);
             }
         }
+        if ((data == null || !data.moveToFirst()) && mListView != null) {
+            mListView.setEmptyView(mEmptyView);
+            return;
+        }
     }
 
     @Override
@@ -76,7 +76,7 @@ public class DBOperationActivity extends BaseActivity implements LoaderCallbacks
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         if (mLastVisibleItem >= mListView.getCount() - DOWNSIDE_INCREASE_COUNT / 2 && scrollState == SCROLL_STATE_IDLE) {
             mOriginLength += DOWNSIDE_INCREASE_COUNT;
-            getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, DBOperationActivity.this);
+            getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, MeterListActivity.this);
             mListView.setFooterViewStatic();
         }
     }
@@ -90,7 +90,7 @@ public class DBOperationActivity extends BaseActivity implements LoaderCallbacks
     public void onLoadMore(PullListView refreshView) {
         refreshView.onCompleteLoadMore(PullListView.LOAD_MORE_STATUE_SUCCESS);
         mOriginLength += DOWNSIDE_INCREASE_COUNT;
-        getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, DBOperationActivity.this);
+        getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, MeterListActivity.this);
     }
 
     private void initView() {
@@ -98,5 +98,23 @@ public class DBOperationActivity extends BaseActivity implements LoaderCallbacks
         mListView.setOnScrollListener(this);
         mEmptyView = findViewById(R.id.empty_view_group);
     }
+
+    public void showDetailFragment(Meter meter) {
+        MeterFragment fragment = new MeterFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(MeterUtilies.PARAM_METER, meter);
+        fragment.setArguments(bundle);
+        MeterUtilies.showFragment(getFragmentManager(), null, fragment, R.id.meter_content, FragmentTransaction.TRANSIT_FRAGMENT_OPEN, String.valueOf(meter.mId));
+    }
+
+    public void restartLoader(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, MeterListActivity.this);
+            }
+        });
+    }
+
 }
 

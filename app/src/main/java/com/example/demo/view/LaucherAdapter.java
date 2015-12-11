@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-public class FunctionsAdapter extends BaseAdapter {
+public class LaucherAdapter extends BaseAdapter {
 
     private static final ThreadFactory sThreadFactory = new CustomThreadPoolFactory("EquipmentDBThread");
     private ExecutorService sThreadPool = Executors.newSingleThreadExecutor(sThreadFactory);
@@ -30,7 +30,7 @@ public class FunctionsAdapter extends BaseAdapter {
             R.drawable.create_db_icon_selector};
     private ProgressDailog mProgressDailog;
 
-    public FunctionsAdapter(Activity mContext) {
+    public LaucherAdapter(Activity mContext) {
         this.mContext = mContext;
     }
 
@@ -66,7 +66,7 @@ public class FunctionsAdapter extends BaseAdapter {
                             mContext.startActivity(intent);
                             break;
                         case 1:
-                            intent.setClass(mContext, DBOperationActivity.class);
+                            intent.setClass(mContext, MeterListActivity.class);
                             mContext.startActivity(intent);
                             break;
                         case 2:

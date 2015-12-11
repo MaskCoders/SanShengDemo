@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/root"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/message_bg_white">
+
+    <!-- 顶部标题 -->
+    <RelativeLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="0dp">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true"
+            android:layout_margin="15dp"
+            android:textColor="@color/title_body_color"
+            android:textSize="16sp"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+    <!-- 内容 -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!-- 分割线 -->
+        <include layout="@layout/divider"
+                 android:id="@+id/dialog_body_head_divider"/>
+
+
+        <!-- 自定义内容 -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:id="@+id/container"/>
+
+        <!-- 消息 -->
+        <LinearLayout
+            android:id="@+id/test"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/conversation_item_margin"
+            android:paddingRight="@dimen/conversation_item_margin"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/mention_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/title_body_color"
+                android:gravity="center"
+                android:layout_margin="@dimen/conversation_item_margin"
+                android:textSize="@dimen/list_body_text_size"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/sub_mention_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/clickable_color"
+                android:textSize="@dimen/list_hint_text_size"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/conversation_item_margin"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:visibility="gone"/>
+        </LinearLayout>
+        <!-- 编辑 -->
+        <EditText
+            android:id="@+id/edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/title_body_color"
+            android:textSize="@dimen/list_body_text_size"
+            android:layout_margin="20dp"
+            android:padding="5dp"
+            android:background="@drawable/message_input_9"/>
+        <!-- 分割线 -->
+        <View
+            android:id="@+id/dialog_container_divider"
+            style="@style/HorizontalDivider"
+            android:visibility="gone"/>
+
+        <!-- 底部按钮 -->
+        <LinearLayout
+            android:id="@+id/dialog_button_panel"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/message_bottom_9">
+            <!--android:background="@drawable/message_bottom_9"-->
+            <Button
+                android:id="@+id/dialog_button_cancel"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_height="fill_parent"
+                android:text="@string/cancel"
+                android:gravity="center"
+                android:background="@drawable/settings_button_drawable"
+                android:textAppearance="@style/DialogButtonText"/>
+            <include layout="@layout/vertical_divider"/>
+
+            <Button
+                android:id="@+id/dialog_button_ok"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="-1dp"
+                android:text="@string/ok"
+                android:gravity="center"
+                android:background="@drawable/settings_button_drawable"
+                android:textAppearance="@style/DialogButtonText"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -6,12 +6,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.example.demo.mode.Content.MeterColumns;
 
 /**
  * Created by sunshaogang on 12/9/15.
  */
-public class Meter extends Content implements MeterColumns {
+public class Meter extends Content implements MeterColumns, Parcelable {
 
     public int mMeterID;
     public String mMeterName;
@@ -19,7 +21,7 @@ public class Meter extends Content implements MeterColumns {
     public long mReadTime;
     public int mDataType;
     public float mValz;
-    public boolean isImportant;//1=true|0=false
+    public int isImportant;//0=true|1=false
     public long mUpdateTime;
 
     public static final int ID_INDEX = 0;
@@ -57,7 +59,7 @@ public class Meter extends Content implements MeterColumns {
             mReadTime = mValueTime + 1;
             mDataType = id % 2 == 0 ? 1 : 2;
             mValz = (float) (1.234 + id);
-            isImportant = id % 2 == 0;
+            isImportant = id % 2;
             mUpdateTime = System.currentTimeMillis();
         }
     }
@@ -76,7 +78,7 @@ public class Meter extends Content implements MeterColumns {
         values.put(MeterColumns.READ_TIME, mReadTime);
         values.put(MeterColumns.DATA_TYPE, mDataType);
         values.put(MeterColumns.VALZ, mValz);
-        values.put(MeterColumns.IMPORTANT, isImportant ? 1 : 0);
+        values.put(MeterColumns.IMPORTANT, isImportant);
         values.put(MeterColumns.UPDATE_TIME, mUpdateTime);
         return values;
     }
@@ -91,11 +93,76 @@ public class Meter extends Content implements MeterColumns {
         mReadTime = cursor.getLong(READ_TIME_INDEX);
         mDataType = cursor.getInt(DATA_TYPE_INDEX);
         mValz = cursor.getFloat(VALZ_INDEX);
-        isImportant = cursor.getInt(IS_IMPORTANT_INDEX) == 1;
+        isImportant = cursor.getInt(IS_IMPORTANT_INDEX);
     }
 
     @Override
     public Uri save(Context context) {
         return super.save(context);
+    }
+
+    public void update(Context context) {
+        super.update(context, toContentValues());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(mId);
+        dest.writeInt(mMeterID);
+        dest.writeString(mMeterName);
+        dest.writeLong(mValueTime);
+        dest.writeLong(mReadTime);
+        dest.writeInt(mDataType);
+        dest.writeFloat(mValz);
+        dest.writeInt(isImportant);
+        dest.writeLong(mUpdateTime);
+    }
+
+    public static final Parcelable.Creator<Meter> CREATOR
+            = new Parcelable.Creator<Meter>() {
+        @Override
+        public Meter createFromParcel(Parcel in) {
+            return new Meter(in);
+        }
+
+        @Override
+        public Meter[] newArray(int size) {
+            return new Meter[size];
+        }
+    };
+
+    public Meter(Parcel in) {
+        mId = in.readLong();
+        mMeterID = in.readInt();
+        mMeterName = in.readString();
+        mValueTime = in.readLong();
+        mReadTime = in.readLong();
+        mDataType = in.readInt();
+        mValz = in.readFloat();
+        isImportant = in.readInt();
+        mUpdateTime = in.readInt();
+    }
+
+    public Meter copy() {
+        Meter meter = new Meter();
+        meter.mId = mId;
+        meter.mMeterID = mMeterID;
+        meter.mMeterName = new String(mMeterName);
+        meter.mValueTime = mValueTime;
+        meter.mReadTime = mReadTime;
+        meter.mDataType = mDataType;
+        meter.mValz = mValz;
+        meter.isImportant = isImportant;
+        meter.mUpdateTime = mUpdateTime;
+        return meter;
+    }
+    public String toString() {
+        return  "[" + ID + " : " + mId + "]" +
+                "[" + METER_NAME + " : " + mMeterName + "]" + "\n";
     }
 }

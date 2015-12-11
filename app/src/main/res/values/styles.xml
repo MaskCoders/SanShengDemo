@@ -34,7 +34,7 @@
         <item name="android:textColor">@color/actionbar_main_title</item>
         <item name="android:background">@color/custom_action_bar_bg</item>
         <item name="android:layout_marginBottom">0.5dp</item>
-        <item name="android:paddingRight">16dp</item>
+        <!--<item name="android:paddingRight">16dp</item>-->
         <!--     <item name="android:textStyle">bold</item> -->
     </style>
 
@@ -45,5 +45,19 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="HorizontalDivider">
+        <item name="android:layout_marginLeft">@dimen/conversation_item_margin</item>
+        <item name="android:layout_marginStart">@dimen/conversation_item_margin</item>
+        <item name="android:layout_marginEnd">@dimen/conversation_item_margin</item>
+        <item name="android:layout_marginRight">@dimen/conversation_item_margin</item>
+        <item name="android:background">@color/divider_color</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+    </style>
+    <style name="DialogButtonText">
+        <item name="android:textColor">@color/title_body_color</item>
+        <item name="android:textSize">@dimen/list_body_text_size</item>
     </style>
 </resources>
