@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.demo.R;
 
 import java.io.*;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 public class SocketDemo extends Activity implements View.OnClickListener {
@@ -25,8 +26,10 @@ public class SocketDemo extends Activity implements View.OnClickListener {
     private Button btn_send = null;
     private Button btn_conn = null;
     private Button btn_cls = null;
+    private Button btn_ser = null;
     // private Button btn_login = null;
-    private static final String HOST = "192.168.134.82";
+//    private static final String HOST = "192.168.134.82";
+    private static final String HOST = "127.0.0.1";
     private static final int PORT = 8001;
     private Socket socket = null;
     private BufferedReader in = null;
@@ -76,7 +79,9 @@ public class SocketDemo extends Activity implements View.OnClickListener {
         btn_send = (Button) findViewById(R.id.send);
         btn_conn = (Button) findViewById(R.id.conn);
         btn_cls = (Button) findViewById(R.id.cls);
+        btn_ser = (Button) findViewById(R.id.startser);
         ed_msg.setText("0x68 0x16");
+        btn_ser.setOnClickListener(this);
         btn_send.setOnClickListener(this);
         btn_conn.setOnClickListener(this);
         btn_cls.setOnClickListener(this);
@@ -147,6 +152,81 @@ public class SocketDemo extends Activity implements View.OnClickListener {
             case R.id.cls:
                 tv_msg.setText("");
                 break;
+            case R.id.startser:
+                startServer();
+                break;
         }
+    }
+    private ServerSocket server = null;
+    Socket client = null;
+    BufferedReader serin = null;
+    private String msg = "";
+    private void startServer(){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    server = new ServerSocket(PORT);
+
+                    while(true){
+                        client = server.accept();
+                        serin = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                        msg = CONN_SUCCESS +client.getInetAddress();
+                        sendmsg();
+                        Thread send = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                    try {
+                                        while(true) {
+                                            if((msg = serin.readLine())!= null) {
+                                                //当客户端发送的信息为：exit时，关闭连接
+//                            if(msg.equals("exit")) {
+//                                System.out.println("ssssssss");
+//                                mList.remove(socket);
+//                                in.close();
+//                                msg = "user:" + socket.getInetAddress()
+//                                    + "exit total:" + mList.size();
+//                                socket.close();
+//                                this.sendmsg();
+//                                break;
+//                                //接收客户端发过来的信息msg，然后发送给客户端。
+//                            } else {
+                                                if(msg.equals("0x68 0x16")){
+                                                    msg = "0x16 0x68";
+                                                }else{
+                                                    msg = "ERRCODE";
+                                                }
+                                                sendmsg();
+//                            }
+                                            }
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+
+                            }
+                        });
+                        send.start();
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+
+
+
+    }
+    public void sendmsg() {
+            PrintWriter pout = null;
+            try {
+                pout = new PrintWriter(new BufferedWriter(
+                        new OutputStreamWriter(client.getOutputStream())),true);
+                pout.println(msg);
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
     }
 }

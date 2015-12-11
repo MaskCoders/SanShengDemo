@@ -39,6 +39,9 @@
             <Button android:id="@+id/cls" android:layout_width="wrap_content" android:layout_height="0dp"
                     android:layout_weight="1"
                     android:text="CLEAR" android:background="@drawable/send"/>
+            <Button android:id="@+id/startser" android:layout_width="wrap_content" android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="STARTSER" android:background="@drawable/send"/>
         </LinearLayout>
     </LinearLayout>
 
