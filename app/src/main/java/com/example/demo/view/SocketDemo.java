@@ -1,12 +1,14 @@
 package com.example.demo.view;
 
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +22,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class SocketDemo extends BaseActivity implements View.OnClickListener {
-    private TextView tv_msg = null;
+    private EditText ed_log = null;
     private TextView tv_info = null;
     private EditText ed_msg = null;
     private Button btn_send = null;
@@ -48,33 +50,40 @@ public class SocketDemo extends BaseActivity implements View.OnClickListener {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             String content = msg.obj.toString();
-            switch(msg.what){
+            switch (msg.what) {
                 case CONN_SER_CLS:
                     break;
                 case RECV_MSG:
-                    if(content.contains(ERRCODE)){
-                        content = "Service can not resolve your code ";
-                    }else if (content.contains(CONN_SUCCESS)){
-                        tv_info.setText("Ser:"+content.replace(CONN_SUCCESS,"").replace("\n","")+",Port:"+PORT);
+                    if (content.contains(ERRCODE)) {
+                        content = SocketDemo.this.getResources().getString(R.string.conn_ser_err2);
+                    } else if (content.contains(CONN_SUCCESS)) {
+                        tv_info.setText(SocketDemo.this.getResources().getString(R.string.server)
+                                + content.replace(CONN_SUCCESS, "").replace("\n", "") + "," +
+                                SocketDemo.this.getResources().getString(R.string.ser_port) + PORT);
+//                        btn_ser.setText(SocketDemo.this.getResources().getString(R.string.start_ser_close));
                         return;
                     }
                     break;
                 case CONN_OK:
                     break;
                 case CONN_ERR:
-                    content = "connect err: "+content;
-                    default:
+                    content = SocketDemo.this.getResources().getString(R.string.conn_ser_err1) + ":" + content;
+                default:
             }
-            tv_msg.setText(tv_msg.getText().toString()+"\n SER => "+content);
+            SpannableString ss = new SpannableString(ed_log.getText().toString() + "\n " + SocketDemo.this.getResources().getString(R.string.server) + content);
+//            ss.setSpan(new ForegroundColorSpan(SocketDemo.this.getResources().getColor(R.color.download_text_color)), 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ed_log.setText(ss);
+            ed_log.setSelection(ed_log.getText().length() - 1);
         }
     };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_layout);
-        tv_msg = (TextView) findViewById(R.id.log);
+        ed_log = (EditText) findViewById(R.id.log);
         tv_info = (TextView) findViewById(R.id.info);
-        tv_msg.setMovementMethod(ScrollingMovementMethod.getInstance());
+        ed_log.setMovementMethod(ScrollingMovementMethod.getInstance());
         ed_msg = (EditText) findViewById(R.id.et);
         btn_send = (Button) findViewById(R.id.send);
         btn_conn = (Button) findViewById(R.id.conn);
@@ -88,21 +97,40 @@ public class SocketDemo extends BaseActivity implements View.OnClickListener {
         setActionBar(SOCKET_VIEW);
     }
 
-    private Message getMessage(String content,int type){
+    private Message getMessage(String content, int type) {
         Message msg = new Message();
         msg.obj = content;
         msg.what = type;
         return msg;
     }
+
+    private boolean connSerLogic() {
+        if (server == null || server.isClosed()) {
+            Toast.makeText(this, this.getResources().getString(R.string.start_ser_tip1), Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (client == null || !client.isConnected()) {
+            Toast.makeText(this, this.getResources().getString(R.string.start_ser_tip2), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.conn:
+                if (server == null || server.isClosed()) {
+                    Toast.makeText(this, this.getResources().getString(R.string.start_ser_tip1), Toast.LENGTH_SHORT).show();
+                }
+                if(client!=null && client.isConnected()){
+                    Toast.makeText(this, this.getResources().getString(R.string.start_ser_tip4), Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            if(socket == null ||socket.isClosed()) {
+                            if (socket == null || socket.isClosed()) {
                                 socket = new Socket(HOST, PORT);
                                 in = new BufferedReader(new InputStreamReader(socket
                                         .getInputStream()));
@@ -114,10 +142,10 @@ public class SocketDemo extends BaseActivity implements View.OnClickListener {
                                 if (!socket.isClosed()) {
                                     if (socket.isConnected()) {
                                         if (!socket.isInputShutdown()) {
-                                            String  content = null;
+                                            String content = null;
                                             if ((content = in.readLine()) != null) {
                                                 content += "\n";
-                                                mHandler.sendMessage(getMessage(content,RECV_MSG));
+                                                mHandler.sendMessage(getMessage(content, RECV_MSG));
                                             } else {
 
                                             }
@@ -129,7 +157,7 @@ public class SocketDemo extends BaseActivity implements View.OnClickListener {
                         } catch (IOException ex) {
                             ex.printStackTrace();
                             Log.d("", "login exception" + ex.getMessage());
-                            mHandler.sendMessage(getMessage("conn err",CONN_ERR));
+                            mHandler.sendMessage(getMessage("conn err", CONN_ERR));
                         }
                     }
                 });
@@ -137,12 +165,18 @@ public class SocketDemo extends BaseActivity implements View.OnClickListener {
                 break;
 
             case R.id.send:
-                String msg = ed_msg.getText().toString();
-                if(TextUtils.isEmpty(msg)){
-                    Toast.makeText(this,"INPUT IS NOT NULL ",0).show();
+                if (!connSerLogic()) {
+                    return;
+                }
+                if (TextUtils.isEmpty(msg)) {
+                    Toast.makeText(this, this.getResources().getString(R.string.conn_ser_err3), 0).show();
                     break;
                 }
-                tv_msg.setText(tv_msg.getText().toString()+"\n CLIENT => "+msg);
+                String msg = ed_msg.getText().toString();
+                SpannableString ss = new SpannableString(ed_log.getText().toString() + "\n " + SocketDemo.this.getResources().getString(R.string.client) + msg);
+//                ss.setSpan(new ForegroundColorSpan(SocketDemo.this.getResources().getColor(R.color.head_icon_bg_color0)), 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                ed_log.setText(ss);
                 if (socket != null && socket.isConnected()) {
                     if (!socket.isOutputShutdown()) {
                         out.println(msg);
@@ -150,36 +184,41 @@ public class SocketDemo extends BaseActivity implements View.OnClickListener {
                 }
                 break;
             case R.id.cls:
-                tv_msg.setText("");
+                ed_log.setText("");
                 break;
             case R.id.startser:
                 startServer();
                 break;
         }
     }
+
     private ServerSocket server = null;
     Socket client = null;
     BufferedReader serin = null;
     private String msg = "";
-    private void startServer(){
+
+    private void startServer() {
+        if(server != null && server.isBound() ){
+            Toast.makeText(this, this.getResources().getString(R.string.start_ser_tip3), 0).show();
+        }
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     server = new ServerSocket(PORT);
 
-                    while(true){
+                    while (true) {
                         client = server.accept();
                         serin = new BufferedReader(new InputStreamReader(client.getInputStream()));
-                        msg = CONN_SUCCESS +client.getInetAddress();
+                        msg = CONN_SUCCESS + client.getInetAddress();
                         sendmsg();
                         Thread send = new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                    try {
-                                        while(true) {
-                                            if((msg = serin.readLine())!= null) {
-                                                //当客户端发送的信息为：exit时，关闭连接
+                                try {
+                                    while (true) {
+                                        if ((msg = serin.readLine()) != null) {
+                                            //当客户端发送的信息为：exit时，关闭连接
 //                            if(msg.equals("exit")) {
 //                                System.out.println("ssssssss");
 //                                mList.remove(socket);
@@ -191,18 +230,18 @@ public class SocketDemo extends BaseActivity implements View.OnClickListener {
 //                                break;
 //                                //接收客户端发过来的信息msg，然后发送给客户端。
 //                            } else {
-                                                if(msg.equals("0x68 0x16")){
-                                                    msg = "0x16 0x68";
-                                                }else{
-                                                    msg = "ERRCODE";
-                                                }
-                                                sendmsg();
-//                            }
+                                            if (msg.equals("0x68 0x16")) {
+                                                msg = "0x16 0x68";
+                                            } else {
+                                                msg = "ERRCODE";
                                             }
+                                            sendmsg();
+//                            }
                                         }
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
                                     }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
 
                             }
                         });
@@ -217,16 +256,16 @@ public class SocketDemo extends BaseActivity implements View.OnClickListener {
         thread.start();
 
 
-
     }
+
     public void sendmsg() {
-            PrintWriter pout = null;
-            try {
-                pout = new PrintWriter(new BufferedWriter(
-                        new OutputStreamWriter(client.getOutputStream())),true);
-                pout.println(msg);
-            }catch (IOException e) {
-                e.printStackTrace();
-            }
+        PrintWriter pout = null;
+        try {
+            pout = new PrintWriter(new BufferedWriter(
+                    new OutputStreamWriter(client.getOutputStream())), true);
+            pout.println(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
