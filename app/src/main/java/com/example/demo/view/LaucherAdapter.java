@@ -125,7 +125,7 @@ public class LaucherAdapter extends BaseAdapter {
         mProgressDailog.setCanceledOnTouchOutside(false);
         mProgressDailog.show();
         mProgressDailog.setActivity(mContext);
-        mProgressDailog.setMessage("正在生成测试数据，请稍后");
+        mProgressDailog.setMessage(mContext.getResources().getString(R.string.create_db_info));
         mProgressDailog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -139,6 +139,6 @@ public class LaucherAdapter extends BaseAdapter {
             mProgressDailog.dismiss();
             mProgressDailog = null;
         }
-        Utility.showToast(mContext, "测试数据已生成");
+        Utility.showToast(mContext, mContext.getResources().getString(R.string.has_create_db));
     }
 }

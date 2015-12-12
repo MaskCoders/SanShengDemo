@@ -32,16 +32,16 @@
 
             <Button android:id="@+id/send" android:layout_width="wrap_content" android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="SEND" android:background="@drawable/send"/>
+                    android:text="@string/send" android:background="@drawable/send"/>
             <Button android:id="@+id/conn" android:layout_width="wrap_content" android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="CONN" android:background="@drawable/send"/>
+                    android:text="@string/conn" android:background="@drawable/send"/>
             <Button android:id="@+id/cls" android:layout_width="wrap_content" android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="CLEAR" android:background="@drawable/send"/>
+                    android:text="@string/clear" android:background="@drawable/send"/>
             <Button android:id="@+id/startser" android:layout_width="wrap_content" android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="STARTSER" android:background="@drawable/send"/>
+                    android:text="@string/start_ser" android:background="@drawable/send"/>
         </LinearLayout>
     </LinearLayout>
 

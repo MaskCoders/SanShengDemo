@@ -24,8 +24,9 @@ public class BaseActivity extends Activity {
     public final static int MODIFY_DETAIL_VIEW = 5;//修改详情
     private ActionBarCallback mActionBarCallback;
 
-    public interface ActionBarCallback{
+    public interface ActionBarCallback {
         void onSaveClick();
+
         void onCancleClick();
     }
 
@@ -34,6 +35,7 @@ public class BaseActivity extends Activity {
         super.onCreate(savedInstanceState);
         customizeActionbar();
     }
+
     private void customizeActionbar() {
         mActionBar = getActionBar();
         if (mActionBar != null) {
@@ -71,7 +73,7 @@ public class BaseActivity extends Activity {
         }
     }
 
-    protected void setActionBar(final int mode){
+    protected void setActionBar(final int mode) {
         setActionBar(mode, null);
     }
 
@@ -82,24 +84,24 @@ public class BaseActivity extends Activity {
             public void run() {
                 switch (mode) {
                     case GENERAL_VIEW:
-                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText("主页");
+                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.index_page));
                         break;
                     case SOCKET_VIEW:
-                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText("通讯");
+                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.connect_page));
                         break;
                     case METER_LIST_VIEW:
-                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText("数据库展示");
+                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.db_show));
                         mActionBarView.findViewById(R.id.ab_modify_view).setVisibility(View.GONE);
                         mActionBarView.findViewById(R.id.ab_view).setVisibility(View.VISIBLE);
                         break;
                     case INSERT_DATABASE_VIEW:
-                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText("生成测试数据");
+                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.create_db));
                         break;
                     case DETAIL_VIEW:
-                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText("电表数据详情");
+                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.db_info));
                         break;
                     case MODIFY_DETAIL_VIEW:
-                        ((TextView) mActionBarView.findViewById(R.id.ab_modify_title)).setText("修改电表数据");
+                        ((TextView) mActionBarView.findViewById(R.id.ab_modify_title)).setText(getResources().getText(R.string.change_db));
                         mActionBarView.findViewById(R.id.ab_modify_view).setVisibility(View.VISIBLE);
                         mActionBarView.findViewById(R.id.ab_view).setVisibility(View.GONE);
                         break;

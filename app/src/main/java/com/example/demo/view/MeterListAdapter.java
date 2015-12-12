@@ -2,7 +2,6 @@ package com.example.demo.view;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,13 +74,14 @@ public class MeterListAdapter extends SimpleCursorAdapter {
         } else {
             holder.vip.setVisibility(View.GONE);
         }
-        holder.meterName.setText("电表名称:" + meter.mMeterName);
-        holder.meterId.setText("电表ID:" + String.valueOf(meter.mMeterID));
-        String type = meter.mDataType == 1 ? "日冻结" : "实时数据";
-        holder.dataType.setText("数据类型:" + type);
-        holder.valueTime.setText("数据时标:" + MeterUtilies.getSanShengDate(meter.mValueTime));
-        holder.readTime.setText("读取时间:" + MeterUtilies.getSanShengDate(meter.mReadTime));
-        holder.meterValue.setText("电表值:" + String.valueOf(meter.mValz));
+        holder.meterName.setText(mActivity.getResources().getString(R.string.db_name) + meter.mMeterName);
+        holder.meterId.setText(mActivity.getResources().getString(R.string.db_id) + String.valueOf(meter.mMeterID));
+        String type = meter.mDataType == 1 ? mActivity.getResources().getString(R.string.db_rdj) :
+                mActivity.getResources().getString(R.string.db_realdata);
+        holder.dataType.setText(mActivity.getResources().getString(R.string.db_type) + type);
+        holder.valueTime.setText(mActivity.getResources().getString(R.string.db_tip) + MeterUtilies.getSanShengDate(meter.mValueTime));
+        holder.readTime.setText(mActivity.getResources().getString(R.string.db_time) + MeterUtilies.getSanShengDate(meter.mReadTime));
+        holder.meterValue.setText(mActivity.getResources().getString(R.string.db_value) + String.valueOf(meter.mValz));
         holder.infoLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

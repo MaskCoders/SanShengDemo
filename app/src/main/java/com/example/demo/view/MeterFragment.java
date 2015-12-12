@@ -35,8 +35,8 @@ public class MeterFragment extends Fragment implements View.OnClickListener, Bas
     private UIRevisableView mDateTypeView;
     private UIRevisableView mValzView;
     private UIRevisableView mImportantView;
-    String[] mImportantEntries = {"是", "否"};
-    String[] mDataEntries = {"日冻结", "实时数据"};
+    private String[] mImportantEntries = {"是", "否"};
+    private String[] mDataEntries = {"日冻结", "实时数据"};
 
     private static final ThreadFactory sThreadFactory = new CustomThreadPoolFactory("MeterThread");
     private ExecutorService sThreadPool = Executors.newSingleThreadExecutor(sThreadFactory);
@@ -47,6 +47,10 @@ public class MeterFragment extends Fragment implements View.OnClickListener, Bas
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mImportantEntries = new String[]{getActivity().getResources().getString(R.string.yes),
+                getActivity().getResources().getString(R.string.no)};
+        mDataEntries = new String[]{getActivity().getResources().getString(R.string.db_rdj),
+                getActivity().getResources().getString(R.string.db_realdata)};
         Bundle bundle = getArguments();
         if (bundle != null) {
             mMeter = bundle.getParcelable(MeterUtilies.PARAM_METER);
@@ -152,7 +156,7 @@ public class MeterFragment extends Fragment implements View.OnClickListener, Bas
             @Override
             public void onClick(View v) {
                 if (dialog.getEditText().getText().toString().getBytes().length > MeterUtilies.NAME_MAX_BYTE_LENGTH) {
-                    Utility.showToast(getActivity(), "名称过长");
+                    Utility.showToast(getActivity(), getActivity().getResources().getString(R.string.too_long));
                 } else if (TextUtils.equals(mChangedMeter.mMeterName, dialog.getEditText().getText().toString())) {
                     //未修改，无需更新
                     dialog.dismiss();
@@ -210,7 +214,7 @@ public class MeterFragment extends Fragment implements View.OnClickListener, Bas
                     try {
                         mChangedMeter.mValz = Float.valueOf(dialog.getEditText().getText().toString());
                     } catch (NumberFormatException e) {
-                        Utility.showToast(getActivity(), "输入非法字符");
+                        Utility.showToast(getActivity(), getActivity().getResources().getString(R.string.illegal_input));
                     }
                     refreshView(mChangedMeter);
                     dialog.dismiss();
