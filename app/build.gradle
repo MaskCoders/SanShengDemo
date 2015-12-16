@@ -17,7 +17,7 @@ android {
     buildToolsVersion '19.1.0'//设置编译时使用的构建工具的版本
 
     defaultConfig {//设置一些默认属性，其可用属性是buildTypes和ProductFlavors之和
-        applicationId "com.example.demo"
+        applicationId "com.sansheng.testcenter"
         minSdkVersion 14 //设置兼容的最小版本
         targetSdkVersion 17 //设置目标SDK版本
     }

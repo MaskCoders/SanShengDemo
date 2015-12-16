@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.demo"
+          package="com.sansheng.testcenter"
           android:versionCode="100000" android:versionName="1.0.0">
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,7 +13,7 @@
             android:theme="@style/UnifiedEmailTheme"
             >
         <activity
-                android:name=".view.LauncherActivity"
+                android:name="com.sansheng.testcenter.demo.view.LauncherActivity"
                 android:label="@string/app_name"
                 android:screenOrientation="sensorLandscape">
             <intent-filter>
@@ -23,15 +23,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.SocketDemo"
+        <activity android:name="com.sansheng.testcenter.demo.view.SocketDemo"
                   android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <activity android:name=".view.MeterListActivity"
+        <activity android:name="com.sansheng.testcenter.demo.view.MeterListActivity"
                   android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
-        <activity android:name=".view.CreateDBActivity"
+        <activity android:name="com.sansheng.testcenter.demo.view.CreateDBActivity"
                   android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -39,7 +39,7 @@
         </activity>
 
         <provider
-                android:name=".provider.EquipmentProvider"
+                android:name="com.sansheng.testcenter.demo.provider.EquipmentProvider"
                 android:authorities="${applicationId}.provider.Equipment"
                 android:exported="false">
             <grant-uri-permission android:pathPattern=".*"/>

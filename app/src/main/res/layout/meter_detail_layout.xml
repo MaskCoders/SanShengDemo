@@ -16,7 +16,7 @@
         <include android:id="@+id/account_sync_email_line"
                  layout="@layout/meter_detail_divider"/>
         <!--电表标识-->
-        <com.example.demo.view.UIUnrevisableView
+        <com.sansheng.testcenter.demo.view.UIUnrevisableView
                 android:id="@+id/meter_id"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
         <include android:id="@+id/account_sync_email_line"
                  layout="@layout/meter_detail_divider"/>
         <!--电表名-->
-        <com.example.demo.view.UIRevisableView
+        <com.sansheng.testcenter.demo.view.UIRevisableView
                 android:id="@+id/meter_name"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
         <include android:id="@+id/account_sync_email_line"
                  layout="@layout/meter_detail_divider"/>
         <!--数据时标-->
-        <com.example.demo.view.UIRevisableView
+        <com.sansheng.testcenter.demo.view.UIRevisableView
                 android:id="@+id/meter_value_time"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
         <include android:id="@+id/account_sync_email_line"
                  layout="@layout/meter_detail_divider"/>
         <!-- 读取时间-->
-        <com.example.demo.view.UIRevisableView
+        <com.sansheng.testcenter.demo.view.UIRevisableView
                 android:id="@+id/meter_read_time"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
         <include android:id="@+id/account_sync_email_line"
                  layout="@layout/meter_detail_divider"/>
         <!--数据类型-->
-        <com.example.demo.view.UIRevisableView
+        <com.sansheng.testcenter.demo.view.UIRevisableView
                 android:id="@+id/meter_data_type"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
@@ -86,7 +86,7 @@
         <include android:id="@+id/account_sync_email_line"
                  layout="@layout/meter_detail_divider"/>
         <!--值-->
-        <com.example.demo.view.UIRevisableView
+        <com.sansheng.testcenter.demo.view.UIRevisableView
                 android:id="@+id/meter_value"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
@@ -100,7 +100,7 @@
         <include android:id="@+id/account_sync_email_line"
                  layout="@layout/meter_detail_divider"/>
         <!--重要-->
-        <com.example.demo.view.UIRevisableView
+        <com.sansheng.testcenter.demo.view.UIRevisableView
                 android:id="@+id/meter_important"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
