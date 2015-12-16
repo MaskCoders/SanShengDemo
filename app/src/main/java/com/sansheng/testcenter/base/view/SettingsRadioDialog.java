@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.demo.view;
+package com.sansheng.testcenter.base.view;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.LayoutParams;
 import com.sansheng.testcenter.R;
+import com.sansheng.testcenter.base.BaseDialog;
 
 public class SettingsRadioDialog extends BaseDialog {
 	private RadioGroup mRadioGroup;

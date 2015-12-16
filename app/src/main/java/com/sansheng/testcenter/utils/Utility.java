@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sansheng.testcenter.demo.util;
+package com.sansheng.testcenter.utils;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

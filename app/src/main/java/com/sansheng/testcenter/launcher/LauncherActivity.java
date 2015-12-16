@@ -1,10 +1,11 @@
-package com.sansheng.testcenter.demo.view;
+package com.sansheng.testcenter.launcher;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
 import com.sansheng.testcenter.R;
+import com.sansheng.testcenter.base.BaseActivity;
 
 
 public class LauncherActivity extends BaseActivity {
@@ -19,6 +20,10 @@ public class LauncherActivity extends BaseActivity {
         mFunctionAdapter = new LaucherAdapter(this);
         mFunctionGridView.setAdapter(mFunctionAdapter);
         setActionBar(GENERAL_VIEW);
+//        Groundy.create(ExampleTask.class)
+//                .callback(this)        // required if you want to get notified of your task lifecycle
+//                .arg("arg_name", "foo")       // optional
+//                .queueUsing(this);
     }
 
     @Override

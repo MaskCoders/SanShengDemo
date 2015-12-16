@@ -4,7 +4,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import com.sansheng.testcenter.demo.util.CustomThreadPoolFactory;
+import com.sansheng.testcenter.base.BaseActivity;
+import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.demo.mode.Meter;
 import com.sansheng.testcenter.R;
 
@@ -15,7 +16,7 @@ import java.util.concurrent.ThreadFactory;
 /**
  * Created by sunshaogang on 12/10/15.
  */
-public class CreateDBActivity extends BaseActivity{
+public class CreateDBActivity extends BaseActivity {
     private TextView mQueryText;
     private TextView mInsertText;
     private TextView mUpdateText;

@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.demo.util;
+package com.sansheng.testcenter.base;
 
 import android.content.Context;
 import android.content.res.Resources;

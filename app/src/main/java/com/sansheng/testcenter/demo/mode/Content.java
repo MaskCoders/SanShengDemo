@@ -5,8 +5,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import com.sansheng.testcenter.demo.util.Utility;
-import com.sansheng.testcenter.demo.provider.ProviderUnavailableException;
+import com.sansheng.testcenter.utils.Utility;
+import com.sansheng.testcenter.provider.ProviderUnavailableException;
 
 /**
  * Created by sunshaogang on 12/9/15.

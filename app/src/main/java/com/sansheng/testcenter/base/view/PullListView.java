@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.demo.view;
+package com.sansheng.testcenter.base.view;
 
 import android.content.Context;
 import android.os.SystemClock;
@@ -13,7 +13,7 @@ import android.view.animation.Interpolator;
 import android.widget.*;
 import android.widget.AbsListView.OnScrollListener;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.demo.util.Utility;
+import com.sansheng.testcenter.utils.Utility;
 
 public class PullListView extends ListView implements OnScrollListener {
     private float mInitialMotionY, mLastMotionY, moveY_1, moveY_2;

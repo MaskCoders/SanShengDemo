@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.demo.provider;
+package com.sansheng.testcenter.provider;
 
 /**
  * Created by sunshaogang on 12/9/15.

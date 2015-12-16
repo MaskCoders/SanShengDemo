@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.demo.view;
+package com.sansheng.testcenter.launcher;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -12,8 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.demo.mode.Meter;
-import com.sansheng.testcenter.demo.util.CustomThreadPoolFactory;
-import com.sansheng.testcenter.demo.util.Utility;
+import com.sansheng.testcenter.base.CustomThreadPoolFactory;
+import com.sansheng.testcenter.utils.Utility;
+import com.sansheng.testcenter.demo.view.MeterListActivity;
+import com.sansheng.testcenter.base.view.ProgressDailog;
+import com.sansheng.testcenter.demo.view.SocketDemo;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

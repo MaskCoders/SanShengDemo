@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.demo.view;
+package com.sansheng.testcenter.base.view;
 
 /**
  * Created by sunshaogang on 12/11/15.

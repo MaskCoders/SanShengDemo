@@ -10,10 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.sansheng.testcenter.R;
+import com.sansheng.testcenter.base.BaseActivity;
+import com.sansheng.testcenter.base.BaseDialog;
+import com.sansheng.testcenter.base.view.DateTimePickDialog;
+import com.sansheng.testcenter.base.view.SettingsRadioDialog;
 import com.sansheng.testcenter.demo.mode.Meter;
-import com.sansheng.testcenter.demo.util.CustomThreadPoolFactory;
+import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.demo.util.MeterUtilies;
-import com.sansheng.testcenter.demo.util.Utility;
+import com.sansheng.testcenter.utils.Utility;
+import com.sansheng.testcenter.base.view.UIRevisableView;
+import com.sansheng.testcenter.base.view.UIUnrevisableView;
 
 import java.util.Calendar;
 import java.util.concurrent.ExecutorService;

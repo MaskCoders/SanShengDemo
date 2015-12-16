@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.demo.provider;
+package com.sansheng.testcenter.provider;
 
 import android.content.*;
 import android.database.Cursor;
@@ -266,7 +266,7 @@ public class EquipmentProvider extends ContentProvider {
      * called when all accounts deleted
      */
     public static void deleteEquipmentData() {
-//        CirclePreference.getPreferences(mContext).deleteCirclePreference();
+        EquipmentPreference.getPreferences(mContext).deleteCirclePreference();
         DBHelper.deleteData(getDatabase(mContext));
     }
 }

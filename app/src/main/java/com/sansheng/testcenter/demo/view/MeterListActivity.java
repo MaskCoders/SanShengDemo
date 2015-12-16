@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import com.sansheng.testcenter.R;
+import com.sansheng.testcenter.base.BaseActivity;
+import com.sansheng.testcenter.base.view.PullListView;
 import com.sansheng.testcenter.demo.mode.Content;
 import com.sansheng.testcenter.demo.mode.Meter;
 import com.sansheng.testcenter.demo.util.MeterUtilies;
