@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.demo.mode;
+package com.sansheng.testcenter.module;
 
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -69,15 +69,6 @@ public abstract class Content {
                 .delete(ContentUris.withAppendedId(baseUri, id), null, null);
     }
 
-    /**
-     * Generic count method that can be used for any ContentProvider
-     *
-     * @param context       the calling Context
-     * @param uri           the Uri for the provider query
-     * @param selection     as with a query call
-     * @param selectionArgs as with a query call
-     * @return the number of items matching the query (or zero)
-     */
     static public int count(Context context, Uri uri, String selection, String[] selectionArgs) {
         return Utility.getFirstRowLong(context,
                 uri, COUNT_COLUMNS, selection, selectionArgs, null, 0, Long.valueOf(0)).intValue();
@@ -143,22 +134,108 @@ public abstract class Content {
         AUTHORITY = EMAIL_PACKAGE_NAME + ".provider.Equipment";
         CONTENT_URI = Uri.parse("content://" + AUTHORITY);
         Meter.init();
-    }
-
-    public static interface MeterColumns {
-        public static final String ID = "_id";
-        public static final String METER_ID = "meterId";
-        public static final String METER_NAME = "name";
-        public static final String VALUE_TIME = "valueTime";
-        public static final String READ_TIME = "readTime";
-        public static final String DATA_TYPE = "dataType";
-        public static final String VALZ = "valz";
-        public static final String IMPORTANT = "important";
-        public static final String UPDATE_TIME = "updateTime";
+        MeterData.init();
+        Collect.init();
+        CollectParam.init();
+        EquipmentException.init();
+        Concentrator.init();
     }
 
     static public Uri uriWithLimit(Uri uri, int limit) {
         return uri.buildUpon().appendQueryParameter(Content.PARAMETER_LIMIT,
                 Integer.toString(limit)).build();
     }
+
+    public static interface MeterColumns {
+        public static final String ID = "_id";
+        public static final String COLLECT_ID = "collectId";
+        public static final String DA = "da";
+        public static final String METER_NAME = "meterNmae";
+        public static final String METER_NUM = "meterNum";
+        public static final String METER_ADDRESS = "meterAddress";
+        public static final String COMMON_PASSWORD = "commPwd";
+        public static final String BAUDRATE_ID = "baudrateID";
+        public static final String COMMON_PORT_ID = "commPortId";
+        public static final String PROTOCOL_ID = "protocolId";
+        public static final String FEILV_ID = "feilvId";
+        public static final String GATHER_ADDRESS = "gatherAddress";
+        public static final String WEISHU_ID = "weishuId";
+        public static final String USER_SMALL_TYPE_ID = "userSmallType";
+        public static final String USER_TYPE_ID = "userType";
+        public static final String USER_NUM = "userNum";
+        public static final String USER_ADDRESS = "userAddress";
+        public static final String GROUP_ID = "groupId";
+        public static final String IMPORTANT = "important";
+        public static final String NOTE = "note";
+    }
+
+    public static interface MeterDataColumns {
+        public static final String ID = "_id";
+        public static final String METER_ID = "meterId";
+        public static final String VALUE_TIME = "valueTime";
+        public static final String READ_TIME = "readTime";
+        public static final String SAVE_TIME = "saveTime";
+        public static final String DATA_TYPE = "dataType";
+        public static final String DATA_ID = "dataId";
+        public static final String VALZ = "valz";
+        public static final String VAL1 = "val1";
+        public static final String VAL2 = "val2";
+        public static final String VAL3 = "val3";
+        public static final String VAL4 = "val4";
+        public static final String UPDATE_TIME = "updateTime";
+    }
+    public static interface ConcentratorColumns {
+        public static final String ID = "_id";
+        public static final String COLLECT_ID = "collectId";
+        public static final String DA = "da";
+        public static final String METER_NAME = "meterNmae";
+        public static final String METER_NUM = "meterNum";
+        public static final String METER_ADDRESS = "meterAddress";
+        public static final String COMMON_PASSWORD = "commPwd";
+        public static final String BAUDRATE_ID = "baudrateID";
+        public static final String COMMON_PORT_ID = "commPortId";
+        public static final String PROTOCOL_ID = "protocolId";
+        public static final String FEILV_ID = "feilvId";
+        public static final String GATHER_ADDRESS = "gatherAddress";
+        public static final String WEISHU_ID = "weishuId";
+        public static final String USER_SMALL_TYPE_ID = "userSmallType";
+        public static final String USER_TYPE_ID = "userType";
+        public static final String USER_NUM = "userNum";
+        public static final String USER_ADDRESS = "userAddress";
+        public static final String GROUP_ID = "groupId";
+        public static final String IMPORTANT = "important";
+        public static final String NOTE = "note";
+    }
+
+    public static interface CollectColumns {
+        public static final String ID = "_id";
+        public static final String COMM_ADDRESS = "commAddress";
+        public static final String COLLECT_NAME = "collectName";
+        public static final String PASSWORD = "password";
+        public static final String CHANNEL_TYPE = "channelType";
+        public static final String TERMINAL_IP = "terminalIp";
+        public static final String TERMINAL_PORT = "terminalPort";
+        public static final String BAUDRATE_ID = "baudrateId";
+    }
+
+    public static interface CollectParamColumns {
+        public static final String ID = "_id";
+        public static final String COLLECT_ID = "collectId";
+        public static final String AFN = "afn";
+        public static final String FN = "fn";
+        public static final String PARAM = "param";
+    }
+
+
+    public static interface EquipmentExceptionColumns {
+        public static final String ID = "_id";
+        public static final String COLLECT_ID = "collectId";
+        public static final String HEPPEN_TIME = "heppenTime";
+        public static final String TYPE = "type";
+        public static final String PM = "pm";
+        public static final String FLAG = "flag";
+        public static final String NOTE = "note";
+    }
+
+
 }

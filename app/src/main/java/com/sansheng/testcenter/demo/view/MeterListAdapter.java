@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.demo.mode.Meter;
+import com.sansheng.testcenter.module.MeterData;
 import com.sansheng.testcenter.demo.util.MeterUtilies;
 
 /**
@@ -20,8 +20,8 @@ public class MeterListAdapter extends SimpleCursorAdapter {
     private MeterListActivity mActivity;
 
     public MeterListAdapter(MeterListActivity context, Cursor cursor) {
-        super(context, android.R.layout.simple_list_item_1, cursor, Meter.CONTENT_PROJECTION,
-                Meter.ID_INDEX_PROJECTION, 0);
+        super(context, android.R.layout.simple_list_item_1, cursor, MeterData.CONTENT_PROJECTION,
+                MeterData.ID_INDEX_PROJECTION, 0);
         this.mActivity = context;
     }
 
@@ -64,17 +64,17 @@ public class MeterListAdapter extends SimpleCursorAdapter {
     }
 
     private void fillDataToViewHolder(final Cursor cursor, final ViewHolder holder) {
-        final Meter meter = new Meter();
+        final MeterData meter = new MeterData();
         meter.restore(cursor);
         if (meter.mId == 0) {//无此条数据
             return;
         }
-        if (meter.isImportant == 0) {
-            holder.vip.setVisibility(View.VISIBLE);
-        } else {
-            holder.vip.setVisibility(View.GONE);
-        }
-        holder.meterName.setText(mActivity.getResources().getString(R.string.db_name) + meter.mMeterName);
+//        if (meter.isImportant == 0) {
+//            holder.vip.setVisibility(View.VISIBLE);
+//        } else {
+//            holder.vip.setVisibility(View.GONE);
+//        }
+//        holder.meterName.setText(mActivity.getResources().getString(R.string.db_name) + meter.mMeterName);
         holder.meterId.setText(mActivity.getResources().getString(R.string.db_id) + String.valueOf(meter.mMeterID));
         String type = meter.mDataType == 1 ? mActivity.getResources().getString(R.string.db_rdj) :
                 mActivity.getResources().getString(R.string.db_realdata);

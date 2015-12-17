@@ -59,18 +59,18 @@ public class EquipmentPreference {
         return getPreferences(context).mSharedPreferences;
     }
 
-    public void setMaxSuccessTimestamp(int type, long timestamp) {
+    public void setMaxSuccessTimestamp(long timestamp) {
         mSharedPreferences.edit().putLong( MAX_SUCCESS_TIMESTAMP, timestamp).apply();
     }
 
-    public long getMaxSuccessTimestamp(int type) {
+    public long getMaxSuccessTimestamp() {
         return mSharedPreferences.getLong(MAX_SUCCESS_TIMESTAMP, 0);
     }
 
     /**
      * 删除数据库同时清空preferences
      */
-    public void deleteCirclePreference() {
+    public void deletePreference() {
         mSharedPreferences.edit().remove(MAX_SUCCESS_TIMESTAMP).apply();
         mSharedPreferences.edit().remove(MAX_SUCCESS_TIMESTAMP).apply();
     }

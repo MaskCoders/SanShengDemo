@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
-import com.sansheng.testcenter.demo.mode.Meter;
+import com.sansheng.testcenter.module.MeterData;
 import com.sansheng.testcenter.R;
 
 import java.util.concurrent.ExecutorService;
@@ -79,7 +79,7 @@ public class CreateDBActivity extends BaseActivity {
         @Override
         protected Integer doInBackground(Void... params) {
             for (int i = 0; i< 50; i++) {
-                Meter meter = new Meter(true, i);
+                MeterData meter = new MeterData(true, i);
                 meter.save(CreateDBActivity.this);
             }
             return null;

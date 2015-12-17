@@ -113,11 +113,11 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
         }
     }
 
-    protected void setActionBar(final int mode) {
+    public void setActionBar(final int mode) {
         setActionBar(mode, null);
     }
 
-    protected void setActionBar(final int mode, ActionBarCallback callback) {
+    public void setActionBar(final int mode, ActionBarCallback callback) {
         mActionBarCallback = callback;
         runOnUiThread(new Runnable() {
             @Override

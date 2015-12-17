@@ -13,8 +13,8 @@ import android.widget.ListView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.view.PullListView;
-import com.sansheng.testcenter.demo.mode.Content;
-import com.sansheng.testcenter.demo.mode.Meter;
+import com.sansheng.testcenter.module.Content;
+import com.sansheng.testcenter.module.MeterData;
 import com.sansheng.testcenter.demo.util.MeterUtilies;
 
 /**
@@ -55,8 +55,8 @@ public class MeterListActivity extends BaseActivity implements LoaderCallbacks<C
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         StringBuilder selection = new StringBuilder(" 1=1 ");
-        return new CursorLoader(this, Meter.CONTENT_URI, Meter.CONTENT_PROJECTION, selection.toString(),
-                null, Meter.ID + " " + Content.DESC + " LIMIT " + mOriginLength);
+        return new CursorLoader(this, MeterData.CONTENT_URI, MeterData.CONTENT_PROJECTION, selection.toString(),
+                null, MeterData.ID + " " + Content.DESC + " LIMIT " + mOriginLength);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class MeterListActivity extends BaseActivity implements LoaderCallbacks<C
         mEmptyView = findViewById(R.id.empty_view_group);
     }
 
-    public void showDetailFragment(Meter meter) {
+    public void showDetailFragment(MeterData meter) {
         MeterFragment fragment = new MeterFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(MeterUtilies.PARAM_METER, meter);

@@ -4,9 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.text.TextUtils;
 import com.sansheng.testcenter.base.FormattedDateBuilder;
-import com.sansheng.testcenter.demo.mode.Meter;
 
 import java.text.SimpleDateFormat;
 
@@ -48,24 +46,24 @@ public class MeterUtilies {
         return transactionId;
     }
 
-    public static boolean compareMeter(Meter a, Meter b){
-        if (a.mId != b.mId) {
-            return false;
-        } else if (a.mMeterID != b.mMeterID){
-            return false;
-        } else if (TextUtils.equals(a.mMeterName, b.mMeterName)){
-            return false;
-        } else if (a.mValueTime != b.mValueTime){
-            return false;
-        } else if (a.mReadTime != b.mReadTime){
-            return false;
-        } else if (a.mValz != b.mValz){
-            return false;
-        } else if (a.mDataType != b.mDataType){
-            return false;
-        } else if (a.isImportant != b.isImportant){
-            return false;
-        }
-        return true;
-    }
+//    public static boolean compareMeter(MeterData a, MeterData b){
+//        if (a.mId != b.mId) {
+//            return false;
+//        } else if (a.mMeterID != b.mMeterID){
+//            return false;
+//        } else if (TextUtils.equals(a.mMeterName, b.mMeterName)){
+//            return false;
+//        } else if (a.mValueTime != b.mValueTime){
+//            return false;
+//        } else if (a.mReadTime != b.mReadTime){
+//            return false;
+//        } else if (a.mValz != b.mValz){
+//            return false;
+//        } else if (a.mDataType != b.mDataType){
+//            return false;
+//        } else if (a.isImportant != b.isImportant){
+//            return false;
+//        }
+//        return true;
+//    }
 }

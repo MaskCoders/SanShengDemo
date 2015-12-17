@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.demo.mode.Meter;
+import com.sansheng.testcenter.module.MeterData;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.utils.Utility;
 import com.sansheng.testcenter.demo.view.MeterListActivity;
@@ -121,7 +121,7 @@ public class LaucherAdapter extends BaseAdapter {
         @Override
         protected Integer doInBackground(Void... params) {
             for (int i = 1; i < 51; i++) {
-                Meter meter = new Meter(true, i);
+                MeterData meter = new MeterData(true, i);
                 meter.save(mContext);
             }
             hideProgressDialog();

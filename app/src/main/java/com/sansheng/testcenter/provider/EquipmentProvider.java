@@ -2,14 +2,17 @@ package com.sansheng.testcenter.provider;
 
 import android.content.*;
 import android.database.Cursor;
-import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
-import com.sansheng.testcenter.demo.mode.Content;
-import com.sansheng.testcenter.demo.mode.Meter;
+import com.sansheng.testcenter.module.Content;
+import com.sansheng.testcenter.module.Meter;
+import com.sansheng.testcenter.module.MeterData;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by sunshaogang on 12/9/15.
@@ -18,23 +21,51 @@ public class EquipmentProvider extends ContentProvider {
 
     private static boolean DEBUG = true;
     private static final String TAG = "EquipmentProvider";
+
+    private static final String NOTIFICATION_OP_DELETE = "delete";
+    private static final String NOTIFICATION_OP_INSERT = "insert";
+    private static final String NOTIFICATION_OP_UPDATE = "update";
+
     private static Context mContext;
     private static String DATABASE_NAME = "Equipment.db";
     private static final Object sDatabaseLock = new Object();
     private static SQLiteDatabase mDatabase;
     private static UriMatcher mURIMatcher;
-    private static final int BASE_SHIFT = 12;
-
+    private static final int BASE_SHIFT = 12;// 12 bits to the base type: 0, 0x1000, 0x2000, etc.
+    //电表
     private static final int METER_BASE = 0;
+    private static final int METER = METER_BASE;
     private static final int METER_ID = METER_BASE + 1;
+    //抄表
+    private static final int METERDATA_BASE = 0x1000;
+    private static final int METERDATA = METERDATA_BASE;
+    private static final int METERDATA_ID = METERDATA_BASE + 1;
+    //concentrator 集中器
+    private static final int CONCENTRATOR_BASE = 0x2000;
+    private static final int CONCENTRATOR = CONCENTRATOR_BASE;
+    private static final int CONCENTRATOR_ID = CONCENTRATOR_BASE + 1;
+    private static final int CONCENTRATOR_CACHED_FILE_ACCESS = CONCENTRATOR_BASE + 3;
+    //collect
+    private static final int COLLECT_BASE = 0x3000;
+    private static final int COLLECT = COLLECT_BASE;
+    private static final int COLLECT_ID = COLLECT_BASE + 2;
+    //collect param
+    private static final int COLLECT_PARAM_BASE = 0x3000;
+    private static final int COLLECT_PARAM = COLLECT_PARAM_BASE;
+    private static final int COLLECT_PARAM_ID = COLLECT_PARAM_BASE + 2;
+    //exception
+    private static final int EXCEPTION_BASE = 0x3000;
+    private static final int EXCEPTION = EXCEPTION_BASE;
+    private static final int EXCEPTION_ID = EXCEPTION_BASE + 2;
+
+    private static ExecutorService mNotifyThreadPool = Executors.newSingleThreadExecutor();
 
     private static final SparseArray<String> TABLE_NAMES;
-    private static final Uri LIST_NOTIFY_URI = Meter.CONTENT_URI;
-
 
     static {
         SparseArray<String> array = new SparseArray<String>(4);
-        array.put(METER_BASE >> BASE_SHIFT, Meter.TABLE_NAME);
+        array.put(METERDATA >> BASE_SHIFT, MeterData.TABLE_NAME);
+        array.put(METER >> BASE_SHIFT, Meter.TABLE_NAME);
         TABLE_NAMES = array;
     }
 
@@ -54,7 +85,7 @@ public class EquipmentProvider extends ContentProvider {
     public boolean onCreate() {
         //init database
         mContext = getContext();
-        Meter.init(mContext);
+        Content.init(mContext);
         getDatabase(mContext);
         init();
         return false;
@@ -62,12 +93,20 @@ public class EquipmentProvider extends ContentProvider {
 
     private void init() {
         mURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        UriMatchInit();
+        initUriMatch();
     }
 
-    private void UriMatchInit() {
-        mURIMatcher.addURI(Content.AUTHORITY, "meter", METER_BASE);
+    private void initUriMatch() {
+        mURIMatcher.addURI(Content.AUTHORITY, "meter", METER);
         mURIMatcher.addURI(Content.AUTHORITY, "meter/#", METER_ID);
+        mURIMatcher.addURI(Content.AUTHORITY, "meterdata", METERDATA);
+        mURIMatcher.addURI(Content.AUTHORITY, "meterdata/#", METERDATA_ID);
+        mURIMatcher.addURI(Content.AUTHORITY, "collect", COLLECT);
+        mURIMatcher.addURI(Content.AUTHORITY, "collect/#", COLLECT_ID);
+        mURIMatcher.addURI(Content.AUTHORITY, "param", COLLECT_PARAM);
+        mURIMatcher.addURI(Content.AUTHORITY, "param/#", COLLECT_PARAM_ID);
+        mURIMatcher.addURI(Content.AUTHORITY, "except", EXCEPTION);
+        mURIMatcher.addURI(Content.AUTHORITY, "except/#", EXCEPTION_ID);
     }
 
     private static int findMatch(Uri uri, String methodName) {
@@ -95,10 +134,11 @@ public class EquipmentProvider extends ContentProvider {
         Cursor cursor = null;
         try {
             switch (match) {
-                case METER_BASE:
-                case METER_ID:
+                case METER:
                     String sql = buildMeterQuery(projection, selection, sortOrder);
                     cursor = db.rawQuery(sql, selectionArgs);
+                    break;
+                case METER_ID:
                     break;
                 default:
                     cursor = db.query(tableName, projection, selection, selectionArgs, null, null, sortOrder, limit);
@@ -122,16 +162,16 @@ public class EquipmentProvider extends ContentProvider {
         String tableName = TABLE_NAMES.valueAt(table);
         long id = -1;
         Uri result = null;
-        Uri contentUri = Meter.CONTENT_URI;
+        Uri contentUri = MeterData.CONTENT_URI;
         try {
             switch (match) {
-                case METER_BASE:
+                case METER:
                 case METER_ID:
-                    contentUri = Meter.CONTENT_URI;
+                    contentUri = MeterData.CONTENT_URI;
                     break;
             }
             switch (match) {
-                case METER_BASE:
+                case METER:
                 case METER_ID:
                     id = db.insertWithOnConflict(tableName, null, values, SQLiteDatabase.CONFLICT_REPLACE);
                     break;
@@ -161,7 +201,7 @@ public class EquipmentProvider extends ContentProvider {
         }
         try {
             switch (match) {
-                case METER_BASE:
+                case METER:
                 case METER_ID:
                     break;
             }
@@ -184,7 +224,7 @@ public class EquipmentProvider extends ContentProvider {
         int result = 0;
         try {
             switch (match) {
-                case METER_BASE:
+                case METER:
                     break;
                 case METER_ID:
                     String id = uri.getLastPathSegment();
@@ -202,7 +242,7 @@ public class EquipmentProvider extends ContentProvider {
     public String getType(Uri uri) {
         int match = findMatch(uri, "getType");
         switch (match) {
-            case METER_BASE:
+            case METER:
                 return "vnd.android.cursor.dir/meter";
             case METER_ID:
                 return "vnd.android.cursor.dir/meter/#";
@@ -215,7 +255,7 @@ public class EquipmentProvider extends ContentProvider {
     private String buildMeterQuery(String[] projection, String selection, String sortOrder) {
         StringBuilder builder = new StringBuilder();
         builder.append("SELECT * FROM ");
-        builder.append(Meter.TABLE_NAME).append(" WHERE ").append(selection);
+        builder.append(MeterData.TABLE_NAME).append(" WHERE ").append(selection);
         if (!TextUtils.isEmpty(sortOrder)) {
             builder.append(" ORDER BY ");
             builder.append(sortOrder);
@@ -223,31 +263,31 @@ public class EquipmentProvider extends ContentProvider {
         return builder.toString();
     }
 
-    private Cursor reverseCursor(Cursor data) {
-        if (data == null) {
-            return null;
-        }
-        MatrixCursor cursor = new MatrixCursor(Meter.CONTENT_PROJECTION);
-        data.moveToLast();
-        for (int i = data.getCount(); i > 0; i--) {
-            cursor.addRow(getCicleContent(data));
-            data.moveToPrevious();
-        }
-        return cursor;
-    }
-
-    private Object[] getCicleContent(Cursor row) {
-        return new Object[]{
-                row.getLong(Meter.ID_INDEX),
-                row.getInt(Meter.METER_ID_INDEX),
-                row.getString(Meter.METER_NAME_INDEX),
-                row.getLong(Meter.VALUE_TIME_INDEX),
-                row.getLong(Meter.READ_TIME_INDEX),
-                row.getInt(Meter.DATA_TYPE_INDEX),
-                row.getString(Meter.VALZ_INDEX),
-                row.getInt(Meter.IS_IMPORTANT_INDEX),
-        };
-    }
+//    private Cursor reverseCursor(Cursor data) {
+//        if (data == null) {
+//            return null;
+//        }
+//        MatrixCursor cursor = new MatrixCursor(MeterData.CONTENT_PROJECTION);
+//        data.moveToLast();
+//        for (int i = data.getCount(); i > 0; i--) {
+//            cursor.addRow(getContent(data));
+//            data.moveToPrevious();
+//        }
+//        return cursor;
+//    }
+//
+//    private Object[] getContent(Cursor row) {
+//        return new Object[]{
+//                row.getLong(MeterData.ID_INDEX),
+//                row.getInt(MeterData.METER_ID_INDEX),
+//                row.getString(MeterData.METER_NAME_INDEX),
+//                row.getLong(MeterData.VALUE_TIME_INDEX),
+//                row.getLong(MeterData.READ_TIME_INDEX),
+//                row.getInt(MeterData.DATA_TYPE_INDEX),
+//                row.getString(MeterData.VALZ_INDEX),
+//                row.getInt(MeterData.IS_IMPORTANT_INDEX),
+//        };
+//    }
 
     private static String whereWithId(String id, String selection) {
         StringBuilder sb = new StringBuilder(256);
@@ -266,7 +306,7 @@ public class EquipmentProvider extends ContentProvider {
      * called when all accounts deleted
      */
     public static void deleteEquipmentData() {
-        EquipmentPreference.getPreferences(mContext).deleteCirclePreference();
+        EquipmentPreference.getPreferences(mContext).deletePreference();
         DBHelper.deleteData(getDatabase(mContext));
     }
 }
