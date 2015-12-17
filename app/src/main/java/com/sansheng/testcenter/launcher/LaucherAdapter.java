@@ -11,12 +11,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.module.MeterData;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
-import com.sansheng.testcenter.utils.Utility;
-import com.sansheng.testcenter.demo.view.MeterListActivity;
 import com.sansheng.testcenter.base.view.ProgressDailog;
+import com.sansheng.testcenter.demo.view.MeterListActivity;
 import com.sansheng.testcenter.demo.view.SocketDemo;
+import com.sansheng.testcenter.module.MeterData;
+import com.sansheng.testcenter.upgrade.AppUpgrade;
+import com.sansheng.testcenter.utils.Utility;
 import com.sansheng.testcenter.view.TestBaseActivity;
 
 import java.util.concurrent.ExecutorService;
@@ -32,7 +33,8 @@ public class LaucherAdapter extends BaseAdapter {
     private int[] iconSource = new int[]{R.drawable.socket_icon_selector,
             R.drawable.db_operation_icon_selector,
             R.drawable.create_db_icon_selector,
-    R.drawable.db_operation_icon_normal};
+    R.drawable.db_operation_icon_normal,
+            R.drawable.db_operation_icon_normal};
     private ProgressDailog mProgressDailog;
 
     public LaucherAdapter(Activity mContext) {
@@ -82,6 +84,9 @@ public class LaucherAdapter extends BaseAdapter {
                         case 3:
                             intent.setClass(mContext, TestBaseActivity.class);
                             mContext.startActivity(intent);
+                            break;
+                        case 4:
+                            new AppUpgrade(mContext).check(false);
                             break;
                         default:
                             break;

@@ -16,14 +16,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.sansheng.testcenter.R;
 
-
-/**
- * @author huzhi
- * @date  2014.06.16
- *
- * 完善 zhuzhenhua
- * @since 2015.05.14
- */
 public class BaseDialog extends Dialog {
 
 

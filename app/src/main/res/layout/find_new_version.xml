@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+    <ScrollView
+        android:id="@+id/scroll"
+    	android:layout_width="match_parent"
+  		android:layout_height="200dp"
+   		android:fillViewport="true"
+        >
+        <LinearLayout 
+     		android:layout_width="fill_parent"
+		    android:layout_height="wrap_content" 
+		    android:orientation="vertical">
+           <TextView
+            android:id="@+id/now_version"   
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content" 
+            android:lineSpacingExtra="6dip"
+            />
+           <TextView
+            android:id="@+id/warm_prompt"   
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content" 
+            android:lineSpacingExtra="6dip"
+            android:gravity="center"
+            android:textColor="@color/account_settings_txt_color"/>
+        </LinearLayout>
+    </ScrollView>
+    <RelativeLayout
+        android:id="@+id/rlCheckBox"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        >
+
+        <CheckBox
+            android:id="@+id/CheckBox"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:checked="false"
+            android:clickable="false"
+            android:button="@null"
+            android:background="@drawable/account_settings_radio_button"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" 
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/CheckBox"
+            android:layout_marginLeft="5dp"
+            android:text="@string/no_display_this_version" />
+    </RelativeLayout>
+    <TextView
+            android:id="@+id/mandatoryalert"
+            android:text="@string/mandatoryalert"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+</LinearLayout>
