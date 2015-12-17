@@ -35,6 +35,7 @@ public class TestBaseActivity extends BaseActivity {
         text3.setOnClickListener(this);
         text4.setOnClickListener(this);
         main_button_list.addView(inflate);
+
     }
 
     @Override
