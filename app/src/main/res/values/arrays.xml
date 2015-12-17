@@ -4,5 +4,6 @@
         <item>@string/function_socket</item>
         <item>@string/function_db_operation</item>
         <item>@string/function_create_data</item>
+        <item>test</item>
     </string-array>
 </resources>

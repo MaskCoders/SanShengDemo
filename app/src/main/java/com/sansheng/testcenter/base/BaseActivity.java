@@ -5,14 +5,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.sansheng.testcenter.R;
 
 /**
  * Created by sunshaogang on 12/10/15.
  */
-public class BaseActivity extends Activity {
+public abstract class BaseActivity extends Activity implements View.OnClickListener {
     private ActionBar mActionBar;
     private FrameLayout mActionBarView;
     public final static int DEFAULT_VIEW = -1;//默认
@@ -24,6 +23,14 @@ public class BaseActivity extends Activity {
     public final static int MODIFY_DETAIL_VIEW = 5;//修改详情
     private ActionBarCallback mActionBarCallback;
 
+    protected EditText main_sort_log;
+    protected EditText main_whole_log;
+    protected ImageButton main_log_down_btn;
+    protected LinearLayout main_info;
+    protected TextView main_status_info;
+    protected LinearLayout main_button_list;
+    protected LinearLayout main_layout_conn;
+
     public interface ActionBarCallback {
         void onSaveClick();
 
@@ -34,6 +41,39 @@ public class BaseActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         customizeActionbar();
+        initBaseViews();
+    }
+
+    protected abstract void initButtonList();
+
+    protected abstract void initConnList();
+
+    private void initBaseViews() {
+        setContentView(R.layout.base_layout);
+        main_sort_log = (EditText) findViewById(R.id.main_sort_log);
+        main_whole_log = (EditText) findViewById(R.id.main_whole_log);
+        main_log_down_btn = (ImageButton) findViewById(R.id.main_log_down_btn);
+        main_info = (LinearLayout) findViewById(R.id.main_info);
+        main_status_info = (TextView) findViewById(R.id.main_status_info);
+        main_button_list = (LinearLayout) findViewById(R.id.main_button_list);
+        main_layout_conn = (LinearLayout) findViewById(R.id.main_layout_conn);
+        initButtonList();
+        initConnList();
+    }
+
+    protected void showShortLog(boolean flag) {
+//        if(main_whole_log.getVisibility() == View.VISIBLE){
+//            main_sort_log.setVisibility(View.GONE);
+//        }else {
+            main_sort_log.setVisibility((main_whole_log.getVisibility() != View.VISIBLE && flag) ? View.VISIBLE : View.GONE);
+//        }
+    }
+
+    protected void showWholeLog(boolean flag) {
+        main_whole_log.setVisibility(flag ? View.VISIBLE : View.GONE);
+        if(flag){
+            main_sort_log.setVisibility(View.GONE);
+        }
     }
 
     private void customizeActionbar() {
@@ -114,4 +154,8 @@ public class BaseActivity extends Activity {
         });
     }
 
+    @Override
+    public void onClick(View v) {
+
+    }
 }

@@ -25,6 +25,8 @@
 
         <activity android:name="com.sansheng.testcenter.demo.view.SocketDemo"
                   android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name=".view.TestBaseActivity"
+                  android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name="com.sansheng.testcenter.demo.view.MeterListActivity"
                   android:screenOrientation="sensorLandscape">
             <intent-filter>

@@ -56,6 +56,16 @@ public class CreateDBActivity extends BaseActivity {
     }
 
     @Override
+    protected void initButtonList() {
+
+    }
+
+    @Override
+    protected void initConnList() {
+
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
     }

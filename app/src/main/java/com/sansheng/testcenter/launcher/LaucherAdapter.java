@@ -17,6 +17,7 @@ import com.sansheng.testcenter.utils.Utility;
 import com.sansheng.testcenter.demo.view.MeterListActivity;
 import com.sansheng.testcenter.base.view.ProgressDailog;
 import com.sansheng.testcenter.demo.view.SocketDemo;
+import com.sansheng.testcenter.view.TestBaseActivity;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,7 +31,8 @@ public class LaucherAdapter extends BaseAdapter {
     private String[] textSource;
     private int[] iconSource = new int[]{R.drawable.socket_icon_selector,
             R.drawable.db_operation_icon_selector,
-            R.drawable.create_db_icon_selector};
+            R.drawable.create_db_icon_selector,
+    R.drawable.db_operation_icon_normal};
     private ProgressDailog mProgressDailog;
 
     public LaucherAdapter(Activity mContext) {
@@ -76,6 +78,10 @@ public class LaucherAdapter extends BaseAdapter {
                             showProgressDialog();
                             InsertDataTask task = new InsertDataTask();
                             task.executeOnExecutor(sThreadPool);
+                            break;
+                        case 3:
+                            intent.setClass(mContext, TestBaseActivity.class);
+                            mContext.startActivity(intent);
                             break;
                         default:
                             break;
