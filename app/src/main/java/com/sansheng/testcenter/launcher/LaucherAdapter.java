@@ -76,12 +76,12 @@ public class LaucherAdapter extends BaseAdapter {
                             intent.setClass(mContext, SocketDemo.class);
                             mContext.startActivity(intent);
                             break;
-                        case 1://电表数据列表
-                            intent.setClass(mContext, MeterDataListActivity.class);
+                        case 1://电表列表
+                            intent.setClass(mContext, MeterListActivity.class);
                             mContext.startActivity(intent);
                             break;
-                        case 2://电表列表
-                            intent.setClass(mContext, MeterListActivity.class);
+                        case 2://电表数据列表
+                            intent.setClass(mContext, MeterDataListActivity.class);
                             mContext.startActivity(intent);
                             break;
                         case 3:
