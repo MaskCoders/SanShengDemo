@@ -26,7 +26,7 @@ import java.util.concurrent.ThreadFactory;
 /**
  * Created by sunshaogang on 12/10/15.
  */
-public class MeterFragment extends Fragment implements View.OnClickListener, BaseActivity.ActionBarCallback {
+public class MeterDataFragment extends Fragment implements View.OnClickListener, BaseActivity.ActionBarCallback {
     private MeterData mMeter;
     private MeterData mChangedMeter;
 
@@ -44,7 +44,7 @@ public class MeterFragment extends Fragment implements View.OnClickListener, Bas
     private static final ThreadFactory sThreadFactory = new CustomThreadPoolFactory("MeterThread");
     private ExecutorService sThreadPool = Executors.newSingleThreadExecutor(sThreadFactory);
 
-    public MeterFragment() {
+    public MeterDataFragment() {
     }
 
     @Override

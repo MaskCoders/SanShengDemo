@@ -16,10 +16,10 @@ public abstract class Content {
     // Newly created objects get this id
     public static final int NOT_SAVED = -1;
     public long mId = NOT_SAVED;
-    public static Uri mBaseUri;
+    public Uri mBaseUri;
     private Uri mUri;
     public static String AUTHORITY;
-    public static Uri CONTENT_URI;
+    public static Uri BASE_CONTENT_URI;
     private static String EMAIL_PACKAGE_NAME;
     public static final String[] COUNT_COLUMNS = new String[]{"count(*)"};
     public static String PARAMETER_LIMIT = "limit";
@@ -132,7 +132,7 @@ public abstract class Content {
     public static synchronized void init(Context context) {
         EMAIL_PACKAGE_NAME = context.getPackageName();
         AUTHORITY = EMAIL_PACKAGE_NAME + ".provider.Equipment";
-        CONTENT_URI = Uri.parse("content://" + AUTHORITY);
+        BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
         Meter.init();
         MeterData.init();
         Collect.init();
@@ -186,25 +186,8 @@ public abstract class Content {
     }
     public static interface ConcentratorColumns {
         public static final String ID = "_id";
-        public static final String COLLECT_ID = "collectId";
-        public static final String DA = "da";
-        public static final String METER_NAME = "meterNmae";
-        public static final String METER_NUM = "meterNum";
-        public static final String METER_ADDRESS = "meterAddress";
-        public static final String COMMON_PASSWORD = "commPwd";
-        public static final String BAUDRATE_ID = "baudrateID";
-        public static final String COMMON_PORT_ID = "commPortId";
-        public static final String PROTOCOL_ID = "protocolId";
-        public static final String FEILV_ID = "feilvId";
-        public static final String GATHER_ADDRESS = "gatherAddress";
-        public static final String WEISHU_ID = "weishuId";
-        public static final String USER_SMALL_TYPE_ID = "userSmallType";
-        public static final String USER_TYPE_ID = "userType";
-        public static final String USER_NUM = "userNum";
-        public static final String USER_ADDRESS = "userAddress";
-        public static final String GROUP_ID = "groupId";
-        public static final String IMPORTANT = "important";
-        public static final String NOTE = "note";
+        public static final String CONCENTRATOR_NAME = "concentratorNmae";
+        public static final String CONCENTRATOR_ADDRESS = "concentratorAddress";
     }
 
     public static interface CollectColumns {

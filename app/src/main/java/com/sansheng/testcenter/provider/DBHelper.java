@@ -57,26 +57,9 @@ public class DBHelper extends SQLiteOpenHelper {
             ")";
 
     private String createConcentratorTable = "CREATE TABLE IF NOT EXISTS `" + Concentrator.TABLE_NAME +"` (\n" +
-            "  `"+ Content.MeterColumns.ID + "` integer primary key autoincrement,\n" +
-            "  `"+ Content.MeterColumns.COLLECT_ID + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.DA + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.METER_NAME + "` text not null,\n" +
-            "  `"+ Content.MeterColumns.METER_NUM + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.METER_ADDRESS + "` text not null,\n" +
-            "  `"+ Content.MeterColumns.COMMON_PASSWORD + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.BAUDRATE_ID + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.COMMON_PORT_ID + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.PROTOCOL_ID + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.FEILV_ID + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.GATHER_ADDRESS + "` text not null,\n" +
-            "  `"+ Content.MeterColumns.WEISHU_ID + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.USER_SMALL_TYPE_ID + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.USER_TYPE_ID + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.USER_NUM + "` text not null,\n" +
-            "  `"+ Content.MeterColumns.USER_ADDRESS + "` text not null,\n" +
-            "  `"+ Content.MeterColumns.GROUP_ID + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.IMPORTANT + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.NOTE + "` text not null\n" +
+            "  `"+ Content.ConcentratorColumns.ID + "` integer primary key autoincrement,\n" +
+            "  `"+ Content.ConcentratorColumns.CONCENTRATOR_NAME + "` text not null,\n" +
+            "  `"+ Content.ConcentratorColumns.CONCENTRATOR_ADDRESS + "` text not null\n" +
             ")";
 
     private String createCollectTable = "CREATE TABLE IF NOT EXISTS `" + Collect.TABLE_NAME +"` (\n" +

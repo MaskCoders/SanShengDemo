@@ -29,7 +29,13 @@
                   android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name=".view.TestBaseActivity"
                   android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <activity android:name="com.sansheng.testcenter.demo.view.MeterListActivity"
+        <activity android:name=".demo.view.MeterDataListActivity"
+                  android:screenOrientation="sensorLandscape">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".demo.view.MeterListActivity"
                   android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

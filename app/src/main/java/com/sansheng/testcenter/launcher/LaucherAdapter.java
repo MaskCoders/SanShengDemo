@@ -13,8 +13,10 @@ import android.widget.TextView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.base.view.ProgressDailog;
+import com.sansheng.testcenter.demo.view.MeterDataListActivity;
 import com.sansheng.testcenter.demo.view.MeterListActivity;
 import com.sansheng.testcenter.demo.view.SocketDemo;
+import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.module.MeterData;
 import com.sansheng.testcenter.upgrade.AppUpgrade;
 import com.sansheng.testcenter.utils.Utility;
@@ -32,8 +34,10 @@ public class LaucherAdapter extends BaseAdapter {
     private String[] textSource;
     private int[] iconSource = new int[]{R.drawable.socket_icon_selector,
             R.drawable.db_operation_icon_selector,
+            R.drawable.db_operation_icon_selector,
             R.drawable.create_db_icon_selector,
-    R.drawable.db_operation_icon_normal,
+            R.drawable.db_operation_icon_normal,
+            R.drawable.db_operation_icon_normal,
             R.drawable.db_operation_icon_normal};
     private ProgressDailog mProgressDailog;
 
@@ -72,21 +76,28 @@ public class LaucherAdapter extends BaseAdapter {
                             intent.setClass(mContext, SocketDemo.class);
                             mContext.startActivity(intent);
                             break;
-                        case 1:
+                        case 1://电表数据列表
+                            intent.setClass(mContext, MeterDataListActivity.class);
+                            mContext.startActivity(intent);
+                            break;
+                        case 2://电表列表
                             intent.setClass(mContext, MeterListActivity.class);
                             mContext.startActivity(intent);
                             break;
-                        case 2:
+                        case 3:
                             showProgressDialog();
                             InsertDataTask task = new InsertDataTask();
                             task.executeOnExecutor(sThreadPool);
                             break;
-                        case 3:
+                        case 4:
                             intent.setClass(mContext, TestBaseActivity.class);
                             mContext.startActivity(intent);
                             break;
-                        case 4:
+                        case 5:
                             new AppUpgrade(mContext).check(false);
+                            break;
+                        case 6://设置
+                            //TODO:
                             break;
                         default:
                             break;
@@ -126,7 +137,9 @@ public class LaucherAdapter extends BaseAdapter {
         @Override
         protected Integer doInBackground(Void... params) {
             for (int i = 1; i < 51; i++) {
-                MeterData meter = new MeterData(true, i);
+                MeterData meterData = new MeterData(true, i);
+                meterData.save(mContext);
+                Meter meter = new Meter(true, i);
                 meter.save(mContext);
             }
             hideProgressDialog();

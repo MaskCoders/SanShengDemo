@@ -38,9 +38,14 @@ public class CollectParam extends Content implements Content.CollectParamColumns
 
     public static final String TABLE_NAME = "collectparam";
 
-    public static void init() {
-        CONTENT_URI = Uri.parse(Content.CONTENT_URI + "/collectparam");
+    public static Uri CONTENT_URI;
+
+    public CollectParam() {
         mBaseUri = CONTENT_URI;
+    }
+
+    public static void init() {
+        CONTENT_URI = Uri.parse(Content.BASE_CONTENT_URI + "/collectparam");
     }
 
     @Override
@@ -108,7 +113,7 @@ public class CollectParam extends Content implements Content.CollectParamColumns
     }
 
     public String toString() {
-        return  "[" + ID + " : " + mId + "]" + "\n" +
+        return "[" + ID + " : " + mId + "]" + "\n" +
                 "[" + PARAM + " : " + mParam + "]" + "\n";
     }
 }

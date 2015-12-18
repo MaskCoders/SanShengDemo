@@ -35,10 +35,14 @@ public class EquipmentException extends Content implements Content.EquipmentExce
 
 
     public static final String TABLE_NAME = "exception";
+    public static Uri CONTENT_URI;
+
+    public EquipmentException() {
+        mBaseUri = CONTENT_URI;
+    }
 
     public static void init() {
-        CONTENT_URI = Uri.parse(Content.CONTENT_URI + "/exception");
-        mBaseUri = CONTENT_URI;
+        CONTENT_URI = Uri.parse(Content.BASE_CONTENT_URI + "/exception");
     }
 
     @Override

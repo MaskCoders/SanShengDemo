@@ -51,14 +51,16 @@ public class MeterData extends Content implements MeterDataColumns, Parcelable {
     public static final String TABLE_NAME = "meterdata";
 
     public static void init() {
-        CONTENT_URI = Uri.parse(Content.CONTENT_URI + "/meterdata");
+        CONTENT_URI = Uri.parse(Content.BASE_CONTENT_URI + "/meterdata");
+    }
+    public static Uri CONTENT_URI;
+
+    public MeterData() {
         mBaseUri = CONTENT_URI;
     }
 
-    public MeterData() {
-    }
-
     public MeterData(boolean test, int id) {
+        mBaseUri = CONTENT_URI;
         if (test) {
             mMeterID = id;
             mValueTime = System.currentTimeMillis();

@@ -40,9 +40,13 @@ public class Collect extends Content implements Content.CollectColumns, Parcelab
 
     public static final String TABLE_NAME = "collect";
 
-    public static void init() {
-        CONTENT_URI = Uri.parse(Content.CONTENT_URI + "/collect");
+    public static Uri CONTENT_URI;
+
+    public Collect() {
         mBaseUri = CONTENT_URI;
+    }
+    public static void init() {
+        CONTENT_URI = Uri.parse(Content.BASE_CONTENT_URI + "/collect");
     }
 
     @Override

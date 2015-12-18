@@ -13,19 +13,19 @@ import android.widget.ListView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.view.PullListView;
-import com.sansheng.testcenter.demo.util.MeterUtilies;
 import com.sansheng.testcenter.module.Content;
-import com.sansheng.testcenter.module.Meter;
+import com.sansheng.testcenter.module.MeterData;
+import com.sansheng.testcenter.demo.util.MeterUtilies;
 
 /**
  * Created by sunshaogang on 12/9/15.
  */
-public class MeterListActivity extends BaseActivity implements LoaderCallbacks<Cursor>, ListView.OnScrollListener, PullListView.OnLoadMoreListener {
+public class MeterDataListActivity extends BaseActivity implements LoaderCallbacks<Cursor>, ListView.OnScrollListener, PullListView.OnLoadMoreListener {
 
     private View mEmptyView;
     private PullListView mListView;
     private Handler mHandler = new Handler();
-    private MeterListAdapter mAdapter;
+    private MeterDataListAdapter mAdapter;
     private int mLastVisibleItem;
     private static final int LOADER_ID_FILTER_DEFAULT = 0;
     private int mOriginLength = 10;//默认初始显示数量
@@ -36,10 +36,10 @@ public class MeterListActivity extends BaseActivity implements LoaderCallbacks<C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.meter_list_layout);
         initView();
-        mAdapter = new MeterListAdapter(this, null);
+        mAdapter = new MeterDataListAdapter(this, null);
         mListView.setAdapter(mAdapter);
         getLoaderManager().initLoader(LOADER_ID_FILTER_DEFAULT, null, this);
-        setActionBar(METER_LIST_VIEW);
+        setActionBar(METERDATA_LIST_VIEW);
     }
 
     @Override
@@ -55,8 +55,8 @@ public class MeterListActivity extends BaseActivity implements LoaderCallbacks<C
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         StringBuilder selection = new StringBuilder(" 1=1 ");
-        return new CursorLoader(this, Meter.CONTENT_URI, Meter.CONTENT_PROJECTION, selection.toString(),
-                null, Meter.ID + " " + Content.DESC + " LIMIT " + mOriginLength);
+        return new CursorLoader(this, MeterData.CONTENT_URI, MeterData.CONTENT_PROJECTION, selection.toString(),
+                null, MeterData.ID + " " + Content.DESC + " LIMIT " + mOriginLength);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class MeterListActivity extends BaseActivity implements LoaderCallbacks<C
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         if (mLastVisibleItem >= mListView.getCount() - DOWNSIDE_INCREASE_COUNT / 2 && scrollState == SCROLL_STATE_IDLE) {
             mOriginLength += DOWNSIDE_INCREASE_COUNT;
-            getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, MeterListActivity.this);
+            getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, MeterDataListActivity.this);
             mListView.setFooterViewStatic();
         }
     }
@@ -102,7 +102,7 @@ public class MeterListActivity extends BaseActivity implements LoaderCallbacks<C
     public void onLoadMore(PullListView refreshView) {
         refreshView.onCompleteLoadMore(PullListView.LOAD_MORE_STATUE_SUCCESS);
         mOriginLength += DOWNSIDE_INCREASE_COUNT;
-        getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, MeterListActivity.this);
+        getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, MeterDataListActivity.this);
     }
 
     private void initView() {
@@ -111,8 +111,8 @@ public class MeterListActivity extends BaseActivity implements LoaderCallbacks<C
         mEmptyView = findViewById(R.id.empty_view_group);
     }
 
-    public void showDetailFragment(Meter meter) {
-        MeterFragment fragment = new MeterFragment();
+    public void showDetailFragment(MeterData meter) {
+        MeterDataFragment fragment = new MeterDataFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(MeterUtilies.PARAM_METER, meter);
         fragment.setArguments(bundle);
@@ -123,7 +123,7 @@ public class MeterListActivity extends BaseActivity implements LoaderCallbacks<C
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, MeterListActivity.this);
+                getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, MeterDataListActivity.this);
             }
         });
     }

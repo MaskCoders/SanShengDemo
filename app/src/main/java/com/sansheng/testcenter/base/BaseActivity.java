@@ -17,10 +17,12 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
     public final static int DEFAULT_VIEW = -1;//默认
     public final static int GENERAL_VIEW = 0;//主页
     public final static int SOCKET_VIEW = 1;//通信
-    public final static int METER_LIST_VIEW = 2;//数据库
-    public final static int INSERT_DATABASE_VIEW = 3;//插入数据库
-    public final static int DETAIL_VIEW = 4;//详情
-    public final static int MODIFY_DETAIL_VIEW = 5;//修改详情
+    public final static int METER_LIST_VIEW = 2;//电表
+    public final static int METERDATA_LIST_VIEW = 3;//电表数据
+    public final static int INSERT_DATABASE_VIEW = 4;//插入数据库
+    public final static int DETAIL_VIEW = 5;//详情
+    public final static int MODIFY_DETAIL_VIEW = 6;//修改详情
+    public final static int SETTINGS_VIEW = 7;//修改详情
     private ActionBarCallback mActionBarCallback;
 
     protected EditText main_sort_log;
@@ -130,7 +132,12 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.connect_page));
                         break;
                     case METER_LIST_VIEW:
-                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.db_show));
+                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_meter_list));
+                        mActionBarView.findViewById(R.id.ab_modify_view).setVisibility(View.GONE);
+                        mActionBarView.findViewById(R.id.ab_view).setVisibility(View.VISIBLE);
+                        break;
+                    case METERDATA_LIST_VIEW:
+                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_meter_data_list));
                         mActionBarView.findViewById(R.id.ab_modify_view).setVisibility(View.GONE);
                         mActionBarView.findViewById(R.id.ab_view).setVisibility(View.VISIBLE);
                         break;
@@ -145,7 +152,9 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
                         mActionBarView.findViewById(R.id.ab_modify_view).setVisibility(View.VISIBLE);
                         mActionBarView.findViewById(R.id.ab_view).setVisibility(View.GONE);
                         break;
-
+                    case SETTINGS_VIEW:
+                        ((TextView) mActionBarView.findViewById(R.id.ab_modify_title)).setText(getResources().getText(R.string.function_settings));
+                        break;
                     default:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(R.string.company_name);
                         break;

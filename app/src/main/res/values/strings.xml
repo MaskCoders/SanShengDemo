@@ -11,8 +11,13 @@
     <string name="cancel">"取消"</string>
 
     <string name="function_socket">SOCKET通讯</string>
-    <string name="function_db_operation">数据库操作</string>
+    <string name="function_meter_data_list">电表数据列表</string>
     <string name="function_create_data">生成测试数据</string>
+    <string name="function_test">test</string>
+    <string name="function_check_update">检查更新</string>
+    <string name="function_meter_list">电表列表</string>
+    <string name="function_settings">设置</string>
+
 
     <string name="meter_detail_id_title">电报标识</string>
     <string name="meter_detail_name_title">电表名称</string>

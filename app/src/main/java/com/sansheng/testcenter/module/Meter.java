@@ -68,9 +68,22 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
 
     public static final String TABLE_NAME = "meter";
 
-    public static void init() {
-        CONTENT_URI = Uri.parse(Content.CONTENT_URI + "/meter");
+    public static Uri CONTENT_URI;
+
+    public Meter() {
         mBaseUri = CONTENT_URI;
+    }
+
+    public Meter(boolean test, int id) {
+        mBaseUri = CONTENT_URI;
+        if (test) {
+            mCollectId = id;
+            mMeterName = "电表名称" + id;
+        }
+    }
+
+    public static void init() {
+        CONTENT_URI = Uri.parse(Content.BASE_CONTENT_URI + "/meter");
     }
 
     @Override
