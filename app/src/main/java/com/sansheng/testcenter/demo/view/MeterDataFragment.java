@@ -65,7 +65,7 @@ public class MeterDataFragment extends Fragment implements View.OnClickListener,
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        ((BaseActivity)getActivity()).setActionBar(BaseActivity.MODIFY_DETAIL_VIEW, this);
-        mRootView = inflater.inflate(R.layout.meter_detail_layout, container, false);
+        mRootView = inflater.inflate(R.layout.meter_data_detail_layout, container, false);
         mMeterIdView = (UIUnrevisableView) mRootView.findViewById(R.id.meter_id);
         mMeterNameView = (UIRevisableView) mRootView.findViewById(R.id.meter_name);
         mValueTimeView = (UIRevisableView) mRootView.findViewById(R.id.meter_value_time);

@@ -37,7 +37,7 @@ public class MeterDataListAdapter extends SimpleCursorAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         if (viewHolder == null) {
-            convertView = LayoutInflater.from(mActivity).inflate(R.layout.meter_item_layout, null);
+            convertView = LayoutInflater.from(mActivity).inflate(R.layout.meter_data_item_layout, null);
             viewHolder = new ViewHolder();
             initViewHolder(viewHolder, convertView);
             convertView.setTag(viewHolder);

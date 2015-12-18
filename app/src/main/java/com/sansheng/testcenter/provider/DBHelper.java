@@ -19,25 +19,25 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private String createMeterTable = "CREATE TABLE IF NOT EXISTS `" + Meter.TABLE_NAME +"` (\n" +
             "  `"+ Content.MeterColumns.ID + "` integer primary key autoincrement,\n" +
-            "  `"+ Content.MeterColumns.COLLECT_ID + "` integer not null default 0,\n" +
+            "  `"+ Content.MeterColumns.COLLECT_ID + "` integer default 0,\n" +
             "  `"+ Content.MeterColumns.DA + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.METER_NAME + "` text not null,\n" +
+            "  `"+ Content.MeterColumns.METER_NAME + "` text,\n" +
             "  `"+ Content.MeterColumns.METER_NUM + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.METER_ADDRESS + "` text not null,\n" +
+            "  `"+ Content.MeterColumns.METER_ADDRESS + "` text,\n" +
             "  `"+ Content.MeterColumns.COMMON_PASSWORD + "` integer not null default 0,\n" +
             "  `"+ Content.MeterColumns.BAUDRATE_ID + "` integer not null default 0,\n" +
             "  `"+ Content.MeterColumns.COMMON_PORT_ID + "` integer not null default 0,\n" +
             "  `"+ Content.MeterColumns.PROTOCOL_ID + "` integer not null default 0,\n" +
             "  `"+ Content.MeterColumns.FEILV_ID + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.GATHER_ADDRESS + "` text not null,\n" +
+            "  `"+ Content.MeterColumns.GATHER_ADDRESS + "` text,\n" +
             "  `"+ Content.MeterColumns.WEISHU_ID + "` integer not null default 0,\n" +
             "  `"+ Content.MeterColumns.USER_SMALL_TYPE_ID + "` integer not null default 0,\n" +
             "  `"+ Content.MeterColumns.USER_TYPE_ID + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.USER_NUM + "` text not null,\n" +
-            "  `"+ Content.MeterColumns.USER_ADDRESS + "` text not null,\n" +
+            "  `"+ Content.MeterColumns.USER_NUM + "` text,\n" +
+            "  `"+ Content.MeterColumns.USER_ADDRESS + "` text,\n" +
             "  `"+ Content.MeterColumns.GROUP_ID + "` integer not null default 0,\n" +
             "  `"+ Content.MeterColumns.IMPORTANT + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.NOTE + "` text not null\n" +
+            "  `"+ Content.MeterColumns.NOTE + "` text\n" +
             ")";
 
     private String createMeterDataTable = "CREATE TABLE IF NOT EXISTS `" + MeterData.TABLE_NAME +"` (\n" +
@@ -58,17 +58,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private String createConcentratorTable = "CREATE TABLE IF NOT EXISTS `" + Concentrator.TABLE_NAME +"` (\n" +
             "  `"+ Content.ConcentratorColumns.ID + "` integer primary key autoincrement,\n" +
-            "  `"+ Content.ConcentratorColumns.CONCENTRATOR_NAME + "` text not null,\n" +
-            "  `"+ Content.ConcentratorColumns.CONCENTRATOR_ADDRESS + "` text not null\n" +
+            "  `"+ Content.ConcentratorColumns.CONCENTRATOR_NAME + "` text,\n" +
+            "  `"+ Content.ConcentratorColumns.CONCENTRATOR_ADDRESS + "` text\n" +
             ")";
 
     private String createCollectTable = "CREATE TABLE IF NOT EXISTS `" + Collect.TABLE_NAME +"` (\n" +
             "  `"+ Content.CollectColumns.ID + "` integer primary key autoincrement,\n" +
-            "  `"+ Content.CollectColumns.COMM_ADDRESS + "` text not null,\n" +
-            "  `"+ Content.CollectColumns.COLLECT_NAME + "` text not null,\n" +
-            "  `"+ Content.CollectColumns.PASSWORD + "` text not null,\n" +
+            "  `"+ Content.CollectColumns.COMM_ADDRESS + "` text,\n" +
+            "  `"+ Content.CollectColumns.COLLECT_NAME + "` text,\n" +
+            "  `"+ Content.CollectColumns.PASSWORD + "` text,\n" +
             "  `"+ Content.CollectColumns.CHANNEL_TYPE + "` integer not null default 0,\n" +
-            "  `"+ Content.CollectColumns.TERMINAL_IP + "` text not null,\n" +
+            "  `"+ Content.CollectColumns.TERMINAL_IP + "` text,\n" +
             "  `"+ Content.CollectColumns.TERMINAL_PORT + "` integer not null default 0,\n" +
             "  `"+ Content.CollectColumns.BAUDRATE_ID + "` integer not null default 0\n" +
             ")";
@@ -78,7 +78,7 @@ public class DBHelper extends SQLiteOpenHelper {
             "  `"+ Content.CollectParamColumns.COLLECT_ID + "` integer not null default 0,\n" +
             "  `"+ Content.CollectParamColumns.AFN + "` integer not null default 0,\n" +
             "  `"+ Content.CollectParamColumns.FN + "` integer not null default 0,\n" +
-            "  `"+ Content.CollectParamColumns.PARAM + "` text not null\n" +
+            "  `"+ Content.CollectParamColumns.PARAM + "` text\n" +
             ")";
 
     private String createExceptionTable = "CREATE TABLE IF NOT EXISTS `" + EquipmentException.TABLE_NAME +"` (\n" +
@@ -88,7 +88,7 @@ public class DBHelper extends SQLiteOpenHelper {
             "  `"+ Content.EquipmentExceptionColumns.TYPE + "` integer not null default 0,\n" +
             "  `"+ Content.EquipmentExceptionColumns.PM + "` integer not null default 0,\n" +
             "  `"+ Content.EquipmentExceptionColumns.FLAG + "` integer not null default 0,\n" +
-            "  `"+ Content.EquipmentExceptionColumns.NOTE + "` text not null\n" +
+            "  `"+ Content.EquipmentExceptionColumns.NOTE + "` text\n" +
             ")";
 
     public DBHelper(Context context, String name) {

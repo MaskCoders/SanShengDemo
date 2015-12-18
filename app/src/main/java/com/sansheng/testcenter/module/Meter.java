@@ -89,25 +89,25 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
     @Override
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
-        values.put(ID, mCollectId);
-        values.put(COLLECT_ID, mDa);
-        values.put(DA, mMeterName);
-        values.put(METER_NAME, mMeterNum);
-        values.put(METER_NUM, mMeterAddress);
-        values.put(METER_ADDRESS, mCommPwd);
-        values.put(COMMON_PASSWORD, mBaudRateId);
-        values.put(BAUDRATE_ID, mCommPortId);
-        values.put(COMMON_PORT_ID, mProtocolId);
-        values.put(PROTOCOL_ID, FeiLvId);
-        values.put(FEILV_ID, mGatherAddress);
-        values.put(GATHER_ADDRESS, mWeiShuId);
-        values.put(WEISHU_ID, mUserSmallTypeId);
-        values.put(USER_SMALL_TYPE_ID, mUserTypeId);
-        values.put(USER_TYPE_ID, mUserNum);
-        values.put(USER_NUM, mUserAddress);
-        values.put(USER_ADDRESS, mGroupId);
-        values.put(GROUP_ID, mImportant);
-        values.put(IMPORTANT, mNote);
+        // Assign values for each row.
+        values.put(COLLECT_ID, mCollectId);
+        values.put(DA, mDa);
+        values.put(METER_NAME, mMeterName);
+        values.put(METER_NUM, mMeterNum);
+        values.put(METER_ADDRESS, mMeterAddress);
+        values.put(COMMON_PASSWORD, mCommPwd);
+        values.put(BAUDRATE_ID, mBaudRateId);
+        values.put(COMMON_PORT_ID, mCommPortId);
+        values.put(PROTOCOL_ID, mProtocolId);
+        values.put(FEILV_ID, FeiLvId);
+        values.put(GATHER_ADDRESS, mGatherAddress);
+        values.put(WEISHU_ID, mWeiShuId);
+        values.put(USER_SMALL_TYPE_ID, mUserSmallTypeId);
+        values.put(USER_TYPE_ID, mUserTypeId);
+        values.put(USER_NUM, mUserNum);
+        values.put(USER_ADDRESS, mUserAddress);
+        values.put(GROUP_ID, mGroupId);
+        values.put(IMPORTANT, mImportant);
         values.put(NOTE, mNote);
         return values;
     }

@@ -45,7 +45,6 @@ public class Concentrator extends Content implements Content.ConcentratorColumns
     @Override
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
-        values.put(ID, mId);
         values.put(CONCENTRATOR_NAME, mConcentratorName);
         values.put(CONCENTRATOR_ADDRESS, mConcentratorAddress);
         return values;

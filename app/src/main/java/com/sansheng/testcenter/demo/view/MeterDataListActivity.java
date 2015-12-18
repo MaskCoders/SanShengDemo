@@ -34,7 +34,7 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.meter_list_layout);
+        setContentView(R.layout.meter_data_list_layout);
         initView();
         mAdapter = new MeterDataListAdapter(this, null);
         mListView.setAdapter(mAdapter);

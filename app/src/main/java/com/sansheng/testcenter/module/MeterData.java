@@ -78,6 +78,7 @@ public class MeterData extends Content implements MeterDataColumns, Parcelable {
 
     @Override
     public ContentValues toContentValues() {
+        // Assign values for each row.
         ContentValues values = new ContentValues();
         values.put(METER_ID, mMeterID);
         values.put(VALUE_TIME, mValueTime);
