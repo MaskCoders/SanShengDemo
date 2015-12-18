@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <Button android:id="@+id/conn1" android:layout_width="fill_parent" android:layout_height="0dp"
+            android:layout_weight="1" android:paddingBottom="5dp" android:textColor="#fff"
+            android:text="open_server" android:background="@drawable/btn_sel"/>
+    <Button android:id="@+id/conn2" android:layout_width="fill_parent" android:layout_height="0dp"
+            android:layout_weight="1" android:paddingBottom="5dp" android:textColor="#fff"
+            android:text="bind_serever" android:background="@drawable/btn_sel"/>
+    <Button android:id="@+id/conn3" android:layout_width="fill_parent" android:layout_height="0dp"
+            android:layout_weight="1" android:paddingBottom="5dp" android:textColor="#fff"
+            android:text="client_conn" android:background="@drawable/btn_sel"/>
+    <Button android:id="@+id/conn4" android:layout_width="fill_parent" android:layout_height="0dp"
+            android:layout_weight="1" android:paddingBottom="5dp" android:textColor="#fff"
+            android:text="send_info" android:background="@drawable/btn_sel"/>
+
+</LinearLayout>

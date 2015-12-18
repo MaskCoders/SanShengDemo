@@ -5,6 +5,6 @@ package com.sansheng.testcenter;
  * Created by hua on 12/17/15.
  */
 interface IMSocketServer {
-   // void setHandler1(in com.sansheng.testcenter.base.IServiceHandler handler);
+   // void setHandler1(IServiceHandler handler);
     void setHandler();
 }
