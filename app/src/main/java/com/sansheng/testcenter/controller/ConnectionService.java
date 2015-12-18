@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import com.sansheng.testcenter.callback.IServiceHandler;
 import com.sansheng.testcenter.callback.ServiceCallback;
 import com.sansheng.testcenter.server.MSocketServer;
 
@@ -12,10 +11,10 @@ import com.sansheng.testcenter.server.MSocketServer;
  * Created by hua on 12/18/15.
  */
 public class ConnectionService implements ServiceConnection {
-    IServiceHandler mHandler;
+    MainHandler mHandler;
     Service mService;
 
-    public ConnectionService(IServiceHandler handler, Service service) {
+    public ConnectionService(MainHandler handler, Service service) {
         this.mHandler = handler;
         this.mService = service;
     }

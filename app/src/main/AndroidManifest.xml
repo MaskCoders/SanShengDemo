@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.sansheng.testcenter"
           android:versionCode="100000" android:versionName="1.0.0">
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-sdk
             android:minSdkVersion="17" android:targetSdkVersion="21"/>
     <application
@@ -26,9 +26,11 @@
         </activity>
 
         <activity android:name="com.sansheng.testcenter.demo.view.SocketDemo"
-                  android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+                  android:screenOrientation="sensorLandscape"
+                  android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name=".view.TestBaseActivity"
-                  android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+                  android:screenOrientation="sensorLandscape"
+                  android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name=".demo.view.MeterDataListActivity"
                   android:screenOrientation="sensorLandscape">
             <intent-filter>
@@ -54,7 +56,8 @@
                 android:exported="false">
             <grant-uri-permission android:pathPattern=".*"/>
         </provider>
-        <service android:name=".server.MSocketServer"></service>
+        <service android:name=".server.MSocketServer" android:enabled="true"
+                 android:exported="true"></service>
     </application>
 
 </manifest>
