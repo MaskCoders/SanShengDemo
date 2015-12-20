@@ -1,8 +1,3 @@
-package com.sansheng.testcenter.server;
-
-import com.sansheng.testcenter.base.Const;
-import com.sansheng.testcenter.controller.MainHandler;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -12,17 +7,27 @@ import java.util.List;
 /**
  * Created by hua on 12/18/15.
  */
-public class SocketServer {
+public class Server {
     private Socket socket = null;
     private BufferedReader in = null;
     private PrintWriter out = null;
     private ServerSocket server = null;
+    static final int PORT = 8001;
+    static final String ERRCODE = "ERRCODE";
+    static final String CONN_SUCCESS = "CONN_SUCCESS";
+    static final String HOST = "127.0.0.1";
+
+    static final int CONN_SER_CLS = -2;
+    static final int CONN_ERR = -1;
+    static final int CONN_OK = 0;
+    static final int RECV_MSG = 1;
+    static final int INPUT_ERR = -3;
     //    Socket client = null;
     private ArrayList<ConnClient> clientList = new ArrayList<ConnClient>();
 
-    private MainHandler mainHandler;
-    public SocketServer(MainHandler handler){
-        mainHandler = handler;
+    public static final void main(String[] args){
+        Server server = new Server();
+        server.startServer();
     }
     public void startServer() {
         System.out.println(" by hua start server ... ");
@@ -33,15 +38,15 @@ public class SocketServer {
             @Override
             public void run() {
                 try {
-                    server = new ServerSocket(Const.PORT);
+                    server = new ServerSocket(PORT);
 
                     while (true) {
                         Socket socket = server.accept();
                         ConnClient client = new ConnClient(socket);
                         clientList.add(client);
                         System.out.println(" by hua client conn ... ");
-                        String msg = Const.CONN_SUCCESS + socket.getInetAddress();
-                        sendmsg(socket.getInetAddress().toString(),msg,false);
+                        String msg = CONN_SUCCESS + socket.getInetAddress();
+                        sendmsg(socket.getInetAddress().toString(),msg,true);
                         (new Thread(client)).start();
 
                     }
@@ -86,16 +91,16 @@ public class SocketServer {
         }
 
         public void sendmsg(String msg) {
-                if(connStatus) {
-                    PrintWriter pout = null;
-                    try {
-                        pout = new PrintWriter(new BufferedWriter(
-                                new OutputStreamWriter(getSocket().getOutputStream())), true);
-                        pout.println(msg);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+            if(connStatus) {
+                PrintWriter pout = null;
+                try {
+                    pout = new PrintWriter(new BufferedWriter(
+                            new OutputStreamWriter(getSocket().getOutputStream())), true);
+                    pout.println(msg);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+            }
         }
 
         @Override

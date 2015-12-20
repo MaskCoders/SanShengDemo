@@ -9,8 +9,6 @@ import com.sansheng.testcenter.controller.MainHandler;
 import java.io.*;
 import java.net.Socket;
 
-import static com.sansheng.testcenter.base.Const.*;
-
 /**
  * Created by hua on 12/18/15.
  */
@@ -20,6 +18,18 @@ public class SocketClient {
     private PrintWriter out = null;
     private Context mContext;
     private MainHandler mMainHandler;
+
+    static final int PORT = 8001;
+    static final String ERRCODE = "ERRCODE";
+    static final String CONN_SUCCESS = "CONN_SUCCESS";
+    static final String HOST = "127.0.0.1";
+
+    static final int CONN_SER_CLS = -2;
+    static final int CONN_ERR = -1;
+    static final int CONN_OK = 0;
+    static final int RECV_MSG = 1;
+    static final int INPUT_ERR = -3;
+
     public SocketClient(Context ctx , MainHandler handler){
         mContext = ctx;
         mMainHandler = handler;
