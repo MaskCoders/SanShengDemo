@@ -41,6 +41,7 @@
     <color name="login_tv_color">#323a42</color>
 
     <color name="login_hint_color">#818c98</color>
+    <color name="login_hint_color_tr">#50818c98</color>
     <color name="actionbar_main_title">#323a42</color>
     <color name="dark_action_bar_bg">#424a59</color>
     <color name="custom_status_bar_color">#424a59</color>

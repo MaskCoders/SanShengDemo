@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.sansheng.testcenter.R;
+import com.sansheng.testcenter.controller.MainHandler;
 
 /**
  * Created by sunshaogang on 12/10/15.
@@ -24,7 +25,7 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
     public final static int MODIFY_DETAIL_VIEW = 6;//修改详情
     public final static int SETTINGS_VIEW = 7;//修改详情
     private ActionBarCallback mActionBarCallback;
-
+    protected MainHandler mMainHandler;
     protected EditText main_sort_log;
     protected EditText main_whole_log;
     protected ImageButton main_log_down_btn;
@@ -67,13 +68,23 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
 //        if(main_whole_log.getVisibility() == View.VISIBLE){
 //            main_sort_log.setVisibility(View.GONE);
 //        }else {
-            main_sort_log.setVisibility((main_whole_log.getVisibility() != View.VISIBLE && flag) ? View.VISIBLE : View.GONE);
+//        if(main_sort_log.getVisibility() == View.VISIBLE){
+//
+//        }
+        main_sort_log.setVisibility((main_whole_log.getVisibility() != View.VISIBLE && flag) ? View.VISIBLE : View.GONE);
+//        if(null != mMainHandler && main_sort_log.getVisibility() == View.GONE) {
+//            mMainHandler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    showShortLog(false);
+//                }
+//            }, 2000);
 //        }
     }
 
     protected void showWholeLog(boolean flag) {
         main_whole_log.setVisibility(flag ? View.VISIBLE : View.GONE);
-        if(flag){
+        if (flag) {
             main_sort_log.setVisibility(View.GONE);
         }
     }

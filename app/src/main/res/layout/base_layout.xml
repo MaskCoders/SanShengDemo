@@ -11,35 +11,41 @@
                          android:layout_weight="11">
 
                 <!-- 主列表-->
-                <LinearLayout android:id="@+id/main_info" android:layout_width="fill_parent" android:layout_height="fill_parent"
+                <LinearLayout android:id="@+id/main_info" android:layout_width="fill_parent"
+                              android:layout_height="fill_parent"
                               android:orientation="vertical"
-                              android:background="#77ffff" ></LinearLayout>
+                              android:background="@drawable/chip_background"></LinearLayout>
                 <!-- log  -->
-                <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
-                              android:orientation="vertical" android:background="#7266ff" >
+                <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+                              android:orientation="vertical" >
                     <EditText android:id="@+id/main_sort_log" android:layout_width="fill_parent"
-                              android:layout_height="50dp" android:background="#776611" android:visibility="gone"/>
+                              android:layout_height="40dp" android:background="@color/head_icon_bg_color1"
+                              android:visibility="gone" android:paddingLeft="7dp" android:paddingRight="7dp"
+                              android:textColor="@color/quick_reply_bg"/>
                     <EditText android:id="@+id/main_whole_log" android:layout_height="fill_parent"
-                              android:layout_width="0dp"
-                              android:layout_weight="8"
-                              android:background="@drawable/btn_default_disabled_holo_light"
+                              android:layout_width="fill_parent"
+                              android:background="@color/light_press_color"
                               android:singleLine="false"
                               android:editable="false"
                               android:gravity="center|top|left"
+                              android:paddingLeft="12dp"
+                              android:paddingRight="12dp"
+                              android:paddingTop="12dp"
+                              android:paddingBottom="12dp"
                               android:visibility="gone"
                               android:scrollbars="vertical"
                     />
-                    <ImageButton android:id="@+id/main_log_down_btn" android:layout_width="wrap_content"
-                                 android:layout_height="wrap_content" android:background="#aa00ff"/>
+                    <ImageButton android:id="@+id/main_log_down_btn" android:layout_width="0dp"
+                                 android:layout_height="0dp" android:background="@color/login_hint_color" android:layout_gravity="center_vertical"/>
                 </LinearLayout>
             </FrameLayout>
             <!-- 底部状态栏 -->
             <TextView android:id="@+id/main_status_info" android:layout_width="fill_parent" android:layout_height="0dp"
-                      android:layout_weight="1" android:background="#837647"/>
+                      android:layout_weight="1" android:background="@drawable/chip_background" android:paddingLeft="7dp"/>
         </LinearLayout>
         <!-- 按钮列表-->
         <LinearLayout android:id="@+id/main_button_list" android:layout_width="0dp" android:layout_height="fill_parent"
-                      android:layout_weight="3" android:orientation="vertical" android:background="#3399aa">
+                      android:layout_weight="3" android:orientation="vertical" android:background="@drawable/chip_background">
 
         </LinearLayout>
     </LinearLayout>
@@ -50,6 +56,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="left"
             android:orientation="vertical"
-            android:background="#7bff7b">
+            android:background="#afff">
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

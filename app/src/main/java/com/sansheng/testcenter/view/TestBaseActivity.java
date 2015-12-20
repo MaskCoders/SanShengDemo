@@ -26,7 +26,7 @@ public class TestBaseActivity extends BaseActivity implements IServiceHandlerCal
     Button conn2;
     Button conn4;
     Button conn3;
-    private MainHandler mMainHandler;
+
     private MSocketServer myService;  //我们自己的service
     private SocketClient mSocketClient;
 
