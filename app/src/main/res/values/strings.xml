@@ -76,7 +76,8 @@
 
 
 
-
+    <string name="capital_on">打开</string>
+    <string name="capital_off">关闭</string>
 
 
 </resources>
