@@ -38,6 +38,7 @@
     <string name="change_db">修改电表书库</string>
     <string name="create_db_info">正在生成测试数据，请稍后 ... </string>
     <string name="has_create_db">测试数据已生成 </string>
+    <string name="loading_settings">正在加载设置信息</string>
 
     <string name="yes">是 </string>
     <string name="no">否 </string>

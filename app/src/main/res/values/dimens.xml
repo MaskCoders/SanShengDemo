@@ -13,4 +13,5 @@
     <dimen name="single_line_height">@dimen/account_item_height</dimen>
     <dimen name="two_line_height">72dp</dimen>
     <dimen name="change_view_margin">20dp</dimen>
+    <dimen name="changable_preference_margin">15dp</dimen>
 </resources>

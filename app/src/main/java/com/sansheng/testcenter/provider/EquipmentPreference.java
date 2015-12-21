@@ -22,23 +22,16 @@ import android.content.SharedPreferences;
 public class EquipmentPreference {
     private static final String TAG = "EquipmentPreference";
     private static final String PREFERENCES_FILE = "Equipment";
-    private static final String PREF_DELIMITER = "-";
 
-    private static final String LAST_SYNC_RESULT = "last-sync-result";
-    private static final String MAX_SUCCESS_TIMESTAMP = "max-success-timestamp";
-    private static final String MAX_UPDATE_TIME = "max-update-time";
-    private static final String LATEST_MSG_COUNT = "latest-msg-count";
-    private static final String UNREAD_DETAIL_COUNT = "unread-detail-count";
-    private static final String MAX_NOTIFICATION_TIME = "max-notification-time";
-    private static final String LAST_SEND_TO = "account-last-send-to";
-    private static final String LAST_MESSAGE_ID = "account-last-message-id";
-    private static final String LAST_MESSAGE_TYPE = "account-last-message-type";
-    private static final String CIRCLE_SEND_FAIL = "circle-send-fail";
-
-    private static final String PARAM_CONTACT_ID = "id";
-    private static final String PARAM_CONTACT_EMAIL = "email";
-    private static final String PARAM_CONTACT_NAME = "name";
-    private static final String PARAM_CONTACT_TYPE = "type";
+    private static final String DEFAULT_AGREEMENT = "default_agreement";
+    private static final String RESEND_FREQUENCY = "resend_frequency";
+    private static final String REQUEST_TIME_OUT = "request_time_out";
+    private static final String LOG_TEXT_SIZE = "log_text_size";
+    private static final String AGREEMENT_SHOW_LENGTH = "agreement_show_length";
+    private static final String MAX_TEST_COUNT = "max_test_count";
+    private static final String TIME_INACCURACY = "time_inaccuracy";
+    private static final String WRITE_TO_LOG = "write_to_log";
+    private static final String SERVER_ADDRESS = "server_address";
 
     private static EquipmentPreference sPreferences;
 
@@ -55,24 +48,99 @@ public class EquipmentPreference {
         return sPreferences;
     }
 
-    public static SharedPreferences getSharedPreferences(Context context) {
-        return getPreferences(context).mSharedPreferences;
+    //默认规约类型
+    public void setDefaultAgreement(int type){
+        mSharedPreferences.edit().putInt(DEFAULT_AGREEMENT, type).apply();
     }
 
-    public void setMaxSuccessTimestamp(long timestamp) {
-        mSharedPreferences.edit().putLong( MAX_SUCCESS_TIMESTAMP, timestamp).apply();
+    public int getDefaultAgreement(){
+        return mSharedPreferences.getInt(DEFAULT_AGREEMENT, 0);
     }
 
-    public long getMaxSuccessTimestamp() {
-        return mSharedPreferences.getLong(MAX_SUCCESS_TIMESTAMP, 0);
+    //重发次数
+    public void setSendFrequency(int times){
+        mSharedPreferences.edit().putInt(RESEND_FREQUENCY, times).apply();
+    }
+
+    public int getSendFrequency(){
+        return mSharedPreferences.getInt(RESEND_FREQUENCY, 0);
+    }
+
+    //超时时间
+    public void setRequestTimeOut(int time){
+        mSharedPreferences.edit().putInt(REQUEST_TIME_OUT, time).apply();
+    }
+
+    public int getRequestTimeOut(){
+        return mSharedPreferences.getInt(REQUEST_TIME_OUT, 1);
+    }
+
+    //日志字体 大中小
+    public void setLogTextSize(int type){
+        mSharedPreferences.edit().putInt(LOG_TEXT_SIZE, type).apply();
+    }
+
+    public int getLogTextSize(){
+        return mSharedPreferences.getInt(LOG_TEXT_SIZE, 1);
+    }
+
+    //报文显示长度
+    public void setAgreementShowLength(int type){
+        mSharedPreferences.edit().putInt(AGREEMENT_SHOW_LENGTH, type).apply();
+    }
+
+    public int getAgreementShowLength(){
+        return mSharedPreferences.getInt(AGREEMENT_SHOW_LENGTH, 50);
+    }
+
+    //任务最大测量点数
+    public void setMaxTestCount(int type){
+        mSharedPreferences.edit().putInt(MAX_TEST_COUNT, type).apply();
+    }
+
+    public int getMaxTestCount(){
+        return mSharedPreferences.getInt(MAX_TEST_COUNT, 10);
+    }
+
+    //表计时间误差 分钟
+    public void setTimeInaccuracy(int type){
+        mSharedPreferences.edit().putInt(TIME_INACCURACY, type).apply();
+    }
+
+    public int getTimeInaccuracy(){
+        return mSharedPreferences.getInt(TIME_INACCURACY, 60);
+    }
+
+    //启用日志
+    public void setWriteToLog(boolean log){
+        mSharedPreferences.edit().putBoolean(WRITE_TO_LOG, log).apply();
+    }
+
+    public boolean getWriteToLog(){
+        return mSharedPreferences.getBoolean(WRITE_TO_LOG, true);
+    }
+
+    //服务器地址
+    public void setServerAddress(String url){
+        mSharedPreferences.edit().putString(SERVER_ADDRESS, url).apply();
+    }
+
+    public String getServerAddress(){
+        return mSharedPreferences.getString(SERVER_ADDRESS, "");
     }
 
     /**
      * 删除数据库同时清空preferences
      */
     public void deletePreference() {
-        mSharedPreferences.edit().remove(MAX_SUCCESS_TIMESTAMP).apply();
-        mSharedPreferences.edit().remove(MAX_SUCCESS_TIMESTAMP).apply();
+        mSharedPreferences.edit().remove(DEFAULT_AGREEMENT).apply();
+        mSharedPreferences.edit().remove(RESEND_FREQUENCY).apply();
+        mSharedPreferences.edit().remove(REQUEST_TIME_OUT).apply();
+        mSharedPreferences.edit().remove(LOG_TEXT_SIZE).apply();
+        mSharedPreferences.edit().remove(AGREEMENT_SHOW_LENGTH).apply();
+        mSharedPreferences.edit().remove(MAX_TEST_COUNT).apply();
+        mSharedPreferences.edit().remove(TIME_INACCURACY).apply();
+        mSharedPreferences.edit().remove(WRITE_TO_LOG).apply();
+        mSharedPreferences.edit().remove(SERVER_ADDRESS).apply();
     }
-
 }

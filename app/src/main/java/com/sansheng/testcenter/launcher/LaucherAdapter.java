@@ -1,7 +1,6 @@
 package com.sansheng.testcenter.launcher;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -18,7 +17,7 @@ import com.sansheng.testcenter.demo.view.MeterListActivity;
 import com.sansheng.testcenter.demo.view.SocketDemo;
 import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.module.MeterData;
-import com.sansheng.testcenter.upgrade.AppUpgrade;
+import com.sansheng.testcenter.settings.SettingsActivity;
 import com.sansheng.testcenter.utils.Utility;
 import com.sansheng.testcenter.view.TestBaseActivity;
 
@@ -36,7 +35,6 @@ public class LaucherAdapter extends BaseAdapter {
             R.drawable.db_operation_icon_selector,
             R.drawable.db_operation_icon_selector,
             R.drawable.create_db_icon_selector,
-            R.drawable.db_operation_icon_normal,
             R.drawable.db_operation_icon_normal,
             R.drawable.db_operation_icon_normal};
     private ProgressDailog mProgressDailog;
@@ -93,11 +91,9 @@ public class LaucherAdapter extends BaseAdapter {
                             intent.setClass(mContext, TestBaseActivity.class);
                             mContext.startActivity(intent);
                             break;
-                        case 5:
-                            new AppUpgrade(mContext).check(false);
-                            break;
-                        case 6://设置
-                            //TODO:
+                        case 5://设置
+                            intent.setClass(mContext, SettingsActivity.class);
+                            mContext.startActivity(intent);
                             break;
                         default:
                             break;
@@ -123,7 +119,7 @@ public class LaucherAdapter extends BaseAdapter {
 
     private String[] getAttSource() {
         if (textSource == null || textSource.length == 0) {
-            textSource = mContext.getResources().getStringArray(R.array.chat_bottom_option_button);
+            textSource = mContext.getResources().getStringArray(R.array.launcher_icon_array);
         }
         return textSource;
     }
@@ -153,12 +149,6 @@ public class LaucherAdapter extends BaseAdapter {
         mProgressDailog.show();
         mProgressDailog.setActivity(mContext);
         mProgressDailog.setMessage(mContext.getResources().getString(R.string.create_db_info));
-        mProgressDailog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-
-            }
-        });
     }
 
     private void hideProgressDialog() {

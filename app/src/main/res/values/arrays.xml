@@ -1,14 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="chat_bottom_option_button">
+    <string-array name="launcher_icon_array">
         <item>@string/function_socket</item>
         <item>@string/function_meter_list</item>
         <item>@string/function_meter_data_list</item>
-
         <item>@string/function_create_data</item>
         <item>@string/function_test</item>
-        <item>@string/function_check_update</item>
-
         <item>@string/function_settings</item>
+    </string-array>
+    <!--规约类型-->
+    <string-array name="agreement_entries">
+        <item>国网规约</item>
+        <item>陕西规约</item>
+    </string-array>
+    <string-array name="agreement_entries_value">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <!--任务重发次数-->
+    <string-array name="resend_frequency_entries">
+        <item>1</item>
+        <item>3</item>
+        <item>5</item>
+        <item>10</item>
+    </string-array>
+    <string-array name="resend_frequency_entries_value">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <!--超时时间-->
+    <string-array name="request_time_out_entries">
+        <item>20</item>
+        <item>60</item>
+        <item>120</item>
+        <item>300</item>
+    </string-array>
+    <string-array name="request_time_out_entries_value">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <!--日志字体大小-->
+    <string-array name="log_text_size_entries">
+        <item>小</item>
+        <item>中</item>
+        <item>大</item>
+    </string-array>
+    <string-array name="log_text_size_entries_value">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <!--报文显示长度-->
+    <string-array name="agreement_show_length_entries">
+        <item>30</item>
+        <item>50</item>
+        <item>100</item>
+    </string-array>
+    <string-array name="agreement_show_length_entries_value">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <!--任务最大测量点数-->
+    <string-array name="max_test_count_entries">
+        <item>5</item>
+        <item>10</item>
+        <item>20</item>
+    </string-array>
+    <string-array name="max_test_count_entries_value">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <!--表计时间误差(分钟)-->
+    <string-array name="time_inaccuracy_entries">
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
+    </string-array>
+    <string-array name="time_inaccuracy_entries_value">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
     </string-array>
 </resources>

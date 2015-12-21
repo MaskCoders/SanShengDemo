@@ -13,13 +13,13 @@ repositories {
 }
 
 android {
-    compileSdkVersion 17//设置编译时用的Android版本
+    compileSdkVersion 19//设置编译时用的Android版本
     buildToolsVersion '19.1.0'//设置编译时使用的构建工具的版本
 
     defaultConfig {//设置一些默认属性，其可用属性是buildTypes和ProductFlavors之和
         applicationId "com.sansheng.testcenter"
-        minSdkVersion 14 //设置兼容的最小版本
-        targetSdkVersion 17 //设置目标SDK版本
+        minSdkVersion 17 //设置兼容的最小版本
+        targetSdkVersion 19 //设置目标SDK版本
     }
 
     compileOptions {

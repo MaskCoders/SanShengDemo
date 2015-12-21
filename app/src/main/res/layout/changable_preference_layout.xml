@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/title_text"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/title_body_color"
+            android:textSize="@dimen/list_body_text_size_big"/>
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/attachment_downloaded_arrow"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="@dimen/changable_preference_margin"
+            android:layout_marginBottom="@dimen/changable_preference_margin"
+            android:paddingRight="10dp"
+            android:id="@+id/next_modify_page"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/content_text"
+            android:singleLine="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/next_modify_page"
+            android:maxLength="30"
+            android:ellipsize="end"
+            android:textColor="@color/conversation_subject_color"
+            android:textSize="@dimen/list_body_text_size_big"/>
+</RelativeLayout>
