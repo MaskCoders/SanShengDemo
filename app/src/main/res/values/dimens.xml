@@ -14,4 +14,8 @@
     <dimen name="two_line_height">72dp</dimen>
     <dimen name="change_view_margin">20dp</dimen>
     <dimen name="changable_preference_margin">15dp</dimen>
+
+    <dimen name="meter_data_list_item_height">50dp</dimen>
+    <dimen name="meter_data_list_item_divider_width">0.5px</dimen>
+    <dimen name="list_margin">10dp</dimen>
 </resources>

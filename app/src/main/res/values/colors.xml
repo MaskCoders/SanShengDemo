@@ -67,4 +67,5 @@
     <color name="divider_color">#dcdfe2</color><!--分割线-->
     <color name="settings_button_press">#f2f2f2</color>
     <color name="color_white">#fff</color>
+    <color name="color_black">#000000</color>
 </resources>

@@ -309,7 +309,7 @@ public class EquipmentProvider extends ContentProvider {
         builder.append(MeterData.TABLE_NAME + " LEFT JOIN "
                 + Meter.TABLE_NAME + " ON " + Meter.TABLE_NAME + "." + Meter.ID + "="
                 + MeterData.TABLE_NAME + "." + MeterData.METER_ID);
-
+//        builder.append(MeterData.TABLE_NAME);
         builder.append(" WHERE ").append(selection);
         if (!TextUtils.isEmpty(sortOrder)) {
             builder.append(" ORDER BY ");

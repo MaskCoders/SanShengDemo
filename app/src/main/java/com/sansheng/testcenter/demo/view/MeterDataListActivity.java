@@ -7,6 +7,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
@@ -24,6 +25,7 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
 
     private View mEmptyView;
     private PullListView mListView;
+//    private View mHeaderView;
     private Handler mHandler = new Handler();
     private MeterDataListAdapter mAdapter;
     private int mLastVisibleItem;
@@ -61,6 +63,7 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {//加载更多。
+        Log.e("ssg", "cursor count = " + data.getCount());
         if (mAdapter.getCount() != 0 && data != null && mAdapter.getCount() == data.getCount()) {
             mListView.setNoMoreData();
             mAdapter.swapCursor(data);
@@ -108,6 +111,8 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
     private void initView() {
         mListView = (PullListView) findViewById(R.id.listview);
         mListView.setOnScrollListener(this);
+//        mHeaderView = getLayoutInflater().inflate(R.layout.meter_data_list_header, mListView, false);
+//        mListView.setPullHeaderView(mHeaderView);
         mEmptyView = findViewById(R.id.empty_view_group);
     }
 
