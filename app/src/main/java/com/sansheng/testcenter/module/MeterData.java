@@ -26,6 +26,8 @@ public class MeterData extends Content implements MeterDataColumns, Parcelable {
     public float mVal4;
     public long mUpdateTime;
 
+    public Meter mMeter;
+
     public static final int ID_INDEX = 0;
     public static final int METER_ID_INDEX = ID_INDEX + 1;
     public static final int VALUE_TIME_INDEX = ID_INDEX + 2;
@@ -110,6 +112,8 @@ public class MeterData extends Content implements MeterDataColumns, Parcelable {
         mVal3 = cursor.getFloat(VAL3_INDEX);
         mVal4 = cursor.getFloat(VAL4_INDEX);
         mUpdateTime = cursor.getLong(UPDATE_TIME_INDEX);
+        mMeter = new Meter();
+        mMeter.restoreWithMeterDataCursor(cursor);
     }
 
     @Override
@@ -141,6 +145,7 @@ public class MeterData extends Content implements MeterDataColumns, Parcelable {
         dest.writeFloat(mVal3);
         dest.writeFloat(mVal4);
         dest.writeLong(mUpdateTime);
+        dest.writeParcelable(mMeter, flags);
     }
 
     public static final Parcelable.Creator<MeterData> CREATOR
@@ -157,6 +162,7 @@ public class MeterData extends Content implements MeterDataColumns, Parcelable {
     };
 
     public MeterData(Parcel in) {
+        final ClassLoader loader = getClass().getClassLoader();
         mId = in.readLong();
         mMeterID = in.readInt();
         mValueTime = in.readLong();
@@ -170,6 +176,7 @@ public class MeterData extends Content implements MeterDataColumns, Parcelable {
         mVal3 = in.readFloat();
         mVal4 = in.readFloat();
         mUpdateTime = in.readInt();
+        mMeter = in.readParcelable(loader);
     }
 
     public MeterData copy() {
@@ -187,6 +194,7 @@ public class MeterData extends Content implements MeterDataColumns, Parcelable {
         meter.mVal3 = mVal3;
         meter.mVal4 = mVal4;
         meter.mUpdateTime = mUpdateTime;
+        meter.mMeter = mMeter.copy();
         return meter;
     }
 

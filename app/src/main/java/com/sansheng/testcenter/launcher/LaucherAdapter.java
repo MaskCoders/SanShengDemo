@@ -133,10 +133,12 @@ public class LaucherAdapter extends BaseAdapter {
         @Override
         protected Integer doInBackground(Void... params) {
             for (int i = 1; i < 51; i++) {
-                MeterData meterData = new MeterData(true, i);
-                meterData.save(mContext);
                 Meter meter = new Meter(true, i);
                 meter.save(mContext);
+                MeterData meterData = new MeterData(true, i);
+                meterData.save(mContext);
+                MeterData meterData1 = new MeterData(true, i);
+                meterData1.save(mContext);
             }
             hideProgressDialog();
             return null;

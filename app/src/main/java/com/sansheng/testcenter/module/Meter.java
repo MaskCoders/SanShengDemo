@@ -12,7 +12,7 @@ import android.os.Parcelable;
  */
 public class Meter extends Content implements Content.MeterColumns, Parcelable {
 
-    public int mCollectId;
+    public int mConcentratorId;
     public int mDa;//作用未知
     public String mMeterName;
     public int mMeterNum;
@@ -77,8 +77,10 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
     public Meter(boolean test, int id) {
         mBaseUri = CONTENT_URI;
         if (test) {
-            mCollectId = id;
+            mConcentratorId = 0;
             mMeterName = "电表名称" + id;
+            mMeterAddress = "电表地址" + id;
+            mMeterNum = id;
         }
     }
 
@@ -90,7 +92,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
         // Assign values for each row.
-        values.put(COLLECT_ID, mCollectId);
+        values.put(COLLECT_ID, mConcentratorId);
         values.put(DA, mDa);
         values.put(METER_NAME, mMeterName);
         values.put(METER_NUM, mMeterNum);
@@ -115,7 +117,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
     @Override
     public void restore(Cursor cursor) {
         mId = cursor.getLong(ID_INDEX);
-        mCollectId = cursor.getInt(COLLECT_ID_INDEX);
+        mConcentratorId = cursor.getInt(COLLECT_ID_INDEX);
         mDa = cursor.getInt(DA_INDEX);
         mMeterName = cursor.getString(METER_NUM_INDEX);
         mMeterNum = cursor.getInt(METER_ADDRESS_INDEX);
@@ -136,6 +138,29 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         mNote = cursor.getString(NOTE_INDEX);
     }
 
+    public void restoreWithMeterDataCursor(Cursor cursor){
+        mId = cursor.getLong(MeterData.METER_ID_INDEX);
+        mConcentratorId = cursor.getInt(cursor.getColumnIndex(COLLECT_ID));
+        mDa = cursor.getInt(cursor.getColumnIndex(DA));
+        mMeterName = cursor.getString(cursor.getColumnIndex(METER_NUM));
+        mMeterNum = cursor.getInt(cursor.getColumnIndex(METER_ADDRESS));
+        mMeterAddress = cursor.getString(cursor.getColumnIndex(METER_NAME));
+        mCommPwd = cursor.getInt(cursor.getColumnIndex(COMMON_PASSWORD));
+        mBaudRateId = cursor.getInt(cursor.getColumnIndex(BAUDRATE_ID));
+        mCommPortId = cursor.getInt(cursor.getColumnIndex(COMMON_PORT_ID));
+        mProtocolId = cursor.getInt(cursor.getColumnIndex(PROTOCOL_ID));
+        FeiLvId = cursor.getInt(cursor.getColumnIndex(FEILV_ID));
+        mGatherAddress = cursor.getString(cursor.getColumnIndex(GATHER_ADDRESS));
+        mWeiShuId = cursor.getInt(cursor.getColumnIndex(WEISHU_ID));
+        mUserSmallTypeId = cursor.getInt(cursor.getColumnIndex(USER_SMALL_TYPE_ID));
+        mUserTypeId = cursor.getInt(cursor.getColumnIndex(USER_TYPE_ID));
+        mUserNum = cursor.getString(cursor.getColumnIndex(USER_NUM));
+        mUserAddress = cursor.getString(cursor.getColumnIndex(USER_ADDRESS));
+        mGroupId = cursor.getInt(cursor.getColumnIndex(GROUP_ID));
+        mImportant = cursor.getInt(cursor.getColumnIndex(IMPORTANT));
+        mNote = cursor.getString(cursor.getColumnIndex(NOTE));
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -154,7 +179,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(mId);
-        dest.writeInt(mCollectId);
+        dest.writeInt(mConcentratorId);
         dest.writeInt(mDa);
         dest.writeString(mMeterName);
         dest.writeInt(mMeterNum);
@@ -190,7 +215,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
 
     public Meter(Parcel in) {
         mId = in.readLong();
-        mCollectId = in.readInt();
+        mConcentratorId = in.readInt();
         mDa = in.readInt();
         mMeterName = in.readString();
         mMeterNum = in.readInt();
@@ -211,6 +236,30 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         mNote = in.readString();
     }
 
+    public Meter copy() {
+        Meter meter = new Meter();
+        meter.mId = mId;
+        meter.mConcentratorId = mConcentratorId;
+        meter.mDa = mDa;
+        meter.mMeterName = mMeterName;
+        meter.mMeterNum = mMeterNum;
+        meter.mMeterAddress = mMeterAddress;
+        meter.mCommPwd = mCommPwd;
+        meter.mBaudRateId = mBaudRateId;
+        meter.mCommPortId = mCommPortId;
+        meter.mProtocolId = mProtocolId;
+        meter.FeiLvId = FeiLvId;
+        meter.mGatherAddress = mGatherAddress;
+        meter.mWeiShuId = mWeiShuId;
+        meter.mUserSmallTypeId = mUserSmallTypeId;
+        meter.mUserTypeId = mUserTypeId;
+        meter.mUserNum = mUserNum;
+        meter.mUserAddress = mUserAddress;
+        meter.mGroupId = mGroupId;
+        meter.mImportant = mImportant;
+        meter.mNote = mNote;
+        return meter;
+    }
     public String toString() {
         return  "[" + ID + " : " + mId + "]" + "\n" +
                 "[" + METER_NAME + " : " + mMeterName + "]" + "\n";

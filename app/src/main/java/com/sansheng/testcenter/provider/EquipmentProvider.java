@@ -149,7 +149,7 @@ public class EquipmentProvider extends ContentProvider {
                 case METER_ID:
                     break;
                 case METERDATA:
-                    sql = buildMeterQuery(tableName, projection, selection, sortOrder);
+                    sql = buildMeterDataQuery(tableName, projection, selection, sortOrder);
                     cursor = db.rawQuery(sql, selectionArgs);
                     break;
                 case METERDATA_ID:
@@ -294,6 +294,23 @@ public class EquipmentProvider extends ContentProvider {
         StringBuilder builder = new StringBuilder();
         builder.append("SELECT * FROM ");
         builder.append(table).append(" WHERE ").append(selection);
+        if (!TextUtils.isEmpty(sortOrder)) {
+            builder.append(" ORDER BY ");
+            builder.append(sortOrder);
+        }
+        return builder.toString();
+    }
+
+    //查询电表数据时联合meter table查询，把对应电表信息也查出来。
+    private String buildMeterDataQuery(String table, String[] projection, String selection, String sortOrder) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("SELECT * FROM ");
+        //联合查询
+        builder.append(MeterData.TABLE_NAME + " LEFT JOIN "
+                + Meter.TABLE_NAME + " ON " + Meter.TABLE_NAME + "." + Meter.ID + "="
+                + MeterData.TABLE_NAME + "." + MeterData.METER_ID);
+
+        builder.append(" WHERE ").append(selection);
         if (!TextUtils.isEmpty(sortOrder)) {
             builder.append(" ORDER BY ");
             builder.append(sortOrder);

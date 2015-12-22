@@ -53,11 +53,11 @@ public class MeterDataListAdapter extends SimpleCursorAdapter {
     ViewHolder initViewHolder(final ViewHolder holder, View view) {
         holder.infoLayout = (RelativeLayout) view.findViewById(R.id.meter_item_info);
         holder.vip = (ImageView) view.findViewById(R.id.meter_vip);
-        holder.meterName = (TextView) view.findViewById(R.id.meter_name);
+//        holder.meterName = (TextView) view.findViewById(R.id.meter_name);
         holder.meterId = (TextView) view.findViewById(R.id.meter_id);
         holder.dataType = (TextView) view.findViewById(R.id.meter_type);
         holder.valueTime = (TextView) view.findViewById(R.id.meter_value_time);
-        holder.readTime = (TextView) view.findViewById(R.id.meter_read_time);
+//        holder.readTime = (TextView) view.findViewById(R.id.meter_read_time);
         holder.meterValue = (TextView) view.findViewById(R.id.meter_value);
         return holder;
     }
