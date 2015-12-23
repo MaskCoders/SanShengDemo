@@ -49,8 +49,6 @@
 
     <style name="HorizontalDivider">
         <item name="android:layout_marginLeft">@dimen/conversation_item_margin</item>
-        <item name="android:layout_marginStart">@dimen/conversation_item_margin</item>
-        <item name="android:layout_marginEnd">@dimen/conversation_item_margin</item>
         <item name="android:layout_marginRight">@dimen/conversation_item_margin</item>
         <item name="android:background">@color/divider_color</item>
         <item name="android:layout_width">match_parent</item>
@@ -58,6 +56,15 @@
     </style>
     <style name="DialogButtonText">
         <item name="android:textColor">@color/title_body_color</item>
+        <item name="android:textSize">@dimen/list_body_text_size</item>
+    </style>
+    <style name="TableText">
+        <item name="android:textColor">@color/title_body_color</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/list_body_text_size_big</item>
+    </style>
+    <style name="TableHeadText" parent="TableText">
         <item name="android:textSize">@dimen/list_body_text_size</item>
     </style>
 </resources>

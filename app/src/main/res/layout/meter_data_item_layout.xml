@@ -3,51 +3,42 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="@dimen/meter_data_list_item_height"
-              android:id="@+id/meter_data_item"
-              android:layout_margin="5dp">
+              android:id="@+id/meter_data_item">
+    <include layout="@layout/meter_data_list_ver_divider"/>
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/meter_data_list_item_height"
             android:id="@+id/meter_num"
-            android:layout_alignParentLeft="true"
-            android:layout_weight="0.5"
+            style="@style/TableText"
             android:text="测量点"/>
     <include layout="@layout/meter_data_list_ver_divider"/>
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/meter_address"
-            android:layout_toRightOf="@id/meter_name"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
+            style="@style/TableText"
             android:text="电表地址"/>
     <include layout="@layout/meter_data_list_ver_divider"/>
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/meter_value_time"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
+            style="@style/TableText"
             android:text="数据时标"/>
     <include layout="@layout/meter_data_list_ver_divider"/>
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/meter_read_time"
-            android:layout_alignLeft="@+id/meter_name"
-            android:layout_below="@id/meter_name"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
+            style="@style/TableText"
             android:text="抄表时间"/>
     <include layout="@layout/meter_data_list_ver_divider"/>
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/meter_value"
-            android:layout_alignTop="@id/meter_value"
-            android:layout_toRightOf="@id/meter_value"
-            android:layout_alignLeft="@id/meter_id"
-            android:layout_weight="3"
+            android:layout_weight="1"
+            style="@style/TableText"
             android:text="正向有功"/>
+    <include layout="@layout/meter_data_list_ver_divider"/>
 </LinearLayout>

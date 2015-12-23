@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/list_margin"
+              android:layout_marginRight="@dimen/list_margin"
+              android:orientation="vertical">
+    <include layout="@layout/meter_data_list_header"/>
+    <include layout="@layout/meter_data_list_hor_divider"/>
+    <com.sansheng.testcenter.base.view.PullListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:listSelector="@android:color/transparent"
+            android:focusable="true"
+            android:scrollbars="none"
+            android:background="#ffffff"
+            android:divider="@color/color_black"
+            android:dividerHeight="@dimen/meter_data_list_item_divider_width"
+            android:scrollbarStyle="insideOverlay"
+            android:clickable="false"/>
+</LinearLayout>

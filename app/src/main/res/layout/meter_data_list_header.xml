@@ -3,40 +3,42 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="@dimen/meter_data_list_item_height"
-              android:layout_marginRight="@dimen/list_margin"
-              android:layout_marginLeft="@dimen/list_margin">
+              android:id="@+id/meter_data_header">
+    <include layout="@layout/meter_data_list_ver_divider"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/id1"
-            android:text="测量点"
-            android:layout_weight="0.5"/>
+            style="@style/TableHeadText"
+            android:text="测量点"/>
     <include layout="@layout/meter_data_list_ver_divider"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/id2"
-            android:text="电表地址"
-            android:layout_weight="1"/>
+            style="@style/TableHeadText"
+            android:text="电表地址"/>
     <include layout="@layout/meter_data_list_ver_divider"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/id3"
-            android:text="数据时标"
-            android:layout_weight="1"/>
+            style="@style/TableHeadText"
+            android:text="数据时标"/>
     <include layout="@layout/meter_data_list_ver_divider"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/id4"
-            android:text="抄表时间"
-            android:layout_weight="1"/>
+            style="@style/TableHeadText"
+            android:text="抄表时间"/>
     <include layout="@layout/meter_data_list_ver_divider"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/id5"
+            style="@style/TableHeadText"
             android:text="正向有功示值"
-            android:layout_weight="2"/>
+            android:layout_weight="1"/>
+    <include layout="@layout/meter_data_list_ver_divider"/>
 </LinearLayout>
