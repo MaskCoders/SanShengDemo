@@ -7,13 +7,14 @@
         <item>@string/function_create_data</item>
         <item>@string/function_test</item>
         <item>@string/function_settings</item>
+        <item>@string/function_home</item>
     </string-array>
     <!--规约类型-->
-    <string-array name="agreement_entries">
+    <string-array name="protocol_entries">
         <item>国网规约</item>
         <item>陕西规约</item>
     </string-array>
-    <string-array name="agreement_entries_value">
+    <string-array name="protocol_entries_value">
         <item>0</item>
         <item>1</item>
     </string-array>
@@ -55,12 +56,12 @@
         <item>3</item>
     </string-array>
     <!--报文显示长度-->
-    <string-array name="agreement_show_length_entries">
+    <string-array name="protocol_show_length_entries">
         <item>30</item>
         <item>50</item>
         <item>100</item>
     </string-array>
-    <string-array name="agreement_show_length_entries_value">
+    <string-array name="protocol_show_length_entries_value">
         <item>1</item>
         <item>2</item>
         <item>3</item>

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.base.view.ProgressDailog;
+import com.sansheng.testcenter.center.CenterActivity;
 import com.sansheng.testcenter.demo.view.MeterDataListActivity;
 import com.sansheng.testcenter.demo.view.MeterListActivity;
 import com.sansheng.testcenter.demo.view.SocketDemo;
@@ -35,6 +36,7 @@ public class LaucherAdapter extends BaseAdapter {
             R.drawable.db_operation_icon_selector,
             R.drawable.db_operation_icon_selector,
             R.drawable.create_db_icon_selector,
+            R.drawable.db_operation_icon_normal,
             R.drawable.db_operation_icon_normal,
             R.drawable.db_operation_icon_normal};
     private ProgressDailog mProgressDailog;
@@ -93,6 +95,10 @@ public class LaucherAdapter extends BaseAdapter {
                             break;
                         case 5://设置
                             intent.setClass(mContext, SettingsActivity.class);
+                            mContext.startActivity(intent);
+                            break;
+                        case 6://主站
+                            intent.setClass(mContext, CenterActivity.class);
                             mContext.startActivity(intent);
                             break;
                         default:

@@ -3,14 +3,14 @@
                   xmlns:SettingsPreference="http://schemas.android.com/apk/res-auto"
                   xmlns:SettingsCheckBoxPreference="http://schemas.android.com/tools">
     <PreferenceCategory
-            android:key="agreement_setting"
+            android:key="protocol_setting"
             android:title="规约设置">
         <com.sansheng.testcenter.base.view.SettingsListPreference
-                android:key="default_agreement"
+                android:key="default_protocol"
                 SettingsPreference:s_title="修改默认规约"
                 android:dialogTitle="修改默认规约"
-                android:entries="@array/agreement_entries"
-                android:entryValues="@array/agreement_entries_value"
+                android:entries="@array/protocol_entries"
+                android:entryValues="@array/protocol_entries_value"
                 android:defaultValue="1"/>
         <com.sansheng.testcenter.base.view.SettingsListPreference
                 android:key="resend_frequency"
@@ -36,10 +36,10 @@
                 android:entryValues="@array/log_text_size_entries_value"
                 android:defaultValue="2"/>
         <com.sansheng.testcenter.base.view.SettingsListPreference
-                android:key="agreement_show_length"
+                android:key="protocol_show_length"
                 SettingsPreference:s_title="报文显示长度"
-                android:entries="@array/agreement_show_length_entries"
-                android:entryValues="@array/agreement_show_length_entries_value"
+                android:entries="@array/protocol_show_length_entries"
+                android:entryValues="@array/protocol_show_length_entries_value"
                 android:defaultValue="2"/>
         <com.sansheng.testcenter.base.view.SettingsListPreference
                 android:key="max_test_count"

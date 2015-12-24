@@ -55,7 +55,12 @@
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
-
+        <activity android:name=".center.CenterActivity"
+                  android:screenOrientation="sensorLandscape">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
+        </activity>
         <provider
                 android:name=".provider.EquipmentProvider"
                 android:authorities="${applicationId}.provider.Equipment"

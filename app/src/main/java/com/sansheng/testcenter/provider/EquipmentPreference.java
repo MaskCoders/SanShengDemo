@@ -23,11 +23,11 @@ public class EquipmentPreference {
     private static final String TAG = "EquipmentPreference";
     private static final String PREFERENCES_FILE = "Equipment";
 
-    private static final String DEFAULT_AGREEMENT = "default_agreement";
+    private static final String DEFAULT_AGREEMENT = "default_protocol";
     private static final String RESEND_FREQUENCY = "resend_frequency";
     private static final String REQUEST_TIME_OUT = "request_time_out";
     private static final String LOG_TEXT_SIZE = "log_text_size";
-    private static final String AGREEMENT_SHOW_LENGTH = "agreement_show_length";
+    private static final String AGREEMENT_SHOW_LENGTH = "protocol_show_length";
     private static final String MAX_TEST_COUNT = "max_test_count";
     private static final String TIME_INACCURACY = "time_inaccuracy";
     private static final String WRITE_TO_LOG = "write_to_log";
