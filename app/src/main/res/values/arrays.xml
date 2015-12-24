@@ -8,6 +8,7 @@
         <item>@string/function_test</item>
         <item>@string/function_settings</item>
         <item>@string/function_home</item>
+        <item>@string/function_collect</item>
     </string-array>
     <!--规约类型-->
     <string-array name="protocol_entries">

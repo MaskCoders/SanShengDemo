@@ -13,9 +13,11 @@ import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.base.view.ProgressDailog;
 import com.sansheng.testcenter.center.CenterActivity;
+import com.sansheng.testcenter.demo.view.CollectListActivity;
 import com.sansheng.testcenter.demo.view.MeterDataListActivity;
 import com.sansheng.testcenter.demo.view.MeterListActivity;
 import com.sansheng.testcenter.demo.view.SocketDemo;
+import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.module.MeterData;
 import com.sansheng.testcenter.settings.SettingsActivity;
@@ -36,6 +38,7 @@ public class LaucherAdapter extends BaseAdapter {
             R.drawable.db_operation_icon_selector,
             R.drawable.db_operation_icon_selector,
             R.drawable.create_db_icon_selector,
+            R.drawable.db_operation_icon_normal,
             R.drawable.db_operation_icon_normal,
             R.drawable.db_operation_icon_normal,
             R.drawable.db_operation_icon_normal};
@@ -101,6 +104,10 @@ public class LaucherAdapter extends BaseAdapter {
                             intent.setClass(mContext, CenterActivity.class);
                             mContext.startActivity(intent);
                             break;
+                        case 7://集中器列表
+                            intent.setClass(mContext, CollectListActivity.class);
+                            mContext.startActivity(intent);
+                            break;
                         default:
                             break;
                     }
@@ -145,6 +152,10 @@ public class LaucherAdapter extends BaseAdapter {
                 meterData.save(mContext);
                 MeterData meterData1 = new MeterData(true, i);
                 meterData1.save(mContext);
+            }
+            for (int i = 1; i < 11; i++) {
+                Collect collect = new Collect(true, i);
+                collect.save(mContext);
             }
             hideProgressDialog();
             return null;

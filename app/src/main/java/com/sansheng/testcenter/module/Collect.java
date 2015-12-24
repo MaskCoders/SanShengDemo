@@ -101,6 +101,19 @@ public class Collect extends Content implements Content.CollectColumns, Parcelab
         dest.writeInt(mBaudRateId);
     }
 
+    public Collect(boolean test, int id) {
+        mBaseUri = CONTENT_URI;
+        if (test) {
+            mCommonAddress = "地址" + id;
+            mCollectName = "名称" + id;
+            mPassword = "00000000";
+            mChannelType = 0;
+            mTerminalIp = "ip:" + id;
+            mTerminalPort = 9001;
+            mBaudRateId = id;
+        }
+    }
+
     public static final Creator<Collect> CREATOR
             = new Creator<Collect>() {
         @Override

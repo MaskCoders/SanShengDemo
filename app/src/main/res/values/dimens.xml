@@ -16,6 +16,7 @@
     <dimen name="changable_preference_margin">15dp</dimen>
 
     <dimen name="meter_data_list_item_height">30dp</dimen>
+    <dimen name="collect_list_item_height">40dp</dimen>
     <dimen name="meter_data_list_item_divider_width">1dp</dimen>
     <dimen name="list_margin">10dp</dimen>
 
@@ -29,4 +30,8 @@
     <dimen name="meter_data_item3_width">120dp</dimen>
     <dimen name="meter_data_item4_width">120dp</dimen>
     <!--电表数据表格参数-->
+    <!--集中器表格参数-->
+    <dimen name="collect_item1_width">120dp</dimen>
+    <dimen name="collect_item2_width">120dp</dimen>
+    <!--集中器表格参数-->
 </resources>
