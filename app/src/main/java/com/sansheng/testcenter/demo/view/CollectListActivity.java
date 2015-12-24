@@ -51,6 +51,11 @@ public class CollectListActivity extends BaseActivity implements LoaderManager.L
     }
 
     @Override
+    protected void initCenter() {
+
+    }
+
+    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         StringBuilder selection = new StringBuilder(" 1=1 ");
         return new CursorLoader(this, Collect.CONTENT_URI, Collect.CONTENT_PROJECTION, selection.toString(),

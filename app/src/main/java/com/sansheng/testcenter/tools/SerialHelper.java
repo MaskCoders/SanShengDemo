@@ -240,4 +240,5 @@ public abstract class SerialHelper{
 	}
 	//----------------------------------------------------
 	protected abstract void onDataReceived(ComBean ComRecData);
+
 }

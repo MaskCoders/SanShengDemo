@@ -54,6 +54,11 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
     }
 
     @Override
+    protected void initCenter() {
+
+    }
+
+    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         StringBuilder selection = new StringBuilder(" 1=1 ");
         return new CursorLoader(this, MeterData.CONTENT_URI, MeterData.CONTENT_PROJECTION, selection.toString(),

@@ -90,6 +90,11 @@ public class CenterActivity extends BaseActivity {
     }
 
     @Override
+    protected void initCenter() {
+
+    }
+
+    @Override
     public void onClick(View v) {
         super.onClick(v);
     }

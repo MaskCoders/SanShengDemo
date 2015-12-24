@@ -26,7 +26,7 @@ public class TestBaseActivity extends BaseActivity implements IServiceHandlerCal
     Button conn2;
     Button conn4;
     Button conn3;
-
+    private MainHandler mMainHandler;
     private MSocketServer myService;  //我们自己的service
     private SocketClient mSocketClient;
 
@@ -73,6 +73,12 @@ public class TestBaseActivity extends BaseActivity implements IServiceHandlerCal
         conn3.setOnClickListener(this);
         conn4.setOnClickListener(this);
         main_layout_conn.addView(inflate);
+    }
+
+    @Override
+    protected void initCenter() {
+        View inflate = getLayoutInflater().inflate(R.layout.connbuttonlist, null);
+        main_info.addView(inflate);
     }
 
     @Override

@@ -53,6 +53,11 @@ public class MeterListActivity extends BaseActivity implements LoaderCallbacks<C
     }
 
     @Override
+    protected void initCenter() {
+
+    }
+
+    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         StringBuilder selection = new StringBuilder(" 1=1 ");
         return new CursorLoader(this, Meter.CONTENT_URI, Meter.CONTENT_PROJECTION, selection.toString(),

@@ -106,6 +106,11 @@ public class SocketDemo extends BaseActivity implements View.OnClickListener {
 
     }
 
+    @Override
+    protected void initCenter() {
+
+    }
+
     private Message getMessage(String content, int type) {
         Message msg = new Message();
         msg.obj = content;

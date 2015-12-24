@@ -66,6 +66,11 @@ public class CreateDBActivity extends BaseActivity {
     }
 
     @Override
+    protected void initCenter() {
+
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
     }
