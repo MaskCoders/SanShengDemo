@@ -1,44 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/meter_data_list_item_height"
-              android:id="@+id/meter_data_header">
-    <include layout="@layout/meter_data_list_ver_divider"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/id1"
-            style="@style/TableHeadText"
-            android:text="测量点"/>
-    <include layout="@layout/meter_data_list_ver_divider"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/id2"
-            style="@style/TableHeadText"
-            android:text="电表地址"/>
-    <include layout="@layout/meter_data_list_ver_divider"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/id3"
-            style="@style/TableHeadText"
-            android:text="数据时标"/>
-    <include layout="@layout/meter_data_list_ver_divider"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/id4"
-            style="@style/TableHeadText"
-            android:text="抄表时间"/>
-    <include layout="@layout/meter_data_list_ver_divider"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/id5"
-            style="@style/TableHeadText"
-            android:text="正向有功示值"
-            android:layout_weight="1"/>
-    <include layout="@layout/meter_data_list_ver_divider"/>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/meter_data_list_item_height"
+            android:id="@+id/meter_data_header">
+        <include layout="@layout/meter_data_list_ver_divider"/>
+        <TextView
+                android:layout_width="@dimen/meter_data_item1_width"
+                android:id="@+id/header_id1"
+                style="@style/TableHeadText"
+                android:text="测量点"/>
+        <include layout="@layout/meter_data_list_ver_divider"/>
+        <TextView
+                android:layout_width="@dimen/meter_data_item2_width"
+                android:id="@+id/header_id2"
+                style="@style/TableHeadText"
+                android:text="电表地址"/>
+        <include layout="@layout/meter_data_list_ver_divider"/>
+        <TextView
+                android:layout_width="@dimen/meter_data_item3_width"
+                android:id="@+id/header_id3"
+                style="@style/TableHeadText"
+                android:text="数据时标"/>
+        <include layout="@layout/meter_data_list_ver_divider"/>
+        <TextView
+                android:layout_width="@dimen/meter_data_item4_width"
+                android:id="@+id/header_id4"
+                style="@style/TableHeadText"
+                android:text="抄表时间"/>
+        <include layout="@layout/meter_data_list_ver_divider"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/header_id5"
+                style="@style/TableHeadText"
+                android:text="正向有功示值"
+                android:layout_weight="1"/>
+        <include layout="@layout/meter_data_list_ver_divider"/>
+
+    </LinearLayout>
+    <include layout="@layout/meter_data_list_hor_divider"/>
 </LinearLayout>

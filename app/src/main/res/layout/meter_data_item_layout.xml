@@ -6,36 +6,31 @@
               android:id="@+id/meter_data_item">
     <include layout="@layout/meter_data_list_ver_divider"/>
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/meter_data_list_item_height"
+            android:layout_width="@dimen/meter_data_item1_width"
             android:id="@+id/meter_num"
             style="@style/TableText"
             android:text="测量点"/>
     <include layout="@layout/meter_data_list_ver_divider"/>
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/meter_data_item2_width"
             android:id="@+id/meter_address"
             style="@style/TableText"
             android:text="电表地址"/>
     <include layout="@layout/meter_data_list_ver_divider"/>
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/meter_data_item3_width"
             android:id="@+id/meter_value_time"
             style="@style/TableText"
             android:text="数据时标"/>
     <include layout="@layout/meter_data_list_ver_divider"/>
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/meter_data_item4_width"
             android:id="@+id/meter_read_time"
             style="@style/TableText"
             android:text="抄表时间"/>
     <include layout="@layout/meter_data_list_ver_divider"/>
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
             android:id="@+id/meter_value"
             android:layout_weight="1"
             style="@style/TableText"

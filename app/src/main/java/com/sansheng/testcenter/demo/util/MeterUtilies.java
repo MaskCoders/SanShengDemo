@@ -24,7 +24,14 @@ public class MeterUtilies {
         FormattedDateBuilder dateBuilder = new FormattedDateBuilder(context);
         return dateBuilder.formatLongDateTime(time).toString();
     }
+
     public static String getSanShengDate(long time) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = formatter.format(time);
+        return dateString;
+    }
+
+    public static String getSanShengTime(long time) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateString = formatter.format(time);
         return dateString;

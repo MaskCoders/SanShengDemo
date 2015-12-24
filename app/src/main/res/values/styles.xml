@@ -60,8 +60,11 @@
     </style>
     <style name="TableText">
         <item name="android:textColor">@color/title_body_color</item>
+        <item name="android:singleLine">true</item>
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_height">@dimen/meter_data_list_item_height</item>
+        <item name="android:background">@color/transparent_color</item>
         <item name="android:textSize">@dimen/list_body_text_size_big</item>
     </style>
     <style name="TableHeadText" parent="TableText">
