@@ -13,6 +13,7 @@ import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.base.view.ProgressDailog;
 import com.sansheng.testcenter.center.CenterActivity;
+import com.sansheng.testcenter.collection.CollectionActivity;
 import com.sansheng.testcenter.demo.view.CollectListActivity;
 import com.sansheng.testcenter.demo.view.MeterDataListActivity;
 import com.sansheng.testcenter.demo.view.MeterListActivity;
@@ -38,6 +39,7 @@ public class LaucherAdapter extends BaseAdapter {
             R.drawable.db_operation_icon_selector,
             R.drawable.db_operation_icon_selector,
             R.drawable.create_db_icon_selector,
+            R.drawable.db_operation_icon_normal,
             R.drawable.db_operation_icon_normal,
             R.drawable.db_operation_icon_normal,
             R.drawable.db_operation_icon_normal,
@@ -106,6 +108,10 @@ public class LaucherAdapter extends BaseAdapter {
                             break;
                         case 7://集中器列表
                             intent.setClass(mContext, CollectListActivity.class);
+                            mContext.startActivity(intent);
+                            break;
+                        case 8://信息采集
+                            intent.setClass(mContext, CollectionActivity.class);
                             mContext.startActivity(intent);
                             break;
                         default:

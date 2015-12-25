@@ -26,14 +26,44 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_6
         targetCompatibility JavaVersion.VERSION_1_6
     }
+    //签名
+    signingConfigs {
+        myConfig {
+            storeFile file("../keystore/sansheng.keystore")
+            storePassword "sansheng"
+            keyAlias "sansheng"
+            keyPassword "sansheng"
+        }
+    }
+
     buildTypes {
-        release {
+        debug {
+            versionNameSuffix "_debug"
+            signingConfig signingConfigs.myConfig
+            zipAlignEnabled true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable true
+            jniDebuggable true
+            renderscriptDebuggable true
+        }
+        release {
+            minifyEnabled false
+            zipAlignEnabled true
+            signingConfig signingConfigs.myConfig
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+            jniDebuggable false
         }
     }
     lintOptions {
         abortOnError false
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
     }
 }
 

@@ -37,6 +37,12 @@ public class MeterUtilies {
         return dateString;
     }
 
+    public static String getCurrentTimeString(long time) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        String dateString = formatter.format(time);
+        return dateString;
+    }
+
     public static int showFragment(FragmentManager manager, Fragment old, Fragment fragment, int id, int transition, String tag) {
         FragmentTransaction fragmentTransaction = manager.beginTransaction();
         fragmentTransaction.setTransition(transition);
