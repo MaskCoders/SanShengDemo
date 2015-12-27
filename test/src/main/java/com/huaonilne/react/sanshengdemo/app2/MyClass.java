@@ -4,10 +4,13 @@ import java.math.BigInteger;
 import java.util.Random;
 
 public class MyClass {
-    public static final byte[] HEAD = "68H".getBytes();
-    public static final byte[] END = "16H".getBytes();
+    public static final byte HEAD = 104;//68
+    public static final byte END = 22;//16
     public  final static void main(String[] args){
         MyClass clazz = new MyClass();
+
+//        byte[] data = clazz.hexStringToBytes("16");
+//        clazz.printit(data);
         byte[] data = clazz.makeCommand();
         System.out.println("data size: "+data.length);
         clazz.printit(data);
@@ -21,8 +24,7 @@ public class MyClass {
         public byte[] data;
     }
     public boolean hasHEAD(byte[] data,Command cmd){
-        if(data[0] == HEAD[0] &&  data[1] == HEAD[1] && data[2] == HEAD[2] &&
-                data[5] == HEAD[0] &&  data[6] == HEAD[1] && data[7]== HEAD[2] ){
+        if(data[0] == HEAD &&  data[3] == HEAD ){
             cmd.l[0] = data[3];
             cmd.l[1] = data[4];
             return true;
@@ -32,9 +34,11 @@ public class MyClass {
     }
     public boolean sumOK(byte[] data,Command cmd){
         int sum = 0;
-        byte[] tmp = new byte[data.length-16];
-        sum = sum+data[8]+data[9]+data[10]+data[11];
-        for(int i=12 ;i<data.length-4;i++){
+        byte[] tmp = new byte[data.length-14];
+        for(int i=6 ;i < 12 ;i++){
+            sum = sum+data[i];
+        }
+        for(int i=12 ;i<data.length-2;i++){
             System.out.print("("+data[i]+")+");
             sum = sum+ data[i];
             tmp[i-12] = data[i];
@@ -93,16 +97,14 @@ public class MyClass {
 
     public  byte[]  getCommandHead(){
         System.out.println("getHEAD");
-        byte[] data = new byte[8];
+        byte[] data = new byte[6];
         byte[] l = getL();
-        data[0]=HEAD[0];
-        data[1]=HEAD[1];
-        data[2]=HEAD[2];
+        data[0]=HEAD;
+        data[1]=l[0];
+        data[2]=l[1];
         data[3]=l[0];
         data[4]=l[1];
-        data[5]=HEAD[0];
-        data[6]=HEAD[1];
-        data[7]=HEAD[2];
+        data[5]=HEAD;
         printit(data);
         return data;
     }
@@ -118,7 +120,7 @@ public class MyClass {
     }
     public CenterBean getCommandCenter(){
         System.out.println("getCENTER");
-        byte[] byteArr = new byte[12];
+        byte[] byteArr = new byte[16];
         byte[] c = getC();
         byte[] a = getA();
         int sum = 0;
@@ -126,8 +128,10 @@ public class MyClass {
         byteArr[1]=a[0];
         byteArr[2]=a[1];
         byteArr[3]=a[2];
+        byteArr[4]=a[3];
+        byteArr[5]=a[4];
         for(int i=0 ;i<byteArr.length;i++){
-            if(i>3) {
+            if(i>5) {
                 byteArr[i] = getRandom();
             }
             System.out.print("(" + byteArr[i] + ")+");
@@ -139,11 +143,9 @@ public class MyClass {
     }
     public byte[] getCommandEnd(int sum){
         System.out.println("getEND");
-        byte[] data = new byte[4];
+        byte[] data = new byte[2];
         data[0]= (byte) sum;
-        data[1]=END[0];
-        data[2]=END[1];
-        data[3]=END[2];
+        data[1]=END;
         printit(data);
         return data;
     }
@@ -177,6 +179,23 @@ public class MyClass {
         System.out.println(decodeBinaryString("10"));
 
     }
+    private static byte charToByte(char c) {
+        return (byte) "0123456789ABCDEF".indexOf(c);
+    }
+    public static byte[] hexStringToBytes(String hexString) {
+        if (hexString == null || hexString.equals("")) {
+            return null;
+        }
+        hexString = hexString.toUpperCase();
+        int length = hexString.length() / 2;
+        char[] hexChars = hexString.toCharArray();
+        byte[] d = new byte[length];
+        for (int i = 0; i < length; i++) {
+            int pos = i * 2;
+            d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
+        }
+        return d;
+    }
     private byte[] getL(){
         System.out.println("getL");
         byte[] byteArr = new byte[2];
@@ -197,7 +216,7 @@ public class MyClass {
     }
     private byte[] getC(){
         System.out.println("getC");
-        byte[] byteArr = new byte[8];
+        byte[] byteArr = new byte[1];
         for(int i=0 ;i<byteArr.length;i++){
             byteArr[i] = getRandom();
         }
@@ -206,7 +225,7 @@ public class MyClass {
     }
     private byte[] getA(){
         System.out.println("getA");
-        byte[] byteArr = new byte[3];
+        byte[] byteArr = new byte[5];
         for(int i=0 ;i<byteArr.length;i++){
             byteArr[i] = getRandom();
         }
@@ -323,8 +342,20 @@ public class MyClass {
         System.out.println( Integer.valueOf(String.valueOf(x),2).toString());
     }
 
+    public static void printHexString( byte[] b) {
+        for (int i = 0; i < b.length; i++) {
+            String hex = Integer.toHexString(b[i] & 0xFF);
+            if (hex.length() == 1) {
+                hex = '0' + hex;
+            }
+            System.out.print(hex.toUpperCase() );
+        }
 
+    }
     private void printit(byte[] ba){
+//        System.out.println("-----------start");
+//        printHexString(ba);
+//        System.out.println("\n-----------end");
         for(int i=0;i<ba.length;i++){
             System.out.print(ba[i] + " ");
         }

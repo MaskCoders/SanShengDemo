@@ -19,10 +19,6 @@ public class ProtocolParse {
 
         byte[] data = clazz.makeCommand();
         clazz.checkCommand(data);
-        String o = "d";
-        o = "0000"+o;
-        o=o.substring(o.length()-4);
-        System.out.println(o);
     }
     /**
      * 解析指令
@@ -60,7 +56,6 @@ public class ProtocolParse {
         int sum = 0;
         byte[] tmp = new byte[data.length-14];
         for(int i=6 ;i < data.length-2 ;i++){
-            System.out.print("("+data[i]+")+");
             sum = sum+Integer.parseInt(Integer.toHexString(data[i] & 0xFF),16);
             if(i>11){
                 tmp[i-12] = data[i];
@@ -68,7 +63,7 @@ public class ProtocolParse {
         }
         System.out.println();
         String hexsum = getCRC(sum);
-        String sumInData = byte2hex(data[data.length-2]);
+        String sumInData = ProtocolUtils.byte2hex(data[data.length-2]);
         System.out.println("sumbyte : "+hexsum+"  ,  in data: "+
                 sumInData);
         if (hexsum.equalsIgnoreCase(sumInData)) {
@@ -100,13 +95,12 @@ public class ProtocolParse {
         getCommandEnd();
         System.out.println(commandBuffer.toString());
         System.out.println(commandBuffer.toString().length()/2);
-        return hexStringToBytes(commandBuffer.toString());
+        return ProtocolUtils.hexStringToBytes(commandBuffer.toString());
     }
 
     public void getCommandCenter(){
-        System.out.println("getCENTER");
-        getC();
-        getA();
+        getC(new C(true,true,true,true,11));
+        getA(new A(1111,124,true,123));
         for(int i=0 ;i<6;i++){
             String h = getRandom();
             sum = sum+Integer.parseInt(h,16);
@@ -114,31 +108,10 @@ public class ProtocolParse {
         }
     }
     public void getCommandEnd(){
-        System.out.println("getEND");
         commandBuffer.append(getCRC());//add crc
         commandBuffer.append(END);
     }
-    private static byte charToByte(char c) {
-        return (byte) "0123456789ABCDEF".indexOf(c);
-    }
 
-    public String byte2hex( byte b) {
-        return Integer.toHexString(b & 0xFF);
-    }
-    public static byte[] hexStringToBytes(String hexString) {
-        if (hexString == null || hexString.equals("")) {
-            return null;
-        }
-        hexString = hexString.toUpperCase();
-        int length = hexString.length() / 2;
-        char[] hexChars = hexString.toCharArray();
-        byte[] d = new byte[length];
-        for (int i = 0; i < length; i++) {
-            int pos = i * 2;
-            d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
-        }
-        return d;
-    }
     private void getL(){
         int type = 2;
         int len = commandBufferCenter.toString().length()/2;
@@ -146,9 +119,7 @@ public class ProtocolParse {
 //        int a = len;
 //        int b = len;
 //        String o = Integer.toHexString((a>>8)+(b<<8));
-        String o = Integer.toHexString(len);
-        o = ("0000"+o);
-        o=o.substring(o.length()-4);
+        String o = ProtocolUtils.get2HexFromInt(len);
 
 //        String bin = Integer.toBinaryString((a>>8)+(b<<8));
 //        Integer.parseInt(len,16);
@@ -172,13 +143,15 @@ public class ProtocolParse {
         }
         return s;
     }
-    private void getC(){
+    private void getC(C c){
         commandBufferCenter = new StringBuffer();
-        String h = getRandom();
+        String h = c.getCommand();
+
         sum = sum+Integer.parseInt(h,16);
         commandBufferCenter.append(h);
     }
-    private void getA(){
+
+    private void getA(A a){
         for(int i=0 ;i<5;i++){
             String h = getRandom();
             sum = sum+Integer.parseInt(h,16);
@@ -201,7 +174,7 @@ public class ProtocolParse {
         if(h.length() == 1){
             h="0"+h;
         }
-        System.out.println(h);
+//        System.out.println(h);
         return h;
     }
 }
