@@ -94,9 +94,9 @@ public class ProtocolUtils {
             hexbyte.append(byte2hex(data[i]));
             hexbyte_withspace.append(byte2hex(data[i])).append(" ");
         }
-        System.out.println(sbbyte.toString());
-        System.out.println(hexbyte.toString());
-        System.out.println(hexbyte_withspace.toString());
+        System.out.println("byte:=> "+sbbyte.toString());
+        System.out.println("hexbyte:=> "+hexbyte.toString());
+        System.out.println("hexbyte_withspace:=> "+hexbyte_withspace.toString());
         return hexbyte.toString();
     }
 }
