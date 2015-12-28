@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.base;
+package com.sansheng.testcenter.base.view;
 
 import android.app.*;
 import android.content.Context;
@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.base.view.AppUpdateDialog;
 import com.sansheng.testcenter.upgrade.AppInfo;
 import com.sansheng.testcenter.upgrade.AppUpgrade;
 

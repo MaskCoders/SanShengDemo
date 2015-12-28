@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
-import com.sansheng.testcenter.base.BaseDialog;
 
 public class AppUpdateDialog extends BaseDialog {
 	

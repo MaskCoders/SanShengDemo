@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.base;
+package com.sansheng.testcenter.base.view;
 
 import android.app.Activity;
 import android.app.Dialog;

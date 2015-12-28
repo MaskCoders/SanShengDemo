@@ -15,8 +15,8 @@ import android.util.Log;
 import android.widget.Toast;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.TestCenterApplication;
-import com.sansheng.testcenter.base.DialogFragmentFactory;
-import com.sansheng.testcenter.base.DialogFragmentFactory.CheckVersionDialogFragment;
+import com.sansheng.testcenter.base.view.DialogFragmentFactory;
+import com.sansheng.testcenter.base.view.DialogFragmentFactory.CheckVersionDialogFragment;
 import com.sansheng.testcenter.utils.Utilities;
 import com.sansheng.testcenter.utils.Utility;
 import org.apache.http.NameValuePair;
@@ -29,9 +29,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by hanyong on 14-8-20.
- */
 public class AppUpgrade {
 
 	private static final String TAG = "Upgrade";

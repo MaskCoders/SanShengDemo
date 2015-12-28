@@ -21,7 +21,7 @@
     <dimen name="list_margin">10dp</dimen>
 
     <dimen name="expand_list_item_height">40dp</dimen>
-
+    <dimen name="choose_attachment_from_paddingLeft">15dp</dimen>
     <!--表格参数-->
 
     <!--电表数据表格参数-->

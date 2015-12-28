@@ -102,9 +102,6 @@
         <activity android:name=".collection.LocationActivity"
                   android:screenOrientation="sensorLandscape">
         </activity>
-        <activity android:name=".collection.TakePhotoActivity"
-                  android:screenOrientation="sensorLandscape">
-        </activity>
         <provider
                 android:name=".provider.EquipmentProvider"
                 android:authorities="${applicationId}.provider.Equipment"

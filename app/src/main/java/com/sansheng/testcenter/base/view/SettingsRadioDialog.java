@@ -7,7 +7,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.LayoutParams;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.base.BaseDialog;
 
 public class SettingsRadioDialog extends BaseDialog {
 	private RadioGroup mRadioGroup;
