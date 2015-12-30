@@ -113,7 +113,7 @@
                 android:layout_weight="1"
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="-1dp"
-                android:text="@string/ok"
+                android:text="@string/confirm"
                 android:gravity="center"
                 android:background="@drawable/settings_button_drawable"
                 android:textAppearance="@style/DialogButtonText"/>

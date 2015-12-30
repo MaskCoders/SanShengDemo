@@ -1,5 +1,6 @@
 package com.sansheng.testcenter.demo.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
@@ -9,16 +10,27 @@ import android.widget.*;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.module.Collect;
 
+import java.util.HashMap;
+
 /**
  * Created by sunshaogang on 12/24/15.
  */
 public class CollectListAdapter extends SimpleCursorAdapter {
-    private CollectListActivity mActivity;
+    private Activity mActivity;
+    private HashMap<String, Collect> mSelectedCollects = new HashMap<String, Collect>();
 
     public CollectListAdapter(CollectListActivity context, Cursor cursor) {
         super(context, android.R.layout.simple_list_item_1, cursor, Collect.CONTENT_PROJECTION,
                 Collect.ID_INDEX_PROJECTION, 0);
         this.mActivity = context;
+        this.mSelectedCollects.clear();
+    }
+
+    public CollectListAdapter(Activity context, Cursor cursor) {
+        super(context, android.R.layout.simple_list_item_1, cursor, Collect.CONTENT_PROJECTION,
+                Collect.ID_INDEX_PROJECTION, 0);
+        this.mActivity = context;
+        this.mSelectedCollects.clear();
     }
 
     @Override
@@ -66,17 +78,30 @@ public class CollectListAdapter extends SimpleCursorAdapter {
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //show detail
 //                mActivity.showDetailFragment(collect);
             }
         });
+        holder.mCheckBox.setChecked(mSelectedCollects.containsKey(collect.mCommonAddress));
         holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //do something
+//                Log.e("ssg", "isChecked = " + isChecked);
+                if (isChecked) {
+                    mSelectedCollects.put(collect.mCommonAddress, collect);
+                } else {
+                    mSelectedCollects.remove(collect.mCommonAddress);
+                }
+//                Log.e("ssg", "mSelectCollects size = " + mSelectCollects.size());
             }
         });
-
     }
+
+    public HashMap<String, Collect> getSelectedCollects(){
+        return mSelectedCollects;
+    }
+
     public static class ViewHolder {
         public LinearLayout itemLayout;
         public TextView collectName;

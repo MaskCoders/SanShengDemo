@@ -1,6 +1,5 @@
 package com.sansheng.testcenter.demo.view;
 
-import android.app.FragmentTransaction;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -13,7 +12,6 @@ import android.widget.ListView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.view.PullListView;
-import com.sansheng.testcenter.demo.util.MeterUtilies;
 import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.module.Meter;
 
@@ -116,13 +114,7 @@ public class MeterListActivity extends BaseActivity implements LoaderCallbacks<C
         mEmptyView = findViewById(R.id.empty_view_group);
     }
 
-    public void showDetailFragment(Meter meter) {
-        MeterFragment fragment = new MeterFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(MeterUtilies.PARAM_METER, meter);
-        fragment.setArguments(bundle);
-        MeterUtilies.showFragment(getFragmentManager(), null, fragment, R.id.meter_content, FragmentTransaction.TRANSIT_FRAGMENT_OPEN, String.valueOf(meter.mId));
-    }
+
 
     public void restartLoader(){
         runOnUiThread(new Runnable() {

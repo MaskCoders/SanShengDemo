@@ -1,7 +1,6 @@
 package com.sansheng.testcenter.demo.view;
 
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,14 +10,11 @@ import android.view.ViewGroup;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
-import com.sansheng.testcenter.base.view.DateTimePickDialog;
-import com.sansheng.testcenter.base.view.SettingsRadioDialog;
 import com.sansheng.testcenter.base.view.UIRevisableView;
 import com.sansheng.testcenter.base.view.UIUnrevisableView;
 import com.sansheng.testcenter.demo.util.MeterUtilies;
-import com.sansheng.testcenter.module.MeterData;
+import com.sansheng.testcenter.module.Meter;
 
-import java.util.Calendar;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -27,8 +23,8 @@ import java.util.concurrent.ThreadFactory;
  * Created by sunshaogang on 12/10/15.
  */
 public class MeterFragment extends Fragment implements View.OnClickListener, BaseActivity.ActionBarCallback {
-    private MeterData mMeter;
-    private MeterData mChangedMeter;
+    private Meter mMeter;
+    private Meter mChangedMeter;
 
     private View mRootView;
     private UIUnrevisableView mMeterIdView;
@@ -108,13 +104,13 @@ public class MeterFragment extends Fragment implements View.OnClickListener, Bas
 //                modifyMeterNamen();
                 break;
             case R.id.meter_value_time:
-                modifyValueTime();
+//                modifyValueTime();
                 break;
             case R.id.meter_read_time:
-                modifyReadTime();
+//                modifyReadTime();
                 break;
             case R.id.meter_data_type:
-                modifyDataType();
+//                modifyDataType();
                 break;
             case R.id.meter_value:
 //                modifyMeterValue();
@@ -141,13 +137,13 @@ public class MeterFragment extends Fragment implements View.OnClickListener, Bas
     }
 
 
-    private void refreshView(MeterData meter) {
-        mMeterIdView.setContent(String.valueOf(meter.mMeterID));
+    private void refreshView(Meter meter) {
+//        mMeterIdView.setContent(String.valueOf(meter.mMeterID));
 //        mMeterNameView.setContent(String.valueOf(meter.mMeterName));
-        mValueTimeView.setContent(MeterUtilies.getSanShengDate(meter.mValueTime));
-        mReadTimeView.setContent(MeterUtilies.getSanShengDate(meter.mReadTime));
-        mDateTypeView.setContent(mDataEntries[meter.mDataType - 1]);
-        mValzView.setContent(String.valueOf(meter.mValz));
+//        mValueTimeView.setContent(MeterUtilies.getSanShengDate(meter.mValueTime));
+//        mReadTimeView.setContent(MeterUtilies.getSanShengDate(meter.mReadTime));
+//        mDateTypeView.setContent(mDataEntries[meter.mDataType - 1]);
+//        mValzView.setContent(String.valueOf(meter.mValz));
 //        mImportantView.setContent(mImportantEntries[meter.isImportant]);
     }
 
@@ -179,29 +175,29 @@ public class MeterFragment extends Fragment implements View.OnClickListener, Bas
 //        dialog.show();
 //    }
 
-    private void modifyValueTime() {
-        DateTimePickDialog.OnDateTimeSetListener listener = new DateTimePickDialog.OnDateTimeSetListener() {
-            @Override
-            public void onDateTimeSet(Calendar calendar) {
-                mChangedMeter.mValueTime = calendar.getTimeInMillis();
-                refreshView(mChangedMeter);
-            }
-        };
-        final DateTimePickDialog dateTimePickDialog = new DateTimePickDialog(getActivity(), listener, mChangedMeter.mValueTime);
-        dateTimePickDialog.show();
-    }
+//    private void modifyValueTime() {
+//        DateTimePickDialog.OnDateTimeSetListener listener = new DateTimePickDialog.OnDateTimeSetListener() {
+//            @Override
+//            public void onDateTimeSet(Calendar calendar) {
+//                mChangedMeter.mValueTime = calendar.getTimeInMillis();
+//                refreshView(mChangedMeter);
+//            }
+//        };
+//        final DateTimePickDialog dateTimePickDialog = new DateTimePickDialog(getActivity(), listener, mChangedMeter.mValueTime);
+//        dateTimePickDialog.show();
+//    }
 
-    private void modifyReadTime() {
-        DateTimePickDialog.OnDateTimeSetListener listener = new DateTimePickDialog.OnDateTimeSetListener() {
-            @Override
-            public void onDateTimeSet(Calendar calendar) {
-                mChangedMeter.mReadTime = calendar.getTimeInMillis();
-                refreshView(mChangedMeter);
-            }
-        };
-        final DateTimePickDialog dateTimePickDialog = new DateTimePickDialog(getActivity(), listener, mChangedMeter.mReadTime);
-        dateTimePickDialog.show();
-    }
+//    private void modifyReadTime() {
+//        DateTimePickDialog.OnDateTimeSetListener listener = new DateTimePickDialog.OnDateTimeSetListener() {
+//            @Override
+//            public void onDateTimeSet(Calendar calendar) {
+//                mChangedMeter.mReadTime = calendar.getTimeInMillis();
+//                refreshView(mChangedMeter);
+//            }
+//        };
+//        final DateTimePickDialog dateTimePickDialog = new DateTimePickDialog(getActivity(), listener, mChangedMeter.mReadTime);
+//        dateTimePickDialog.show();
+//    }
 
 //    private void modifyMeterValue() {
 //        final BaseDialog dialog = new BaseDialog(getActivity(), R.style.CustomDialog);
@@ -233,21 +229,21 @@ public class MeterFragment extends Fragment implements View.OnClickListener, Bas
 //        dialog.show();
 //    }
 
-    private void modifyDataType() {
-        final SettingsRadioDialog dialog = new SettingsRadioDialog(getActivity(), R.style.CustomDialog);
-        dialog.setTitleText(R.string.meter_detail_data_type_title);
-
-        dialog.setSingleChoiceItems(mDataEntries, mChangedMeter.mDataType - 1, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                if (which + 1 != mChangedMeter.mDataType) {
-                    mChangedMeter.mDataType = which + 1;
-                    refreshView(mChangedMeter);
-                }
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
+//    private void modifyDataType() {
+//        final SettingsRadioDialog dialog = new SettingsRadioDialog(getActivity(), R.style.CustomDialog);
+//        dialog.setTitleText(R.string.meter_detail_data_type_title);
+//
+//        dialog.setSingleChoiceItems(mDataEntries, mChangedMeter.mDataType - 1, new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int which) {
+//                if (which + 1 != mChangedMeter.mDataType) {
+//                    mChangedMeter.mDataType = which + 1;
+//                    refreshView(mChangedMeter);
+//                }
+//                dialog.dismiss();
+//            }
+//        });
+//        dialog.show();
+//    }
 
 //    private void modifyImportant() {
 //        final SettingsRadioDialog dialog = new SettingsRadioDialog(getActivity(), R.style.CustomDialog);

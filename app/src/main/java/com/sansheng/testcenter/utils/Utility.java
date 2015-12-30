@@ -528,7 +528,7 @@ public class Utility {
     public static <T extends Object> T getFirstRowColumn(Context context, Uri uri,
             String[] projection, String selection, String[] selectionArgs, String sortOrder,
             int column, T defaultValue, CursorGetter<T> getter) {
-        // Use PARAMETER_LIMIT to restrict the query to the single row we need
+        // Use PARAMETER_LIMIT to restrict the query to the single_meter row we need
         uri = buildLimitOneUri(uri);
         Cursor c = context.getContentResolver().query(uri, projection, selection, selectionArgs,
                 sortOrder);
@@ -612,7 +612,7 @@ public class Utility {
     }
 
     /**
-     * Convenience method wrapping calls to retrieve columns from a single row, via EmailProvider.
+     * Convenience method wrapping calls to retrieve columns from a single_meter row, via EmailProvider.
      * The arguments are exactly the same as to contentResolver.query().  Results are returned in
      * an array of Strings corresponding to the columns in the projection.  If the cursor has no
      * rows, null is returned.

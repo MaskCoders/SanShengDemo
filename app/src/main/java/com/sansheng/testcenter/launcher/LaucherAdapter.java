@@ -3,6 +3,7 @@ package com.sansheng.testcenter.launcher;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +11,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.sansheng.testcenter.R;
+import com.sansheng.testcenter.base.CollectSelectDialog;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.base.view.ProgressDailog;
 import com.sansheng.testcenter.center.CenterActivity;
 import com.sansheng.testcenter.collection.CollectionActivity;
-import com.sansheng.testcenter.demo.view.CollectListActivity;
 import com.sansheng.testcenter.demo.view.MeterDataListActivity;
-import com.sansheng.testcenter.demo.view.MeterListActivity;
+import com.sansheng.testcenter.base.MeterSelectDialog;
 import com.sansheng.testcenter.demo.view.SocketDemo;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Meter;
@@ -25,11 +26,12 @@ import com.sansheng.testcenter.settings.SettingsActivity;
 import com.sansheng.testcenter.utils.Utility;
 import com.sansheng.testcenter.view.TestBaseActivity;
 
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-public class LaucherAdapter extends BaseAdapter {
+public class LaucherAdapter extends BaseAdapter implements CollectSelectDialog.CollectCallback, MeterSelectDialog.MeterCallback{
 
     private static final ThreadFactory sThreadFactory = new CustomThreadPoolFactory("EquipmentDBThread");
     private ExecutorService sThreadPool = Executors.newSingleThreadExecutor(sThreadFactory);
@@ -82,8 +84,10 @@ public class LaucherAdapter extends BaseAdapter {
                             mContext.startActivity(intent);
                             break;
                         case 1://电表列表
-                            intent.setClass(mContext, MeterListActivity.class);
-                            mContext.startActivity(intent);
+                            MeterSelectDialog meterDialog = new MeterSelectDialog(LaucherAdapter.this);
+                            meterDialog.show(mContext.getFragmentManager(), "select_meter");
+//                            intent.setClass(mContext, MeterListActivity.class);
+//                            mContext.startActivity(intent);
                             break;
                         case 2://电表数据列表
                             intent.setClass(mContext, MeterDataListActivity.class);
@@ -107,8 +111,10 @@ public class LaucherAdapter extends BaseAdapter {
                             mContext.startActivity(intent);
                             break;
                         case 7://集中器列表
-                            intent.setClass(mContext, CollectListActivity.class);
-                            mContext.startActivity(intent);
+                            CollectSelectDialog collectDialog = new CollectSelectDialog(LaucherAdapter.this);
+                            collectDialog.show(mContext.getFragmentManager(), "select_collects");
+//                            intent.setClass(mContext, CollectListActivity.class);
+//                            mContext.startActivity(intent);
                             break;
                         case 8://信息采集
                             intent.setClass(mContext, CollectionActivity.class);
@@ -130,6 +136,27 @@ public class LaucherAdapter extends BaseAdapter {
         viewHolder.imageView.setImageResource(iconSource[postion]);
         viewHolder.textView.setText(getAttSource()[postion]);
         return convertView;
+    }
+
+    @Override
+    public void onCollectNegativeClick() {
+        //do nothing
+    }
+
+    @Override
+    public void onCollectPositiveClick(HashMap<String, Collect> collects) {
+        //get collect list
+        Log.e("ssg", "selected collects size = " + collects.size());
+    }
+
+    @Override
+    public void onMeterNegativeClick() {
+
+    }
+
+    @Override
+    public void onMeterPositiveClick(HashMap<String, Meter> meters) {
+        Log.e("ssg", "selected meters size = " + meters.size());
     }
 
     public interface OptionCallback {

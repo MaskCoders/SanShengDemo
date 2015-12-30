@@ -521,4 +521,10 @@ public class PullListView extends ListView implements OnScrollListener {
     public void setLoadMoreUseless() {
         state = LOAD_MORE_STATUS_USELESS;
     }
+
+    public void hideFooterView(){
+        if (footerView != null) {
+            footerView.setVisibility(View.GONE);
+        }
+    }
 }

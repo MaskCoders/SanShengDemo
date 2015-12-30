@@ -1,5 +1,7 @@
-package com.sansheng.testcenter.demo.view;
+package com.sansheng.testcenter.base;
 
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
@@ -7,19 +9,27 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.base.BaseActivity;
+import com.sansheng.testcenter.base.view.AnswerDialog;
 import com.sansheng.testcenter.base.view.PullListView;
 import com.sansheng.testcenter.demo.util.MeterUtilies;
+import com.sansheng.testcenter.demo.view.CollectListAdapter;
+import com.sansheng.testcenter.demo.view.MeterDataFragment;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Content;
 
+import java.util.HashMap;
+
 /**
- * Created by sunshaogang on 12/24/15.
+ * Created by sunshaogang on 12/30/15.
  */
-public class CollectListActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>, ListView.OnScrollListener, PullListView.OnLoadMoreListener {
+public class CollectSelectDialog extends DialogFragment implements LoaderManager.LoaderCallbacks<Cursor>, ListView.OnScrollListener, PullListView.OnLoadMoreListener {
+    private View mRootView;
 //    private View mEmptyView;
     private PullListView mListView;
     private CollectListAdapter mAdapter;
@@ -27,37 +37,59 @@ public class CollectListActivity extends BaseActivity implements LoaderManager.L
     private static final int LOADER_ID_FILTER_DEFAULT = 0;
     private int mOriginLength = 10;//默认初始显示数量
     private final static int DOWNSIDE_INCREASE_COUNT = 10;//每次增加数量
+    private AnswerDialog mDialog;
+    private CollectCallback callback;
+
+    public CollectSelectDialog(CollectCallback callback) {
+        this.callback = callback;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.collect_list_layout);
-        initView();
-        mAdapter = new CollectListAdapter(this, null);
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        mDialog = new AnswerDialog(getActivity());
+        mDialog.show();
+        mDialog.setTitleText("选择集中器");
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        mRootView = inflater.inflate(R.layout.collect_list_layout, null);
+        mListView = (PullListView) mRootView.findViewById(R.id.listview);
+        mListView.setOnScrollListener(this);
+        mListView.hideFooterView();
+//        mEmptyView = mRootView.findViewById(R.id.empty_view_group);
+        mAdapter = new CollectListAdapter(getActivity(), null);
         mListView.setAdapter(mAdapter);
         getLoaderManager().initLoader(LOADER_ID_FILTER_DEFAULT, null, this);
-        setActionBar(METERDATA_LIST_VIEW);
+        mDialog.setCustomView(mRootView);
+        mDialog.setNegativeButton(R.string.cancel, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.onCollectNegativeClick();
+                mDialog.dismiss();
+            }
+        });
+        mDialog.setPositiveButton(R.string.confirm, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+                callback.onCollectPositiveClick(mAdapter.getSelectedCollects());
+            }
+        });
+        return mDialog;
     }
 
     @Override
-    protected void initButtonList() {
-
-    }
-
-    @Override
-    protected void initConnList() {
-
-    }
-
-    @Override
-    protected void initCenter() {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         StringBuilder selection = new StringBuilder(" 1=1 ");
-        return new CursorLoader(this, Collect.CONTENT_URI, Collect.CONTENT_PROJECTION, selection.toString(),
+        return new CursorLoader(getActivity(), Collect.CONTENT_URI, Collect.CONTENT_PROJECTION, selection.toString(),
                 null, Collect.ID + " " + Content.DESC + " LIMIT " + mOriginLength);
     }
 
@@ -91,7 +123,7 @@ public class CollectListActivity extends BaseActivity implements LoaderManager.L
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         if (mLastVisibleItem >= mListView.getCount() - DOWNSIDE_INCREASE_COUNT / 2 && scrollState == SCROLL_STATE_IDLE) {
             mOriginLength += DOWNSIDE_INCREASE_COUNT;
-            getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, CollectListActivity.this);
+            getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, this);
             mListView.setFooterViewStatic();
         }
     }
@@ -105,13 +137,7 @@ public class CollectListActivity extends BaseActivity implements LoaderManager.L
     public void onLoadMore(PullListView refreshView) {
         refreshView.onCompleteLoadMore(PullListView.LOAD_MORE_STATUE_SUCCESS);
         mOriginLength += DOWNSIDE_INCREASE_COUNT;
-        getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, CollectListActivity.this);
-    }
-
-    private void initView() {
-        mListView = (PullListView) findViewById(R.id.listview);
-        mListView.setOnScrollListener(this);
-//        mEmptyView = findViewById(R.id.empty_view_group);
+        getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, this);
     }
 
     public void showDetailFragment(Collect collect) {
@@ -122,12 +148,12 @@ public class CollectListActivity extends BaseActivity implements LoaderManager.L
         MeterUtilies.showFragment(getFragmentManager(), null, fragment, R.id.meter_content, FragmentTransaction.TRANSIT_FRAGMENT_OPEN, String.valueOf(collect.mId));
     }
 
-    public void restartLoader(){
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, CollectListActivity.this);
-            }
-        });
+    public void restartLoader() {
+        getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, this);
+    }
+
+    public interface CollectCallback {
+        void onCollectNegativeClick();
+        void onCollectPositiveClick(HashMap<String, Collect> collects);
     }
 }

@@ -1,27 +1,39 @@
 package com.sansheng.testcenter.demo.view;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
+import android.widget.*;
 import com.sansheng.testcenter.R;
+import com.sansheng.testcenter.demo.util.MeterUtilies;
 import com.sansheng.testcenter.module.Meter;
+
+import java.util.HashMap;
 
 /**
  * Created by sunshaogang on 12/9/15.
  */
 public class MeterListAdapter extends SimpleCursorAdapter {
-    private MeterListActivity mActivity;
+    private Activity mActivity;
+    private HashMap<String, Meter> mSelectedMeters = new HashMap<String, Meter>();
 
     public MeterListAdapter(MeterListActivity context, Cursor cursor) {
         super(context, android.R.layout.simple_list_item_1, cursor, Meter.CONTENT_PROJECTION,
                 Meter.ID_INDEX_PROJECTION, 0);
         this.mActivity = context;
+        this.mSelectedMeters.clear();
+    }
+
+    public MeterListAdapter(Activity context, Cursor cursor) {
+        super(context, android.R.layout.simple_list_item_1, cursor, Meter.CONTENT_PROJECTION,
+                Meter.ID_INDEX_PROJECTION, 0);
+        this.mActivity = context;
+        this.mSelectedMeters.clear();
     }
 
     @Override
@@ -32,7 +44,7 @@ public class MeterListAdapter extends SimpleCursorAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
-        Cursor cursor = (Cursor)getItem(position);
+        Cursor cursor = (Cursor) getItem(position);
         if (convertView != null) {
             viewHolder = (ViewHolder) convertView.getTag();
         }
@@ -45,20 +57,22 @@ public class MeterListAdapter extends SimpleCursorAdapter {
         fillDataToViewHolder(cursor, viewHolder);
         return convertView;
     }
+
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         //do nothing
     }
 
     ViewHolder initViewHolder(final ViewHolder holder, View view) {
-        holder.infoLayout = (RelativeLayout) view.findViewById(R.id.meter_item_info);
-        holder.vip = (ImageView) view.findViewById(R.id.meter_vip);
+        holder.infoLayout = (LinearLayout) view.findViewById(R.id.meter_item);
+        holder.meterType = (ImageView) view.findViewById(R.id.meter_type);
         holder.meterName = (TextView) view.findViewById(R.id.meter_name);
         holder.meterId = (TextView) view.findViewById(R.id.meter_id);
-        holder.dataType = (TextView) view.findViewById(R.id.meter_type);
-        holder.valueTime = (TextView) view.findViewById(R.id.meter_value_time);
-        holder.readTime = (TextView) view.findViewById(R.id.meter_read_time);
-        holder.meterValue = (TextView) view.findViewById(R.id.meter_value);
+        holder.meterCheckBox = (CheckBox) view.findViewById(R.id.meter_checkbox);
+//        holder.dataType = (TextView) view.findViewById(R.id.meter_type);
+//        holder.valueTime = (TextView) view.findViewById(R.id.meter_value_time);
+//        holder.readTime = (TextView) view.findViewById(R.id.meter_read_time);
+//        holder.meterValue = (TextView) view.findViewById(R.id.meter_value);
         return holder;
     }
 
@@ -74,7 +88,9 @@ public class MeterListAdapter extends SimpleCursorAdapter {
 //            holder.vip.setVisibility(View.GONE);
 //        }
 //        holder.meterName.setText(mActivity.getResources().getString(R.string.db_name) + meter.mMeterName);
-        holder.meterId.setText(mActivity.getResources().getString(R.string.db_id) + String.valueOf(meter.mMeterName));
+        holder.meterType.setImageResource(meter.mDa == 0 ? R.drawable.single_meter : R.drawable.three_meter);//单项 v 三项
+        holder.meterId.setText(String.valueOf(meter.mMeterNum));
+        holder.meterName.setText(String.valueOf(meter.mMeterName));
 //        String type = meter.mDataType == 1 ? mActivity.getResources().getString(R.string.db_rdj) :
 //                mActivity.getResources().getString(R.string.db_realdata);
 //        holder.dataType.setText(mActivity.getResources().getString(R.string.db_type) + type);
@@ -84,19 +100,47 @@ public class MeterListAdapter extends SimpleCursorAdapter {
         holder.infoLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mActivity.showDetailFragment(meter);
+                showDetailFragment(meter);
+            }
+        });
+        holder.meterCheckBox.setChecked(mSelectedMeters.containsKey(meter.mMeterAddress));
+        holder.meterCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //do something
+//                Log.e("ssg", "isChecked = " + isChecked);
+                if (isChecked) {
+                    mSelectedMeters.put(meter.mMeterAddress, meter);
+                } else {
+                    mSelectedMeters.remove(meter.mMeterAddress);
+                }
+//                Log.e("ssg", "mSelectCollects size = " + mSelectCollects.size());
             }
         });
     }
+
     public static class ViewHolder {
-        public RelativeLayout infoLayout;
-        public ImageView vip;
+        public LinearLayout infoLayout;
+        public ImageView meterType;
         public TextView meterName;
         public TextView meterId;
-        public TextView dataType;
-        public TextView valueTime;
-        public TextView readTime;
-        public TextView meterValue;
+        public CheckBox meterCheckBox;
+//        public TextView dataType;
+//        public TextView valueTime;
+//        public TextView readTime;
+//        public TextView meterValue;
+    }
+
+    private void showDetailFragment(Meter meter) {
+        MeterFragment fragment = new MeterFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(MeterUtilies.PARAM_METER, meter);
+        fragment.setArguments(bundle);
+        MeterUtilies.showFragment(mActivity.getFragmentManager(), null, fragment, R.id.meter_content, FragmentTransaction.TRANSIT_FRAGMENT_OPEN, String.valueOf(meter.mId));
+    }
+
+    public HashMap<String, Meter> getSelectedMeters() {
+        return mSelectedMeters;
     }
 }
 
