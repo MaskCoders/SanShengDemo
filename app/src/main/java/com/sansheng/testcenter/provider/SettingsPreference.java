@@ -18,11 +18,12 @@ package com.sansheng.testcenter.provider;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
-public class EquipmentPreference {
+public class SettingsPreference {
     private static final String TAG = "EquipmentPreference";
     private static final String PREFERENCES_FILE = "Equipment";
-
+//    com.sansheng.testcenter_preferences
     private static final String DEFAULT_AGREEMENT = "default_protocol";
     private static final String RESEND_FREQUENCY = "resend_frequency";
     private static final String REQUEST_TIME_OUT = "request_time_out";
@@ -33,17 +34,18 @@ public class EquipmentPreference {
     private static final String WRITE_TO_LOG = "write_to_log";
     private static final String SERVER_ADDRESS = "server_address";
 
-    private static EquipmentPreference sPreferences;
+    private static SettingsPreference sPreferences;
 
     private final SharedPreferences mSharedPreferences;
 
-    private EquipmentPreference(Context context) {
-        mSharedPreferences = context.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+    private SettingsPreference(Context context) {
+//        mSharedPreferences = context.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);//
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);//使用settings默认的preferences。
     }
 
-    public static synchronized EquipmentPreference getPreferences(Context context) {
+    public static synchronized SettingsPreference getPreferences(Context context) {
         if (sPreferences == null) {
-            sPreferences = new EquipmentPreference(context);
+            sPreferences = new SettingsPreference(context);
         }
         return sPreferences;
     }

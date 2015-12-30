@@ -14,19 +14,30 @@ import com.sansheng.testcenter.upgrade.AppUpgrade;
 public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceClickListener {
 
     private SettingsPreference mCheckUpgradePreference;
-//    private static final ThreadFactory sThreadFactory = new CustomThreadPoolFactory("SettingsActivity");
-//    private ExecutorService sThreadPool = Executors.newSingleThreadExecutor(sThreadFactory);
-//    private ProgressDailog mProgressDailog;
-
+//    android:key="default_protocol"
+//    SettingsPreference:s_title="修改默认规约"
+//    android:key="resend_frequency"
+//    SettingsPreference:s_title="任务重发次数"
+//    android:key="request_time_out"
+//    SettingsPreference:s_title="超时时间"
+//    android:key="log_text_size"
+//    SettingsPreference:s_title="日志字体大小"
+//    android:key="protocol_show_length"
+//    SettingsPreference:s_title="报文显示长度"
+//    android:key="max_test_count"
+//    SettingsPreference:s_title="任务最大测量点数"
+//    android:key="time_inaccuracy"
+//    SettingsPreference:s_title="表计时间误差(分钟)"
+//    android:key="write_to_log"
+//    android:title="记录日志文件"
+//    android:key="server_address"
+//    SettingsPreference:s_title="接口服务地址"
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings_preferences);
         mCheckUpgradePreference = (SettingsPreference) findPreference("check_upgrade");
         mCheckUpgradePreference.setOnPreferenceClickListener(this);
-//        showProgressDialog();
-//        ReadPreferenceTask task = new ReadPreferenceTask();
-//        task.executeOnExecutor(sThreadPool);
     }
 
     @Override
@@ -43,38 +54,4 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         return false;
     }
 
-//    private class ReadPreferenceTask extends AsyncTask<Void, Void, Void> {
-//        @Override
-//        protected Void doInBackground(Void... params) {
-//            //TODO:耗时操作
-//            hideProgressDialog();
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void aVoid) {
-//            //refresh view
-//        }
-//    }
-//
-//    private void showProgressDialog() {
-//        mProgressDailog = new ProgressDailog(this);
-//        mProgressDailog.setCanceledOnTouchOutside(false);
-//        mProgressDailog.show();
-//        mProgressDailog.setActivity(this);
-//        mProgressDailog.setMessage(this.getResources().getString(R.string.loading_settings));
-//        mProgressDailog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-//            @Override
-//            public void onCancel(DialogInterface dialog) {
-//
-//            }
-//        });
-//    }
-//
-//    private void hideProgressDialog() {
-//        if (mProgressDailog != null && mProgressDailog.isShowing()) {
-//            mProgressDailog.dismiss();
-//            mProgressDailog = null;
-//        }
-//    }
 }

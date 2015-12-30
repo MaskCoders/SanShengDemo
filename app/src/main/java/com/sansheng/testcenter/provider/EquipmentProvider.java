@@ -361,7 +361,7 @@ public class EquipmentProvider extends ContentProvider {
      * called when all accounts deleted
      */
     public static void deleteEquipmentData() {
-        EquipmentPreference.getPreferences(mContext).deletePreference();
+        SettingsPreference.getPreferences(mContext).deletePreference();
         DBHelper.deleteData(getDatabase(mContext));
     }
 }
