@@ -99,9 +99,25 @@ public class Server {
 
                     pout = new BufferedOutputStream(getSocket().getOutputStream());
                     ProtocolCreater creater = new ProtocolCreater();
-                    byte[] cmd = creater.makeCommand();
-                    pout.write(cmd);
-                    pout.flush();
+                    while(true) {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                        String str = br.readLine();
+                        System.out.println("you input cmd is "+str);
+                        if(!str.equalsIgnoreCase("end")) {
+                            byte[] cmd = creater.makeCommand();
+                            pout.write(cmd);
+                            pout.flush();
+                        }else{
+                            System.out.println("we will quit ====> ...");
+                            System.exit(0);
+                        }
+//                        System.out.println("send 2 ");
+//                        Thread.sleep(4000);
+//                        byte[] cmd1 = creater.makeCommand();
+//
+//                        pout.write(cmd1);
+//                        pout.flush();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }finally {

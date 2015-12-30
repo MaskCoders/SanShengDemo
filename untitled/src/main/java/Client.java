@@ -1,4 +1,4 @@
-import com.sansheng.testcenter.tools.ProtocolUtils;
+import com.huaonilne.react.sanshengdemo.app2.ProtocolUtils;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -26,12 +26,12 @@ public class Client {
     static final int INPUT_ERR = -3;
 
 
-    public final static void main(String[] args) {
+    public final static void main(String[] args){
         Client client = new Client();
         client.startClient();
     }
 
-    public void sendMessage(String msg) {
+    public void sendMessage(String msg){
         if (socket != null && socket.isConnected()) {
             if (!socket.isOutputShutdown()) {
                 out.println(msg);
@@ -40,7 +40,8 @@ public class Client {
     }
 
 
-    public void startClient() {
+
+    public void startClient(){
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -51,7 +52,6 @@ public class Client {
                     }
 
                     while (true) {
-                        System.out.println("====> start");
                         if (!socket.isClosed()) {
                             if (socket.isConnected()) {
                                 if (!socket.isInputShutdown())
@@ -59,28 +59,42 @@ public class Client {
 
 
                                         ArrayList<Byte> list = new ArrayList<Byte>();
-                                        int count = in.available();
-                                        int i = 0;
+                                        int count = 0;
+                                        int i=0;
+                                        System.out.println("count is "+in.available());
                                         int ch = in.read();
-                                        if(ch == -1){
-                                            System.out.println("Service is outof connection !!");
-                                            break;
-                                        }//如果服务器直接发来-1,说明服务器已经断开
-                                        list.clear();
-                                        while (ch != -1 && in.available() > 0) {
-                                            //这里应该逐行解析,这里还需要考虑服务段了的情况
-                                            list.add((byte) ch);
+                                        while(ch != -1){
+                                            //这里应该逐行解析
+                                            list.add((byte)ch);
                                             ch = in.read();
                                         }
-                                        list.add((byte) ch);
+//                                        while( (count = in.available()) > 0 )
+//                                        {
+//                                            // get the number of bytes available
+////                                                Integer nBytes = in.available();
+////                                                System.out.println("Available bytes = " + nBytes );
+//
+//                                            // read next available character
+//                                            byte ch =  (byte)in.read();
+//                                            list.add(ch);
+//                                        }683200320068FB0b007c00f6180D80BD22D8D416
                                         byte[] bs = new byte[list.size()];
-                                        for (int j = 0; j < list.size(); j++) {
+                                        for(int j=0;j<list.size();j++){
                                             bs[j] = list.get(j);
                                         }
-//                                        System.out.println("count is " + in.available());
+                                        System.out.println("count is "+in.available());
                                         ProtocolUtils.printByte(bs);
-//                                        in.close();//这里不能close，如果close，client将不能再处理service数据
+//                                            in.read(last);
+
+                                        in.close();
                                     }
+                                {
+//                                        String content = null;
+//                                        if ((content = in.readLine()) != null) {
+//                                            content += "\n";
+//                                            System.out.println("msg from ser: "+content+"\n");
+//                                        }
+                                }
                             }
                         }
                     }
