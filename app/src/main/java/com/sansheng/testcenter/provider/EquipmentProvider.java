@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 import com.sansheng.testcenter.module.*;
+import com.sansheng.testcenter.settings.SettingsPreference;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sansheng.testcenter.provider;
+package com.sansheng.testcenter.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
