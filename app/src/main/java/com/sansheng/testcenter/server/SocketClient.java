@@ -1,20 +1,21 @@
 package com.sansheng.testcenter.server;
 
 import android.content.Context;
-import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import com.sansheng.testcenter.controller.MainHandler;
+import com.sansheng.testcenter.tools.ProtocolUtils;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * Created by hua on 12/18/15.
  */
 public class SocketClient {
     private Socket socket = null;
-    private BufferedReader in = null;
+    private BufferedInputStream in = null;
     private PrintWriter out = null;
     private Context mContext;
     private MainHandler mMainHandler;
@@ -57,23 +58,37 @@ public class SocketClient {
                 try {
                     if (socket == null || socket.isClosed()) {
                         socket = new Socket(HOST, PORT);
-                        in = new BufferedReader(new InputStreamReader(socket
-                                .getInputStream()));
-                        out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-                                socket.getOutputStream())), true);
+                        in = new BufferedInputStream(socket.getInputStream());;
                     }
 
                     while (true) {
                         if (!socket.isClosed()) {
                             if (socket.isConnected()) {
                                 if (!socket.isInputShutdown()) {
-                                    String content = null;
-                                    if ((content = in.readLine()) != null) {
-                                        content += "\n";
-                                        ((Handler)mMainHandler).sendMessage(getMessage(content, RECV_MSG));
-                                    } else {
 
+                                    ArrayList<Byte> list = new ArrayList<Byte>();
+                                    int count = 0;
+                                    int i=0;
+                                    System.out.println("===>"  );
+                                    while( (count = in.available()) > 0 )
+                                    {
+                                        // get the number of bytes available
+//                                                Integer nBytes = in.available();
+//                                                System.out.println("Available bytes = " + nBytes );
+
+                                        // read next available character
+                                        byte ch =  (byte)in.read();
+                                        list.add(ch);
                                     }
+                                    System.out.println("===>"+count);
+                                    byte[] bs = new byte[list.size()];
+                                    for(int j=0;j<list.size();j++){
+                                        bs[j] = list.get(j);
+                                    }
+                                    ProtocolUtils.printByte(bs);
+//                                            in.read(last);
+
+                                    in.close();
                                 }
                             }
                         }

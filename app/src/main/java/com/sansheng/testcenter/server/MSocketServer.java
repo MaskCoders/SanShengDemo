@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import com.sansheng.testcenter.callback.ServiceCallback;
 import com.sansheng.testcenter.controller.MainHandler;
 
@@ -15,7 +14,6 @@ import com.sansheng.testcenter.controller.MainHandler;
 public class MSocketServer extends Service implements ServiceCallback {
     MainHandler mHandler;
     SocketServer mSocketServer;
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         //*return mMessenger.getBinder();*/

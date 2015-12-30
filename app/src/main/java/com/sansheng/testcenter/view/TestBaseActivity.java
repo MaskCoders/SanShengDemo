@@ -133,4 +133,5 @@ public class TestBaseActivity extends BaseActivity implements IServiceHandlerCal
     public void pullStatus(String info) {
         main_status_info.setText(info);
     }
+
 }

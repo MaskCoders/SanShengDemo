@@ -1,5 +1,3 @@
-import com.sansheng.testcenter.tools.ProtocolCreater;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -94,22 +92,13 @@ public class Server {
 
         public void sendmsg(String msg) {
             if(connStatus) {
-                BufferedOutputStream pout = null;
+                PrintWriter pout = null;
                 try {
-
-                    pout = new BufferedOutputStream(getSocket().getOutputStream());
-                    ProtocolCreater creater = new ProtocolCreater();
-                    byte[] cmd = creater.makeCommand();
-                    pout.write(cmd);
-                    pout.flush();
-                } catch (Exception e) {
+                    pout = new PrintWriter(new BufferedWriter(
+                            new OutputStreamWriter(getSocket().getOutputStream())), true);
+                    pout.println(msg);
+                } catch (IOException e) {
                     e.printStackTrace();
-                }finally {
-//                    try {
-//                        pout.close();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
                 }
             }
         }

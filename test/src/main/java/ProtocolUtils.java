@@ -1,5 +1,3 @@
-package com.sansheng.testcenter.tools;
-
 /**
  * Created by hua on 15-12-26.
  */
@@ -67,7 +65,7 @@ public class ProtocolUtils {
                 }
                 return tmp.toString();
             }
-        //16转2
+        //16转2System.out.println(new String(data));
         public static String hexString2binaryString(String hexString)
         {
             if (hexString == null || hexString.length() % 2 != 0)
@@ -94,10 +92,11 @@ public class ProtocolUtils {
             hexbyte.append(byte2hex(data[i]));
             hexbyte_withspace.append(byte2hex(data[i])).append(" ");
         }
-        System.out.println("sbbyte == >"+sbbyte.toString());
-        System.out.println("hexbyte == >"+hexbyte.toString());
-        System.out.println("hexbyte_withspace == >"+hexbyte_withspace.toString());
-        System.out.println("string == >"+(new String(data)));
+        System.out.println(sbbyte.toString());
+        System.out.println(hexbyte.toString());
+        System.out.println(hexbyte_withspace.toString());
+        System.out.println(new String(data));
+
         return hexbyte.toString();
     }
 }
