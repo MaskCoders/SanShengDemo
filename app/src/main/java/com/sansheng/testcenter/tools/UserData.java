@@ -11,9 +11,9 @@ public class UserData {
     private String DataUnitTip_DT1; //1字节
     private String DataUnitTip_DT2; //1字节
     private String DataUnit; // 不确定字节
-    private String AUX_PW; // 2字节
-    private String AUX_EC;//2字节
-    private String AUX_Tp ;///6字节
+    private String AUX_PW = ""; // 2字节
+    private String AUX_EC = "";//2字节
+    private String AUX_Tp = "" ;///6字节
     public void parse(byte[] data){
 
     }
@@ -64,6 +64,12 @@ public class UserData {
     public String getCommand(){
         return AFN+SEQ+DataUnitTip_DA1+DataUnitTip_DA2+DataUnitTip_DT1+DataUnitTip_DT2+DataUnit+AUX_PW+AUX_EC+AUX_Tp;
     }
+
+    @Override
+    public String toString() {
+        return  getCommand();
+    }
+
     private void getLongSum(String str){
         int sum = 0;
         for(int i = 2 ; i<str.length();i++){
@@ -73,8 +79,8 @@ public class UserData {
     public int getSum(){
         int sum = 0;
         String str = getCommand();
-        for(int i = 2 ; i <str.length();i++){
-            sum =  Integer.parseInt(str.substring(i-2,i),16);
+        for(int i = 2 ; i <str.length();i=i+2){
+            sum = sum+ Integer.parseInt(str.substring(i-2,i),16);
         }
         return sum;
     }

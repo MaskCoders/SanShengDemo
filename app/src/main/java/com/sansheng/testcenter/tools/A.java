@@ -26,21 +26,21 @@ public class A {
         a2 = ProtocolUtils.get2HexFromInt(address);
         int a3num =  a3d0?0:1;
         a3num = a3num +(a3maa<<1);
-        a3 = ProtocolUtils.get2HexFromInt(a3num);
+        a3 = ProtocolUtils.dec2hex(a3num);
     }
 
     public String getCommand(){
-        System.out.println(a1);
-        System.out.println(a2);
-        System.out.println(a3);
+//        System.out.println(a1);
+//        System.out.println(a2);
+//        System.out.println(a3);
         return a1+a2+a3;
     }
     public int getSum(){
-        int sum = Integer.parseInt(a1,16)+
+        int sum = Integer.parseInt(a3,16)+
                 Integer.parseInt(a2.substring(0,2),16)+
                 Integer.parseInt(a2.substring(2,4),16)+
-                Integer.parseInt(a3.substring(0,2),16)+
-                Integer.parseInt(a3.substring(2,4),16);
+                Integer.parseInt(a1.substring(0,2),16)+
+                Integer.parseInt(a1.substring(2,4),16);
         return sum;
     }
 

@@ -16,7 +16,7 @@ public class ProtocolParse {
         ProtocolParse clazz = new ProtocolParse();
         ProtocolCreater creater = new ProtocolCreater();
 
-        byte[] data = creater.makeCommand();
+        byte[] data = creater.makeCommand(null,null,null);
         BaseCommandData cmd = clazz.checkCommand(data);
         System.out.println(cmd.toString());
     }

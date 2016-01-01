@@ -15,6 +15,32 @@ public class ProtocolUtils {
         }
         return hex;
     }
+    public static final String dec2hex(int dec){
+        String hex = Integer.toHexString(dec);
+        if(hex.length()==1){
+            hex = "0"+hex;
+        }
+        return hex;
+    }
+    public static final int hex2dec(String hex){
+        return Integer.parseInt(hex,16);
+
+    }
+    public static final void main(String[] args){
+
+        System.out.println(bcd2dec4hex("fe"));
+    }
+    public static int bcd2dec4byte(int b){
+        int h = (((int)b)<<4)&0xff;
+        int l = ((int)b)>>4;
+
+        return h+l;
+    }
+    public static int bcd2dec4hex(String hex){
+        int b = hex2dec(hex);
+        return bcd2dec4byte(b);
+
+    }
 
     /**
      * 16 to bytes

@@ -86,30 +86,32 @@ public class SocketClient {
                         if (!socket.isClosed()) {
                             if (socket.isConnected()) {
                                 if (!socket.isInputShutdown()) {
+                                    if (in != null) {
 
-                                    ArrayList<Byte> list = new ArrayList<Byte>();
-                                    int count = 0;
-                                    int i=0;
-                                    System.out.println("===>"  );
-                                    while( (count = in.available()) > 0 )
-                                    {
-                                        // get the number of bytes available
-//                                                Integer nBytes = in.available();
-//                                                System.out.println("Available bytes = " + nBytes );
 
-                                        // read next available character
-                                        byte ch =  (byte)in.read();
-                                        list.add(ch);
+                                        ArrayList<Byte> list = new ArrayList<Byte>();
+                                        int count = in.available();
+                                        int i = 0;
+                                        int ch = in.read();
+                                        if(ch == -1){
+                                            System.out.println("Service is outof connection !!");
+                                            break;
+                                        }//如果服务器直接发来-1,说明服务器已经断开
+                                        list.clear();
+                                        while (ch != -1 && in.available() > 0) {
+                                            //这里应该逐行解析,这里还需要考虑服务段了的情况
+                                            list.add((byte) ch);
+                                            ch = in.read();
+                                        }
+                                        list.add((byte) ch);
+                                        byte[] bs = new byte[list.size()];
+                                        for (int j = 0; j < list.size(); j++) {
+                                            bs[j] = list.get(j);
+                                        }
+//                                        System.out.println("count is " + in.available());
+                                        ProtocolUtils.printByte(bs);
+//                                        in.close();//这里不能close，如果close，client将不能再处理service数据
                                     }
-                                    System.out.println("===>"+count);
-                                    byte[] bs = new byte[list.size()];
-                                    for(int j=0;j<list.size();j++){
-                                        bs[j] = list.get(j);
-                                    }
-                                    ProtocolUtils.printByte(bs);
-//                                            in.read(last);
-
-                                    in.close();
                                 }
                             }
                         }

@@ -111,7 +111,7 @@ public class TestBaseActivity extends BaseActivity implements IServiceHandlerCal
                 mClientManager.createClient(null,-100);
                 break;
             case R.id.conn4:
-                mClientManager.sendMessage(null, cmdCreater.makeCommand());
+                mClientManager.sendMessage(null, cmdCreater.makeCommand(null,null,null));
                 break;
         }
     }

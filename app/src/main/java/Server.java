@@ -104,28 +104,17 @@ public class Server {
                         String str = br.readLine();
                         System.out.println("you input cmd is "+str);
                         if(!str.equalsIgnoreCase("end")) {
-                            byte[] cmd = creater.makeCommand();
+                            byte[] cmd = creater.makeCommand(null,null,null);
                             pout.write(cmd);
                             pout.flush();
                         }else{
                             System.out.println("we will quit ====> ...");
                             System.exit(0);
                         }
-//                        System.out.println("send 2 ");
-//                        Thread.sleep(4000);
-//                        byte[] cmd1 = creater.makeCommand();
-//
-//                        pout.write(cmd1);
-//                        pout.flush();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }finally {
-//                    try {
-//                        pout.close();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
                 }
             }
         }
