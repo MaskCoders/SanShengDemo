@@ -2,11 +2,14 @@ package com.sansheng.testcenter.server;
 
 import android.content.Context;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.tools.ProtocolUtils;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -20,22 +23,32 @@ public class SocketClient {
     private Context mContext;
     private MainHandler mMainHandler;
 
-    static final int PORT = 8001;
+    private int PORT = 8001;
     static final String ERRCODE = "ERRCODE";
     static final String CONN_SUCCESS = "CONN_SUCCESS";
-    static final String HOST = "127.0.0.1";
+     private String HOST = "127.0.0.1";
 
     static final int CONN_SER_CLS = -2;
     static final int CONN_ERR = -1;
     static final int CONN_OK = 0;
     static final int RECV_MSG = 1;
     static final int INPUT_ERR = -3;
-
-    public SocketClient(Context ctx , MainHandler handler){
+    private ClientManager manager;
+    SocketClient(Context ctx , MainHandler handler,ClientManager cm){
+        this(ctx,handler,null,-100,cm);
+    }
+    SocketClient(Context ctx , MainHandler handler,String ip,int port,ClientManager cm) {
         mContext = ctx;
         mMainHandler = handler;
+        this.manager = cm;
+        if (!TextUtils.isEmpty(ip)) {
+            HOST = ip;
+        }
+        if (port > 0) {
+            PORT = port;
+        }
     }
-    public void sendMessage(String msg){
+    void sendMessage(String msg){
         if (socket != null && socket.isConnected()) {
             if (!socket.isOutputShutdown()) {
                 out.println(msg);
@@ -50,8 +63,16 @@ public class SocketClient {
         msg.what = type;
         return msg;
     }
-
-    public void startClient(){
+    void stopClient(){
+        if(socket != null && socket.isConnected()){
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    void startClient(){
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {

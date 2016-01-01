@@ -86,6 +86,7 @@ public class ProtocolCreater {
      * @return
      */
     public byte[] makeCommand(){
+        commandBuffer = new StringBuffer();
         commandBuffer.append(HEAD);
         getCommandCenter();
         getL();

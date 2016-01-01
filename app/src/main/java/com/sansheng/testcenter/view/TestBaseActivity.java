@@ -11,8 +11,9 @@ import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.controller.ConnectionService;
 import com.sansheng.testcenter.controller.MainHandler;
+import com.sansheng.testcenter.server.ClientManager;
 import com.sansheng.testcenter.server.MSocketServer;
-import com.sansheng.testcenter.server.SocketClient;
+import com.sansheng.testcenter.tools.ProtocolCreater;
 
 /**
  * Created by hua on 12/17/15.
@@ -28,14 +29,15 @@ public class TestBaseActivity extends BaseActivity implements IServiceHandlerCal
     Button conn3;
     private MainHandler mMainHandler;
     private MSocketServer myService;  //我们自己的service
-    private SocketClient mSocketClient;
-
+    private ClientManager mClientManager;
+    private ProtocolCreater cmdCreater;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         mMainHandler = new MainHandler(this, this);
-        mSocketClient = new SocketClient(this, mMainHandler);
+        mClientManager = ClientManager.getInstance(this, mMainHandler);
+        cmdCreater = new ProtocolCreater();
         initData();
     }
 
@@ -106,10 +108,10 @@ public class TestBaseActivity extends BaseActivity implements IServiceHandlerCal
                 bindService(intent, connSer, Context.BIND_AUTO_CREATE);
                 break;
             case R.id.conn3:
-                mSocketClient.startClient();
+                mClientManager.createClient(null,-100);
                 break;
             case R.id.conn4:
-                mSocketClient.sendMessage("xxx");
+                mClientManager.sendMessage(null, cmdCreater.makeCommand());
                 break;
         }
     }
