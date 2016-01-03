@@ -159,6 +159,11 @@ public class LaucherAdapter extends BaseAdapter implements CollectSelectDialog.C
         Log.e("ssg", "selected meters size = " + meters.size());
     }
 
+    @Override
+    public String getSelectedColletion() {
+        return null;
+    }
+
     public interface OptionCallback {
         public void onOptionSelected(int postion);
     }

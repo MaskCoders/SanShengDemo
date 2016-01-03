@@ -145,6 +145,7 @@ public class EquipmentProvider extends ContentProvider {
             switch (match) {
                 case METER:
                     sql = buildMeterQuery(tableName, projection, selection, sortOrder);
+                    Log.e("ssg", "meter sql = " + sql);
                     cursor = db.rawQuery(sql, selectionArgs);
                     break;
                 case METER_ID:

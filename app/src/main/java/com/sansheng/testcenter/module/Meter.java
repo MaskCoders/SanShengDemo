@@ -77,7 +77,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
     public Meter(boolean test, int id) {
         mBaseUri = CONTENT_URI;
         if (test) {
-            mConcentratorId = 0;
+            mConcentratorId = id % 2;
             mMeterName = "电表名称" + id;
             mMeterAddress = "电表地址" + id;
             mMeterNum = id;

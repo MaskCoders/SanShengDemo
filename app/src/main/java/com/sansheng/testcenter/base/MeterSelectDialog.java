@@ -8,6 +8,7 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ public class MeterSelectDialog extends DialogFragment implements LoaderManager.L
     private final static int DOWNSIDE_INCREASE_COUNT = 10;//每次增加数量
     private AnswerDialog mDialog;
     private MeterCallback callback;
+    private String collectIds;
 
     public MeterSelectDialog(MeterCallback callback) {
         this.callback = callback;
@@ -88,7 +90,13 @@ public class MeterSelectDialog extends DialogFragment implements LoaderManager.L
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        StringBuilder selection = new StringBuilder(" 1=1 ");
+        collectIds = String .valueOf(0);
+        StringBuilder selection = new StringBuilder();
+        if (TextUtils.isEmpty(collectIds)) {
+            selection.append(" 1=1 ");
+        } else {//如必要,根据选中的集中器显示相应的电表以供选择
+            selection.append(Meter.COLLECT_ID).append(" in ").append("(").append(collectIds).append(")");
+        }
         return new CursorLoader(getActivity(), Meter.CONTENT_URI, Meter.CONTENT_PROJECTION, selection.toString(),
                 null, Meter.ID + " " + Content.DESC + " LIMIT " + mOriginLength);
     }
@@ -154,5 +162,6 @@ public class MeterSelectDialog extends DialogFragment implements LoaderManager.L
     public interface MeterCallback {
         void onMeterNegativeClick();
         void onMeterPositiveClick(HashMap<String, Meter> meters);
+        String getSelectedColletion();
     }
 }
