@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="main_color">#29bd8b</color>
+
+    <color name="main_green">#6abd78</color>
+
     <color name="clickable_color">#abb2bb</color>
     <color name="list_color">#818c98</color>
     <color name="icon_list_color">#626d78</color>

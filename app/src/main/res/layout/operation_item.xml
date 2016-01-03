@@ -15,6 +15,7 @@
         android:id="@+id/chat_bottom_option_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/color_white"
         android:textSize="14sp"
         />
 </LinearLayout>
