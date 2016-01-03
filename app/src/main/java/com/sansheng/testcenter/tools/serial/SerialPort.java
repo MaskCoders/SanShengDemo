@@ -14,7 +14,7 @@
  * limitations under the License. 
  */
 
-package com.sansheng.testcenter.tools;
+package com.sansheng.testcenter.tools.serial;
 
 import android.util.Log;
 

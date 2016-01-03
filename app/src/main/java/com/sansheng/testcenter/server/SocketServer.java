@@ -2,7 +2,7 @@ package com.sansheng.testcenter.server;
 
 import com.sansheng.testcenter.base.Const;
 import com.sansheng.testcenter.controller.MainHandler;
-import com.sansheng.testcenter.tools.ProtocolCreater;
+import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -92,7 +92,7 @@ public class SocketServer {
                     try {
 
                         pout = new BufferedOutputStream(getSocket().getOutputStream());
-                        ProtocolCreater creater = new ProtocolCreater();
+                        TerProtocolCreater creater = new TerProtocolCreater();
                         while(true) {
                             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
                             String str = br.readLine();

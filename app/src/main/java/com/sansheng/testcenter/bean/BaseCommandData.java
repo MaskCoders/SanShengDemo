@@ -1,4 +1,6 @@
-package com.sansheng.testcenter.tools;
+package com.sansheng.testcenter.bean;
+
+import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 
 /**
  * Created by hua on 12/28/15.

@@ -1,4 +1,4 @@
-import com.sansheng.testcenter.tools.ProtocolUtils;
+import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

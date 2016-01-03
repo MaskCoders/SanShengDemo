@@ -1,11 +1,15 @@
-package com.sansheng.testcenter.tools;
+package com.sansheng.testcenter.tools.protocol;
+
+import com.sansheng.testcenter.bean.A;
+import com.sansheng.testcenter.bean.C;
+import com.sansheng.testcenter.bean.UserData;
 
 import java.util.Random;
 
 /**
  * Created by hua on 12/23/15.
  */
-public class ProtocolCreater {
+public class TerProtocolCreater {
 
     public static final String HEAD = "68";//68
     public static final byte HEAD_B = 104;//68
@@ -18,7 +22,7 @@ public class ProtocolCreater {
     C mc;
     UserData userData;
     public  final static void main(String[] args){
-        ProtocolCreater clazz = new ProtocolCreater();
+        TerProtocolCreater clazz = new TerProtocolCreater();
         //68 49 00 49 00 68
         // C: 4A
         // A : 10 12 64 00 02

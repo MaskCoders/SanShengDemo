@@ -20,9 +20,9 @@ import android.widget.*;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.bean.AssistBean;
 import com.sansheng.testcenter.bean.ComBean;
-import com.sansheng.testcenter.tools.MyFunc;
-import com.sansheng.testcenter.tools.SerialHelper;
-import com.sansheng.testcenter.tools.SerialPortFinder;
+import com.sansheng.testcenter.tools.serial.MyFunc;
+import com.sansheng.testcenter.tools.serial.SerialHelper;
+import com.sansheng.testcenter.tools.serial.SerialPortFinder;
 
 import java.io.*;
 import java.security.InvalidParameterException;

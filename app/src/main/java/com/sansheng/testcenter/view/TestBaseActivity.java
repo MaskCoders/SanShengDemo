@@ -13,7 +13,7 @@ import com.sansheng.testcenter.controller.ConnectionService;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.server.ClientManager;
 import com.sansheng.testcenter.server.MSocketServer;
-import com.sansheng.testcenter.tools.ProtocolCreater;
+import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
 
 /**
  * Created by hua on 12/17/15.
@@ -30,14 +30,14 @@ public class TestBaseActivity extends BaseActivity implements IServiceHandlerCal
     private MainHandler mMainHandler;
     private MSocketServer myService;  //我们自己的service
     private ClientManager mClientManager;
-    private ProtocolCreater cmdCreater;
+    private TerProtocolCreater cmdCreater;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         mMainHandler = new MainHandler(this, this);
         mClientManager = ClientManager.getInstance(this, mMainHandler);
-        cmdCreater = new ProtocolCreater();
+        cmdCreater = new TerProtocolCreater();
         initData();
     }
 

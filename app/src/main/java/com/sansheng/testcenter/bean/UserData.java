@@ -1,4 +1,6 @@
-package com.sansheng.testcenter.tools;
+package com.sansheng.testcenter.bean;
+
+import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 
 /**
  * Created by hua on 15-12-26.
@@ -10,12 +12,21 @@ public class UserData {
     private String DataUnitTip_DA2; //1字节
     private String DataUnitTip_DT1; //1字节
     private String DataUnitTip_DT2; //1字节
-    private String DataUnit; // 不确定字节
+    private String DataUnit = ""; // 不确定字节
     private String AUX_PW = ""; // 2字节
     private String AUX_EC = "";//2字节
     private String AUX_Tp = "" ;///6字节
     public void parse(byte[] data){
-
+        AFN = ProtocolUtils.byte2hex(data[12]);
+        SEQ = ProtocolUtils.byte2hex(data[13]);
+        DataUnitTip_DA1 = ProtocolUtils.byte2hex(data[14]);
+        DataUnitTip_DA2 = ProtocolUtils.byte2hex(data[15]);
+        DataUnitTip_DT1 = ProtocolUtils.byte2hex(data[16]);
+        DataUnitTip_DT2 = ProtocolUtils.byte2hex(data[17]);
+        for(int i = 18 ;i< data.length-2;i++ ){
+            DataUnit = DataUnit+ProtocolUtils.byte2hex(data[i]);
+        }
+       //先不考虑aux
     }
     public UserData(){
 

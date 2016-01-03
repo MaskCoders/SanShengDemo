@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.tools;
+package com.sansheng.testcenter.bean;
 
 /**
     控制域

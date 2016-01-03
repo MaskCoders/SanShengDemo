@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.tools;
+package com.sansheng.testcenter.tools.protocol;
 
 /**
  * Created by hua on 15-12-26.
@@ -41,7 +41,18 @@ public class ProtocolUtils {
         return bcd2dec4byte(b);
 
     }
-
+    public static String getStrFromBytes(byte[] data,int s,int e){
+        try{
+            String tmp = "" ;
+            for(int i=s;i<=e;i++){
+                tmp = tmp+byte2hex(data[i]);
+            }
+            return tmp;
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return "";
+        }
+    }
     /**
      * 16 to bytes
      * @param hexString

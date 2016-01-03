@@ -5,7 +5,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import com.sansheng.testcenter.controller.MainHandler;
-import com.sansheng.testcenter.tools.ProtocolUtils;
+import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

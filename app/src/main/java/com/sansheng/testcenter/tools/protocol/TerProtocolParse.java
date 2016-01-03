@@ -1,20 +1,24 @@
-package com.sansheng.testcenter.tools;
+package com.sansheng.testcenter.tools.protocol;
+
+import com.sansheng.testcenter.bean.BaseCommandData;
 
 /**
  * Created by hua on 12/23/15.
  */
-public class ProtocolParse {
+public class TerProtocolParse {
 
     public static final String HEAD = "68";//68
     public static final byte HEAD_B = 104;//68
-    public static final String END = "16";//16
     public static final byte END_B  = 22;//16
+    public static final String END = "16";//16
     public StringBuffer commandBuffer = new StringBuffer();
     public StringBuffer commandBufferCenter = new StringBuffer();
     int sum = 0;
+    BaseCommandData cmd;
+
     public  final static void main(String[] args){
-        ProtocolParse clazz = new ProtocolParse();
-        ProtocolCreater creater = new ProtocolCreater();
+        TerProtocolParse clazz = new TerProtocolParse();
+        TerProtocolCreater creater = new TerProtocolCreater();
 
         byte[] data = creater.makeCommand(null,null,null);
         BaseCommandData cmd = clazz.checkCommand(data);
@@ -24,20 +28,22 @@ public class ProtocolParse {
      * 解析指令
      */
     public BaseCommandData checkCommand(byte[] data){
-        BaseCommandData cmd = new BaseCommandData(data);
+        cmd = new BaseCommandData(data);
         boolean hashead = hasHEAD(data,cmd);
         boolean sumOK = sumOK(data,cmd);
         if(hashead && sumOK){
-            parseCommand(cmd);
+            parseCommand(data);
             return cmd;
         }else{
             return null;
         }
     }
-    public void parseCommand(BaseCommandData cmd){
+    public void parseCommand(byte[] data){
         System.out.println(" parseCommand !!");
+        cmd.a.parse(data);
+        cmd.data.parse(data);
+        cmd.CRC = data[data.length-2];
     }
-
     public boolean hasHEAD(byte[] data,BaseCommandData cmd){
         if(data[0] == HEAD_B &&  data[5] == HEAD_B ){
             cmd.l.parse(data);
