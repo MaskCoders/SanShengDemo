@@ -2,7 +2,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-
+    <dimen name="list_sec_text_size">10sp</dimen><!--列表/提示-->
+    <dimen name="list_main_text_size">14sp</dimen><!--列表/提示-->
     <dimen name="list_hint_text_size">12sp</dimen><!--列表/提示-->
     <dimen name="list_body_text_size">14sp</dimen><!--列表/正文-->
     <dimen name="list_body_text_size_big">16sp</dimen><!--列表/正文-->
