@@ -3,6 +3,8 @@
     <color name="main_color">#29bd8b</color>
 
     <color name="main_green">#6abd78</color>
+    <color name="main_green2">#886abd78</color>
+    <color name="main_green3">#336abd78</color>
 
     <color name="clickable_color">#abb2bb</color>
     <color name="list_color">#818c98</color>
@@ -14,7 +16,7 @@
     <color name="assist_color">#424a59</color>
 
     <color name="conversation_action_bar_text_color">#808d99</color>
-    <color name="light_press_color">#1A626d79</color>
+    <color name="light_press_color">#626d79</color>
     <color name="dark_press_color">#323a42</color>
     <color name="dialog_edittext_hint_text_color">#aab6c4</color>
 
@@ -72,4 +74,5 @@
     <color name="color_white">#fff</color>
     <color name="color_black">#000000</color>
     <color name="sky_blue">#87ceeb</color>
+    <color name="sky_blue2">#3387ceeb</color>
 </resources>

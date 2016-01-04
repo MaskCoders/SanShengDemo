@@ -30,6 +30,8 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
     protected ImageButton main_log_down_btn;
     protected LinearLayout main_info;
     protected TextView main_status_info;
+    protected TextView base_title;
+    protected TextView back_btn;
     protected LinearLayout main_button_list;
     protected LinearLayout main_layout_conn;
 
@@ -58,8 +60,11 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
         main_log_down_btn = (ImageButton) findViewById(R.id.main_log_down_btn);
         main_info = (LinearLayout) findViewById(R.id.main_info);
         main_status_info = (TextView) findViewById(R.id.main_status_info);
+        base_title = (TextView) findViewById(R.id.base_title);
+        back_btn = (TextView) findViewById(R.id.back_btn);
         main_button_list = (LinearLayout) findViewById(R.id.main_button_list);
         main_layout_conn = (LinearLayout) findViewById(R.id.main_layout_conn);
+        back_btn.setOnClickListener(this);
         initButtonList();
         initConnList();
         initCenter();
@@ -72,7 +77,9 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
             main_sort_log.setVisibility((main_whole_log.getVisibility() != View.VISIBLE && flag) ? View.VISIBLE : View.GONE);
 //        }
     }
-
+    protected void setTitle(String title){
+        base_title.setText(title);
+    }
     protected void showWholeLog(boolean flag) {
         main_whole_log.setVisibility(flag ? View.VISIBLE : View.GONE);
         if(flag){
@@ -167,6 +174,10 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-
+        switch(v.getId()){
+            case R.id.back_btn:
+                finish();
+                break;
+        }
     }
 }

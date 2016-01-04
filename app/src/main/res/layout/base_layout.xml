@@ -14,17 +14,17 @@
                 <LinearLayout android:id="@+id/main_info" android:layout_width="fill_parent"
                               android:layout_height="fill_parent"
                               android:orientation="vertical"
-                              android:background="@drawable/chip_background"></LinearLayout>
+                              android:background="@drawable/chip_back_blue"></LinearLayout>
                 <!-- log  -->
                 <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
-                              android:orientation="vertical" >
+                              android:orientation="vertical">
                     <EditText android:id="@+id/main_sort_log" android:layout_width="fill_parent"
-                              android:layout_height="40dp" android:background="@color/head_icon_bg_color1"
+                              android:layout_height="40dp" android:background="@color/head_icon_bg_color1" android:layout_margin="2dp"
                               android:visibility="gone" android:paddingLeft="7dp" android:paddingRight="7dp"
-                              android:textColor="@color/quick_reply_bg"/>
+                              android:textColor="@color/quick_reply_bg" android:enabled="false"  android:textStyle="bold"/>
                     <EditText android:id="@+id/main_whole_log" android:layout_height="fill_parent"
                               android:layout_width="fill_parent"
-                              android:background="@color/light_press_color"
+                              android:background="@drawable/chip_back2"
                               android:singleLine="false"
                               android:editable="false"
                               android:gravity="center|top|left"
@@ -36,18 +36,34 @@
                               android:scrollbars="vertical"
                     />
                     <ImageButton android:id="@+id/main_log_down_btn" android:layout_width="0dp"
-                                 android:layout_height="0dp" android:background="@color/login_hint_color" android:layout_gravity="center_vertical"/>
+                                 android:layout_height="0dp" android:background="@color/login_hint_color"
+                                 android:layout_gravity="center_vertical"/>
                 </LinearLayout>
             </FrameLayout>
             <!-- 底部状态栏 -->
             <TextView android:id="@+id/main_status_info" android:layout_width="fill_parent" android:layout_height="0dp"
-                      android:layout_weight="1" android:background="@drawable/chip_background" android:paddingLeft="7dp"/>
+                      android:layout_weight="1" android:textStyle="bold" android:background="@drawable/chip_back_dark" android:paddingLeft="7dp" android:gravity="center_vertical"/>
         </LinearLayout>
         <!-- 按钮列表-->
-        <LinearLayout android:id="@+id/main_button_list" android:layout_width="0dp" android:layout_height="fill_parent"
-                      android:layout_weight="3" android:orientation="vertical" android:background="@drawable/chip_background">
-
-        </LinearLayout>
+        <RelativeLayout android:layout_width="0dp" android:layout_height="fill_parent"
+                        android:layout_weight="3" android:orientation="vertical"
+                        android:background="@drawable/chip_back_blue" >
+            <TextView android:id="@+id/base_title" android:layout_width="fill_parent"
+                      android:layout_height="40dp"
+                      android:text="TITLE" android:textStyle="bold" android:textSize="20sp"
+                      android:textColor="@color/color_white" android:background="@color/main_green"
+                      android:layout_alignParentTop="true" android:gravity="center" android:layout_marginLeft="2dp"
+                      android:layout_marginRight="2dp" android:layout_marginTop="2dp"/>
+            <LinearLayout android:id="@+id/main_button_list" android:layout_width="fill_parent"
+                          android:layout_height="wrap_content" android:orientation="vertical"
+                          android:layout_below="@id/base_title" android:padding="5dp"></LinearLayout>
+            <TextView android:id="@+id/back_btn" android:layout_width="fill_parent"
+                      android:layout_height="40dp" android:gravity="center"
+                      android:text="@string/capital_off" android:textStyle="bold" android:textSize="20sp"
+                      android:textColor="@color/color_white" android:background="@color/main_green"
+                      android:layout_alignParentBottom="true" android:layout_marginBottom="2dp"
+                      android:layout_marginLeft="2dp" android:layout_marginRight="2dp"/>
+        </RelativeLayout>
     </LinearLayout>
     <!-- 抽屉-->
     <LinearLayout

@@ -39,6 +39,7 @@ public class TestBaseActivity extends BaseActivity implements IServiceHandlerCal
         mClientManager = ClientManager.getInstance(this, mMainHandler);
         cmdCreater = new TerProtocolCreater();
         initData();
+        setTitle("电表检测");
     }
 
     private void initData() {
@@ -79,8 +80,8 @@ public class TestBaseActivity extends BaseActivity implements IServiceHandlerCal
 
     @Override
     protected void initCenter() {
-        View inflate = getLayoutInflater().inflate(R.layout.connbuttonlist, null);
-        main_info.addView(inflate);
+//        View inflate = getLayoutInflater().inflate(R.layout.connbuttonlist, null);
+//        main_info.addView(inflate);
     }
 
     @Override
@@ -114,6 +115,7 @@ public class TestBaseActivity extends BaseActivity implements IServiceHandlerCal
                 mClientManager.sendMessage(null, cmdCreater.makeCommand(null,null,null));
                 break;
         }
+        super.onClick(v);
     }
 
 
