@@ -120,7 +120,7 @@
     <string name = "whm_bl_start">开始检测</string>
     <string name = "whm_bl_choose_items">选择项目</string>
     <string name = "whm_bl_show_log">显示日志</string>
-    <string name = "whm_bl_close_log">显示日志</string>
+    <string name = "whm_bl_close_log">关闭日志</string>
 
     <string name = "whm_db_address">电表地址</string>
     <string name = "whm_db_conn_type">信道类型</string>
