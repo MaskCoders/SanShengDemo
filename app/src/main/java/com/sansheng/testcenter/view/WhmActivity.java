@@ -1,15 +1,14 @@
 package com.sansheng.testcenter.view;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
-import com.sansheng.testcenter.controller.ConnectionService;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.server.ClientManager;
 import com.sansheng.testcenter.server.MSocketServer;
@@ -87,8 +86,15 @@ public class WhmActivity extends BaseActivity implements IServiceHandlerCallback
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.whm_bl_read_address:
-//                logBuffer.append(getTimeStamp()).append("/t").append("")
-                main_whole_log.setText(logBuffer.toString());
+                String time = getTimeStamp()+"\t发送指令=>>";
+                logBuffer = new StringBuffer();
+                logBuffer.append("68 49 00 49 00 68 4A 10 12 64 00 02 0C F0 00 00 01 00 00 35 24 09 25 00 56 16").append("\n");
+                SpannableString span = new SpannableString(time+logBuffer.toString());
+                span.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.contact_list_text_color_selected)),
+                        0, time.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                main_whole_log.append(span);
+                main_sort_log.setText(span);
+                showShortLog(true);
                 break;
             case R.id.whm_bl_choose_db:
                 break;

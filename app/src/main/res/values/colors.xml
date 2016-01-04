@@ -33,7 +33,6 @@
     <color name="swipe_to_refresh_text_color">#29bd8b</color>
     <color name="sync_progress_bar_color">#29bd8b</color>
     <color name="splash_bg_color">#29bd8b</color>
-    <color name="contact_list_text_color_selected">#29bd8b</color>
 
     <color name="action_bar_spinner_text_color">#323a42</color>
     <color name="remain_action_bar_color">#29bd8b</color>
@@ -75,4 +74,5 @@
     <color name="color_black">#000000</color>
     <color name="sky_blue">#87ceeb</color>
     <color name="sky_blue2">#3387ceeb</color>
+    <color name="contact_list_text_color_selected">#00bdc1</color>
 </resources>

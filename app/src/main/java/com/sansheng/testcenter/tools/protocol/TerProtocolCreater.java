@@ -42,7 +42,7 @@ public class TerProtocolCreater {
         u.setDataUnitTip_DT1("01");
         u.setDataUnitTip_DT2("00");
         u.setDataUnit("00 35 24 09 25 00".replace(" ",""));
-        System.out.println("68 49 00 49 00 68 4A 10 12 64 00 02   0C F0 00 00 01 00 00 35 24 09 25 00   56 16".replace(" ",""));
+        System.out.println("68 49 00 49 00 68 4A 10 12 64 00 02 0C F0 00 00 01 00 00 35 24 09 25 00 56 16".replace(" ",""));
         byte[] data = clazz.makeCommand(a,c ,u);
 
     }

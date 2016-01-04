@@ -3,6 +3,7 @@ package com.sansheng.testcenter.base;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -40,7 +41,7 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
 
     protected String getTimeStamp(){
         Date nowTime=new Date();
-        SimpleDateFormat time=new SimpleDateFormat("HH-mm-ss");
+        SimpleDateFormat time=new SimpleDateFormat("HH:mm:ss");
         return time.format(nowTime);
     }
     public interface ActionBarCallback {
@@ -85,7 +86,13 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
 //            main_sort_log.setVisibility(View.GONE);
 //        }else {
             main_sort_log.setVisibility((main_whole_log.getVisibility() != View.VISIBLE && flag) ? View.VISIBLE : View.GONE);
-//        }
+        new Handler().postDelayed(new Runnable(){
+
+            public void run() {
+                main_sort_log.setVisibility(View.GONE);
+            }
+
+        }, 1000);
     }
     protected void setTitle(String title){
         base_title.setText(title);
