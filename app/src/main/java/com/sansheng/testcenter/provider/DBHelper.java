@@ -36,7 +36,6 @@ public class DBHelper extends SQLiteOpenHelper {
             "  `"+ Content.MeterColumns.USER_NUM + "` text,\n" +
             "  `"+ Content.MeterColumns.USER_ADDRESS + "` text,\n" +
             "  `"+ Content.MeterColumns.GROUP_ID + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.IMPORTANT + "` integer not null default 0,\n" +
             "  `"+ Content.MeterColumns.NOTE + "` text\n" +
             ")";
 
@@ -53,6 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
             "  `"+ Content.MeterDataColumns.VAL2 + "` text not null default 0,\n" +
             "  `"+ Content.MeterDataColumns.VAL3 + "` text not null default 0,\n" +
             "  `"+ Content.MeterDataColumns.VAL4 + "` text not null default 0,\n" +
+            "  `"+ Content.MeterDataColumns.IMPORTANT + "` integer not null default 0,\n" +
             "  `"+ Content.MeterDataColumns.UPDATE_TIME + "` integer not null default 0\n" +
             ")";
 

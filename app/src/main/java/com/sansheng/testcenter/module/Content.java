@@ -150,7 +150,7 @@ public abstract class Content {
         public static final String ID = "_id";
         public static final String COLLECT_ID = "collectId";
         public static final String DA = "da";
-        public static final String METER_NAME = "meterNmae";
+        public static final String METER_NAME = "meterName";
         public static final String METER_NUM = "meterNum";
         public static final String METER_ADDRESS = "meterAddress";
         public static final String COMMON_PASSWORD = "commPwd";
@@ -165,7 +165,6 @@ public abstract class Content {
         public static final String USER_NUM = "userNum";
         public static final String USER_ADDRESS = "userAddress";
         public static final String GROUP_ID = "groupId";
-        public static final String IMPORTANT = "important";
         public static final String NOTE = "note";
     }
 
@@ -182,6 +181,7 @@ public abstract class Content {
         public static final String VAL2 = "val2";
         public static final String VAL3 = "val3";
         public static final String VAL4 = "val4";
+        public static final String IMPORTANT = "important";
         public static final String UPDATE_TIME = "updateTime";
     }
     public static interface ConcentratorColumns {

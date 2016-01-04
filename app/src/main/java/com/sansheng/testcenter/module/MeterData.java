@@ -25,6 +25,7 @@ public class MeterData extends Content implements MeterDataColumns, Parcelable {
     public float mVal3;
     public float mVal4;
     public long mUpdateTime;
+    public int mImportant;
 
     public Meter mMeter;
 
@@ -40,15 +41,16 @@ public class MeterData extends Content implements MeterDataColumns, Parcelable {
     public static final int VAL2_INDEX = ID_INDEX + 9;
     public static final int VAL3_INDEX = ID_INDEX + 10;
     public static final int VAL4_INDEX = ID_INDEX + 11;
-    public static final int UPDATE_TIME_INDEX = ID_INDEX + 12;
+    public static final int IMPORTANT_INDEX = ID_INDEX + 12;
+    public static final int UPDATE_TIME_INDEX = ID_INDEX + 13;
 
     public static final String[] CONTENT_PROJECTION = {
             ID, METER_ID, VALUE_TIME, READ_TIME, SAVE_TIME, DATA_TYPE,
-            DATA_ID, VALZ, VAL1, VAL2, VAL3, VAL4, UPDATE_TIME};
+            DATA_ID, VALZ, VAL1, VAL2, VAL3, VAL4, IMPORTANT, UPDATE_TIME};
 
     public static final int[] ID_INDEX_PROJECTION = {
             ID_INDEX, METER_ID_INDEX, VALUE_TIME_INDEX, READ_TIME_INDEX, SAVE_TIME_INDEX,
-            DATA_TYPE_INDEX, DATA_ID_INDEX, VALZ_INDEX, VAL1_INDEX, VAL2_INDEX, VAL3_INDEX, VAL4_INDEX, UPDATE_TIME_INDEX};
+            DATA_TYPE_INDEX, DATA_ID_INDEX, VALZ_INDEX, VAL1_INDEX, VAL2_INDEX, VAL3_INDEX, VAL4_INDEX, IMPORTANT_INDEX, UPDATE_TIME_INDEX};
 
     public static final String TABLE_NAME = "meterdata";
 
@@ -93,6 +95,7 @@ public class MeterData extends Content implements MeterDataColumns, Parcelable {
         values.put(VAL2, mVal2);
         values.put(VAL3, mVal3);
         values.put(VAL4, mVal4);
+        values.put(IMPORTANT, mImportant);
         values.put(UPDATE_TIME, mUpdateTime);
         return values;
     }
@@ -111,6 +114,7 @@ public class MeterData extends Content implements MeterDataColumns, Parcelable {
         mVal2 = cursor.getFloat(VAL2_INDEX);
         mVal3 = cursor.getFloat(VAL3_INDEX);
         mVal4 = cursor.getFloat(VAL4_INDEX);
+        mImportant = cursor.getInt(IMPORTANT_INDEX);
         mUpdateTime = cursor.getLong(UPDATE_TIME_INDEX);
         mMeter = new Meter();
         mMeter.restoreWithMeterDataCursor(cursor);
@@ -144,6 +148,7 @@ public class MeterData extends Content implements MeterDataColumns, Parcelable {
         dest.writeFloat(mVal2);
         dest.writeFloat(mVal3);
         dest.writeFloat(mVal4);
+        dest.writeInt(mImportant);
         dest.writeLong(mUpdateTime);
         dest.writeParcelable(mMeter, flags);
     }
@@ -175,6 +180,7 @@ public class MeterData extends Content implements MeterDataColumns, Parcelable {
         mVal2 = in.readFloat();
         mVal3 = in.readFloat();
         mVal4 = in.readFloat();
+        mImportant = in.readInt();
         mUpdateTime = in.readInt();
         mMeter = in.readParcelable(loader);
     }
@@ -193,6 +199,7 @@ public class MeterData extends Content implements MeterDataColumns, Parcelable {
         meter.mVal2 = mVal2;
         meter.mVal3 = mVal3;
         meter.mVal4 = mVal4;
+        meter.mImportant = mImportant;
         meter.mUpdateTime = mUpdateTime;
         meter.mMeter = mMeter.copy();
         return meter;

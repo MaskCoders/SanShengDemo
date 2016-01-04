@@ -5,18 +5,17 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
-import com.sansheng.testcenter.base.view.DateTimePickDialog;
-import com.sansheng.testcenter.base.view.SettingsRadioDialog;
-import com.sansheng.testcenter.base.view.UIRevisableView;
-import com.sansheng.testcenter.base.view.UIUnrevisableView;
+import com.sansheng.testcenter.base.view.*;
 import com.sansheng.testcenter.demo.util.MeterUtilies;
 import com.sansheng.testcenter.module.MeterData;
+import com.sansheng.testcenter.utils.Utility;
 
 import java.util.Calendar;
 import java.util.concurrent.ExecutorService;
@@ -32,7 +31,7 @@ public class MeterDataFragment extends Fragment implements View.OnClickListener,
 
     private View mRootView;
     private UIUnrevisableView mMeterIdView;
-    private UIRevisableView mMeterNameView;
+    private UIUnrevisableView mMeterNameView;
     private UIRevisableView mValueTimeView;
     private UIRevisableView mReadTimeView;
     private UIRevisableView mDateTypeView;
@@ -67,7 +66,7 @@ public class MeterDataFragment extends Fragment implements View.OnClickListener,
 //        ((BaseActivity)getActivity()).setActionBar(BaseActivity.MODIFY_DETAIL_VIEW, this);
         mRootView = inflater.inflate(R.layout.meter_data_detail_layout, container, false);
         mMeterIdView = (UIUnrevisableView) mRootView.findViewById(R.id.meter_id);
-        mMeterNameView = (UIRevisableView) mRootView.findViewById(R.id.meter_name);
+        mMeterNameView = (UIUnrevisableView) mRootView.findViewById(R.id.meter_name);
         mValueTimeView = (UIRevisableView) mRootView.findViewById(R.id.meter_value_time);
         mReadTimeView = (UIRevisableView) mRootView.findViewById(R.id.meter_read_time);
         mDateTypeView = (UIRevisableView) mRootView.findViewById(R.id.meter_data_type);
@@ -117,10 +116,10 @@ public class MeterDataFragment extends Fragment implements View.OnClickListener,
                 modifyDataType();
                 break;
             case R.id.meter_value:
-//                modifyMeterValue();
+                modifyMeterValue();
                 break;
             case R.id.meter_important:
-//                modifyImportant();
+                modifyImportant();
                 break;
             default:
                 break;
@@ -141,14 +140,14 @@ public class MeterDataFragment extends Fragment implements View.OnClickListener,
     }
 
 
-    private void refreshView(MeterData meter) {
-        mMeterIdView.setContent(String.valueOf(meter.mMeterID));
-//        mMeterNameView.setContent(String.valueOf(meter.mMeterName));
-        mValueTimeView.setContent(MeterUtilies.getSanShengDate(meter.mValueTime));
-        mReadTimeView.setContent(MeterUtilies.getSanShengDate(meter.mReadTime));
-        mDateTypeView.setContent(mDataEntries[meter.mDataType - 1]);
-        mValzView.setContent(String.valueOf(meter.mValz));
-//        mImportantView.setContent(mImportantEntries[meter.isImportant]);
+    private void refreshView(MeterData meterData) {
+        mMeterIdView.setContent(String.valueOf(meterData.mMeterID));
+        mMeterNameView.setContent(String.valueOf(meterData.mMeter.mMeterName));
+        mValueTimeView.setContent(MeterUtilies.getSanShengDate(meterData.mValueTime));
+        mReadTimeView.setContent(MeterUtilies.getSanShengDate(meterData.mReadTime));
+        mDateTypeView.setContent(mDataEntries[meterData.mDataType - 1]);
+        mValzView.setContent(String.valueOf(meterData.mValz));
+        mImportantView.setContent(mImportantEntries[meterData.mImportant]);
     }
 
 //    private void modifyMeterNamen() {
@@ -203,35 +202,35 @@ public class MeterDataFragment extends Fragment implements View.OnClickListener,
         dateTimePickDialog.show();
     }
 
-//    private void modifyMeterValue() {
-//        final BaseDialog dialog = new BaseDialog(getActivity(), R.style.CustomDialog);
-//        dialog.setTitleText(R.string.meter_detail_value_title);
-//        dialog.setEditText(String.valueOf(mChangedMeter.mValz));
-//        dialog.setOnPositiveBtnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (TextUtils.equals(mChangedMeter.mMeterName, dialog.getEditText().getText().toString())) {
-//                    //未修改，无需更新
-//                    dialog.dismiss();
-//                } else {//修改
-//                    try {
-//                        mChangedMeter.mValz = Float.valueOf(dialog.getEditText().getText().toString());
-//                    } catch (NumberFormatException e) {
-//                        Utility.showToast(getActivity(), getActivity().getResources().getString(R.string.illegal_input));
-//                    }
-//                    refreshView(mChangedMeter);
-//                    dialog.dismiss();
-//                }
-//            }
-//        });
-//        dialog.setOnNegativeBtnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog.dismiss();
-//            }
-//        });
-//        dialog.show();
-//    }
+    private void modifyMeterValue() {
+        final BaseDialog dialog = new BaseDialog(getActivity(), R.style.CustomDialog);
+        dialog.setTitleText(R.string.meter_detail_value_title);
+        dialog.setEditText(String.valueOf(mChangedMeter.mValz));
+        dialog.setOnPositiveBtnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.equals(mChangedMeter.mMeter.mMeterName, dialog.getEditText().getText().toString())) {
+                    //未修改，无需更新
+                    dialog.dismiss();
+                } else {//修改
+                    try {
+                        mChangedMeter.mValz = Float.valueOf(dialog.getEditText().getText().toString());
+                    } catch (NumberFormatException e) {
+                        Utility.showToast(getActivity(), getActivity().getResources().getString(R.string.illegal_input));
+                    }
+                    refreshView(mChangedMeter);
+                    dialog.dismiss();
+                }
+            }
+        });
+        dialog.setOnNegativeBtnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 
     private void modifyDataType() {
         final SettingsRadioDialog dialog = new SettingsRadioDialog(getActivity(), R.style.CustomDialog);
@@ -249,21 +248,21 @@ public class MeterDataFragment extends Fragment implements View.OnClickListener,
         dialog.show();
     }
 
-//    private void modifyImportant() {
-//        final SettingsRadioDialog dialog = new SettingsRadioDialog(getActivity(), R.style.CustomDialog);
-//        dialog.setTitleText(R.string.meter_detail_important_title);
-//
-//        dialog.setSingleChoiceItems(mImportantEntries, mChangedMeter.isImportant, new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog, int which) {
-//                if (which != mChangedMeter.isImportant) {
-//                    mChangedMeter.isImportant = which;
-//                    refreshView(mChangedMeter);
-//                }
-//                dialog.dismiss();
-//            }
-//        });
-//        dialog.show();
-//    }
+    private void modifyImportant() {
+        final SettingsRadioDialog dialog = new SettingsRadioDialog(getActivity(), R.style.CustomDialog);
+        dialog.setTitleText(R.string.meter_detail_important_title);
+
+        dialog.setSingleChoiceItems(mImportantEntries, mChangedMeter.mImportant, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (which != mChangedMeter.mImportant) {
+                    mChangedMeter.mImportant = which;
+                    refreshView(mChangedMeter);
+                }
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 
     private class DataBaseTask extends AsyncTask<Void, Void, Integer> {
 

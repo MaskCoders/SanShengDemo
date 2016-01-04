@@ -26,10 +26,10 @@
     <!--表格参数-->
 
     <!--电表数据表格参数-->
-    <dimen name="meter_data_item1_width">50dp</dimen>
-    <dimen name="meter_data_item2_width">120dp</dimen>
-    <dimen name="meter_data_item3_width">120dp</dimen>
-    <dimen name="meter_data_item4_width">120dp</dimen>
+    <dimen name="meter_data_item1_width">100dp</dimen>
+    <dimen name="meter_data_item2_width">100dp</dimen>
+    <dimen name="meter_data_item3_width">100dp</dimen>
+    <dimen name="meter_data_item4_width">100dp</dimen>
     <!--电表数据表格参数-->
     <!--集中器表格参数-->
     <dimen name="collect_item1_width">120dp</dimen>

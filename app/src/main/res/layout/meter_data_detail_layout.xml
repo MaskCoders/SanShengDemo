@@ -29,7 +29,7 @@
         <include android:id="@+id/account_sync_email_line"
                  layout="@layout/meter_detail_divider"/>
         <!--电表名-->
-        <com.sansheng.testcenter.base.view.UIRevisableView
+        <com.sansheng.testcenter.base.view.UIUnrevisableView
                 android:id="@+id/meter_name"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"

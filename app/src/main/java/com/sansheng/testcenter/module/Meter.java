@@ -29,7 +29,6 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
     public String mUserNum;
     public String mUserAddress;
     public int mGroupId;
-    public int mImportant;
     public String mNote;
 
     public static final int ID_INDEX = 0;
@@ -50,20 +49,19 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
     public static final int USER_NUM_INDEX = ID_INDEX + 15;
     public static final int USER_ADDRESS_INDEX = ID_INDEX + 16;
     public static final int GROUP_ID_INDEX = ID_INDEX + 17;
-    public static final int IMPORTANT_INDEX = ID_INDEX + 18;
-    public static final int NOTE_INDEX = ID_INDEX + 19;
+    public static final int NOTE_INDEX = ID_INDEX + 18;
 
 
     public static final String[] CONTENT_PROJECTION = {
             ID, COLLECT_ID, DA, METER_NAME, METER_NUM, METER_ADDRESS,COMMON_PASSWORD, BAUDRATE_ID,COMMON_PORT_ID,
             PROTOCOL_ID, FEILV_ID, GATHER_ADDRESS, WEISHU_ID, USER_SMALL_TYPE_ID, USER_TYPE_ID, USER_NUM,
-            USER_ADDRESS, GROUP_ID, IMPORTANT, NOTE};
+            USER_ADDRESS, GROUP_ID, NOTE};
 
     public static final int[] ID_INDEX_PROJECTION = {
             ID_INDEX, COLLECT_ID_INDEX, DA_INDEX, METER_NUM_INDEX, METER_ADDRESS_INDEX, METER_NAME_INDEX,
             COMMON_PASSWORD_INDEX, BAUDRATE_ID_INDEX, COMMON_PORT_ID_INDEX, PROTOCOL_ID_INDEX, FEILV_ID_INDEX,
             GATHER_ADDRESS_INDEX, WEISHU_ID_INDEX, USER_SMALL_TYPE_ID_INDEX, USER_TYPE_ID_INDEX,
-            USER_NUM_INDEX, USER_ADDRESS_INDEX, GROUP_ID_INDEX, IMPORTANT_INDEX, NOTE_INDEX};
+            USER_NUM_INDEX, USER_ADDRESS_INDEX, GROUP_ID_INDEX, NOTE_INDEX};
 
 
     public static final String TABLE_NAME = "meter";
@@ -110,7 +108,6 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         values.put(USER_NUM, mUserNum);
         values.put(USER_ADDRESS, mUserAddress);
         values.put(GROUP_ID, mGroupId);
-        values.put(IMPORTANT, mImportant);
         values.put(NOTE, mNote);
         return values;
     }
@@ -135,7 +132,6 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         mUserNum = cursor.getString(USER_NUM_INDEX);
         mUserAddress = cursor.getString(USER_ADDRESS_INDEX);
         mGroupId = cursor.getInt(GROUP_ID_INDEX);
-        mImportant = cursor.getInt(IMPORTANT_INDEX);
         mNote = cursor.getString(NOTE_INDEX);
     }
 
@@ -143,9 +139,9 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         mId = cursor.getLong(MeterData.METER_ID_INDEX);
         mConcentratorId = cursor.getInt(cursor.getColumnIndex(COLLECT_ID));
         mDa = cursor.getInt(cursor.getColumnIndex(DA));
-        mMeterName = cursor.getString(cursor.getColumnIndex(METER_NUM));
-        mMeterNum = cursor.getInt(cursor.getColumnIndex(METER_ADDRESS));
-        mMeterAddress = cursor.getString(cursor.getColumnIndex(METER_NAME));
+        mMeterName = cursor.getString(cursor.getColumnIndex(METER_NAME));
+        mMeterNum = cursor.getInt(cursor.getColumnIndex(METER_NUM));
+        mMeterAddress = cursor.getString(cursor.getColumnIndex(METER_ADDRESS));
         mCommPwd = cursor.getInt(cursor.getColumnIndex(COMMON_PASSWORD));
         mBaudRateId = cursor.getInt(cursor.getColumnIndex(BAUDRATE_ID));
         mCommPortId = cursor.getInt(cursor.getColumnIndex(COMMON_PORT_ID));
@@ -158,7 +154,6 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         mUserNum = cursor.getString(cursor.getColumnIndex(USER_NUM));
         mUserAddress = cursor.getString(cursor.getColumnIndex(USER_ADDRESS));
         mGroupId = cursor.getInt(cursor.getColumnIndex(GROUP_ID));
-        mImportant = cursor.getInt(cursor.getColumnIndex(IMPORTANT));
         mNote = cursor.getString(cursor.getColumnIndex(NOTE));
     }
 
@@ -197,7 +192,6 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         dest.writeString(mUserNum);
         dest.writeString(mUserAddress);
         dest.writeInt(mGroupId);
-        dest.writeInt(mImportant);
         dest.writeString(mNote);
     }
 
@@ -233,7 +227,6 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         mUserNum = in.readString();
         mUserAddress = in.readString();
         mGroupId = in.readInt();
-        mImportant = in.readInt();
         mNote = in.readString();
     }
 
@@ -257,7 +250,6 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         meter.mUserNum = mUserNum;
         meter.mUserAddress = mUserAddress;
         meter.mGroupId = mGroupId;
-        meter.mImportant = mImportant;
         meter.mNote = mNote;
         return meter;
     }

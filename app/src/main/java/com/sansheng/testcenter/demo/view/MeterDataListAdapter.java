@@ -66,11 +66,20 @@ public class MeterDataListAdapter extends SimpleCursorAdapter {
         if (meterData.mId == 0) {//无此条数据
             return;
         }
-        holder.meterNum.setText(String.valueOf(meterData.mMeter.mMeterNum));
+        holder.meterNum.setText(String.valueOf(meterData.mMeter.mMeterName));
         holder.meterAddress.setText(meterData.mMeter.mMeterAddress);
         holder.valueTime.setText(MeterUtilies.getSanShengDate(meterData.mValueTime));
         holder.readTime.setText(MeterUtilies.getSanShengDate(meterData.mReadTime));
-        holder.meterValue.setText(String.valueOf(meterData.mValz));
+        StringBuffer value = new StringBuffer(String.valueOf(meterData.mValz));
+        value.append("  ");
+        value.append(meterData.mVal1);
+        value.append("  ");
+        value.append(meterData.mVal1);
+        value.append("  ");
+        value.append(meterData.mVal1);
+        value.append("  ");
+        value.append(meterData.mVal1);
+        holder.meterValue.setText(value);
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
