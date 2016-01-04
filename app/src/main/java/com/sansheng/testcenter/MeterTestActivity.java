@@ -7,13 +7,18 @@ import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import com.sansheng.testcenter.base.BaseActivity;
+import com.sansheng.testcenter.base.MeterSelectDialog;
 import com.sansheng.testcenter.base.MeterTestItemsDialog;
+import com.sansheng.testcenter.base.view.ConnectTypeDialog;
 import com.sansheng.testcenter.base.view.UIRevisableView;
+import com.sansheng.testcenter.base.view.WaySelectMeterDialog;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.controller.ConnectionService;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.module.Meter;
+import com.sansheng.testcenter.provider.EquipmentPreference;
 import com.sansheng.testcenter.server.ClientManager;
 import com.sansheng.testcenter.server.MSocketServer;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
@@ -23,16 +28,21 @@ import java.util.HashMap;
 /**
  * Created by sunshaogang on 1/4/16.
  */
-public class MeterTestActivity extends BaseActivity implements IServiceHandlerCallback, MeterTestItemsDialog.MeterTestCallback {
-    Button text1;
+public class MeterTestActivity extends BaseActivity implements IServiceHandlerCallback,
+        MeterTestItemsDialog.MeterTestCallback, WaySelectMeterDialog.WaySelectMeterCallback, ConnectTypeDialog.ConnectTypeCallback{
+//    Button text1;
     Button text2;
     Button text3;
     Button text4;
     Button text5;
+    Button text6;
     UIRevisableView mAddressView;
     UIRevisableView mConnTypeView;
     UIRevisableView mReadAddressView;
     UIRevisableView mSelectAddressView;
+
+    private ListView mListView;
+    private MeterTestCenterListAdapter mAdapter;
     private MainHandler mMainHandler;
     private MSocketServer myService;  //我们自己的service
     private ClientManager mClientManager;
@@ -59,56 +69,70 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     @Override
     protected void initButtonList() {
         View inflate = getLayoutInflater().inflate(R.layout.meter_test_control_button_list, null);
-        text1 = (Button) inflate.findViewById(R.id.text1);
+//        text1 = (Button) inflate.findViewById(R.id.text1);
         text2 = (Button) inflate.findViewById(R.id.text2);
         text3 = (Button) inflate.findViewById(R.id.text3);
         text4 = (Button) inflate.findViewById(R.id.text4);
         text5 = (Button) inflate.findViewById(R.id.text5);
-        text1.setOnClickListener(this);
+        text6 = (Button) inflate.findViewById(R.id.text6);
+//        text1.setOnClickListener(this);
         text2.setOnClickListener(this);
         text3.setOnClickListener(this);
         text4.setOnClickListener(this);
         text5.setOnClickListener(this);
+        text6.setOnClickListener(this);
         main_button_list.addView(inflate);
     }
 
     @Override
     protected void initConnList() {
-        View inflate = getLayoutInflater().inflate(R.layout.meter_test_connect_layout, null);
-        mAddressView = (UIRevisableView) inflate.findViewById(R.id.meter_address);
-        mConnTypeView = (UIRevisableView) inflate.findViewById(R.id.conn_type);
-        mReadAddressView = (UIRevisableView) inflate.findViewById(R.id.read_address);
-        mSelectAddressView = (UIRevisableView) inflate.findViewById(R.id.select_meter);
-        mAddressView.setOnClickListener(this);
-        mConnTypeView.setOnClickListener(this);
-        mReadAddressView.setOnClickListener(this);
-        mSelectAddressView.setOnClickListener(this);
-        main_layout_conn.addView(inflate);
+//        View inflate = getLayoutInflater().inflate(R.layout.meter_test_connect_layout, null);
+//        mAddressView = (UIRevisableView) inflate.findViewById(R.id.meter_address);
+//        mConnTypeView = (UIRevisableView) inflate.findViewById(R.id.conn_type);
+//        mReadAddressView = (UIRevisableView) inflate.findViewById(R.id.read_address);
+//        mSelectAddressView = (UIRevisableView) inflate.findViewById(R.id.select_meter);
+//        mAddressView.setOnClickListener(this);
+//        mConnTypeView.setOnClickListener(this);
+//        mReadAddressView.setOnClickListener(this);
+//        mSelectAddressView.setOnClickListener(this);
+//        main_layout_conn.addView(inflate);
+        setDrawerDisable();
     }
 
     @Override
     protected void initCenter() {
-//        View inflate = getLayoutInflater().inflate(R.layout.connbuttonlist, null);
-//        main_info.addView(inflate);
+        View inflate = getLayoutInflater().inflate(R.layout.meter_test_center_layout, null);
+        mListView = (ListView) inflate.findViewById(R.id.list_view);
+        mAdapter = new MeterTestCenterListAdapter(this);
+        mListView.setAdapter(mAdapter);
+        main_info.addView(inflate);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.text1:
-                showShortLog(true);
-                break;
+//            case R.id.text1:
+//                showShortLog(true);
+//                break;
             case R.id.text2:
-                showWholeLog(true);
+                //选择电表,弹出对话框选择 1、输入地址 2、选择已有电表 3、读地址，从已连接的设备中获取电表地址
+                showWaySelectMeterDialog();
                 break;
             case R.id.text3:
-                showShortLog(false);
+                //开始按钮
+                startTest();
                 break;
             case R.id.text4:
-                showWholeLog(false);
+                //设置时钟
+                setMeterTime();
                 break;
             case R.id.text5:
                 showTestItemsDialog();
+                //选择检测项目
+                break;
+            case R.id.text6:
+                showConnectTypeDialog();
+                //弹出对话框选择通讯类型
                 break;
             case R.id.meter_address:
                 Intent intent = new Intent(MeterTestActivity.this, MSocketServer.class);
@@ -154,16 +178,46 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         testItemsDialog.show(getFragmentManager(), "select_items");
     }
 
+    private void showWaySelectMeterDialog() {
+        WaySelectMeterDialog waySelectMeterDialog = new WaySelectMeterDialog(MeterTestActivity.this);
+        waySelectMeterDialog.show(getFragmentManager(), "way_select_meter");
+    }
+
+    private void showConnectTypeDialog() {
+        ConnectTypeDialog connectTypeDialog = new ConnectTypeDialog(MeterTestActivity.this);
+        connectTypeDialog.show(getFragmentManager(), "select_connect_type");
+    }
+
+    private void startTest(){
+        Log.e("ssg", "开始检测");
+    }
+
+    private void setMeterTime(){
+        Log.e("ssg", "设置电表时间");
+    }
+
     @Override
-    public void onCollectNegativeClick() {
+    public void onMeterItemNegativeClick() {
 
     }
 
     @Override
-    public void onCollectPositiveClick(HashMap<Integer, String> itemMap) {
+    public void onMeterItemPositiveClick(HashMap<Integer, String> itemMap) {
         if (itemMap != null) {
             Log.e("ssg", "选择测试项目的数量 ＝ " + itemMap.size());
+            mAdapter.setSelectedItemts(itemMap);
+            mAdapter.notifyDataSetChanged();
+//            EquipmentPreference.getPreferences(this).setSelectedMeterTest(itemMap.keySet());
         }
     }
 
+    @Override
+    public void onSelectMeterPositiveClick(HashMap<String, Meter> meters) {
+
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Log.e("ssg", "选择的通讯类型 ＝ " + getResources().getStringArray(R.array.select_connect_type)[position]);
+    }
 }

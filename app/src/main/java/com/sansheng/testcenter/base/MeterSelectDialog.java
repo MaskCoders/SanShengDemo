@@ -17,9 +17,9 @@ import android.widget.ListView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.view.AnswerDialog;
 import com.sansheng.testcenter.base.view.PullListView;
+import com.sansheng.testcenter.demo.view.MeterListAdapter;
 import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.demo.view.MeterDataFragment;
-import com.sansheng.testcenter.demo.view.MeterListAdapter;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.module.Meter;
@@ -33,7 +33,7 @@ public class MeterSelectDialog extends DialogFragment implements LoaderManager.L
     private View mRootView;
 //    private View mEmptyView;
     private PullListView mListView;
-    private MeterListAdapter mAdapter;
+    private MeterListDialogAdapter mAdapter;
     private int mLastVisibleItem;
     private static final int LOADER_ID_FILTER_DEFAULT = 0;
     private int mOriginLength = 10;//默认初始显示数量
@@ -62,7 +62,7 @@ public class MeterSelectDialog extends DialogFragment implements LoaderManager.L
         mListView.setOnScrollListener(this);
         mListView.hideFooterView();
 //        mEmptyView = mRootView.findViewById(R.id.empty_view_group);
-        mAdapter = new MeterListAdapter(getActivity(), null);
+        mAdapter = new MeterListDialogAdapter(getActivity(), null);
         mListView.setAdapter(mAdapter);
         getLoaderManager().initLoader(LOADER_ID_FILTER_DEFAULT, null, this);
         mDialog.setCustomView(mRootView);

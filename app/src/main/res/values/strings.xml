@@ -130,4 +130,5 @@
     <string name="meter_test_connect_type">通讯类型</string>
     <string name="meter_test_read_address">读地址</string>
     <string name="meter_test_select_meter">选择电表</string>
+    <string name="edit_meter_adders">输入电表地址</string>
 </resources>

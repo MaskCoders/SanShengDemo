@@ -21,8 +21,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class SettingsPreference {
-    private static final String TAG = "EquipmentPreference";
-    private static final String PREFERENCES_FILE = "Equipment";
 //    com.sansheng.testcenter_preferences
     private static final String DEFAULT_AGREEMENT = "default_protocol";
     private static final String RESEND_FREQUENCY = "resend_frequency";

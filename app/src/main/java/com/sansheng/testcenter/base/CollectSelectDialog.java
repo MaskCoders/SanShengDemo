@@ -17,8 +17,8 @@ import android.widget.ListView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.view.AnswerDialog;
 import com.sansheng.testcenter.base.view.PullListView;
-import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.demo.view.CollectListAdapter;
+import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.demo.view.MeterDataFragment;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Content;
@@ -32,13 +32,16 @@ public class CollectSelectDialog extends DialogFragment implements LoaderManager
     private View mRootView;
 //    private View mEmptyView;
     private PullListView mListView;
-    private CollectListAdapter mAdapter;
+    private CollectListDialogAdapter mAdapter;
     private int mLastVisibleItem;
     private static final int LOADER_ID_FILTER_DEFAULT = 0;
     private int mOriginLength = 10;//默认初始显示数量
     private final static int DOWNSIDE_INCREASE_COUNT = 10;//每次增加数量
     private AnswerDialog mDialog;
     private CollectCallback callback;
+
+    public CollectSelectDialog() {
+    }
 
     public CollectSelectDialog(CollectCallback callback) {
         this.callback = callback;
@@ -60,7 +63,7 @@ public class CollectSelectDialog extends DialogFragment implements LoaderManager
         mListView.setOnScrollListener(this);
         mListView.hideFooterView();
 //        mEmptyView = mRootView.findViewById(R.id.empty_view_group);
-        mAdapter = new CollectListAdapter(getActivity(), null);
+        mAdapter = new CollectListDialogAdapter(getActivity(), null);
         mListView.setAdapter(mAdapter);
         getLoaderManager().initLoader(LOADER_ID_FILTER_DEFAULT, null, this);
         mDialog.setCustomView(mRootView);

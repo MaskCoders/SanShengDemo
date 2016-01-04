@@ -364,6 +364,7 @@ public class EquipmentProvider extends ContentProvider {
      */
     public static void deleteEquipmentData() {
         SettingsPreference.getPreferences(mContext).deletePreference();
+        EquipmentPreference.getPreferences(mContext).deletePreference();
         DBHelper.deleteData(getDatabase(mContext));
     }
 }

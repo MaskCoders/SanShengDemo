@@ -23,6 +23,19 @@
         <item>"跳闸次数"</item>
     </string-array>
 
+    <string-array name="way_select_meter">
+        <item>"手动输入"</item>
+        <item>"选择已有电表"</item>
+        <item>"读地址"</item>
+    </string-array>
+
+    <string-array name="select_connect_type">
+        <item>"红外"</item>
+        <item>"RS485"</item>
+        <item>"RS232"</item>
+        <item>"通用载波"</item>
+    </string-array>
+
     <string-array name="crop_image_from">
         <item>@string/crop_image_from_gallery</item>
         <item>@string/crop_image_from_camera</item>

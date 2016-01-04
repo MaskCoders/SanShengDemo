@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -29,6 +30,7 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
     public final static int SETTINGS_VIEW = 7;//修改详情
     private ActionBarCallback mActionBarCallback;
     protected StringBuffer logBuffer = new StringBuffer();
+    protected DrawerLayout mDrawerLayout;
     protected EditText main_sort_log;
     protected EditText main_whole_log;
     protected ImageButton main_log_down_btn;
@@ -66,6 +68,7 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
 
     private void initBaseViews() {
         setContentView(R.layout.base_layout);
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer);
         main_sort_log = (EditText) findViewById(R.id.main_sort_log);
         main_whole_log = (EditText) findViewById(R.id.main_whole_log);
         main_log_down_btn = (ImageButton) findViewById(R.id.main_log_down_btn);
@@ -79,6 +82,10 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
         initButtonList();
         initConnList();
         initCenter();
+    }
+
+    protected void setDrawerDisable(){
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
     protected void showShortLog(boolean flag) {
