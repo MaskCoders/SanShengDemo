@@ -74,7 +74,7 @@
         <item name="android:textSize">@dimen/list_body_text_size</item>
     </style>
     <style name="ExpandableListText">
-        <item name="android:textColor">@color/title_body_color</item>
+        <item name="android:textColor">@drawable/center_text_selector</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_vertical</item>
@@ -83,7 +83,7 @@
         <item name="android:textSize">@dimen/list_body_text_size_big</item>
     </style>
     <style name="ListTextView">
-        <item name="android:textColor">@color/title_body_color</item>
+        <item name="android:textColor">@drawable/center_text_selector</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_vertical</item>

@@ -54,6 +54,8 @@ public class CenterActivity extends BaseActivity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 //TODO:启动检测接口
+                Log.e("ssg", "the position that clicked is " + mGroupArray.get(groupPosition).mChildArray.get(childPosition).n);
+                mListView.getPackedPositionForChild(groupPosition, childPosition);
                 return false;
             }
         });

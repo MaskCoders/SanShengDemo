@@ -7,6 +7,5 @@
               android:id="@+id/center_group_title"
               android:layout_marginLeft="30dp"
               style="@style/ExpandableListText"
-              android:textColor="@color/color_black"
               android:text="电表地址"/>
 </LinearLayout>
