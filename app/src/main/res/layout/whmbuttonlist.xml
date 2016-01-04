@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <Button android:id="@+id/whm_bl_read_address" style="@style/BtnStyle1"
+            android:text="@string/whm_bl_read_address"/>
+    <Button android:id="@+id/whm_bl_choose_db" style="@style/BtnStyle1"
+            android:text="@string/whm_bl_choose_db" />
+    <Button android:id="@+id/whm_bl_start"  style="@style/BtnStyle1"
+            android:text="@string/whm_bl_start" />
+    <Button android:id="@+id/whm_bl_choose_items"  style="@style/BtnStyle1"
+            android:text="@string/whm_bl_choose_items"/>
+    <Button android:id="@+id/whm_bl_show_log"  style="@style/BtnStyle1"
+            android:text="@string/whm_bl_show_log"/>
+
+</LinearLayout>

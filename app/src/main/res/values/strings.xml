@@ -10,7 +10,7 @@
     <string name="save">"保存"</string>
     <string name="cancel">"取消"</string>
 
-    <string name="function_socket">SOCKET通讯</string>
+    <string name="function_socket">电表检测</string>
     <string name="function_meter_list">选择电表</string>
     <string name="function_meter_data_list">电表数据列表</string>
     <string name="function_create_data">生成测试数据</string>
@@ -105,5 +105,24 @@
         602：key mcode不匹配\n
         501～700：key验证失败\n</string>
     <!--baidu-sample needed-->
+    <!-- 电表检测-->
+    <string name = "whm_item_dqbm">当前表码</string>
+    <string name = "whm_item_sxdy">三相电压</string>
+    <string name = "whm_item_dbtime">电表时间</string>
+    <string name = "whm_item_djtime">冻结时间</string>
+    <string name = "whm_item_symoney">剩余金额</string>
+    <string name = "whm_item_syqk">失压情况</string>
+    <string name = "whm_item_kgtimes">开盖次数</string>
+    <string name = "whm_item_tztimes">跳闸次数</string>
+
+    <string name = "whm_bl_read_address">读地址</string>
+    <string name = "whm_bl_choose_db">选择电表</string>
+    <string name = "whm_bl_start">开始检测</string>
+    <string name = "whm_bl_choose_items">选择项目</string>
+    <string name = "whm_bl_show_log">显示日志</string>
+    <string name = "whm_bl_close_log">显示日志</string>
+
+    <string name = "whm_db_address">电表地址</string>
+    <string name = "whm_db_conn_type">信道类型</string>
 
 </resources>

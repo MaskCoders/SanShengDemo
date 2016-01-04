@@ -60,6 +60,9 @@
         <activity android:name=".view.TestBaseActivity"
                   android:screenOrientation="sensorLandscape"
                   android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name=".view.WhmActivity"
+                  android:screenOrientation="sensorLandscape"
+                  android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name=".demo.view.MeterDataListActivity"
                   android:screenOrientation="sensorLandscape">
             <intent-filter>

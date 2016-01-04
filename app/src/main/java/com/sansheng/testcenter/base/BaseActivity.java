@@ -40,7 +40,9 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
 
         void onCancleClick();
     }
-
+    protected boolean wholeIsShow(){
+        return main_whole_log.getVisibility() == View.VISIBLE?true:false;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

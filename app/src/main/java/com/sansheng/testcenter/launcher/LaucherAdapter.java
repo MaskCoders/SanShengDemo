@@ -25,6 +25,7 @@ import com.sansheng.testcenter.module.MeterData;
 import com.sansheng.testcenter.settings.SettingsActivity;
 import com.sansheng.testcenter.utils.Utility;
 import com.sansheng.testcenter.view.TestBaseActivity;
+import com.sansheng.testcenter.view.WhmActivity;
 
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
@@ -80,7 +81,7 @@ public class LaucherAdapter extends BaseAdapter implements CollectSelectDialog.C
                     Intent intent = new Intent();
                     switch (postion) {
                         case 0:
-                            intent.setClass(mContext, SocketDemo.class);
+                            intent.setClass(mContext, WhmActivity.class);
                             mContext.startActivity(intent);
                             break;
                         case 1://电表列表
