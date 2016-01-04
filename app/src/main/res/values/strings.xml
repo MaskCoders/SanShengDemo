@@ -20,9 +20,10 @@
     <string name="function_home">国网主站</string>
     <string name="function_collect">选择终端</string>
     <string name="function_info_collection">信息采集</string>
+    <string name="function_meter_test">电表检测</string>
 
 
-    <string name="meter_detail_id_title">电报标识</string>
+    <string name="meter_detail_id_title">电表标识</string>
     <string name="meter_detail_name_title">电表名称</string>
     <string name="meter_detail_value_time_title">数据时标</string>
     <string name="meter_detail_read_time_title">读取时间</string>
@@ -125,4 +126,8 @@
     <string name = "whm_db_address">电表地址</string>
     <string name = "whm_db_conn_type">信道类型</string>
 
+    <string name="meter_test_modify_address">电表地址</string>
+    <string name="meter_test_connect_type">通讯类型</string>
+    <string name="meter_test_read_address">读地址</string>
+    <string name="meter_test_select_meter">选择电表</string>
 </resources>

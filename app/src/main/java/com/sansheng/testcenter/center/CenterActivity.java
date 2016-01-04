@@ -21,6 +21,7 @@ import java.util.concurrent.ThreadFactory;
 
 /**
  * Created by sunshaogang on 12/24/15.
+ * 国网主站
  */
 public class CenterActivity extends BaseActivity {
 

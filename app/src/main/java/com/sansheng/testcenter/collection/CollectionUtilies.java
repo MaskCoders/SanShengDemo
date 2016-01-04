@@ -1,6 +1,6 @@
 package com.sansheng.testcenter.collection;
 
-import com.sansheng.testcenter.demo.util.MeterUtilies;
+import com.sansheng.testcenter.utils.MeterUtilies;
 
 import java.util.Random;
 

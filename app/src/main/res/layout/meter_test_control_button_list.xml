@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <Button android:id="@+id/text1" style="@style/BtnStyle1"
+            android:text="读地址"/>
+    <Button android:id="@+id/text2" style="@style/BtnStyle1"
+            android:text="选择电表"/>
+    <Button android:id="@+id/text5" style="@style/BtnStyle1"
+            android:text="选择项目"/>
+    <Button android:id="@+id/text3" style="@style/BtnStyle1"
+            android:text="开始检测"/>
+    <Button android:id="@+id/text4" style="@style/BtnStyle1"
+            android:text="设置时钟"/>
+
+</LinearLayout>

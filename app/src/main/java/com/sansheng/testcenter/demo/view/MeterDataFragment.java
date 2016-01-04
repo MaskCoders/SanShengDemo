@@ -13,7 +13,7 @@ import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.base.view.*;
-import com.sansheng.testcenter.demo.util.MeterUtilies;
+import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.module.MeterData;
 import com.sansheng.testcenter.utils.Utility;
 

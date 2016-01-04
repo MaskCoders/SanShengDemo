@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.demo.util.MeterUtilies;
+import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.module.MeterData;
 
 /**

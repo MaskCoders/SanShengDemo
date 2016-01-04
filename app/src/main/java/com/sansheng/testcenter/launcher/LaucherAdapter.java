@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.sansheng.testcenter.MeterTestActivity;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.CollectSelectDialog;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
@@ -42,6 +43,7 @@ public class LaucherAdapter extends BaseAdapter implements CollectSelectDialog.C
             R.drawable.db_operation_icon_selector,
             R.drawable.db_operation_icon_selector,
             R.drawable.create_db_icon_selector,
+            R.drawable.db_operation_icon_normal,
             R.drawable.db_operation_icon_normal,
             R.drawable.db_operation_icon_normal,
             R.drawable.db_operation_icon_normal,
@@ -119,6 +121,10 @@ public class LaucherAdapter extends BaseAdapter implements CollectSelectDialog.C
                             break;
                         case 8://信息采集
                             intent.setClass(mContext, CollectionActivity.class);
+                            mContext.startActivity(intent);
+                            break;
+                        case 9://电表检测
+                            intent.setClass(mContext, MeterTestActivity.class);
                             mContext.startActivity(intent);
                             break;
                         default:

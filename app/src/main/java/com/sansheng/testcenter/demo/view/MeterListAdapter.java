@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.demo.util.MeterUtilies;
+import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.module.Meter;
 
 import java.util.HashMap;

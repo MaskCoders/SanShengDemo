@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:ModifyView="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <com.sansheng.testcenter.base.view.UIRevisableView
+            android:id="@+id/meter_address"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            ModifyView:title="@string/meter_test_modify_address"
+            ModifyView:content="@string/meter_detail_default_content"
+            android:gravity="center_vertical|right"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/list_sec_text_size"/>
+    <com.sansheng.testcenter.base.view.UIRevisableView
+            android:id="@+id/conn_type"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            ModifyView:title="@string/meter_test_connect_type"
+            ModifyView:content="@string/meter_detail_default_content"
+            android:gravity="center_vertical|right"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/list_sec_text_size"/>
+    <com.sansheng.testcenter.base.view.UIRevisableView
+            android:id="@+id/read_address"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            ModifyView:title="@string/meter_test_read_address"
+            ModifyView:content="@string/meter_detail_default_content"
+            android:gravity="center_vertical|right"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/list_sec_text_size"/>
+    <com.sansheng.testcenter.base.view.UIRevisableView
+            android:id="@+id/select_meter"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            ModifyView:title="@string/meter_test_select_meter"
+            ModifyView:content="@string/meter_detail_default_content"
+            android:gravity="center_vertical|right"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/list_sec_text_size"/>
+
+    <!--<Button android:id="@+id/conn1" style="@style/BtnStyle1"-->
+            <!--android:text="电表地址"/>-->
+    <!--<Button android:id="@+id/conn2" style="@style/BtnStyle1"-->
+            <!--android:text="通讯类型" />-->
+    <!--<Button android:id="@+id/conn3"  style="@style/BtnStyle1"-->
+            <!--android:text="读地址" />-->
+    <!--<Button android:id="@+id/conn4"  style="@style/BtnStyle1"-->
+            <!--android:text="选择电表" />-->
+
+</LinearLayout>

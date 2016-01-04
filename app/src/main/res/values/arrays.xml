@@ -10,6 +10,17 @@
         <item>@string/function_home</item>
         <item>@string/function_collect</item>
         <item>@string/function_info_collection</item>
+        <item>@string/function_meter_test</item>
+    </string-array>
+    <string-array name="meter_test_items">
+        <item>"当前表码"</item>
+        <item>"三相电压"</item>
+        <item>"电表时间"</item>
+        <item>"冻结时间"</item>
+        <item>"剩余金额"</item>
+        <item>"失压情况"</item>
+        <item>"开盖次数"</item>
+        <item>"跳闸次数"</item>
     </string-array>
 
     <string-array name="crop_image_from">
