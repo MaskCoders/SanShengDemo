@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.sansheng.testcenter.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by sunshaogang on 12/10/15.
  */
@@ -24,7 +27,7 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
     public final static int MODIFY_DETAIL_VIEW = 6;//修改详情a
     public final static int SETTINGS_VIEW = 7;//修改详情
     private ActionBarCallback mActionBarCallback;
-
+    protected StringBuffer logBuffer = new StringBuffer();
     protected EditText main_sort_log;
     protected EditText main_whole_log;
     protected ImageButton main_log_down_btn;
@@ -35,6 +38,11 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
     protected LinearLayout main_button_list;
     protected LinearLayout main_layout_conn;
 
+    protected String getTimeStamp(){
+        Date nowTime=new Date();
+        SimpleDateFormat time=new SimpleDateFormat("HH-mm-ss");
+        return time.format(nowTime);
+    }
     public interface ActionBarCallback {
         void onSaveClick();
 

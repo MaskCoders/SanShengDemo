@@ -42,7 +42,6 @@ public class WhmActivity extends BaseActivity implements IServiceHandlerCallback
     private void initData() {
         main_status_info.setText("has conn the ser : ip-192.168,134,77 :  port-8001");
         main_sort_log.setText("show the sort log");
-        main_whole_log.setText("show long test\nshow long test\nshow long test\nshow long test\nshow long test\n");
     }
 
     @Override
@@ -88,6 +87,8 @@ public class WhmActivity extends BaseActivity implements IServiceHandlerCallback
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.whm_bl_read_address:
+//                logBuffer.append(getTimeStamp()).append("/t").append("")
+                main_whole_log.setText(logBuffer.toString());
                 break;
             case R.id.whm_bl_choose_db:
                 break;
