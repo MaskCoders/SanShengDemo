@@ -14,12 +14,11 @@ import com.sansheng.testcenter.MeterTestActivity;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.CollectSelectDialog;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
+import com.sansheng.testcenter.base.MeterSelectDialog;
 import com.sansheng.testcenter.base.view.ProgressDailog;
 import com.sansheng.testcenter.center.CenterActivity;
 import com.sansheng.testcenter.collection.CollectionActivity;
 import com.sansheng.testcenter.demo.view.MeterDataListActivity;
-import com.sansheng.testcenter.base.MeterSelectDialog;
-import com.sansheng.testcenter.demo.view.SocketDemo;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.module.MeterData;
@@ -33,22 +32,27 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-public class LaucherAdapter extends BaseAdapter implements CollectSelectDialog.CollectCallback, MeterSelectDialog.MeterCallback{
+public class LaucherAdapter extends BaseAdapter implements CollectSelectDialog.CollectCallback, MeterSelectDialog.MeterCallback {
 
     private static final ThreadFactory sThreadFactory = new CustomThreadPoolFactory("EquipmentDBThread");
     private ExecutorService sThreadPool = Executors.newSingleThreadExecutor(sThreadFactory);
     private Activity mContext;
     private String[] textSource;
-    private int[] iconSource = new int[]{R.drawable.socket_icon_selector,
-            R.drawable.db_operation_icon_selector,
-            R.drawable.db_operation_icon_selector,
-            R.drawable.create_db_icon_selector,
-            R.drawable.db_operation_icon_normal,
-            R.drawable.db_operation_icon_normal,
-            R.drawable.db_operation_icon_normal,
-            R.drawable.db_operation_icon_normal,
-            R.drawable.db_operation_icon_normal,
-            R.drawable.db_operation_icon_normal};
+    private int[] iconSource = new int[]{R.drawable.dxb,
+            R.drawable.sxb,
+            R.drawable.jzq,
+            R.drawable.bdmk,
+            R.drawable.ycmkjc,
+            R.drawable.tqsb,
+            R.drawable.gps,
+            R.drawable.gw3761,
+            R.drawable.dagl,
+            R.drawable.sjbcjsc,
+            R.drawable.tqsb,
+            R.drawable.gyjx,
+            R.drawable.xcsd,
+            R.drawable.settings,
+    };
     private ProgressDailog mProgressDailog;
 
     public LaucherAdapter(Activity mContext) {
@@ -82,49 +86,63 @@ public class LaucherAdapter extends BaseAdapter implements CollectSelectDialog.C
                 public void onClick(View v) {
                     Intent intent = new Intent();
                     switch (postion) {
-                        case 0:
+                        case 0://单项表检测
                             intent.setClass(mContext, WhmActivity.class);
                             mContext.startActivity(intent);
                             break;
-                        case 1://电表列表
-                            MeterSelectDialog meterDialog = new MeterSelectDialog(LaucherAdapter.this);
-                            meterDialog.show(mContext.getFragmentManager(), "select_meter");
+                        case 1://三相表检测
+                            intent.setClass(mContext, MeterTestActivity.class);
+                            mContext.startActivity(intent);
+//                            MeterSelectDialog meterDialog = new MeterSelectDialog(LaucherAdapter.this);
+//                            meterDialog.show(mContext.getFragmentManager(), "select_meter");
 //                            intent.setClass(mContext, MeterListActivity.class);
 //                            mContext.startActivity(intent);
                             break;
-                        case 2://电表数据列表
+                        case 2://集中器检测
+                            CollectSelectDialog collectDialog = new CollectSelectDialog(LaucherAdapter.this);
+                            collectDialog.show(mContext.getFragmentManager(), "select_collects");
+                            break;
+                        case 3://本地模块检测
+                            intent.setClass(mContext, TestBaseActivity.class);
+                            mContext.startActivity(intent);
+                            break;
+                        case 4://远程模块检测
+                            intent.setClass(mContext, TestBaseActivity.class);
+                            mContext.startActivity(intent);
+                            break;
+                        case 5://台区识别
+                            break;
+                        case 6://GPS定位
+                            intent.setClass(mContext, CollectionActivity.class);
+                            mContext.startActivity(intent);
+                            break;
+                        case 7://国网376.1主站
+                            intent.setClass(mContext, CenterActivity.class);
+                            mContext.startActivity(intent);
+                            break;
+                        case 8://档案管理
                             intent.setClass(mContext, MeterDataListActivity.class);
                             mContext.startActivity(intent);
                             break;
-                        case 3:
+                        case 9://数据补抄
                             showProgressDialog();
                             InsertDataTask task = new InsertDataTask();
                             task.executeOnExecutor(sThreadPool);
                             break;
-                        case 4:
+                        case 10://组网拓扑
                             intent.setClass(mContext, TestBaseActivity.class);
                             mContext.startActivity(intent);
                             break;
-                        case 5://设置
+                        case 11://规约解析
+                            intent.setClass(mContext, TestBaseActivity.class);
+                            mContext.startActivity(intent);
+                            break;
+                        case 12://现场售电
+                            MeterSelectDialog meterDialog = new MeterSelectDialog(LaucherAdapter.this);
+                            meterDialog.show(mContext.getFragmentManager(), "select_meter");
+                            break;
+                        case 13://系统设置
                             intent.setClass(mContext, SettingsActivity.class);
-                            mContext.startActivity(intent);
-                            break;
-                        case 6://主站
-                            intent.setClass(mContext, CenterActivity.class);
-                            mContext.startActivity(intent);
-                            break;
-                        case 7://集中器列表
-                            CollectSelectDialog collectDialog = new CollectSelectDialog(LaucherAdapter.this);
-                            collectDialog.show(mContext.getFragmentManager(), "select_collects");
-//                            intent.setClass(mContext, CollectListActivity.class);
-//                            mContext.startActivity(intent);
-                            break;
-                        case 8://信息采集
-                            intent.setClass(mContext, CollectionActivity.class);
-                            mContext.startActivity(intent);
-                            break;
-                        case 9://电表检测
-                            intent.setClass(mContext, MeterTestActivity.class);
                             mContext.startActivity(intent);
                             break;
                         default:

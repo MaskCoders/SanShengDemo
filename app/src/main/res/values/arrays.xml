@@ -6,11 +6,15 @@
         <item>@string/function_meter_data_list</item>
         <item>@string/function_create_data</item>
         <item>@string/function_test</item>
-        <item>@string/function_settings</item>
+        <item>@string/function_check_update</item>
+        <item>@string/function_gps</item>
         <item>@string/function_home</item>
         <item>@string/function_collect</item>
+        <item>@string/function_data_upload</item>
         <item>@string/function_info_collection</item>
+        <item>@string/function_protocol</item>
         <item>@string/function_meter_test</item>
+        <item>@string/function_settings</item>
     </string-array>
     <string-array name="meter_test_items">
         <item>"当前表码"</item>
