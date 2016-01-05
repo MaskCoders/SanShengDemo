@@ -1,3 +1,6 @@
+import com.sansheng.testcenter.bean.A;
+import com.sansheng.testcenter.bean.C;
+import com.sansheng.testcenter.bean.UserData;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
 
 import java.io.*;
@@ -104,8 +107,28 @@ public class Server {
                         String str = br.readLine();
                         System.out.println("you input cmd is "+str);
                         if(!str.equalsIgnoreCase("end")) {
-                            byte[] cmd = creater.makeCommand(null,null,null);
-                            pout.write(cmd);
+                            TerProtocolCreater clazz = new TerProtocolCreater();
+                            //68 49 00 49 00 68
+                            // C: 4A
+                            // A : 10 12 64 00 02
+                            // AFN:0C
+                            // SEQ:F0
+                            // DA : 00 00
+                            // DT:01 00
+                            // suerdata:00 35 24 09 25 00
+                            // 56 16
+                            C c =new C(false,true,false,false,10);
+                            A a = new A(4114,25600,true,1);
+                            UserData u = new UserData();
+                            u.setAFN("0C");
+                            u.setSEQ("F0");
+                            u.setDataUnitTip_DA1("00");
+                            u.setDataUnitTip_DA2("00");
+                            u.setDataUnitTip_DT1("01");
+                            u.setDataUnitTip_DT2("00");
+                            u.setDataUnit("00 35 24 09 25 00".replace(" ",""));
+                            byte[] data = clazz.makeCommand(a,c ,u);
+                            pout.write(data);
                             pout.flush();
                         }else{
                             System.out.println("we will quit ====> ...");

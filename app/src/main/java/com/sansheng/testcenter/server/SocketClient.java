@@ -4,14 +4,15 @@ import android.content.Context;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import com.sansheng.testcenter.bean.BaseCommandData;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
+import com.sansheng.testcenter.tools.protocol.TerProtocolParse;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.logging.Handler;
 
 /**
  * Created by hua on 12/18/15.
@@ -63,6 +64,12 @@ public class SocketClient {
         msg.what = type;
         return msg;
     }
+    private Message getMessage(Object obj, int type) {
+        Message msg = new Message();
+        msg.obj = obj;
+        msg.what = type;
+        return msg;
+    }
     void stopClient(){
         if(socket != null && socket.isConnected()){
             try {
@@ -79,7 +86,9 @@ public class SocketClient {
                 try {
                     if (socket == null || socket.isClosed()) {
                         socket = new Socket(HOST, PORT);
-                        in = new BufferedInputStream(socket.getInputStream());;
+                        in = new BufferedInputStream(socket.getInputStream());
+                        out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+                                socket.getOutputStream())), true);
                     }
 
                     while (true) {
@@ -110,6 +119,9 @@ public class SocketClient {
                                         }
 //                                        System.out.println("count is " + in.available());
                                         ProtocolUtils.printByte(bs);
+//                                        TerProtocolParse parse = new TerProtocolParse();
+//                                        BaseCommandData cmd = parse.checkCommand(bs);
+                                        mMainHandler.sendMessage(getMessage(ProtocolUtils.printByte(bs),RECV_MSG));
 //                                        in.close();//这里不能close，如果close，client将不能再处理service数据
                                     }
                                 }
@@ -120,7 +132,7 @@ public class SocketClient {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                     Log.d("", "login exception" + ex.getMessage());
-//                    ((Handler)mHandler).sendMessage(getMessage("conn err", CONN_ERR));
+                    mMainHandler.sendMessage(getMessage("conn err", CONN_ERR));
                 }
             }
         });

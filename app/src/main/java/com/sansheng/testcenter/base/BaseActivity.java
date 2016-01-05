@@ -5,10 +5,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
+import android.text.SpannableString;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.sansheng.testcenter.R;
+import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,7 +18,7 @@ import java.util.Date;
 /**
  * Created by sunshaogang on 12/10/15.
  */
-public abstract class BaseActivity extends Activity implements View.OnClickListener {
+public  abstract class BaseActivity extends Activity implements View.OnClickListener, IServiceHandlerCallback {
     private ActionBar mActionBar;
     private FrameLayout mActionBarView;
     public final static int DEFAULT_VIEW = -1;//默认
@@ -41,11 +43,31 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
     protected LinearLayout main_button_list;
     protected LinearLayout main_layout_conn;
 
-    protected String getTimeStamp(){
-        Date nowTime=new Date();
-        SimpleDateFormat time=new SimpleDateFormat("HH:mm:ss");
-        return time.format(nowTime);
+    @Override
+    public void pullShortLog(String info) {
+
     }
+
+    @Override
+    public void pullShortLog(SpannableString info) {
+
+    }
+
+    @Override
+    public void pullWholeLog(String info) {
+
+    }
+
+    @Override
+    public void pullWholeLog(SpannableString info) {
+
+    }
+
+    @Override
+    public void pullStatus(String info) {
+
+    }
+
     public interface ActionBarCallback {
         void onSaveClick();
 

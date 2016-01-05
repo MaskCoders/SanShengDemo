@@ -13,6 +13,7 @@ public interface Const {
     static final int CONN_ERR = -1;
     static final int CONN_OK = 0;
     static final int RECV_MSG = 1;
+    static final int SEND_MSG = 2;
     static final int INPUT_ERR = -3;
 
     enum CX {

@@ -21,7 +21,7 @@ public class ClientManager {
     }
 
     public static ClientManager getInstance(Context ctx, MainHandler handler) {
-        if (manager != null) {
+        if (manager == null) {
             manager = new ClientManager(ctx, handler);
         }
         return manager;

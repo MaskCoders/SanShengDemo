@@ -6,6 +6,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.SpannableString;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
@@ -125,5 +126,29 @@ public class MeterListActivity extends BaseActivity implements LoaderCallbacks<C
         });
     }
 
+    @Override
+    public void pullShortLog(String info) {
+
+    }
+
+    @Override
+    public void pullShortLog(SpannableString info) {
+
+    }
+
+    @Override
+    public void pullWholeLog(String info) {
+
+    }
+
+    @Override
+    public void pullWholeLog(SpannableString info) {
+
+    }
+
+    @Override
+    public void pullStatus(String info) {
+
+    }
 }
 

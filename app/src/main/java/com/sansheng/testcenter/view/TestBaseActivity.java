@@ -18,7 +18,7 @@ import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
 /**
  * Created by hua on 12/17/15.
  */
-public class TestBaseActivity extends BaseActivity implements IServiceHandlerCallback {
+public class TestBaseActivity extends BaseActivity  {
     Button text1;
     Button text2;
     Button text4;
@@ -125,12 +125,22 @@ public class TestBaseActivity extends BaseActivity implements IServiceHandlerCal
     }
 
     @Override
+    public void pullShortLog(SpannableString info) {
+
+    }
+
+    @Override
     public void pullWholeLog(String info) {
         SpannableString ss = new SpannableString(main_whole_log.getText().toString() + "\n " +
                 getResources().getString(R.string.server) + info);
 //            ss.setSpan(new ForegroundColorSpan(SocketDemo.this.getResources().getColor(R.color.download_text_color)), 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         main_whole_log.setText(ss);
         main_whole_log.setSelection(main_whole_log.getText().length() - 1);
+    }
+
+    @Override
+    public void pullWholeLog(SpannableString info) {
+
     }
 
     @Override

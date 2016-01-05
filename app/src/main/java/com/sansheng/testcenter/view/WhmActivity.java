@@ -1,31 +1,37 @@
 package com.sansheng.testcenter.view;
 
 import android.os.Bundle;
-import android.text.Spannable;
+import android.os.Message;
 import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
-import com.sansheng.testcenter.callback.IServiceHandlerCallback;
+import com.sansheng.testcenter.base.Const;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.server.ClientManager;
 import com.sansheng.testcenter.server.MSocketServer;
+import com.sansheng.testcenter.server.SocketClient;
+import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
 
 /**
  * Created by hua on 12/17/15.
  */
-public class WhmActivity extends BaseActivity implements IServiceHandlerCallback {
+public class WhmActivity extends BaseActivity  {
     Button whm_bl_read_address;
     Button whm_bl_choose_db;
     Button whm_bl_start;
     Button whm_bl_choose_items;
     Button whm_bl_show_log;
+    Button conn;
+    EditText whm_ip ;
+    EditText whm_port;
     private MainHandler mMainHandler;
     private MSocketServer myService;  //我们自己的service
     private ClientManager mClientManager;
+    private SocketClient mClient;
     private TerProtocolCreater cmdCreater;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,16 +70,16 @@ public class WhmActivity extends BaseActivity implements IServiceHandlerCallback
 
     @Override
     protected void initConnList() {
-        View inflate = getLayoutInflater().inflate(R.layout.connbuttonlist, null);
-//        conn1 = (Button) inflate.findViewById(R.id.conn1);
-//        conn2 = (Button) inflate.findViewById(R.id.conn2);
-//        conn3 = (Button) inflate.findViewById(R.id.conn3);
+        View inflate = getLayoutInflater().inflate(R.layout.whmconnlist, null);
+        conn = (Button) inflate.findViewById(R.id.conn);
+        whm_ip = (EditText) inflate.findViewById(R.id.whm_ip);
+        whm_port = (EditText) inflate.findViewById(R.id.whm_port);
 //        conn4 = (Button) inflate.findViewById(R.id.conn4);
 //        conn1.setOnClickListener(this);
 //        conn2.setOnClickListener(this);
 //        conn3.setOnClickListener(this);
-//        conn4.setOnClickListener(this);
-//        main_layout_conn.addView(inflate);
+        conn.setOnClickListener(this);
+        main_layout_conn.addView(inflate);
     }
 
     @Override
@@ -86,15 +92,22 @@ public class WhmActivity extends BaseActivity implements IServiceHandlerCallback
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.whm_bl_read_address:
-                String time = getTimeStamp()+"\t发送指令=>>";
-                logBuffer = new StringBuffer();
-                logBuffer.append("68 49 00 49 00 68 4A 10 12 64 00 02 0C F0 00 00 01 00 00 35 24 09 25 00 56 16").append("\n");
-                SpannableString span = new SpannableString(time+logBuffer.toString());
-                span.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.contact_list_text_color_selected)),
-                        0, time.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                main_whole_log.append(span);
-                main_sort_log.setText(span);
-                showShortLog(true);
+//                String time = getTimeStamp()+"\t发送指令=>>";
+//                logBuffer = new StringBuffer();
+                logBuffer.append("68 49 00 49 00 68 4A 10 12 64 00 02 0C F0 00 00 01 00 00 35 24 09 25 00 56 16".replace(" ",""));
+                        //.append("\n");
+//                SpannableString span = new SpannableString(time+logBuffer.toString());
+//                span.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.contact_list_text_color_selected)),
+//                        0, time.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                main_whole_log.append(span);
+//                main_sort_log.setText(span);
+//                showShortLog(true);
+                ;
+                Message msg = new Message();
+                msg.obj = logBuffer.toString();
+                msg.what = Const.SEND_MSG;
+                mMainHandler.sendMessage(msg);
+                mClientManager.sendMessage(mClient,new String(ProtocolUtils.hexStringToBytes(logBuffer.toString())));
                 break;
             case R.id.whm_bl_choose_db:
                 break;
@@ -111,6 +124,9 @@ public class WhmActivity extends BaseActivity implements IServiceHandlerCallback
                     ((Button)findViewById(R.id.whm_bl_show_log)).setText(R.string.whm_bl_show_log);
                 }
                 break;
+            case R.id.conn:
+                mClient = mClientManager.createClient(whm_ip.getText().toString(),Integer.valueOf(whm_port.getText().toString()));
+                break;
         }
         super.onClick(v);
     }
@@ -122,12 +138,22 @@ public class WhmActivity extends BaseActivity implements IServiceHandlerCallback
     }
 
     @Override
+    public void pullShortLog(SpannableString info) {
+        main_sort_log.append(info);
+        showShortLog(true);
+    }
+
+    @Override
     public void pullWholeLog(String info) {
         SpannableString ss = new SpannableString(main_whole_log.getText().toString() + "\n " +
                 getResources().getString(R.string.server) + info);
-//            ss.setSpan(new ForegroundColorSpan(SocketDemo.this.getResources().getColor(R.color.download_text_color)), 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        main_whole_log.setText(ss);
+        main_whole_log.append(ss);
         main_whole_log.setSelection(main_whole_log.getText().length() - 1);
+    }
+
+    @Override
+    public void pullWholeLog(SpannableString info) {
+        main_whole_log.append(info);
     }
 
     @Override

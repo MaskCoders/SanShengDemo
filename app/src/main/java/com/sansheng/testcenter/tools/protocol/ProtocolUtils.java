@@ -1,5 +1,8 @@
 package com.sansheng.testcenter.tools.protocol;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by hua on 15-12-26.
  */
@@ -135,6 +138,13 @@ public class ProtocolUtils {
         System.out.println("hexbyte == >"+hexbyte.toString());
         System.out.println("hexbyte_withspace == >"+hexbyte_withspace.toString());
         System.out.println("string == >"+(new String(data)));
-        return hexbyte.toString();
+        return hexbyte_withspace.toString();
     }
+
+    public static String getTimeStamp(){
+        Date nowTime=new Date();
+        SimpleDateFormat time=new SimpleDateFormat("HH:mm:ss");
+        return time.format(nowTime);
+    }
+
 }

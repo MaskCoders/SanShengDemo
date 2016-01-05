@@ -56,6 +56,7 @@
     <color name="head_icon_bg_color_unknown">#29bd8b</color>
     <color name="head_icon_bg_color0">#69b7ff</color>
     <color name="head_icon_bg_color1">#fe7c70</color>
+    <color name="err_msg_tip">#ff0000</color>
     <color name="head_icon_bg_color2">#b98dfb</color>
     <color name="head_icon_bg_color3">#ffcb5c</color>
     <color name="head_icon_bg_color4">#ff9967</color>
