@@ -29,10 +29,10 @@ import java.util.HashMap;
 /**
  * Created by sunshaogang on 1/4/16.
  */
-public class MeterTestActivity extends BaseActivity implements
-        MeterTestItemsDialog.MeterTestCallback, WaySelectMeterDialog.WaySelectMeterCallback, ConnectTypeDialog.ConnectTypeCallback{
-//    Button text1;
-    Button textq2;
+public class MeterTestActivity extends BaseActivity implements IServiceHandlerCallback,
+        MeterTestItemsDialog.MeterTestCallback, WaySelectMeterDialog.WaySelectMeterCallback, ConnectTypeDialog.ConnectTypeCallback {
+    //    Button text1;
+    Button text2;
     Button text3;
     Button text4;
     Button text5;
@@ -165,22 +165,12 @@ public class MeterTestActivity extends BaseActivity implements
     }
 
     @Override
-    public void pullShortLog(SpannableString info) {
-
-    }
-
-    @Override
     public void pullWholeLog(String info) {
         SpannableString ss = new SpannableString(main_whole_log.getText().toString() + "\n " +
                 getResources().getString(R.string.server) + info);
 //            ss.setSpan(new ForegroundColorSpan(SocketDemo.this.getResources().getColor(R.color.download_text_color)), 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         main_whole_log.setText(ss);
         main_whole_log.setSelection(main_whole_log.getText().length() - 1);
-    }
-
-    @Override
-    public void pullWholeLog(SpannableString info) {
-
     }
 
     @Override
