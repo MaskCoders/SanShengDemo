@@ -101,4 +101,12 @@
         <item name="android:textStyle">bold</item>
         <item name="android:layout_margin">2dp</item>
     </style>
+    <style name="MeterTestCenterListTextStyle">
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_height">@dimen/collect_list_item_height</item>
+        <item name="android:background">@color/transparent_color</item>
+        <item name="android:textSize">@dimen/list_body_text_size_big</item>
+    </style>
 </resources>

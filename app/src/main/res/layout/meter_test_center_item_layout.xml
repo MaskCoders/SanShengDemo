@@ -10,17 +10,20 @@
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:id="@+id/test_item_describe"
-            style="@style/ListTextView"/>
+            style="@style/MeterTestCenterListTextStyle"
+            android:textColor="@color/color_black"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/test_item_result"
             android:layout_weight="1"
-            style="@style/ListTextView"/>
+            style="@style/MeterTestCenterListTextStyle"
+            android:textColor="@color/main_green"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/test_item_explain"
             android:layout_weight="1"
-            style="@style/ListTextView"/>
+            style="@style/MeterTestCenterListTextStyle"
+            android:textColor="@color/err_msg_tip"/>
 </LinearLayout>

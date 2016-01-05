@@ -54,7 +54,7 @@ android:id="@+id/drawer">
             <TextView android:id="@+id/base_title" android:layout_width="fill_parent"
                       android:layout_height="40dp"
                       android:text="TITLE" android:textStyle="bold" android:textSize="20sp"
-                      android:textColor="@color/color_white" android:background="@color/main_green"
+                      android:textColor="@color/color_white" android:background="@drawable/base_controll_top_back"
                       android:layout_alignParentTop="true" android:gravity="center" android:layout_marginLeft="2dp"
                       android:layout_marginRight="2dp" android:layout_marginTop="2dp"/>
             <LinearLayout android:id="@+id/main_button_list" android:layout_width="fill_parent"
@@ -63,7 +63,7 @@ android:id="@+id/drawer">
             <TextView android:id="@+id/back_btn" android:layout_width="fill_parent"
                       android:layout_height="40dp" android:gravity="center"
                       android:text="@string/capital_off" android:textStyle="bold" android:textSize="20sp"
-                      android:textColor="@color/color_white" android:background="@color/main_green"
+                      android:textColor="@color/color_white" android:background="@drawable/base_controll_bottom_back"
                       android:layout_alignParentBottom="true" android:layout_marginBottom="2dp"
                       android:layout_marginLeft="2dp" android:layout_marginRight="2dp"/>
         </RelativeLayout>
