@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import java.util.Set;
-
 /**
  * Created by sunshaogang on 2016/1/5.
  */
@@ -38,16 +36,14 @@ public class EquipmentPreference {
         return sPreferences;
     }
 
-
     //记录上次选择的电表检测项目
-    public void setSelectedMeterTest(Set<String> selected){
-        mSharedPreferences.edit().putStringSet(DEFAULT_AGREEMENT, selected).apply();
+    public void setSelectedMeterTest(String selected){
+        mSharedPreferences.edit().putString(DEFAULT_AGREEMENT, selected).apply();
     }
 
-    public Set<String> getSelectedMeterTest(){
-        return mSharedPreferences.getStringSet(DEFAULT_AGREEMENT, null);
+    public String getSelectedMeterTest(){
+        return mSharedPreferences.getString(DEFAULT_AGREEMENT, null);
     }
-
 
     /**
      * 删除数据库同时清空preferences

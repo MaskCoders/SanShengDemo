@@ -15,7 +15,7 @@ import java.util.HashMap;
 /**
  * Created by sunshaogang on 2016/1/5.
  */
-public class MeterTestCenterListAdapter extends BaseAdapter{
+public class MeterTestCenterListAdapter extends BaseAdapter {
     private HashMap<Integer, String> mSelectedItems = new HashMap<Integer, String>();
     private ArrayList<Integer> testItemList = new ArrayList<Integer>();
     private String[] allItems;
@@ -26,7 +26,7 @@ public class MeterTestCenterListAdapter extends BaseAdapter{
         allItems = mContext.getResources().getStringArray(R.array.meter_test_items);
     }
 
-    public ArrayList<Integer> getTestItems(){
+    public ArrayList<Integer> getTestItems() {
         if (testItemList == null || testItemList.size() == 0) {
             for (int index : mSelectedItems.keySet()) {
                 testItemList.add(index);
@@ -86,12 +86,19 @@ public class MeterTestCenterListAdapter extends BaseAdapter{
 
     }
 
-    public HashMap<Integer, String> getSelectedItems(){
+    public HashMap<Integer, String> getSelectedItems() {
         return mSelectedItems;
     }
 
-    public void setSelectedItemts(HashMap<Integer, String> itemMap){
+    public void setSelectedItemts(HashMap<Integer, String> itemMap) {
+        if (itemMap == null || itemMap.size() == 0) {
+            return;
+        }
         mSelectedItems = itemMap;
+        testItemList.clear();
+        for (int index : mSelectedItems.keySet()) {
+            testItemList.add(index);
+        }
     }
 
     public class ViewHolder {
@@ -101,9 +108,12 @@ public class MeterTestCenterListAdapter extends BaseAdapter{
         public TextView explainView;
     }
 
-    private void readMeterAddress(){
+    private void readMeterAddress() {
         Log.e("ssg", "从已连接的设备中读取电表地址");
     }
 
+    public String[] getAllItems(){
+        return allItems;
+    }
 
 }

@@ -3,6 +3,7 @@ package com.sansheng.testcenter.base;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -130,6 +131,7 @@ public class MeterTestItemsDialog extends DialogFragment {
             if (getTestItems() == null || testItems.length == 0) {
                 return;
             }
+//            Log.e("ssg", "position = " + position);
             holder.describeView.setText(testItems[position]);
             holder.itemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -138,15 +140,27 @@ public class MeterTestItemsDialog extends DialogFragment {
                 }
             });
             holder.mCheckBox.setChecked(mSelectedItems.containsKey(position));
-            holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                @Override
+//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                    Log.e("ssg", "position = " + position);
+//                    if (isChecked) {
+//                        mSelectedItems.put(position, testItems[position]);
+//                    } else {
+//                        mSelectedItems.remove(position);
+//                    }
+//                    Log.e("ssg", "mSelectedItems size = " + mSelectedItems.size());
+//                }
+//            });
+            holder.mCheckBox.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
+                public void onClick(View v) {
+                    Log.e("ssg", "onClick position = " + position);
+                    if (!mSelectedItems.containsKey(position)) {
                         mSelectedItems.put(position, testItems[position]);
                     } else {
                         mSelectedItems.remove(position);
                     }
-//                Log.e("ssg", "mSelectCollects size = " + mSelectCollects.size());
                 }
             });
         }

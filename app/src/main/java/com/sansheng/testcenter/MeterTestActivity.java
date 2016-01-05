@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import com.sansheng.testcenter.base.BaseActivity;
-import com.sansheng.testcenter.base.MeterSelectDialog;
 import com.sansheng.testcenter.base.MeterTestItemsDialog;
 import com.sansheng.testcenter.base.view.ConnectTypeDialog;
 import com.sansheng.testcenter.base.view.UIRevisableView;
@@ -23,14 +23,15 @@ import com.sansheng.testcenter.server.ClientManager;
 import com.sansheng.testcenter.server.MSocketServer;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * Created by sunshaogang on 1/4/16.
  */
 public class MeterTestActivity extends BaseActivity implements IServiceHandlerCallback,
-        MeterTestItemsDialog.MeterTestCallback, WaySelectMeterDialog.WaySelectMeterCallback, ConnectTypeDialog.ConnectTypeCallback{
-//    Button text1;
+        MeterTestItemsDialog.MeterTestCallback, WaySelectMeterDialog.WaySelectMeterCallback, ConnectTypeDialog.ConnectTypeCallback {
+    //    Button text1;
     Button text2;
     Button text3;
     Button text4;
@@ -104,6 +105,10 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         View inflate = getLayoutInflater().inflate(R.layout.meter_test_center_layout, null);
         mListView = (ListView) inflate.findViewById(R.id.list_view);
         mAdapter = new MeterTestCenterListAdapter(this);
+        String result = EquipmentPreference.getPreferences(this).getSelectedMeterTest();
+        if (!TextUtils.isEmpty(result)) {
+            mAdapter.setSelectedItemts(stringToMap(result));
+        }
         mListView.setAdapter(mAdapter);
         main_info.addView(inflate);
     }
@@ -188,11 +193,11 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         connectTypeDialog.show(getFragmentManager(), "select_connect_type");
     }
 
-    private void startTest(){
+    private void startTest() {
         Log.e("ssg", "开始检测");
     }
 
-    private void setMeterTime(){
+    private void setMeterTime() {
         Log.e("ssg", "设置电表时间");
     }
 
@@ -207,7 +212,12 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
             Log.e("ssg", "选择测试项目的数量 ＝ " + itemMap.size());
             mAdapter.setSelectedItemts(itemMap);
             mAdapter.notifyDataSetChanged();
-//            EquipmentPreference.getPreferences(this).setSelectedMeterTest(itemMap.keySet());
+            ArrayList<Integer> list = new ArrayList<Integer>();
+            for (int index : itemMap.keySet()) {
+                list.add(index);
+            }
+            EquipmentPreference.getPreferences(this).setSelectedMeterTest(list.toString());
+            Log.e("ssg", "" + list.toString());
         }
     }
 
@@ -220,4 +230,26 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     public void onItemClick(int position) {
         Log.e("ssg", "选择的通讯类型 ＝ " + getResources().getStringArray(R.array.select_connect_type)[position]);
     }
+
+    public HashMap<Integer, String> stringToMap(String mapText) {
+        if (TextUtils.isEmpty(mapText)) {
+            return null;
+        }
+        Log.e("ssg","mapText = " + mapText);
+        Log.e("ssg","mapText.length() = " + mapText.length());
+//        if (mapText.contains(", ")) {
+        mapText = mapText.substring(mapText.indexOf("[") + 1, mapText.indexOf("]"));
+//        }
+        Log.e("ssg","mapText = " + mapText);
+        if (TextUtils.isEmpty(mapText)) {
+            return null;
+        }
+        HashMap<Integer, String> map = new HashMap<Integer, String>();
+        String[] text = mapText.split(", "); // 转换为数组
+        for (String str : text) {
+            map.put(Integer.valueOf(str), mAdapter.getAllItems()[Integer.valueOf(str)]);
+        }
+        return map;
+    }
+
 }
