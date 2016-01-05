@@ -12,17 +12,15 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ListView;
+import android.widget.*;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.view.AnswerDialog;
 import com.sansheng.testcenter.base.view.PullListView;
-import com.sansheng.testcenter.demo.view.MeterListAdapter;
-import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.demo.view.MeterDataFragment;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.module.Meter;
+import com.sansheng.testcenter.utils.MeterUtilies;
 
 import java.util.HashMap;
 
@@ -32,11 +30,14 @@ import java.util.HashMap;
 public class MeterSelectDialog extends DialogFragment implements LoaderManager.LoaderCallbacks<Cursor>, ListView.OnScrollListener, PullListView.OnLoadMoreListener {
     private View mRootView;
 //    private View mEmptyView;
+    private TextView mSelectCollectView;
+    private EditText mFilterView;
+    private CheckBox mSelectAllView;
     private PullListView mListView;
     private MeterListDialogAdapter mAdapter;
     private int mLastVisibleItem;
     private static final int LOADER_ID_FILTER_DEFAULT = 0;
-    private int mOriginLength = 10;//默认初始显示数量
+    private int mOriginLength = Integer.MAX_VALUE;//默认初始显示数量
     private final static int DOWNSIDE_INCREASE_COUNT = 10;//每次增加数量
     private AnswerDialog mDialog;
     private MeterCallback callback;
@@ -58,6 +59,19 @@ public class MeterSelectDialog extends DialogFragment implements LoaderManager.L
         mDialog.setTitleText("选择电表");
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         mRootView = inflater.inflate(R.layout.meter_dialog_list_layout, null);
+        mSelectCollectView = (TextView) mRootView.findViewById(R.id.meter_select_collect);
+        mFilterView = (EditText) mRootView.findViewById(R.id.meter_select_filter);
+        mSelectAllView = (CheckBox) mRootView.findViewById(R.id.meter_select_all);
+        mSelectAllView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    mAdapter.addAllMeters();
+                } else {
+                    mAdapter.getSelectedMeters().clear();
+                }
+            }
+        });
         mListView = (PullListView) mRootView.findViewById(R.id.listview);
         mListView.setOnScrollListener(this);
         mListView.hideFooterView();

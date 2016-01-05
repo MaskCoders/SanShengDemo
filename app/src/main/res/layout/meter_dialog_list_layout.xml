@@ -12,7 +12,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/select_collect"
+                android:id="@+id/meter_select_collect"
                 android:text="选择集中器"/>
         <EditText
                 android:layout_width="wrap_content"

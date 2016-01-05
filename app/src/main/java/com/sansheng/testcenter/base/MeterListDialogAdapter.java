@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,10 +72,6 @@ public class MeterListDialogAdapter extends SimpleCursorAdapter {
         holder.meterName = (TextView) view.findViewById(R.id.meter_name);
         holder.meterId = (TextView) view.findViewById(R.id.meter_id);
         holder.meterCheckBox = (CheckBox) view.findViewById(R.id.meter_checkbox);
-//        holder.dataType = (TextView) view.findViewById(R.id.meter_type);
-//        holder.valueTime = (TextView) view.findViewById(R.id.meter_value_time);
-//        holder.readTime = (TextView) view.findViewById(R.id.meter_read_time);
-//        holder.meterValue = (TextView) view.findViewById(R.id.meter_value);
         return holder;
     }
 
@@ -84,39 +81,25 @@ public class MeterListDialogAdapter extends SimpleCursorAdapter {
         if (meter.mId == 0) {//无此条数据
             return;
         }
-//        if (meter.isImportant == 0) {
-//            holder.vip.setVisibility(View.VISIBLE);
-//        } else {
-//            holder.vip.setVisibility(View.GONE);
-//        }
-//        holder.meterName.setText(mActivity.getResources().getString(R.string.db_name) + meter.mMeterName);
         holder.meterType.setImageResource(meter.mDa == 0 ? R.drawable.single_meter : R.drawable.three_meter);//单项 v 三项
         holder.meterId.setText(String.valueOf(meter.mMeterNum));
         holder.meterName.setText(String.valueOf(meter.mMeterName));
-//        String type = meter.mDataType == 1 ? mActivity.getResources().getString(R.string.db_rdj) :
-//                mActivity.getResources().getString(R.string.db_realdata);
-//        holder.dataType.setText(mActivity.getResources().getString(R.string.db_type) + type);
-//        holder.valueTime.setText(mActivity.getResources().getString(R.string.db_tip) + MeterUtilies.getSanShengDate(meter.mValueTime));
-//        holder.readTime.setText(mActivity.getResources().getString(R.string.db_time) + MeterUtilies.getSanShengDate(meter.mReadTime));
-//        holder.meterValue.setText(mActivity.getResources().getString(R.string.db_value) + String.valueOf(meter.mValz));
-        holder.infoLayout.setOnClickListener(new View.OnClickListener() {
+//        holder.infoLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showDetailFragment(meter);
+//            }
+//        });
+        holder.meterCheckBox.setChecked(mSelectedMeters.containsKey(meter.mMeterAddress));
+        holder.meterCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDetailFragment(meter);
-            }
-        });
-        holder.meterCheckBox.setChecked(mSelectedMeters.containsKey(meter.mMeterAddress));
-        holder.meterCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //do something
-//                Log.e("ssg", "isChecked = " + isChecked);
-                if (isChecked) {
+                Log.e("ssg", "onClick position = " + meter.mMeterAddress);
+                if (!mSelectedMeters.containsKey(meter.mMeterAddress)) {
                     mSelectedMeters.put(meter.mMeterAddress, meter);
                 } else {
                     mSelectedMeters.remove(meter.mMeterAddress);
                 }
-//                Log.e("ssg", "mSelectCollects size = " + mSelectCollects.size());
             }
         });
     }
@@ -127,10 +110,6 @@ public class MeterListDialogAdapter extends SimpleCursorAdapter {
         public TextView meterName;
         public TextView meterId;
         public CheckBox meterCheckBox;
-//        public TextView dataType;
-//        public TextView valueTime;
-//        public TextView readTime;
-//        public TextView meterValue;
     }
 
     private void showDetailFragment(Meter meter) {
@@ -143,6 +122,11 @@ public class MeterListDialogAdapter extends SimpleCursorAdapter {
 
     public HashMap<String, Meter> getSelectedMeters() {
         return mSelectedMeters;
+    }
+
+
+    public void addAllMeters() {
+
     }
 }
 
