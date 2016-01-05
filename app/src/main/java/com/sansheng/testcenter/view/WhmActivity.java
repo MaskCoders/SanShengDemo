@@ -118,10 +118,10 @@ public class WhmActivity extends BaseActivity  {
             case R.id.whm_bl_show_log:
                 if(wholeIsShow()){
                     showWholeLog(false);
-                    ((Button)findViewById(R.id.whm_bl_show_log)).setText(R.string.whm_bl_close_log);
+                    ((Button)findViewById(R.id.whm_bl_show_log)).setText(R.string.whm_bl_show_log);
                 }else{
                     showWholeLog(true);
-                    ((Button)findViewById(R.id.whm_bl_show_log)).setText(R.string.whm_bl_show_log);
+                    ((Button)findViewById(R.id.whm_bl_show_log)).setText(R.string.whm_bl_close_log);
                 }
                 break;
             case R.id.conn:
