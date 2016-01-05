@@ -33,6 +33,7 @@
         <item>"红外"</item>
         <item>"RS485"</item>
         <item>"RS232"</item>
+        <item>"鼎信载波"</item>
         <item>"通用载波"</item>
     </string-array>
 

@@ -31,7 +31,7 @@ import java.util.HashMap;
  */
 public class MeterTestActivity extends BaseActivity implements IServiceHandlerCallback,
         MeterTestItemsDialog.MeterTestCallback, WaySelectMeterDialog.WaySelectMeterCallback, ConnectTypeDialog.ConnectTypeCallback {
-    //    Button text1;
+        Button text1;
     Button text2;
     Button text3;
     Button text4;
@@ -70,13 +70,13 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     @Override
     protected void initButtonList() {
         View inflate = getLayoutInflater().inflate(R.layout.meter_test_control_button_list, null);
-//        text1 = (Button) inflate.findViewById(R.id.text1);
+        text1 = (Button) inflate.findViewById(R.id.text1);
         text2 = (Button) inflate.findViewById(R.id.text2);
         text3 = (Button) inflate.findViewById(R.id.text3);
         text4 = (Button) inflate.findViewById(R.id.text4);
         text5 = (Button) inflate.findViewById(R.id.text5);
         text6 = (Button) inflate.findViewById(R.id.text6);
-//        text1.setOnClickListener(this);
+        text1.setOnClickListener(this);
         text2.setOnClickListener(this);
         text3.setOnClickListener(this);
         text4.setOnClickListener(this);
@@ -116,9 +116,15 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.text1:
-//                showShortLog(true);
-//                break;
+            case R.id.text1://显示日志
+                if (main_whole_log.getVisibility() == View.VISIBLE) {
+                    showWholeLog(false);
+                    text1.setText("隐藏日志");
+                } else {
+                    showWholeLog(true);
+                    text1.setText("显示日志");
+                }
+                break;
             case R.id.text2:
                 //选择电表,弹出对话框选择 1、输入地址 2、选择已有电表 3、读地址，从已连接的设备中获取电表地址
                 showWaySelectMeterDialog();

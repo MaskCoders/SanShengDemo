@@ -16,5 +16,6 @@
             android:text="设置时钟"/>
     <Button android:id="@+id/text6" style="@style/BtnStyle1"
             android:text="通讯方式"/>
-
+    <Button android:id="@+id/text1" style="@style/BtnStyle1"
+            android:text="显示日志"/>
 </LinearLayout>
