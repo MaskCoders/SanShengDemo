@@ -32,7 +32,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-public class LaucherAdapter extends BaseAdapter implements CollectSelectDialog.CollectCallback, MeterSelectDialog.MeterCallback {
+public class LauncherAdapter extends BaseAdapter implements CollectSelectDialog.CollectCallback, MeterSelectDialog.MeterCallback {
 
     private static final ThreadFactory sThreadFactory = new CustomThreadPoolFactory("EquipmentDBThread");
     private ExecutorService sThreadPool = Executors.newSingleThreadExecutor(sThreadFactory);
@@ -55,7 +55,7 @@ public class LaucherAdapter extends BaseAdapter implements CollectSelectDialog.C
     };
     private ProgressDailog mProgressDailog;
 
-    public LaucherAdapter(Activity mContext) {
+    public LauncherAdapter(Activity mContext) {
         this.mContext = mContext;
     }
 
@@ -99,7 +99,7 @@ public class LaucherAdapter extends BaseAdapter implements CollectSelectDialog.C
 //                            mContext.startActivity(intent);
                             break;
                         case 2://集中器检测
-                            CollectSelectDialog collectDialog = new CollectSelectDialog(LaucherAdapter.this);
+                            CollectSelectDialog collectDialog = new CollectSelectDialog(LauncherAdapter.this);
                             collectDialog.show(mContext.getFragmentManager(), "select_collects");
                             break;
                         case 3://本地模块检测
@@ -138,7 +138,7 @@ public class LaucherAdapter extends BaseAdapter implements CollectSelectDialog.C
                             mContext.startActivity(intent);
                             break;
                         case 12://现场售电
-                            MeterSelectDialog meterDialog = new MeterSelectDialog(LaucherAdapter.this);
+                            MeterSelectDialog meterDialog = new MeterSelectDialog(LauncherAdapter.this);
                             meterDialog.show(mContext.getFragmentManager(), "select_meter");
                             break;
                         case 13://系统设置

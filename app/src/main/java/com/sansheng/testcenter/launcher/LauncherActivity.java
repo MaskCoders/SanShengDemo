@@ -10,14 +10,14 @@ import com.sansheng.testcenter.base.BaseActivity;
 
 public class LauncherActivity extends BaseActivity {
     private GridView mFunctionGridView;
-    private LaucherAdapter mFunctionAdapter;
+    private LauncherAdapter mFunctionAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.launcher_layout);
         mFunctionGridView = (GridView) findViewById(R.id.operation_panel);
-        mFunctionAdapter = new LaucherAdapter(this);
+        mFunctionAdapter = new LauncherAdapter(this);
         mFunctionGridView.setAdapter(mFunctionAdapter);
         setActionBar(GENERAL_VIEW);
 //        Groundy.create(ExampleTask.class)
