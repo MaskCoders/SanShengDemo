@@ -101,7 +101,18 @@ public class WhmBean {
 
     }
     public static final void main(String[] args){
-        //68 02 00 00 00 10 20 68 11 04 33 32 34 33 E3 16
+        /**
+         /home/hua/lib/jdk7/bin/java -Didea.launcher.port=7533 -Didea.launcher.bin.path=/home/hua/lib/idea/idea-IU-143.1184.17/bin -Dfile.encoding=UTF-8 -classpath /home/hua/lib/android-sdk_lastest/android-sdk-linux/platforms/android-19/android.jar:/home/hua/lib/android-sdk_lastest/android-sdk-linux/platforms/android-19/data/res:/home/hua/workspace/SanShengDemo/app/build/intermediates/classes/debug:/home/hua/.gradle/caches/modules-2/files-2.1/com.squareup/javawriter/2.2.1/d6dac1da0b24ab9ea9a6b5d49c2586d85f17e597/javawriter-2.2.1.jar:/home/hua/.gradle/caches/modules-2/files-2.1/com.telly/groundy/1.4/981963d8b2bb838244c5dcca28b6214f05775372/groundy-1.4.jar:/home/hua/lib/android-sdk_lastest/android-sdk-linux/extras/android/m2repository/com/android/support/support-annotations/21.0.0/support-annotations-21.0.0.jar:/home/hua/workspace/SanShengDemo/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/classes.jar:/home/hua/workspace/SanShengDemo/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/res:/home/hua/workspace/SanShengDemo/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/libs/internal_impl-21.0.0.jar:/home/hua/.gradle/caches/modules-2/files-2.1/com.telly/groundy-compiler/1.4/17c0459c5625743e163e764c760b67af65cc0604/groundy-compiler-1.4.jar:/home/hua/workspace/SanShengDemo/app/libs/BaiduLBS_Android.jar:/home/hua/lib/idea/idea-IU-143.1184.17/lib/idea_rt.jar com.intellij.rt.execution.application.AppMain Server1
+         by hua start server ...
+         by hua client conn ...
+         by hua client info is h    h3243�
+         sbbyte == >104 2 0 0 0 16 32 104 17 4 51 50 52 51 -17 -65 -67 22
+         hexbyte == >6802000000102068110433323433efbfbd16
+         hexbyte_withspace == >68 02 00 00 00 10 20 68 11 04 33 32 34 33 ef bf bd 16
+         string == >h    h3243�
+         false
+
+         */
         //68 02 00 00 00 10 20 68 11 04 33 32 34 33 e1 16
         //68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5D 16
         String address = "02 00 00 00 10 20".replace(" ","");
@@ -110,11 +121,10 @@ public class WhmBean {
         WhmBean bean =  WhmBean.create(type,data,address);
 //        WhmBean bean2 = WhmBean.parse(ProtocolUtils.hexStringToBytes(bean.toString()));
         WhmBean bean3 = WhmBean.parse(ProtocolUtils.hexStringToBytes("68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5B 16".replace(" ","")));
-
-        System.out.println(bean.toString());
+        System.out.println(ProtocolUtils.hexStringToBytes(bean.toString()));
 //        System.out.println(bean2.toString());
-        System.out.println(bean3.toString());
+//        System.out.println(bean3.toString());
         System.out.println("68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5B 16".replace(" ",""));
-        System.out.println(bean3.toString().equalsIgnoreCase("68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5B 16".replace(" ","")));
+//        System.out.println(bean3.toString().equalsIgnoreCase("68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5B 16".replace(" ","")));
     }
 }

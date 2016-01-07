@@ -48,17 +48,26 @@ public class ClientManager {
     private void getClient(){
 
     }
-    public void sendMessage(SocketClient client, String msg) {
+//    public void sendMessage(SocketClient client, String msg) {
+//        if (client == null) {
+//            for (SocketClient cli : clientList) {
+//                cli.sendMessage(msg);
+//            }
+//        }else{
+//            client.sendMessage(msg);
+//        }
+//    }
+    public void sendMessage(SocketClient client, byte[] data) {
         if (client == null) {
             for (SocketClient cli : clientList) {
-                cli.sendMessage(msg);
+                cli.sendMessage(data);
             }
         }else{
-            client.sendMessage(msg);
+            client.sendMessage(data);
         }
     }
 
-    public void sendMessage(SocketClient client, byte[] msgArr) {
-        sendMessage(client,new String(msgArr));
-    }
+//    public void sendMessage(SocketClient client, byte[] msgArr) {
+//        sendMessage(client,new String(msgArr));
+//    }
 }

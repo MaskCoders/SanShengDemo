@@ -20,7 +20,8 @@ import java.util.logging.Handler;
 public class SocketClient {
     private Socket socket = null;
     private BufferedInputStream in = null;
-    private PrintWriter out = null;
+//    private PrintWriter out = null;
+    private DataOutputStream out = null;
     private Context mContext;
     private MainHandler mMainHandler;
 
@@ -49,10 +50,27 @@ public class SocketClient {
             PORT = port;
         }
     }
-    void sendMessage(String msg){
+//    void sendMessage(String msg){
+//        if (socket != null && socket.isConnected()) {
+//            if (!socket.isOutputShutdown()) {
+//                out.println(msg);
+////                out.write(msg.toCharArray());
+////                out.flush();
+//            }
+//        }
+//    }
+    void sendMessage(byte[] data){
         if (socket != null && socket.isConnected()) {
             if (!socket.isOutputShutdown()) {
-                out.println(msg);
+                try {
+                    out.write(data);
+                    out.write('\n');//这个是为了测试服务有个结尾
+                    out.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+//                out.write(msg.toCharArray());
+//                out.flush();
             }
         }
     }
@@ -87,8 +105,8 @@ public class SocketClient {
                     if (socket == null || socket.isClosed()) {
                         socket = new Socket(HOST, PORT);
                         in = new BufferedInputStream(socket.getInputStream());
-                        out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-                                socket.getOutputStream())), true);
+                        out = new DataOutputStream(
+                                socket.getOutputStream());
                     }
 
                     while (true) {
@@ -107,12 +125,19 @@ public class SocketClient {
                                             break;
                                         }//如果服务器直接发来-1,说明服务器已经断开
                                         list.clear();
-                                        while (ch != -1 && in.available() > 0) {
-                                            //这里应该逐行解析,这里还需要考虑服务段了的情况
-                                            list.add((byte) ch);
+//                                        while (ch != -1 && in.available() > 0) {
+                                        while (true) {
+                                            if (ch == '\n' || ch == '\r' ){
+                                                break;
+                                            }else{
+                                                //这里应该逐行解析,这里还需要考虑服务段了的情况
+                                                list.add((byte) ch);
+                                                System.out.println("by hua "+ch);
+                                            }
                                             ch = in.read();
+
                                         }
-                                        list.add((byte) ch);
+//                                        list.add((byte) ch);
                                         byte[] bs = new byte[list.size()];
                                         for (int j = 0; j < list.size(); j++) {
                                             bs[j] = list.get(j);

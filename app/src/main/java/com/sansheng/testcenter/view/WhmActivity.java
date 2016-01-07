@@ -9,6 +9,7 @@ import android.widget.EditText;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.Const;
+import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.server.ClientManager;
 import com.sansheng.testcenter.server.MSocketServer;
@@ -93,8 +94,12 @@ public class WhmActivity extends BaseActivity  {
         switch (v.getId()) {
             case R.id.whm_bl_read_address:
 //                String time = getTimeStamp()+"\t发送指令=>>";
-                logBuffer = new StringBuffer();
-                logBuffer.append("68 49 00 49 00 68 4A 10 12 64 00 02 0C F0 00 00 01 00 00 35 24 09 25 00 56 16".replace(" ",""));
+//                logBuffer = new StringBuffer();
+//                logBuffer.append("68 49 00 49 00 68 4A 10 12 64 00 02 0C F0 00 00 01 00 00 35 24 09 25 00 56 16".replace(" ",""));
+                String address = "02 00 00 00 10 20".replace(" ","");
+                Const.WhmConst.C type = Const.WhmConst.C.MAIN_REQUEST_READ_DATA;
+                String data = "33 32 34 33 ".replace(" ","");
+                WhmBean bean =  WhmBean.create(type,data,address);
                         //.append("\n");
 //                SpannableString span = new SpannableString(time+logBuffer.toString());
 //                span.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.contact_list_text_color_selected)),
@@ -104,10 +109,11 @@ public class WhmActivity extends BaseActivity  {
 //                showShortLog(true);
                 ;
                 Message msg = new Message();
-                msg.obj = logBuffer.toString();
+                msg.obj = bean.toString();
                 msg.what = Const.SEND_MSG;
                 mMainHandler.sendMessage(msg);
-                mClientManager.sendMessage(mClient,new String(ProtocolUtils.hexStringToBytes(logBuffer.toString())));
+                System.out.println("by hua : "+bean.toString());
+                mClientManager.sendMessage(mClient,ProtocolUtils.hexStringToBytes(bean.toString()));
                 break;
             case R.id.whm_bl_choose_db:
                 break;

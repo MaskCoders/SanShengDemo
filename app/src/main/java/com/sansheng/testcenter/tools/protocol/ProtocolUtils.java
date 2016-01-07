@@ -138,10 +138,10 @@ public class ProtocolUtils {
             hexbyte.append(byte2hex(data[i]));
             hexbyte_withspace.append(byte2hex(data[i])).append(" ");
         }
-        System.out.println("sbbyte == >"+sbbyte.toString());
-        System.out.println("hexbyte == >"+hexbyte.toString());
-        System.out.println("hexbyte_withspace == >"+hexbyte_withspace.toString());
-        System.out.println("string == >"+(new String(data)));
+        System.out.println("by hua sbbyte == >"+sbbyte.toString());
+        System.out.println("by hua  hexbyte == >"+hexbyte.toString());
+        System.out.println("by hua hexbyte_withspace == >"+hexbyte_withspace.toString());
+        System.out.println("by hua string == >"+(new String(data)));
         return hexbyte_withspace.toString();
     }
 
