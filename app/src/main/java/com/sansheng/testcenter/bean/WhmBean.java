@@ -66,8 +66,8 @@ public class WhmBean {
     }
     @Override
     public String toString() {
-        String sum_str =  ProtocolUtils.dec2hex(type.getValue())+ ProtocolUtils.dec2hex(len)+userData;
-        return "68"+address+"68"+sum_str+getCs(sum_str)+"16";
+        String sum_str =  "68"+address+"68"+ProtocolUtils.dec2hex(type.getValue())+ ProtocolUtils.dec2hex(len)+userData;
+        return sum_str+getCs(sum_str)+"16";
     }
     private static String getCs(String hexs){
         int sum = 0;
@@ -121,7 +121,7 @@ public class WhmBean {
         WhmBean bean =  WhmBean.create(type,data,address);
 //        WhmBean bean2 = WhmBean.parse(ProtocolUtils.hexStringToBytes(bean.toString()));
         WhmBean bean3 = WhmBean.parse(ProtocolUtils.hexStringToBytes("68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5B 16".replace(" ","")));
-        System.out.println(ProtocolUtils.hexStringToBytes(bean.toString()));
+        System.out.println(bean3.toString());
 //        System.out.println(bean2.toString());
 //        System.out.println(bean3.toString());
         System.out.println("68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5B 16".replace(" ",""));
