@@ -110,6 +110,7 @@ public class Server1{
                     String msg="";
                     if ((msg = serin.readLine()) != null) {
                         System.out.println(" by hua client info is "+msg);
+
                         if (msg.equals("0x68 0x16")) {
                             msg = "0x16 0x68";
                         } else {

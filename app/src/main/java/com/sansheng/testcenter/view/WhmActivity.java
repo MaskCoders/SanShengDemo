@@ -93,7 +93,7 @@ public class WhmActivity extends BaseActivity  {
         switch (v.getId()) {
             case R.id.whm_bl_read_address:
 //                String time = getTimeStamp()+"\t发送指令=>>";
-//                logBuffer = new StringBuffer();
+                logBuffer = new StringBuffer();
                 logBuffer.append("68 49 00 49 00 68 4A 10 12 64 00 02 0C F0 00 00 01 00 00 35 24 09 25 00 56 16".replace(" ",""));
                         //.append("\n");
 //                SpannableString span = new SpannableString(time+logBuffer.toString());

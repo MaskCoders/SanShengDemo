@@ -22,7 +22,7 @@
     <string name="function_data_upload">数据补抄</string>
     <string name="function_info_collection">组网拓扑</string>
     <string name="function_protocol">规约解析</string>
-    <string name="function_meter_test">现场售电(dbcreat)</string>
+    <string name="function_meter_test">现场售电</string>
     <string name="function_settings">系统设置</string>
 
 
@@ -36,7 +36,7 @@
     <string name="meter_detail_default_content"></string>
 
     <string name="date_time_done">完成</string>
-    <string name="index_page">智能电力系统终端</string>
+    <string name="index_page">电力系统智能终端</string>
     <string name="connect_page">通讯</string>
     <string name="db_show">数据库展示</string>
     <string name="create_db">生成测试数据库</string>

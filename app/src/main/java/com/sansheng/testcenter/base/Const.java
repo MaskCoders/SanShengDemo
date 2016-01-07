@@ -92,7 +92,16 @@ public interface Const {
             public int getValue(){
                 return value;
             }
+            public static C getC(int value){
+                for(C c:C.class.getEnumConstants()){
+                    if(c.value == value){
+                        return c;
+                    }
+                }
+                return null;
+            }
 
             }
+
     }
 }

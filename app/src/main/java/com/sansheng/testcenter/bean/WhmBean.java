@@ -1,5 +1,7 @@
 package com.sansheng.testcenter.bean;
 
+import com.sansheng.testcenter.base.*;
+import com.sansheng.testcenter.base.Const;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 
 import static com.sansheng.testcenter.base.Const.WhmConst.C.*;
@@ -9,9 +11,8 @@ import static com.sansheng.testcenter.base.Const.WhmConst.C.*;
  */
 public class WhmBean {
 
-    public C type;
-    public int c;
-    public String address ;
+    public Const.WhmConst.C type;
+    public String address;
     public String userData;
     public static final byte HEAD_B = 104;//68
     public static final byte END_B  = 22;//16
@@ -21,7 +22,7 @@ public class WhmBean {
 
     }
     public static boolean hasHEAD(byte[] data,WhmBean cmd){
-        if(data[0] == HEAD_B &&  data[5] == HEAD_B ){
+        if(data[0] == HEAD_B &&  data[7] == HEAD_B ){
             String add = new String();
             for(int i = 1;i<7;i++){
                 add = add+ProtocolUtils.byte2hex(data[i]);
@@ -54,10 +55,10 @@ public class WhmBean {
         String sumInData = ProtocolUtils.byte2hex(data[data.length-2]);
 
         if (hexsum.equalsIgnoreCase(sumInData)) {
-            cmd.c = (int)(data[8]);
+            cmd.type = Const.WhmConst.C.getC(data[8]);
             cmd.len = (int)data[9];
-            cmd.address = ProtocolUtils.getStrFromBytes(data,1,5);
-            cmd.userData = ProtocolUtils.getStrFromBytes(data,8,data.length-2);
+            cmd.address = ProtocolUtils.getStrFromBytes(data,1,6);
+            cmd.userData = ProtocolUtils.getStrFromBytes(data,10,data.length-3);
             return true;
         }else{
             return false;
@@ -65,13 +66,13 @@ public class WhmBean {
     }
     @Override
     public String toString() {
-        String sum_str =  c+ ProtocolUtils.dec2hex(len)+userData;
+        String sum_str =  ProtocolUtils.dec2hex(type.getValue())+ ProtocolUtils.dec2hex(len)+userData;
         return "68"+address+"68"+sum_str+getCs(sum_str)+"16";
     }
     private static String getCs(String hexs){
         int sum = 0;
-        for(int i = 2 ; i <hexs.length();i=i+2){
-            sum = sum+ Integer.parseInt(hexs.substring(i-2,i),16);
+        for(int i = 2 ; i <hexs.length()+2;i=i+2){
+            sum = sum+ProtocolUtils.hex2dec(hexs.substring(i-2,i));
         }
         return ProtocolUtils.dec2hex(sum);
     }
@@ -80,25 +81,31 @@ public class WhmBean {
         boolean hashead = hasHEAD(data,bean);
         boolean sumOK = sumOK(data,bean);
         if(hashead && sumOK){
-            parseType(bean);
             return bean;
         }else{
             return null;
         }
     }
-    public static void parseType(WhmBean bean){
-        int type = bean.c;
-        //这里要把type和bean一起通过handler发出去，通过Activity运行
-    }
-    public static WhmBean create(C type, String data,String ads,int m) {
+    public static WhmBean create(Const.WhmConst.C type, String data, String ads) {
         WhmBean bean = new WhmBean();
         bean.type = type;
+        bean.userData = data;
         bean.address = ads;
-        bean.c = SLAVE_RESPONSE_READ_DATA.getValue();
         bean.len = data.length()/2;
 
         return bean;
 
     }
-
+    public static final void main(String[] args){
+        //68 02 00 00 00 10 20 68 11 04 33 32 34 33 E3 16
+        //68 02 00 00 00 10 20 68 11 04 33 32 34 33 e1 16
+        //68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5D 16
+        String address = "02 00 00 00 10 20".replace(" ","");
+        Const.WhmConst.C type = Const.WhmConst.C.MAIN_REQUEST_READ_DATA;
+        String data = "33 32 34 33 ".replace(" ","");
+        WhmBean bean =  WhmBean.create(type,data,address);
+        WhmBean bean2 = WhmBean.parse(ProtocolUtils.hexStringToBytes(bean.toString()));
+        System.out.println(bean.toString());
+        System.out.println(bean2.toString());
+    }
 }
