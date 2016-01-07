@@ -55,7 +55,7 @@ public class WhmBean {
         String sumInData = ProtocolUtils.byte2hex(data[data.length-2]);
 
         if (hexsum.equalsIgnoreCase(sumInData)) {
-            cmd.type = Const.WhmConst.C.getC(data[8]);
+            cmd.type = Const.WhmConst.C.getC(ProtocolUtils.byte2dec(data[8]));
             cmd.len = (int)data[9];
             cmd.address = ProtocolUtils.getStrFromBytes(data,1,6);
             cmd.userData = ProtocolUtils.getStrFromBytes(data,10,data.length-3);
@@ -74,7 +74,11 @@ public class WhmBean {
         for(int i = 2 ; i <hexs.length()+2;i=i+2){
             sum = sum+ProtocolUtils.hex2dec(hexs.substring(i-2,i));
         }
-        return ProtocolUtils.dec2hex(sum);
+        String hex = ProtocolUtils.dec2hex(sum);
+        if(hex.length()>2){
+            hex = hex.substring(hex.length()-2,hex.length());
+        }
+        return hex ;
     }
     public static WhmBean parse(byte[] data) {
         WhmBean bean = new WhmBean();
@@ -104,8 +108,13 @@ public class WhmBean {
         Const.WhmConst.C type = Const.WhmConst.C.MAIN_REQUEST_READ_DATA;
         String data = "33 32 34 33 ".replace(" ","");
         WhmBean bean =  WhmBean.create(type,data,address);
-        WhmBean bean2 = WhmBean.parse(ProtocolUtils.hexStringToBytes(bean.toString()));
+//        WhmBean bean2 = WhmBean.parse(ProtocolUtils.hexStringToBytes(bean.toString()));
+        WhmBean bean3 = WhmBean.parse(ProtocolUtils.hexStringToBytes("68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5B 16".replace(" ","")));
+
         System.out.println(bean.toString());
-        System.out.println(bean2.toString());
+//        System.out.println(bean2.toString());
+        System.out.println(bean3.toString());
+        System.out.println("68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5B 16".replace(" ",""));
+        System.out.println(bean3.toString().equalsIgnoreCase("68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5B 16".replace(" ","")));
     }
 }

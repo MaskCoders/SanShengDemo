@@ -18,6 +18,10 @@ public class ProtocolUtils {
         }
         return hex;
     }
+    //byte to dec
+    public static int byte2dec( byte b) {
+     return b&0xff;
+    }
     public static final String dec2hex(int dec){
         String hex = Integer.toHexString(dec);
         if(hex.length()==1){
