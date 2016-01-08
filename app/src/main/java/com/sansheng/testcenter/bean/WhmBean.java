@@ -13,13 +13,28 @@ public class WhmBean {
 
     public Const.WhmConst.C type;
     public String address;
-    public String userData;
+    private String userData;
     public static final byte HEAD_B = 104;//68
     public static final byte END_B  = 22;//16
     public int len = 1;
 
     public WhmBean() {
 
+    }
+    public byte[] getUserData(){
+        return ProtocolUtils.hexStringToBytesDecode(userData);
+    }
+    public double[] getUserDataArr(){
+        byte[] decodeData = getUserData();
+        int len = (decodeData.length -type.getLen())/4;
+        if(len <=0) return null;
+        double[] data = new double[len];
+        int j = 0;
+        for(int i=type.getLen();i<decodeData.length;i=i+4){
+            double x= ProtocolUtils.getbcdDec4bytes2(decodeData[i],decodeData[i+1]);
+            data[j++] = x;
+        }
+        return data;
     }
     public static boolean hasHEAD(byte[] data,WhmBean cmd){
         if(data[0] == HEAD_B &&  data[7] == HEAD_B ){
@@ -93,7 +108,8 @@ public class WhmBean {
     public static WhmBean create(Const.WhmConst.C type, String data, String ads) {
         WhmBean bean = new WhmBean();
         bean.type = type;
-        bean.userData = data;
+        bean.userData =
+        ProtocolUtils.bytes2hex(ProtocolUtils.hexStringToBytesEncode(data));
         bean.address = ads;
         bean.len = data.length()/2;
 
@@ -112,25 +128,38 @@ public class WhmBean {
         return data;
     }
     public static final void main(String[] args){
-         byte[] bytes = ProtocolUtils.hexStringToBytesEncode("00ff");
+//         byte[] bytes = ProtocolUtils.hexStringToBytesEncode("00ff");
 //        System.out.println(ProtocolUtils.bytes2hex(bytes));
 
-        byte b = (byte) (0x33+ProtocolUtils.hex2dec("ff"));
+//        byte b = (byte) (0x33+ProtocolUtils.hex2dec("ff"));
 //        byte b = (byte) (0x33+255);
-        System.out.println(ProtocolUtils.bytes2hex(bytes));
-        System.out.println(ProtocolUtils.bytes2hex(ProtocolUtils.hexStringToBytesDecode("3332")));
+//        System.out.println(ProtocolUtils.bytes2hex(bytes));
+//        System.out.println(ProtocolUtils.bytes2hex(ProtocolUtils.hexStringToBytesDecode("3332")));
 
         //68 02 00 00 00 10 20 68 11 04 33 32 34 33 e1 16
         //68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5D 16
-//        String address = "02 00 00 00 10 20".replace(" ","");
-//        Const.WhmConst.C type = Const.WhmConst.C.MAIN_REQUEST_READ_DATA;
-//        String data = "33 32 34 33 ".replace(" ","");
-//        WhmBean bean =  WhmBean.create(type,data,address);
+        String address = "02 00 00 00 10 20".replace(" ","");
+        Const.WhmConst.C type = Const.WhmConst.C.MAIN_REQUEST_READ_DATA;
+        String data = "00 FF 01 00".replace(" ","");
+        WhmBean bean =  WhmBean.create(type,data,address);
 //        WhmBean bean2 = WhmBean.parse(ProtocolUtils.hexStringToBytes(bean.toString()));
-//        WhmBean bean3 = WhmBean.parse(ProtocolUtils.hexStringToBytes("68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5B 16".replace(" ","")));
-//        System.out.println(bean3.toString());
+        WhmBean bean3 = WhmBean.parse(ProtocolUtils.hexStringToBytes("68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5B 16".replace(" ","")));
+
+        byte[] decodeData =  ProtocolUtils.hexStringToBytesDecode("33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33".replace(" ",""));
+        System.out.println(ProtocolUtils.bytes2hex(decodeData));
+//        for(int i=type.getLen();i<decodeData.length;i=i+4){
+//           double x= ProtocolUtils.getbcdDec4bytes2(decodeData[i],decodeData[i+1]);
+//            System.out.println(x);
+////            data[i-type.getLen()] =
+//        }
+//        System.out.println(bean.toString());
+//        System.out.println(ProtocolUtils.getbcdDec4bytes((byte)33,(byte)32));
 //        System.out.println(bean2.toString());
-//        System.out.println(bean3.toString());
+        System.out.println(bean3.toString());
+        for(int i = 0;i < bean3.getUserDataArr().length;i++){
+
+            System.out.println(bean3.getUserDataArr()[i]);
+        }
 //        System.out.println("68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5B 16".replace(" ",""));
 //        System.out.println(bean3.toString().equalsIgnoreCase("68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5B 16".replace(" ","")));
     }

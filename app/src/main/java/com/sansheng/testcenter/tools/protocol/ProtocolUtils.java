@@ -22,6 +22,25 @@ public class ProtocolUtils {
     public static int byte2dec( byte b) {
      return b&0xff;
     }
+    /**
+     * 求bcd，变成小树，按16进制算
+     * @param a
+     * @param b
+     * @return
+     */
+    public static double getbcdDec4bytes(byte a ,byte b){
+       return  byte2dec(b)+(double)byte2dec(a)/100;
+    }
+
+    /**
+     * 求bcd，变成小树，按10进制算
+     * @param a
+     * @param b
+     * @return
+     */
+    public static double getbcdDec4bytes2(byte a ,byte b){
+       return  Integer.valueOf(byte2hex(b))+Double.valueOf(byte2hex(a))/100;
+    }
     public static String bytes2hex(byte[] bytes){
         StringBuffer sb = new StringBuffer();
         for(byte b:bytes){
@@ -198,5 +217,6 @@ public class ProtocolUtils {
         SimpleDateFormat time=new SimpleDateFormat("HH:mm:ss");
         return time.format(nowTime);
     }
+
 
 }
