@@ -17,7 +17,6 @@ import android.widget.ListView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.view.AnswerDialog;
 import com.sansheng.testcenter.base.view.PullListView;
-import com.sansheng.testcenter.demo.view.CollectListAdapter;
 import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.demo.view.MeterDataFragment;
 import com.sansheng.testcenter.module.Collect;

@@ -17,7 +17,7 @@ import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.base.MeterSelectDialog;
 import com.sansheng.testcenter.base.view.ProgressDailog;
 import com.sansheng.testcenter.center.CenterActivity;
-import com.sansheng.testcenter.collection.CollectionActivity;
+import com.sansheng.testcenter.location.LocationInfoActivity;
 import com.sansheng.testcenter.demo.view.MeterDataListActivity;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Meter;
@@ -113,7 +113,7 @@ public class LauncherAdapter extends BaseAdapter implements CollectSelectDialog.
                         case 5://台区识别
                             break;
                         case 6://GPS定位
-                            intent.setClass(mContext, CollectionActivity.class);
+                            intent.setClass(mContext, LocationInfoActivity.class);
                             mContext.startActivity(intent);
                             break;
                         case 7://国网376.1主站

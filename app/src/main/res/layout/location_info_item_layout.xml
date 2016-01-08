@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+                android:id="@+id/location_item">
+    <ImageView
+            android:id="@+id/theme_image"
+            android:layout_width="@dimen/thumbnail_width"
+            android:layout_height="@dimen/thumbnail_height"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"/>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/location_address"
+                android:text="地址"
+                style="@style/LocationInfoTextStyle"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/location_poi"
+                android:text="建筑"
+                style="@style/LocationInfoTextStyle"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/location_update_time"
+                android:text="时间"
+                style="@style/LocationInfoTextStyle"/>
+
+
+    </LinearLayout>
+</LinearLayout>

@@ -313,8 +313,8 @@ public class ComposeDialogFragmentFactory {
 			super.onCreate(savedInstanceState);
 			String[] attResource = context.getResources().getStringArray(R.array.crop_image_from);
 			int[] icons = new int[] {
-					R.drawable.chat_bottom_picture_normal,
-					R.drawable.chat_bottom_photo_normal,
+					R.drawable.dialog_select_picture,
+					R.drawable.dialog_take_photo,
 					};
 
 			setTitleText(R.string.select_photo_type);

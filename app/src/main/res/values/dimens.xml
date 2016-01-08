@@ -36,4 +36,10 @@
     <dimen name="collect_item1_width">120dp</dimen>
     <dimen name="collect_item2_width">120dp</dimen>
     <!--集中器表格参数-->
+    <!--缩略图格式参数-->
+    <dimen name="thumbnail_width">90dip</dimen>
+    <dimen name="thumbnail_height">60dip</dimen>
+
+    <dimen name="compose_thumbnail_width">128dip</dimen>
+    <dimen name="compose_thumbnail_height">128dip</dimen>
 </resources>

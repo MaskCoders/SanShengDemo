@@ -2,7 +2,7 @@
 <resources>
     <color name="main_color">#00766e</color>
 
-    <color name="main_green">#6abd78</color>
+    <color name="main_green">@color/main_color</color>
     <color name="main_green2">#886abd78</color>
     <color name="main_green3">#336abd78</color>
 
@@ -20,23 +20,23 @@
     <color name="dark_press_color">#323a42</color>
     <color name="dialog_edittext_hint_text_color">#aab6c4</color>
 
-    <color name="conversation_item_unread">#29bd8b</color>
-    <color name="folder_list_text_color_red">#29bd8b</color>
-    <color name="message_invite_calendar_view_color">#29bd8b</color>
-    <color name="hight_light_key_color">#29bd8b</color>
-    <color name="search_tabs_down_color">#29bd8b</color>
-    <color name="feedback_title_bg">#29bd8b</color>
-    <color name="progress_bar_fg">#29bd8b</color>
-    <color name="contact_add_normal">#29bd8b</color>
-    <color name="contact_add_press">#29bd8b</color>
-    <color name="contact_add_bcc_press">#29bd8b</color>
-    <color name="swipe_to_refresh_text_color">#29bd8b</color>
-    <color name="sync_progress_bar_color">#29bd8b</color>
-    <color name="splash_bg_color">#29bd8b</color>
+    <color name="conversation_item_unread">@color/main_color</color>
+    <color name="folder_list_text_color_red">@color/main_color</color>
+    <color name="message_invite_calendar_view_color">@color/main_color</color>
+    <color name="hight_light_key_color">@color/main_color</color>
+    <color name="search_tabs_down_color">@color/main_color</color>
+    <color name="feedback_title_bg">@color/main_color</color>
+    <color name="progress_bar_fg">@color/main_color</color>
+    <color name="contact_add_normal">@color/main_color</color>
+    <color name="contact_add_press">@color/main_color</color>
+    <color name="contact_add_bcc_press">@color/main_color</color>
+    <color name="swipe_to_refresh_text_color">@color/main_color</color>
+    <color name="sync_progress_bar_color">@color/main_color</color>
+    <color name="splash_bg_color">@color/main_color</color>
 
     <color name="action_bar_spinner_text_color">#323a42</color>
-    <color name="remain_action_bar_color">#29bd8b</color>
-    <color name="circle_send_fail_resend">#29bd8b</color>
+    <color name="remain_action_bar_color">@color/main_color</color>
+    <color name="circle_send_fail_resend">@color/main_color</color>
     <color name="conversation_list_subtitle">#808d99</color>
 
     <color name="account_settings_text_color">#323a42</color>
@@ -53,7 +53,7 @@
     <color name="quick_reply_bg">#ffffff</color>
     <color name="custom_action_bar_bg">#f2f6f9</color>
 
-    <color name="head_icon_bg_color_unknown">#29bd8b</color>
+    <color name="head_icon_bg_color_unknown">@color/main_color</color>
     <color name="head_icon_bg_color0">#69b7ff</color>
     <color name="head_icon_bg_color1">#fe7c70</color>
     <color name="err_msg_tip">#ff0000</color>

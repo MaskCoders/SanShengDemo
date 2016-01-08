@@ -18,9 +18,9 @@ public class Concentrator extends Content implements Content.ConcentratorColumns
 
 
     public static final int ID_INDEX = 0;
-    public static final int CONCENTRATOR_NUM_INDEX = ID_INDEX + 3;
-    public static final int CONCENTRATOR_ADDRESS_INDEX = ID_INDEX + 4;
-    public static final int CONCENTRATOR_NAME_INDEX = ID_INDEX + 5;
+    public static final int CONCENTRATOR_NUM_INDEX = ID_INDEX + 1;
+    public static final int CONCENTRATOR_ADDRESS_INDEX = ID_INDEX + 2;
+    public static final int CONCENTRATOR_NAME_INDEX = ID_INDEX + 3;
 
 
     public static final String[] CONTENT_PROJECTION = {

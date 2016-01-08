@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.collection;
+package com.sansheng.testcenter.demo.view;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -45,12 +45,12 @@ public class LocationActivity extends Activity {
                 // TODO Auto-generated method stub
                 initLocation();
 
-                if (startLocation.getText().equals(getString(R.string.startlocation))) {
+                if (startLocation.getText().equals(getString(R.string.start_location))) {
                     mLocationClient.start();//定位SDK start之后会默认发起一次定位请求，开发者无须判断isstart并主动调用request
-                    startLocation.setText(getString(R.string.stoplocation));
+                    startLocation.setText(getString(R.string.stop_location));
                 } else {
                     mLocationClient.stop();
-                    startLocation.setText(getString(R.string.startlocation));
+                    startLocation.setText(getString(R.string.start_location));
                 }
             }
         });

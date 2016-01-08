@@ -91,6 +91,17 @@ public class DBHelper extends SQLiteOpenHelper {
             "  `"+ Content.EquipmentExceptionColumns.NOTE + "` text\n" +
             ")";
 
+    private String createLocationTable = "CREATE TABLE IF NOT EXISTS `" + LocationInfo.TABLE_NAME +"` (\n" +
+            "  `"+ Content.LocationInfoColumns.ID + "` integer primary key autoincrement,\n" +
+            "  `"+ Content.LocationInfoColumns.LOCTYPE + "` Integer not null default 0,\n" +
+            "  `"+ Content.LocationInfoColumns.ADDRESS + "` text,\n" +
+            "  `"+ Content.LocationInfoColumns.POI + "` text,\n" +
+            "  `"+ Content.LocationInfoColumns.LATITUDE + "` text,\n" +
+            "  `"+ Content.LocationInfoColumns.LONTITUDE + "` text,\n" +
+            "  `"+ Content.LocationInfoColumns.UPDATE_TIME + "` text,\n" +
+            "  `"+ Content.LocationInfoColumns.URI_LIST + "` text\n" +
+            ")";
+
     public DBHelper(Context context, String name) {
         super(context, name, null, DB_VERSION);
         mContext = context;
@@ -104,6 +115,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(createCollectTable);
         db.execSQL(createCollectParamTable);
         db.execSQL(createExceptionTable);
+        db.execSQL(createLocationTable);
     }
 
     @Override

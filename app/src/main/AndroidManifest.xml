@@ -25,9 +25,9 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
     <!--允许应用读取低级别的系统日志文件 -->
     <uses-permission android:name="android.permission.READ_LOGS"></uses-permission>
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
 
     <uses-sdk
             android:minSdkVersion="17" android:targetSdkVersion="19"/>
@@ -42,7 +42,7 @@
         <!--设置Accesskey-->
         <meta-data
                 android:name="com.baidu.lbsapi.API_KEY"
-                android:value="wFtG3DzxxFRqinI8SRxy9lIy" />
+                android:value="wFtG3DzxxFRqinI8SRxy9lIy"/>
         <activity
                 android:name=".launcher.LauncherActivity"
                 android:label="@string/app_name"
@@ -99,10 +99,13 @@
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
-        <activity android:name=".collection.CollectionActivity"
+        <activity android:name=".location.ComposeLocationActivity"
                   android:screenOrientation="sensorLandscape">
         </activity>
-        <activity android:name=".collection.LocationActivity"
+        <activity android:name=".demo.view.LocationActivity"
+                  android:screenOrientation="sensorLandscape">
+        </activity>
+        <activity android:name=".location.LocationInfoActivity"
                   android:screenOrientation="sensorLandscape">
         </activity>
         <activity android:name=".MeterTestActivity"

@@ -12,9 +12,6 @@ import android.widget.*;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
  * Created by sunshaogang on 12/10/15.
  */
@@ -30,6 +27,8 @@ public  abstract class BaseActivity extends Activity implements View.OnClickList
     public final static int DETAIL_VIEW = 5;//详情
     public final static int MODIFY_DETAIL_VIEW = 6;//修改详情a
     public final static int SETTINGS_VIEW = 7;//修改详情
+    public final static int LOCATION_INFO = 8;//定位
+    public final static int COMPOSE_LOCATION = 9;//新增现场信息
     private ActionBarCallback mActionBarCallback;
     protected StringBuffer logBuffer = new StringBuffer();
     protected DrawerLayout mDrawerLayout;
@@ -209,6 +208,12 @@ public  abstract class BaseActivity extends Activity implements View.OnClickList
                         break;
                     case SETTINGS_VIEW:
                         ((TextView) mActionBarView.findViewById(R.id.ab_modify_title)).setText(getResources().getText(R.string.function_settings));
+                        break;
+                    case LOCATION_INFO:
+                        ((TextView) mActionBarView.findViewById(R.id.ab_modify_title)).setText(getResources().getText(R.string.function_gps));
+                        break;
+                    case COMPOSE_LOCATION:
+                        ((TextView) mActionBarView.findViewById(R.id.ab_modify_title)).setText(getResources().getText(R.string.function_compose_location));
                         break;
                     default:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(R.string.company_name);

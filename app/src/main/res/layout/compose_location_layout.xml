@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+<LinearLayout
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 定位模式"
+            android:textSize="16sp"/>
+    <RadioGroup
+            android:id="@+id/selectMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <RadioButton
+                android:id="@+id/radio_hight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:layout_weight="1"
+                android:text="高精度"/>
+        <RadioButton
+                android:id="@+id/radio_low"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="低功耗"/>
+        <RadioButton
+                android:id="@+id/radio_device"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="仅设备"/>
+    </RadioGroup>
+    <TextView
+            android:id="@+id/modeinfor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" "/>
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/compose_location"
+            android:text="开启定位"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/compose_uris"
+            android:text="图片uri"/>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/compose_pics">
+
+    </LinearLayout>
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/compose_take_photo"
+            android:text="选择图片"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/compose_address"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/compose_poi"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/compose_update_time"/>
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/compose_add_to_db"
+            android:text="添加"/>
+</LinearLayout>
+</ScrollView>

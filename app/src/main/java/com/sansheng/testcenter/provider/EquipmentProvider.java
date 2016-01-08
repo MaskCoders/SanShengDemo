@@ -55,19 +55,24 @@ public class EquipmentProvider extends ContentProvider {
     private static final int EXCEPTION_BASE = 0x5000;
     private static final int EXCEPTION = EXCEPTION_BASE;
     private static final int EXCEPTION_ID = EXCEPTION_BASE + 2;
+    //location
+    private static final int LOCATION_BASE = 0x6000;
+    private static final int LOCATION = LOCATION_BASE;
+    private static final int LOCATION_ID = LOCATION_BASE + 2;
 
     private static ExecutorService mNotifyThreadPool = Executors.newSingleThreadExecutor();
 
     private static final SparseArray<String> TABLE_NAMES;
 
     static {
-        SparseArray<String> array = new SparseArray<String>(6);
+        SparseArray<String> array = new SparseArray<String>(7);
         array.put(METER_BASE >> BASE_SHIFT, Meter.TABLE_NAME);
         array.put(METERDATA_BASE >> BASE_SHIFT, MeterData.TABLE_NAME);
         array.put(CONCENTRATOR_BASE >> BASE_SHIFT, Concentrator.TABLE_NAME);
         array.put(COLLECT_BASE >> BASE_SHIFT, Collect.TABLE_NAME);
         array.put(COLLECT_PARAM_BASE >> BASE_SHIFT, CollectParam.TABLE_NAME);
         array.put(EXCEPTION_BASE >> BASE_SHIFT, EquipmentException.TABLE_NAME);
+        array.put(LOCATION_BASE >> BASE_SHIFT, LocationInfo.TABLE_NAME);
         TABLE_NAMES = array;
     }
 
@@ -111,6 +116,8 @@ public class EquipmentProvider extends ContentProvider {
         mURIMatcher.addURI(Content.AUTHORITY, "collectparam/#", COLLECT_PARAM_ID);
         mURIMatcher.addURI(Content.AUTHORITY, "except", EXCEPTION);
         mURIMatcher.addURI(Content.AUTHORITY, "except/#", EXCEPTION_ID);
+        mURIMatcher.addURI(Content.AUTHORITY, "location", LOCATION);
+        mURIMatcher.addURI(Content.AUTHORITY, "location/#", LOCATION_ID);
     }
 
     private static int findMatch(Uri uri, String methodName) {
@@ -156,6 +163,8 @@ public class EquipmentProvider extends ContentProvider {
                     break;
                 case METERDATA_ID:
                     break;
+                case LOCATION:
+                case LOCATION_ID:
                 default:
                     cursor = db.query(tableName, projection, selection, selectionArgs, null, null, sortOrder, limit);
                     break;
@@ -185,6 +194,8 @@ public class EquipmentProvider extends ContentProvider {
                 case METER_ID:
                     id = db.insertWithOnConflict(tableName, null, values, SQLiteDatabase.CONFLICT_REPLACE);
                     break;
+                case LOCATION:
+                case LOCATION_ID:
                 case METERDATA:
                 case METERDATA_ID:
                     id = db.insertWithOnConflict(tableName, null, values, SQLiteDatabase.CONFLICT_REPLACE);
@@ -219,6 +230,8 @@ public class EquipmentProvider extends ContentProvider {
                 case METER_ID:
                 case METERDATA:
                 case METERDATA_ID:
+                case LOCATION:
+                case LOCATION_ID:
                     break;
             }
             result = db.delete(tableName, selection, selectionArgs);
@@ -249,6 +262,9 @@ public class EquipmentProvider extends ContentProvider {
                 case METERDATA_ID:
                     String id = uri.getLastPathSegment();
                     selection = whereWithId(id, selection);
+                    break;
+                case LOCATION:
+                case LOCATION_ID:
                     break;
             }
             result = db.update(tableName, values, selection, selectionArgs);
@@ -286,6 +302,10 @@ public class EquipmentProvider extends ContentProvider {
                 return "vnd.android.cursor.dir/except/";
             case EXCEPTION_ID:
                 return "vnd.android.cursor.dir/except/#";
+            case LOCATION:
+                return "vnd.android.cursor.dir/location/";
+            case LOCATION_ID:
+                return "vnd.android.cursor.dir/location/#";
             default:
                 return null;
         }

@@ -109,4 +109,11 @@
         <item name="android:background">@color/transparent_color</item>
         <item name="android:textSize">@dimen/list_body_text_size_big</item>
     </style>
+    <style name="LocationInfoTextStyle">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_height">@dimen/collect_list_item_height</item>
+        <item name="android:background">@color/transparent_color</item>
+        <item name="android:textSize">@dimen/list_body_text_size_big</item>
+        <item name="android:color">@color/color_black</item>
+    </style>
 </resources>

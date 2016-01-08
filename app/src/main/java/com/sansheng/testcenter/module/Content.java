@@ -139,6 +139,7 @@ public abstract class Content {
         CollectParam.init();
         EquipmentException.init();
         Concentrator.init();
+        LocationInfo.init();
     }
 
     static public Uri uriWithLimit(Uri uri, int limit) {
@@ -220,5 +221,17 @@ public abstract class Content {
         public static final String NOTE = "note";
     }
 
+
+
+    public static interface LocationInfoColumns {
+        public static final String ID = "_id";
+        public static final String LOCTYPE = "loctype";
+        public static final String ADDRESS = "address";
+        public static final String POI = "poi";
+        public static final String LATITUDE = "latitude";
+        public static final String LONTITUDE = "lontitude";
+        public static final String UPDATE_TIME = "upate_time";
+        public static final String URI_LIST = "uri_list";
+    }
 
 }

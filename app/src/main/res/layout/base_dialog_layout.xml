@@ -4,14 +4,15 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@drawable/base_dialog_bac">
+              android:background="@drawable/message_bg_white">
 
     <!-- 顶部标题 -->
     <RelativeLayout
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_margin="0dp">
+        android:layout_margin="0dp"
+        android:background="@drawable/base_dialog_top_bac">
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
@@ -94,7 +95,7 @@
             android:id="@+id/dialog_button_panel"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:background="@drawable/message_bottom_9">
+            android:background="@drawable/base_dialog_top_bac">
             <!--android:background="@drawable/message_bottom_9"-->
             <Button
                 android:id="@+id/dialog_button_cancel"
