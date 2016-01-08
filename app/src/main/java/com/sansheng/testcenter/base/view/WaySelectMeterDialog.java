@@ -11,6 +11,7 @@ import android.widget.*;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.MeterSelectDialog;
 import com.sansheng.testcenter.module.Meter;
+import com.sansheng.testcenter.utils.Utility;
 
 import java.util.HashMap;
 
@@ -63,20 +64,11 @@ public class WaySelectMeterDialog extends DialogFragment implements MeterSelectD
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override
-    public void onMeterNegativeClick() {
-
-    }
 
     @Override
     public void onMeterPositiveClick(HashMap<String, Meter> meters) {
         Log.e("ssg", "WaySelectMeterDialog selected meters size = " + meters.size());
         mCallback.onSelectMeterPositiveClick(meters);
-    }
-
-    @Override
-    public String getSelectedColletion() {
-        return null;
     }
 
     class MeterTestAdapter extends BaseAdapter {
@@ -180,12 +172,14 @@ public class WaySelectMeterDialog extends DialogFragment implements MeterSelectD
                 public void onClick(View v) {
                     if (dialog.getEditText().getText().toString().length() != 10) {//TODO:电表地址的长度可能不对
                         //未修改，无需更新
-                        dialog.dismiss();
+                        Utility.showToast(getActivity(), "电表地址的长度可能不对");
                     } else {//修改
                         Meter meter = new Meter();
                         meter.mMeterAddress = dialog.getEditText().getText().toString();
                         selectMeters.put(meter.mMeterAddress, meter);
+                        Log.e("ssg", "address = " + meter.mMeterAddress);
                         mCallback.onSelectMeterPositiveClick(selectMeters);
+                        dialog.dismiss();
                     }
                 }
             });

@@ -58,6 +58,10 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     private TerProtocolCreater cmdCreater;
     private Meter mMeter;
 
+    private static final int METER_TEST_MODE_SINGLE = 0;
+    private static final int METER_TEST_MODE_TRIPLE = 1;
+    private static int mMode = METER_TEST_MODE_SINGLE;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -250,12 +254,25 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
 
     @Override
     public void onSelectMeterPositiveClick(HashMap<String, Meter> meters) {
-
+        if (meters == null || meters.size() == 0) {
+            Log.e("ssg", "selected no meter");
+        }else {
+            Log.e("ssg", "selected meters size = " + meters.size());
+        }
     }
 
     @Override
     public void onItemClick(int position) {
         Log.e("ssg", "选择的通讯类型 ＝ " + getResources().getStringArray(R.array.select_connect_type)[position]);
     }
+
+//    @Override
+//    public void onMeterPositiveClick(HashMap<String, Meter> meters) {
+//        if (meters == null || meters.size() == 0) {
+//            Log.e("ssg", "selected no meter");
+//        }else {
+//            Log.e("ssg", "selected meters size = " + meters.size());
+//        }
+//    }
 
 }

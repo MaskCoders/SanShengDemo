@@ -175,18 +175,8 @@ public class LauncherAdapter extends BaseAdapter implements CollectSelectDialog.
     }
 
     @Override
-    public void onMeterNegativeClick() {
-
-    }
-
-    @Override
     public void onMeterPositiveClick(HashMap<String, Meter> meters) {
         Log.e("ssg", "selected meters size = " + meters.size());
-    }
-
-    @Override
-    public String getSelectedColletion() {
-        return null;
     }
 
     public interface OptionCallback {

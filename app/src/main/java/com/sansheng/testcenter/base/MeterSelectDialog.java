@@ -83,7 +83,6 @@ public class MeterSelectDialog extends DialogFragment implements LoaderManager.L
         mDialog.setNegativeButton(R.string.cancel, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callback.onMeterNegativeClick();
                 mDialog.dismiss();
             }
         });
@@ -174,8 +173,6 @@ public class MeterSelectDialog extends DialogFragment implements LoaderManager.L
     }
 
     public interface MeterCallback {
-        void onMeterNegativeClick();
         void onMeterPositiveClick(HashMap<String, Meter> meters);
-        String getSelectedColletion();
     }
 }
