@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.MeterTestItemsDialog;
@@ -21,6 +22,7 @@ import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.provider.EquipmentPreference;
 import com.sansheng.testcenter.server.ClientManager;
 import com.sansheng.testcenter.server.MSocketServer;
+import com.sansheng.testcenter.server.SocketClient;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
 
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ import java.util.HashMap;
  */
 public class MeterTestActivity extends BaseActivity implements IServiceHandlerCallback,
         MeterTestItemsDialog.MeterTestCallback, WaySelectMeterDialog.WaySelectMeterCallback, ConnectTypeDialog.ConnectTypeCallback {
-        Button text1;
+    Button text1;
     Button text2;
     Button text3;
     Button text4;
@@ -42,9 +44,14 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     UIRevisableView mReadAddressView;
     UIRevisableView mSelectAddressView;
 
+    Button conn;
+    EditText whm_ip;
+    EditText whm_port;
+
     private ListView mListView;
     private MeterTestCenterListAdapter mAdapter;
     private MainHandler mMainHandler;
+    private SocketClient mClient;
     private MSocketServer myService;  //我们自己的service
     private ClientManager mClientManager;
     private TerProtocolCreater cmdCreater;
@@ -64,7 +71,6 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     private void initData() {
         main_status_info.setText("has conn the ser : ip-192.168,134,77 :  port-8001");
         main_sort_log.setText("show the sort log");
-        main_whole_log.setText("show long test\nshow long test\nshow long test\nshow long test\nshow long test\n");
     }
 
     @Override
@@ -97,7 +103,13 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
 //        mReadAddressView.setOnClickListener(this);
 //        mSelectAddressView.setOnClickListener(this);
 //        main_layout_conn.addView(inflate);
-        setDrawerDisable();
+//        setDrawerDisable();
+        View inflate = getLayoutInflater().inflate(R.layout.whmconnlist, null);
+        conn = (Button) inflate.findViewById(R.id.conn);
+        whm_ip = (EditText) inflate.findViewById(R.id.whm_ip);
+        whm_port = (EditText) inflate.findViewById(R.id.whm_port);
+        conn.setOnClickListener(this);
+        main_layout_conn.addView(inflate);
     }
 
     @Override
@@ -117,7 +129,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.text1://显示日志
-                if (main_whole_log.getVisibility() == View.VISIBLE) {
+                if (wholeIsShow()) {
                     showWholeLog(false);
                     text1.setText("隐藏日志");
                 } else {
@@ -160,6 +172,9 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
             case R.id.select_meter:
                 mClientManager.createClient(null, -100);
                 break;
+            case R.id.conn:
+                mClient = mClientManager.createClient(whm_ip.getText().toString(),Integer.valueOf(whm_port.getText().toString()));
+                break;
         }
         super.onClick(v);
     }
@@ -167,16 +182,21 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
 
     @Override
     public void pullShortLog(String info) {
-
+        main_sort_log.append(info);
+        showShortLog(true);
     }
 
     @Override
     public void pullWholeLog(String info) {
         SpannableString ss = new SpannableString(main_whole_log.getText().toString() + "\n " +
                 getResources().getString(R.string.server) + info);
-//            ss.setSpan(new ForegroundColorSpan(SocketDemo.this.getResources().getColor(R.color.download_text_color)), 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         main_whole_log.setText(ss);
         main_whole_log.setSelection(main_whole_log.getText().length() - 1);
+    }
+
+    @Override
+    public void pullWholeLog(SpannableString info) {
+        main_whole_log.append(info);
     }
 
     @Override
@@ -241,12 +261,12 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         if (TextUtils.isEmpty(mapText)) {
             return null;
         }
-        Log.e("ssg","mapText = " + mapText);
-        Log.e("ssg","mapText.length() = " + mapText.length());
+        Log.e("ssg", "mapText = " + mapText);
+        Log.e("ssg", "mapText.length() = " + mapText.length());
 //        if (mapText.contains(", ")) {
         mapText = mapText.substring(mapText.indexOf("[") + 1, mapText.indexOf("]"));
 //        }
-        Log.e("ssg","mapText = " + mapText);
+        Log.e("ssg", "mapText = " + mapText);
         if (TextUtils.isEmpty(mapText)) {
             return null;
         }
