@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by sunshaogang on 1/7/16.
@@ -35,5 +36,22 @@ public class ModuleUtilites {
             e.printStackTrace();
         }
         return a;
+    }
+
+    public static HashMap<Integer, String> jsonToMapForMeterTest(String json, String[] allItems) {
+        if (TextUtils.isEmpty(json)) {
+            return new HashMap<Integer, String>();
+        }
+        HashMap<Integer, String> map = new HashMap<Integer, String>();
+        try {
+            JSONArray array = new JSONArray(json);
+            for (int i = 0; i < array.length(); i++) {
+                int index = Integer.valueOf(array.get(i).toString());
+                map.put(index, allItems[index]);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return map;
     }
 }

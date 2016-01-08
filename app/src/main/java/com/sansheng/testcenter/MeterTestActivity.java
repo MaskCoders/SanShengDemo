@@ -19,6 +19,7 @@ import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.controller.ConnectionService;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.module.Meter;
+import com.sansheng.testcenter.module.ModuleUtilites;
 import com.sansheng.testcenter.provider.EquipmentPreference;
 import com.sansheng.testcenter.server.ClientManager;
 import com.sansheng.testcenter.server.MSocketServer;
@@ -119,7 +120,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         mAdapter = new MeterTestCenterListAdapter(this);
         String result = EquipmentPreference.getPreferences(this).getSelectedMeterTest();
         if (!TextUtils.isEmpty(result)) {
-            mAdapter.setSelectedItemts(stringToMap(result));
+            mAdapter.setSelectedItemts(ModuleUtilites.jsonToMapForMeterTest(result, getResources().getStringArray(R.array.meter_test_items)));
         }
         mListView.setAdapter(mAdapter);
         main_info.addView(inflate);
@@ -238,12 +239,12 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
             Log.e("ssg", "选择测试项目的数量 ＝ " + itemMap.size());
             mAdapter.setSelectedItemts(itemMap);
             mAdapter.notifyDataSetChanged();
-            ArrayList<Integer> list = new ArrayList<Integer>();
+            ArrayList<String> list = new ArrayList<String>();
             for (int index : itemMap.keySet()) {
-                list.add(index);
+                list.add(String.valueOf(index));
             }
-            EquipmentPreference.getPreferences(this).setSelectedMeterTest(list.toString());
-            Log.e("ssg", "" + list.toString());
+            EquipmentPreference.getPreferences(this).setSelectedMeterTest(ModuleUtilites.listToJson(list));
+            Log.e("ssg", "onMeterItemPositiveClick json = " + ModuleUtilites.listToJson(list));
         }
     }
 
@@ -255,27 +256,6 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     @Override
     public void onItemClick(int position) {
         Log.e("ssg", "选择的通讯类型 ＝ " + getResources().getStringArray(R.array.select_connect_type)[position]);
-    }
-
-    public HashMap<Integer, String> stringToMap(String mapText) {
-        if (TextUtils.isEmpty(mapText)) {
-            return null;
-        }
-        Log.e("ssg", "mapText = " + mapText);
-        Log.e("ssg", "mapText.length() = " + mapText.length());
-//        if (mapText.contains(", ")) {
-        mapText = mapText.substring(mapText.indexOf("[") + 1, mapText.indexOf("]"));
-//        }
-        Log.e("ssg", "mapText = " + mapText);
-        if (TextUtils.isEmpty(mapText)) {
-            return null;
-        }
-        HashMap<Integer, String> map = new HashMap<Integer, String>();
-        String[] text = mapText.split(", "); // 转换为数组
-        for (String str : text) {
-            map.put(Integer.valueOf(str), mAdapter.getAllItems()[Integer.valueOf(str)]);
-        }
-        return map;
     }
 
 }
