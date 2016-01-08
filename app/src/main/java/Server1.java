@@ -148,6 +148,7 @@ public class Server1{
                             hexStringToBytes("68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5B 16".replace(" ","")));
                                             //68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5c 33 33 99 3a 33 33 48 39 33 33 b3 37 33 33 a4 43 33 33 5b 16
                     sendmsg(ProtocolUtils.hexStringToBytes(bean.toString()));
+
 //                    if ((msg = serin.readLine()) != null) {
 ////                        System.out.println(" by hua client info is "+msg);
 //                        byte[] b11 = ProtocolUtils.hexStringToBytes("68 02 00 00 00 10 20 68 11 04 33 32 34 33 e1 16".replace(" ",""));

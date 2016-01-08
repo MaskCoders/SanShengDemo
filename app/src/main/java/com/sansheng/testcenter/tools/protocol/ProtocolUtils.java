@@ -22,6 +22,13 @@ public class ProtocolUtils {
     public static int byte2dec( byte b) {
      return b&0xff;
     }
+    public static String bytes2hex(byte[] bytes){
+        StringBuffer sb = new StringBuffer();
+        for(byte b:bytes){
+            sb.append(byte2hex(b));
+        }
+        return sb.toString();
+    }
     public static final String dec2hex(int dec){
         String hex = Integer.toHexString(dec);
         if(hex.length()==1){
@@ -33,6 +40,7 @@ public class ProtocolUtils {
         return Integer.parseInt(hex,16);
 
     }
+
     public static final void main(String[] args){
 
         System.out.println(bcd2dec4hex("fe"));
@@ -76,6 +84,46 @@ public class ProtocolUtils {
         for (int i = 0; i < length; i++) {
             int pos = i * 2;
             d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
+        }
+        return d;
+    }
+    /**
+     * 16 to bytes 并且加密
+     * @param hexString
+     * @return
+     */
+    public static byte[] hexStringToBytesEncode(String hexString) {
+        if (hexString == null || hexString.equals("")) {
+            return null;
+        }
+        hexString = hexString.toUpperCase();
+        int length = hexString.length() / 2;
+        char[] hexChars = hexString.toCharArray();
+        byte[] d = new byte[length];
+        for (int i = 0; i < length; i++) {
+            int pos = i * 2;
+            byte b = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
+            d[i] = (byte) (0x33 + b & 0xff);
+        }
+        return d;
+    }
+    /**
+     * 16 to bytes 并且解密
+     * @param hexString
+     * @return
+     */
+    public static byte[] hexStringToBytesDecode(String hexString) {
+        if (hexString == null || hexString.equals("")) {
+            return null;
+        }
+        hexString = hexString.toUpperCase();
+        int length = hexString.length() / 2;
+        char[] hexChars = hexString.toCharArray();
+        byte[] d = new byte[length];
+        for (int i = 0; i < length; i++) {
+            int pos = i * 2;
+            byte b = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
+            d[i] = (byte) (byte2dec(b)-0x33);
         }
         return d;
     }
