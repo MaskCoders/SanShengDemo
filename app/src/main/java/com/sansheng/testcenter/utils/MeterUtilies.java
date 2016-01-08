@@ -13,8 +13,10 @@ import java.text.SimpleDateFormat;
  */
 public class MeterUtilies {
     public static final int NAME_MAX_BYTE_LENGTH = 30;
-
+    public static final String PAMAR_METER_TYPE = "meter_type";
     public static final String PARAM_METER = "meter";
+    public static final int METER_TEST_TYPE_SINGLE = 0;
+    public static final int METER_TEST_TYPE_TRIPLE = 1;
     public static String getDateShort(Context context, long time) {
         FormattedDateBuilder dateBuilder = new FormattedDateBuilder(context);
         return dateBuilder.formatShortDate(time).toString();

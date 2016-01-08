@@ -25,6 +25,7 @@ import com.sansheng.testcenter.server.ClientManager;
 import com.sansheng.testcenter.server.MSocketServer;
 import com.sansheng.testcenter.server.SocketClient;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
+import com.sansheng.testcenter.utils.MeterUtilies;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,13 +59,15 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     private TerProtocolCreater cmdCreater;
     private Meter mMeter;
 
-    private static final int METER_TEST_MODE_SINGLE = 0;
-    private static final int METER_TEST_MODE_TRIPLE = 1;
-    private static int mMode = METER_TEST_MODE_SINGLE;
+
+    private static int mMeterType = MeterUtilies.METER_TEST_TYPE_SINGLE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            mMeterType = savedInstanceState.getInt(MeterUtilies.PAMAR_METER_TYPE);
+        }
         getActionBar().hide();
         mMainHandler = new MainHandler(this, this);
         mClientManager = ClientManager.getInstance(this, mMainHandler);
@@ -136,10 +139,10 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
             case R.id.text1://显示日志
                 if (wholeIsShow()) {
                     showWholeLog(false);
-                    text1.setText("隐藏日志");
+                    text1.setText("显示日志");
                 } else {
                     showWholeLog(true);
-                    text1.setText("显示日志");
+                    text1.setText("关闭日志");
                 }
                 break;
             case R.id.text2:

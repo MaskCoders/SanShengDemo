@@ -3,6 +3,7 @@ package com.sansheng.testcenter.launcher;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,15 +18,15 @@ import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.base.MeterSelectDialog;
 import com.sansheng.testcenter.base.view.ProgressDailog;
 import com.sansheng.testcenter.center.CenterActivity;
-import com.sansheng.testcenter.location.LocationInfoActivity;
 import com.sansheng.testcenter.demo.view.MeterDataListActivity;
+import com.sansheng.testcenter.location.LocationInfoActivity;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.module.MeterData;
 import com.sansheng.testcenter.settings.SettingsActivity;
+import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.utils.Utility;
 import com.sansheng.testcenter.view.TestBaseActivity;
-import com.sansheng.testcenter.view.WhmActivity;
 
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
@@ -85,12 +86,17 @@ public class LauncherAdapter extends BaseAdapter implements CollectSelectDialog.
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent();
+                    Bundle bundle = new Bundle();
                     switch (postion) {
                         case 0://单项表检测
-                            intent.setClass(mContext, WhmActivity.class);
+                            bundle.putInt(MeterUtilies.PAMAR_METER_TYPE, MeterUtilies.METER_TEST_TYPE_SINGLE);
+                            intent.putExtras(bundle);
+                            intent.setClass(mContext, MeterTestActivity.class);
                             mContext.startActivity(intent);
                             break;
                         case 1://三相表检测
+                            bundle.putInt(MeterUtilies.PAMAR_METER_TYPE, MeterUtilies.METER_TEST_TYPE_TRIPLE);
+                            intent.putExtras(bundle);
                             intent.setClass(mContext, MeterTestActivity.class);
                             mContext.startActivity(intent);
 //                            MeterSelectDialog meterDialog = new MeterSelectDialog(LaucherAdapter.this);
