@@ -18,6 +18,7 @@ import java.util.HashMap;
 public class MeterTestCenterListAdapter extends BaseAdapter {
     private HashMap<Integer, String> mSelectedItems = new HashMap<Integer, String>();
     private ArrayList<Integer> testItemList = new ArrayList<Integer>();
+    private double[] mValues;
     private String[] allItems;
     private Context mContext;
 
@@ -83,6 +84,11 @@ public class MeterTestCenterListAdapter extends BaseAdapter {
             return;
         }
         holder.describeView.setText(allItems[testItemList.get(position)]);
+        try{
+            holder.explainView.setText(String.valueOf(mValues[position]));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -100,7 +106,10 @@ public class MeterTestCenterListAdapter extends BaseAdapter {
             testItemList.add(index);
         }
     }
-
+    public void setmSelectedItemsValues(double[] values){
+        mValues = values;
+        notifyDataSetChanged();
+    }
     public class ViewHolder {
         public LinearLayout itemLayout;
         public TextView describeView;

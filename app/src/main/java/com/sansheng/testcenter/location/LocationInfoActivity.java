@@ -166,4 +166,8 @@ public class LocationInfoActivity extends BaseActivity implements LoaderManager.
     }
 
 
+    @Override
+    public void setValue(double[] values) {
+
+    }
 }

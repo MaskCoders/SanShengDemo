@@ -102,6 +102,11 @@ public class CenterActivity extends BaseActivity {
         super.onClick(v);
     }
 
+    @Override
+    public void setValue(double[] values) {
+
+    }
+
     private class ParseTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {

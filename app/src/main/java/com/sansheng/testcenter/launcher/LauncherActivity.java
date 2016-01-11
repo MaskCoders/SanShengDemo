@@ -56,4 +56,8 @@ public class LauncherActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void setValue(double[] values) {
+
+    }
 }

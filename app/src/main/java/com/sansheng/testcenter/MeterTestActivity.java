@@ -3,6 +3,7 @@ package com.sansheng.testcenter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,10 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import com.sansheng.testcenter.base.BaseActivity;
+import com.sansheng.testcenter.base.Const;
 import com.sansheng.testcenter.base.MeterTestItemsDialog;
 import com.sansheng.testcenter.base.view.ConnectTypeDialog;
 import com.sansheng.testcenter.base.view.UIRevisableView;
 import com.sansheng.testcenter.base.view.WaySelectMeterDialog;
+import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.controller.ConnectionService;
 import com.sansheng.testcenter.controller.MainHandler;
@@ -24,6 +27,7 @@ import com.sansheng.testcenter.provider.EquipmentPreference;
 import com.sansheng.testcenter.server.ClientManager;
 import com.sansheng.testcenter.server.MSocketServer;
 import com.sansheng.testcenter.server.SocketClient;
+import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
 import com.sansheng.testcenter.utils.MeterUtilies;
 
@@ -146,7 +150,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
                 }
                 break;
             case R.id.text2:
-                //选择电表,弹出对话框选择 1、输入地址 2、选择已有电表 3、读地址，从已连接的设备中获取电表地址
+                //选择电表,弹出对话框选择 1、输入地址 2、选择已有电表 3、读地址，从已连接的设备中获取电表地址init
                 showWaySelectMeterDialog();
                 break;
             case R.id.text3:
@@ -175,9 +179,11 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
                 bindService(intent, connSer, Context.BIND_AUTO_CREATE);
                 break;
             case R.id.read_address:
+//                mClientManager.clearClients();
                 mClientManager.createClient(null, -100);
                 break;
             case R.id.select_meter:
+//                mClientManager.clearClients();
                 mClientManager.createClient(null, -100);
                 break;
             case R.id.conn:
@@ -200,6 +206,11 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
                 getResources().getString(R.string.server) + info);
         main_whole_log.setText(ss);
         main_whole_log.setSelection(main_whole_log.getText().length() - 1);
+    }
+
+    @Override
+    public void setValue(double[] values) {
+        mAdapter.setmSelectedItemsValues(values);
     }
 
     @Override
@@ -229,6 +240,25 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
 
     private void startTest() {
         Log.e("ssg", "开始检测");
+        //                logBuffer.append("68 49 00 49 00 68 4A 10 12 64 00 02 0C F0 00 00 01 00 00 35 24 09 25 00 56 16".replace(" ",""));
+        String address = "02 00 00 00 10 20".replace(" ","");
+        Const.WhmConst.C type = Const.WhmConst.C.MAIN_REQUEST_READ_DATA;
+        String data = "33 32 34 33 ".replace(" ","");
+        WhmBean bean =  WhmBean.create(type,data,address);
+        //.append("\n");
+//                SpannableString span = new SpannableString(time+logBuffer.toString());
+//                span.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.contact_list_text_color_selected)),
+//                        0, time.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                main_whole_log.append(span);
+//                main_sort_log.setText(span);
+//                showShortLog(true);
+        ;
+        Message msg = new Message();
+        msg.obj = bean.toString();
+        msg.what = Const.SEND_MSG;
+        mMainHandler.sendMessage(msg);
+        System.out.println("by hua : "+bean.toString());
+        mClientManager.sendMessage(mClient, ProtocolUtils.hexStringToBytes(bean.toString()));
     }
 
     private void setMeterTime() {

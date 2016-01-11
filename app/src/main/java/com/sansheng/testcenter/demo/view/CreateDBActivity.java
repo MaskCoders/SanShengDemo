@@ -80,6 +80,11 @@ public class CreateDBActivity extends BaseActivity {
         super.onDestroy();
     }
 
+    @Override
+    public void setValue(double[] values) {
+
+    }
+
     private class InsertDataTask extends AsyncTask<Void, Void, Integer> {
         @Override
         protected Integer doInBackground(Void... params) {

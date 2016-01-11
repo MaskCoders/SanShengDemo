@@ -9,6 +9,7 @@ public interface IServiceHandlerCallback {
     void pullShortLog(String info);
     void pullShortLog(SpannableString info);
     void pullWholeLog(String info);
+    void setValue(double[] values);
     void pullWholeLog(SpannableString info);
     void pullStatus(String info);
 

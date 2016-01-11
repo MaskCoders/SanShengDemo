@@ -7,6 +7,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import com.sansheng.testcenter.R;
+import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 
@@ -60,6 +61,15 @@ public class MainHandler extends Handler {
                 0, time.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return span;
     }
+    public SpannableString getSendValueSS(String content) {
+        String time = ProtocolUtils.getTimeStamp() + "\t发送指令=>>";
+        StringBuffer logBuffer = new StringBuffer();
+        logBuffer.append(content).append("\n");
+        SpannableString span = new SpannableString(time + logBuffer.toString());
+        span.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.contact_list_text_color_selected)),
+                0, time.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return span;
+    }
     @Override
     public void handleMessage(Message msg) {
         super.handleMessage(msg);
@@ -75,6 +85,12 @@ public class MainHandler extends Handler {
                 SpannableString recvSS =new SpannableString(getRecvCmdSS(content.toString()));
                 mMainUI.pullShortLog(recvSS);
                 mMainUI.pullWholeLog(recvSS);
+
+                if(msg.obj instanceof WhmBean){
+                    WhmBean bean = (WhmBean) msg.obj;
+                    double arr[] = bean.getUserDataArr();
+                    mMainUI.setValue(arr);
+                }
                 return;
             case CONN_SER_CLS:
                 break;

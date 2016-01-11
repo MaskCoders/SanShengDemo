@@ -60,7 +60,7 @@ public class WhmBean {
     public static boolean sumOK(byte[] data,WhmBean cmd){
         int sum = 0;
         byte[] tmp = new byte[data.length-10];
-        for(int i=8 ;i < data.length-2 ;i++){
+        for(int i=0 ;i < data.length-2 ;i++){
             sum = sum+Integer.parseInt(Integer.toHexString(data[i] & 0xFF),16);
             if(i>11){
                 tmp[i-12] = data[i];

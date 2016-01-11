@@ -136,6 +136,11 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
         });
     }
 
+    @Override
+    public void setValue(double[] values) {
+
+    }
+
 //    private void initHeaderView(){
 //        TextView textView1 = (TextView) findViewById(R.id.header_id1);
 //        TextView textView2 = (TextView) findViewById(R.id.header_id2);

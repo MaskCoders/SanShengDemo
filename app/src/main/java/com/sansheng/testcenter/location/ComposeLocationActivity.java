@@ -365,6 +365,11 @@ public class ComposeLocationActivity extends BaseActivity implements PoiSelectDi
         mLocationClient.setLocOption(option);
     }
 
+    @Override
+    public void setValue(double[] values) {
+
+    }
+
     public class LocationListener implements BDLocationListener {
 
         @Override

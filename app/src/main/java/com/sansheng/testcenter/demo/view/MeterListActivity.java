@@ -142,6 +142,11 @@ public class MeterListActivity extends BaseActivity implements LoaderCallbacks<C
     }
 
     @Override
+    public void setValue(double[] values) {
+
+    }
+
+    @Override
     public void pullWholeLog(SpannableString info) {
 
     }

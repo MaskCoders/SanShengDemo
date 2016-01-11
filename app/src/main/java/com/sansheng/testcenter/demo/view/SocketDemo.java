@@ -282,4 +282,9 @@ public class SocketDemo extends BaseActivity implements View.OnClickListener {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void setValue(double[] values) {
+
+    }
 }

@@ -5,6 +5,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import com.sansheng.testcenter.bean.BaseCommandData;
+import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 import com.sansheng.testcenter.tools.protocol.TerProtocolParse;
@@ -76,13 +77,13 @@ public class SocketClient {
     }
 
 
-    private Message getMessage(String content, int type) {
+    private Message getMessageStr(String content, int type) {
         Message msg = new Message();
         msg.obj = content;
         msg.what = type;
         return msg;
     }
-    private Message getMessage(Object obj, int type) {
+    private Message getMessageObj(Object obj, int type) {
         Message msg = new Message();
         msg.obj = obj;
         msg.what = type;
@@ -146,7 +147,12 @@ public class SocketClient {
                                         ProtocolUtils.printByte(bs);
 //                                        TerProtocolParse parse = new TerProtocolParse();
 //                                        BaseCommandData cmd = parse.checkCommand(bs);
-                                        mMainHandler.sendMessage(getMessage(ProtocolUtils.printByte(bs),RECV_MSG));
+                                        WhmBean bean = WhmBean.parse(bs);
+                                        if(null == bean){
+                                            mMainHandler.sendMessage(getMessageObj(bs, RECV_MSG));
+                                        }else {
+                                            mMainHandler.sendMessage(getMessageObj(bean, RECV_MSG));
+                                        }
 //                                        in.close();//这里不能close，如果close，client将不能再处理service数据
                                     }
                                 }
@@ -157,7 +163,7 @@ public class SocketClient {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                     Log.d("", "login exception" + ex.getMessage());
-                    mMainHandler.sendMessage(getMessage("conn err", CONN_ERR));
+                    mMainHandler.sendMessage(getMessageStr("conn err", CONN_ERR));
                 }
             }
         });

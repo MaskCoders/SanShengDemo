@@ -158,6 +158,11 @@ public class WhmActivity extends BaseActivity  {
     }
 
     @Override
+    public void setValue(double[] values) {
+
+    }
+
+    @Override
     public void pullWholeLog(SpannableString info) {
         main_whole_log.append(info);
     }

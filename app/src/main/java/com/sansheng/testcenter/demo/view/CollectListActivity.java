@@ -130,4 +130,9 @@ public class CollectListActivity extends BaseActivity implements LoaderManager.L
             }
         });
     }
+
+    @Override
+    public void setValue(double[] values) {
+
+    }
 }

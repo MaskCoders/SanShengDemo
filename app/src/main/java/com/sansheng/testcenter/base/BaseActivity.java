@@ -41,6 +41,7 @@ public  abstract class BaseActivity extends Activity implements View.OnClickList
     protected TextView back_btn;
     protected LinearLayout main_button_list;
     protected LinearLayout main_layout_conn;
+    protected LinearLayout main_whole_log_ll;
 
     @Override
     public void pullShortLog(String info) {
@@ -73,7 +74,7 @@ public  abstract class BaseActivity extends Activity implements View.OnClickList
         void onCancleClick();
     }
     protected boolean wholeIsShow(){
-        return main_whole_log.getVisibility() == View.VISIBLE?true:false;
+        return main_whole_log_ll.getVisibility() == View.VISIBLE?true:false;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,7 @@ public  abstract class BaseActivity extends Activity implements View.OnClickList
         back_btn = (TextView) findViewById(R.id.back_btn);
         main_button_list = (LinearLayout) findViewById(R.id.main_button_list);
         main_layout_conn = (LinearLayout) findViewById(R.id.main_layout_conn);
+        main_whole_log_ll = (LinearLayout) findViewById(R.id.main_whole_log_ll);
         back_btn.setOnClickListener(this);
         initButtonList();
         initConnList();
@@ -130,7 +132,7 @@ public  abstract class BaseActivity extends Activity implements View.OnClickList
         base_title.setText(title);
     }
     protected void showWholeLog(boolean flag) {
-        main_whole_log.setVisibility(flag ? View.VISIBLE : View.GONE);
+        main_whole_log_ll.setVisibility(flag ? View.VISIBLE : View.GONE);
         if(flag){
             main_sort_log.setVisibility(View.GONE);
         }
