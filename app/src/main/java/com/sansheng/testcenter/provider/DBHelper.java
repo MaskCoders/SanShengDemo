@@ -36,7 +36,8 @@ public class DBHelper extends SQLiteOpenHelper {
             "  `"+ Content.MeterColumns.USER_NUM + "` text,\n" +
             "  `"+ Content.MeterColumns.USER_ADDRESS + "` text,\n" +
             "  `"+ Content.MeterColumns.GROUP_ID + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.NOTE + "` text\n" +
+            "  `"+ Content.MeterColumns.NOTE + "` text,\n" +
+            "  `"+ Content.MeterColumns.METER_TYPE + "` integer not null default 0\n" +
             ")";
 
     private String createMeterDataTable = "CREATE TABLE IF NOT EXISTS `" + MeterData.TABLE_NAME +"` (\n" +

@@ -13,9 +13,9 @@ import android.os.Parcelable;
 public class Meter extends Content implements Content.MeterColumns, Parcelable {
 
     public int mConcentratorId;
-    public int mDa;//作用未知
-    public String mMeterName;
-    public int mMeterNum;
+    public int mDa;//测量点
+    public String mMeterName;//户名
+    public int mMeterNum;//表号 资产号
     public String mMeterAddress;
     public int mCommPwd;
     public int mBaudRateId;
@@ -25,11 +25,12 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
     public String mGatherAddress;
     public int mWeiShuId;
     public int mUserSmallTypeId;
-    public int mUserTypeId;
-    public String mUserNum;
-    public String mUserAddress;
-    public int mGroupId;
+    public int mUserTypeId;//广东，湖北规约在用，其他用UserSmallTypeId
+    public String mUserNum;//户号
+    public String mUserAddress;//地址
+    public int mGroupId;//电表漏抄选择
     public String mNote;
+    public int mType;//0 = 单项表|| 1 = 三项表
 
     public static final int ID_INDEX = 0;
     public static final int COLLECT_ID_INDEX = ID_INDEX + 1;
@@ -50,18 +51,19 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
     public static final int USER_ADDRESS_INDEX = ID_INDEX + 16;
     public static final int GROUP_ID_INDEX = ID_INDEX + 17;
     public static final int NOTE_INDEX = ID_INDEX + 18;
+    public static final int METER_TYPE_INDEX = ID_INDEX + 19;
 
 
     public static final String[] CONTENT_PROJECTION = {
             ID, COLLECT_ID, DA, METER_NAME, METER_NUM, METER_ADDRESS,COMMON_PASSWORD, BAUDRATE_ID,COMMON_PORT_ID,
             PROTOCOL_ID, FEILV_ID, GATHER_ADDRESS, WEISHU_ID, USER_SMALL_TYPE_ID, USER_TYPE_ID, USER_NUM,
-            USER_ADDRESS, GROUP_ID, NOTE};
+            USER_ADDRESS, GROUP_ID, NOTE, METER_TYPE};
 
     public static final int[] ID_INDEX_PROJECTION = {
             ID_INDEX, COLLECT_ID_INDEX, DA_INDEX, METER_NUM_INDEX, METER_ADDRESS_INDEX, METER_NAME_INDEX,
             COMMON_PASSWORD_INDEX, BAUDRATE_ID_INDEX, COMMON_PORT_ID_INDEX, PROTOCOL_ID_INDEX, FEILV_ID_INDEX,
             GATHER_ADDRESS_INDEX, WEISHU_ID_INDEX, USER_SMALL_TYPE_ID_INDEX, USER_TYPE_ID_INDEX,
-            USER_NUM_INDEX, USER_ADDRESS_INDEX, GROUP_ID_INDEX, NOTE_INDEX};
+            USER_NUM_INDEX, USER_ADDRESS_INDEX, GROUP_ID_INDEX, NOTE_INDEX, METER_TYPE_INDEX};
 
 
     public static final String TABLE_NAME = "meter";
@@ -79,7 +81,8 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
             mMeterName = "电表名称" + id;
             mMeterAddress = "电表地址" + id;
             mMeterNum = id;
-            mDa = id % 2;
+            mDa = id;
+            mType = id % 2;
         }
     }
 
@@ -109,6 +112,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         values.put(USER_ADDRESS, mUserAddress);
         values.put(GROUP_ID, mGroupId);
         values.put(NOTE, mNote);
+        values.put(METER_TYPE, mType);
         return values;
     }
 
@@ -133,6 +137,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         mUserAddress = cursor.getString(USER_ADDRESS_INDEX);
         mGroupId = cursor.getInt(GROUP_ID_INDEX);
         mNote = cursor.getString(NOTE_INDEX);
+        mType = cursor.getInt(METER_TYPE_INDEX);
     }
 
     public void restoreWithMeterDataCursor(Cursor cursor){
@@ -155,6 +160,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         mUserAddress = cursor.getString(cursor.getColumnIndex(USER_ADDRESS));
         mGroupId = cursor.getInt(cursor.getColumnIndex(GROUP_ID));
         mNote = cursor.getString(cursor.getColumnIndex(NOTE));
+        mType = cursor.getInt(cursor.getColumnIndex(METER_TYPE));
     }
 
     @Override
@@ -193,6 +199,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         dest.writeString(mUserAddress);
         dest.writeInt(mGroupId);
         dest.writeString(mNote);
+        dest.writeInt(mType);
     }
 
     public static final Parcelable.Creator<Meter> CREATOR
@@ -228,6 +235,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         mUserAddress = in.readString();
         mGroupId = in.readInt();
         mNote = in.readString();
+        mType = in.readInt();
     }
 
     public Meter copy() {
@@ -251,6 +259,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         meter.mUserAddress = mUserAddress;
         meter.mGroupId = mGroupId;
         meter.mNote = mNote;
+        meter.mType = mType;
         return meter;
     }
     public String toString() {

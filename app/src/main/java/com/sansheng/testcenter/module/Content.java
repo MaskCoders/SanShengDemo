@@ -167,6 +167,7 @@ public abstract class Content {
         public static final String USER_ADDRESS = "userAddress";
         public static final String GROUP_ID = "groupId";
         public static final String NOTE = "note";
+        public static final String METER_TYPE = "type";
     }
 
     public static interface MeterDataColumns {
