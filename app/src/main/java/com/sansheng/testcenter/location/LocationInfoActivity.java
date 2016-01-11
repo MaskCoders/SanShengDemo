@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.ListView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
@@ -29,7 +29,7 @@ import com.sansheng.testcenter.utils.MeterUtilies;
 public class LocationInfoActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>, ListView.OnScrollListener, PullListView.OnLoadMoreListener{
     private PullListView mListView;
     private LocationInfoAdapter mAdapter;
-    private ImageView mComposeBtn;
+    private Button mComposeBtn;
     private int mLastVisibleItem;
     private static final int LOADER_ID_FILTER_DEFAULT = 0;
     private int mOriginLength = 10;//默认初始显示数量
@@ -136,7 +136,7 @@ public class LocationInfoActivity extends BaseActivity implements LoaderManager.
     private void initView() {
         mListView = (PullListView) findViewById(R.id.list_view);
         mListView.setOnScrollListener(this);
-        mComposeBtn = (ImageView) findViewById(R.id.compose_button);
+        mComposeBtn = (Button) findViewById(R.id.compose_button);
         mComposeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

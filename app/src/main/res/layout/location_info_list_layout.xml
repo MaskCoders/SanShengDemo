@@ -15,12 +15,15 @@
                 android:dividerHeight="5dp"
                 android:scrollbarStyle="insideOverlay"
                 android:clickable="false"/>
-    <ImageView
+    <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/compose_btn"
+            android:background="@drawable/circle_add_bg"
             android:layout_gravity="bottom|right"
             android:layout_margin="20dp"
+            android:textColor="@color/color_white"
+            android:textSize="30sp"
+            android:text="+"
             android:id="@+id/compose_button"/>
     <FrameLayout android:id="@+id/fragment_content"
                  android:layout_width="match_parent"

@@ -39,7 +39,7 @@ import java.util.concurrent.ThreadFactory;
  * Created by sunshaogang on 12/25/15.
  * collect scene information
  */
-public class ComposeLocationActivity extends BaseActivity implements PoiSelectDialog.PoiSelectCallback{
+public class ComposeLocationActivity extends BaseActivity implements PoiSelectDialog.PoiSelectCallback {
 
     public static String TAG = "ComposeLocationActivity";
     private Uri photoUri;
@@ -61,12 +61,12 @@ public class ComposeLocationActivity extends BaseActivity implements PoiSelectDi
     private static List<Poi> mPoiList = new ArrayList<Poi>();
     //location
     private RadioGroup mSelectMode;
-    private TextView ModeInfor;
-    private Button mLocationBtn;
-    private Button mPhotoBtn;
-    private Button mAddBtn;
+    //    private TextView ModeInfor;
+    private TextView mLocationBtn;
+    private ImageView mPhotoBtn;
+    private TextView mAddBtn;
     private LinearLayout mPicsLayout;
-    private TextView mUrisView;
+    //    private TextView mUrisView;
     private TextView mAddressView;
     private TextView mPoiView;
     private TextView mUpdateTimesView;
@@ -146,11 +146,12 @@ public class ComposeLocationActivity extends BaseActivity implements PoiSelectDi
 //            ContentValues values = new ContentValues();
 //            values.put(LocationInfo.URI_LIST, ModuleUtilites.listToJson(mLocationInfo.mUriList));
 //            mLocationInfo.saveOrUpdate(this, values);
-                mUrisView.setText(mLocationInfo.mUriList.toString());
+//                mUrisView.setText(mLocationInfo.mUriList.toString());
                 ImageView imageView = new ImageView(this);
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mThumbnailWidth, mThumbnailHeight);
-                params.setMargins(10,10,10,10);
+                int margin = getResources().getDimensionPixelSize(R.dimen.compose_thumbnail_margin);
+                params.setMargins(margin, margin, margin, margin);
                 imageView.setLayoutParams(params);
                 ThumbnailUtility.loadBitmap(sThreadPool, uri.toString(),
                         imageView, mThumbnailWidth, mThumbnailHeight, R.drawable.circle_message_photo_unload, this);
@@ -189,11 +190,11 @@ public class ComposeLocationActivity extends BaseActivity implements PoiSelectDi
     private void initVIew() {
         mPicsLayout = (LinearLayout) findViewById(R.id.compose_pics);
         mSelectMode = (RadioGroup) findViewById(R.id.selectMode);
-        ModeInfor = (TextView) findViewById(R.id.modeinfor);
-        mLocationBtn = (Button) findViewById(R.id.compose_location);
-        mPhotoBtn = (Button) findViewById(R.id.compose_take_photo);
-        mAddBtn = (Button) findViewById(R.id.compose_add_to_db);
-        mUrisView = (TextView) findViewById(R.id.compose_uris);
+//        ModeInfor = (TextView) findViewById(R.id.modeinfor);
+        mLocationBtn = (TextView) findViewById(R.id.compose_location);
+        mPhotoBtn = (ImageView) findViewById(R.id.compose_take_photo);
+        mAddBtn = (TextView) findViewById(R.id.compose_add_to_db);
+//        mUrisView = (TextView) findViewById(R.id.compose_uris);
         mAddressView = (TextView) findViewById(R.id.compose_address);
         mPoiView = (TextView) findViewById(R.id.compose_poi);
         mUpdateTimesView = (TextView) findViewById(R.id.compose_update_time);
@@ -258,7 +259,8 @@ public class ComposeLocationActivity extends BaseActivity implements PoiSelectDi
                     default:
                         break;
                 }
-                ModeInfor.setText(ModeInformation);
+                Utility.showToast(ComposeLocationActivity.this, ModeInformation);
+//                ModeInfor.setText(ModeInformation);
             }
         });
     }
@@ -429,7 +431,7 @@ public class ComposeLocationActivity extends BaseActivity implements PoiSelectDi
                 return;
             }
             mLocationInfo.restoreFromLocation(location);
-            if (location.getLocType() == BDLocation.TypeGpsLocation || location.getLocType() == BDLocation.TypeNetWorkLocation){
+            if (location.getLocType() == BDLocation.TypeGpsLocation || location.getLocType() == BDLocation.TypeNetWorkLocation) {
                 showPoiDialog(location.getPoiList());
             }
 

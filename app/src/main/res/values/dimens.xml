@@ -40,6 +40,7 @@
     <dimen name="thumbnail_width">90dip</dimen>
     <dimen name="thumbnail_height">60dip</dimen>
 
-    <dimen name="compose_thumbnail_width">128dip</dimen>
-    <dimen name="compose_thumbnail_height">128dip</dimen>
+    <dimen name="compose_thumbnail_width">96dp</dimen>
+    <dimen name="compose_thumbnail_height">96dp</dimen>
+    <dimen name="compose_thumbnail_margin">8dp</dimen>
 </resources>
