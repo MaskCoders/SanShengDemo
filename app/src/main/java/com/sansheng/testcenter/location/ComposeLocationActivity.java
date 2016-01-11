@@ -13,7 +13,10 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.*;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import com.baidu.location.*;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.TestCenterApplication;
@@ -61,12 +64,10 @@ public class ComposeLocationActivity extends BaseActivity implements PoiSelectDi
     private static List<Poi> mPoiList = new ArrayList<Poi>();
     //location
     private RadioGroup mSelectMode;
-    //    private TextView ModeInfor;
     private TextView mLocationBtn;
-    private ImageView mPhotoBtn;
+    private TextView mPhotoBtn;
     private TextView mAddBtn;
     private LinearLayout mPicsLayout;
-    //    private TextView mUrisView;
     private TextView mAddressView;
     private TextView mPoiView;
     private TextView mUpdateTimesView;
@@ -76,11 +77,13 @@ public class ComposeLocationActivity extends BaseActivity implements PoiSelectDi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.compose_location_layout);
+        setActionBar(LOCATION_INFO);
+        hideBottomLog();
+//        getActionBar().hide();
         mThumbnailWidth = getResources().getDimensionPixelSize(R.dimen.compose_thumbnail_width);
         mThumbnailHeight = getResources().getDimensionPixelSize(R.dimen.compose_thumbnail_height);
-        initVIew();
-        setActionBar(COMPOSE_LOCATION);
+        initData();
+        setTitle("现场采集");
         mLocationClient = new LocationClient(TestCenterApplication.getInstance().getApplicationContext());  //声明LocationClient类
         mLocationClient.registerLocationListener(mListener);  //注册监听函数
         mLocationInfo = new LocationInfo();
@@ -88,7 +91,73 @@ public class ComposeLocationActivity extends BaseActivity implements PoiSelectDi
 
     @Override
     protected void initButtonList() {
+        View inflate = getLayoutInflater().inflate(R.layout.compose_location_control_layout, null);
+        mSelectMode = (RadioGroup) inflate.findViewById(R.id.selectMode);
+        mLocationBtn = (TextView) inflate.findViewById(R.id.compose_location);
+        mPhotoBtn = (TextView) inflate.findViewById(R.id.compose_take_photo);
+        mAddBtn = (TextView) inflate.findViewById(R.id.compose_add_to_db);
+        mPhotoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectPicture();
+            }
+        });
+        mLocationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initLocation();
+                if (mLocationBtn.getText().equals(getString(R.string.start_location))) {
+                    mLocationClient.start();//定位SDK start之后会默认发起一次定位请求，开发者无须判断isstart并主动调用request
+                    mLocationBtn.setText(getString(R.string.stop_location));
+                } else {
+                    mLocationClient.stop();
+                    mLocationBtn.setText(getString(R.string.start_location));
+                }
+            }
+        });
+        mAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mLocationInfo.mUriList.size() == 0 || TextUtils.isEmpty(mLocationInfo.mAddress)) {
+                    Utility.showToast(ComposeLocationActivity.this, "信息不完整，无法添加");
+                    return;
+                }
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(LocationUtilies.COMPOSE_LOCATION_LOCATIONINFO, mLocationInfo);
+                intent.putExtras(bundle);
+                setResult(Activity.RESULT_OK, intent);
+                ComposeLocationActivity.this.finish();
+            }
+        });
 
+        mSelectMode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // TODO Auto-generated method stub
+                String ModeInformation = null;
+                switch (checkedId) {
+                    case R.id.radio_hight:
+                        tempMode = LocationClientOption.LocationMode.Hight_Accuracy;
+                        ModeInformation = getString(R.string.hight_accuracy_desc);
+                        break;
+                    case R.id.radio_low:
+                        tempMode = LocationClientOption.LocationMode.Battery_Saving;
+                        ModeInformation = getString(R.string.saving_battery_desc);
+                        break;
+                    case R.id.radio_device:
+                        tempMode = LocationClientOption.LocationMode.Device_Sensors;
+                        ModeInformation = getString(R.string.device_sensor_desc);
+                        break;
+                    default:
+                        break;
+                }
+                Utility.showToast(ComposeLocationActivity.this, ModeInformation);
+//                ModeInfor.setText(ModeInformation);
+            }
+        });
+        main_button_list.addView(inflate);
     }
 
     @Override
@@ -98,7 +167,17 @@ public class ComposeLocationActivity extends BaseActivity implements PoiSelectDi
 
     @Override
     protected void initCenter() {
+        View inflate = getLayoutInflater().inflate(R.layout.compose_location_center_layout, null);
+        mPicsLayout = (LinearLayout) inflate.findViewById(R.id.compose_pics);
+        mAddressView = (TextView) inflate.findViewById(R.id.compose_address);
+        mPoiView = (TextView) inflate.findViewById(R.id.compose_poi);
+        mUpdateTimesView = (TextView) inflate.findViewById(R.id.compose_update_time);
+        main_info.addView(inflate);
+    }
 
+    private void initData() {
+//        main_status_info.setText("has conn the ser : ip-192.168,134,77 :  port-8001");
+//        main_sort_log.setText("show the sort log");
     }
 
     @Override
@@ -185,84 +264,6 @@ public class ComposeLocationActivity extends BaseActivity implements PoiSelectDi
             mPoiView.setText(mLocationInfo.mPoi);
             mUpdateTimesView.setText(mLocationInfo.mUpdateTime);
         }
-    }
-
-    private void initVIew() {
-        mPicsLayout = (LinearLayout) findViewById(R.id.compose_pics);
-        mSelectMode = (RadioGroup) findViewById(R.id.selectMode);
-//        ModeInfor = (TextView) findViewById(R.id.modeinfor);
-        mLocationBtn = (TextView) findViewById(R.id.compose_location);
-        mPhotoBtn = (ImageView) findViewById(R.id.compose_take_photo);
-        mAddBtn = (TextView) findViewById(R.id.compose_add_to_db);
-//        mUrisView = (TextView) findViewById(R.id.compose_uris);
-        mAddressView = (TextView) findViewById(R.id.compose_address);
-        mPoiView = (TextView) findViewById(R.id.compose_poi);
-        mUpdateTimesView = (TextView) findViewById(R.id.compose_update_time);
-        mLocationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initLocation();
-                if (mLocationBtn.getText().equals(getString(R.string.start_location))) {
-                    mLocationClient.start();//定位SDK start之后会默认发起一次定位请求，开发者无须判断isstart并主动调用request
-                    mLocationBtn.setText(getString(R.string.stop_location));
-                } else {
-                    mLocationClient.stop();
-                    mLocationBtn.setText(getString(R.string.start_location));
-                }
-            }
-        });
-        mPhotoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectPicture();
-//                Intent intent = new Intent(Intent.ACTION_VIEW);
-//                intent.setClass(CollectionActivity.this, TakePhotoActivity.class);
-//                startActivity(intent);
-            }
-        });
-        mAddBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mLocationInfo.mUriList.size() == 0 || TextUtils.isEmpty(mLocationInfo.mAddress)) {
-                    Utility.showToast(ComposeLocationActivity.this, "信息不完整，无法添加");
-                    return;
-                }
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(LocationUtilies.COMPOSE_LOCATION_LOCATIONINFO, mLocationInfo);
-                intent.putExtras(bundle);
-                setResult(Activity.RESULT_OK, intent);
-                ComposeLocationActivity.this.finish();
-            }
-        });
-
-
-        mSelectMode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // TODO Auto-generated method stub
-                String ModeInformation = null;
-                switch (checkedId) {
-                    case R.id.radio_hight:
-                        tempMode = LocationClientOption.LocationMode.Hight_Accuracy;
-                        ModeInformation = getString(R.string.hight_accuracy_desc);
-                        break;
-                    case R.id.radio_low:
-                        tempMode = LocationClientOption.LocationMode.Battery_Saving;
-                        ModeInformation = getString(R.string.saving_battery_desc);
-                        break;
-                    case R.id.radio_device:
-                        tempMode = LocationClientOption.LocationMode.Device_Sensors;
-                        ModeInformation = getString(R.string.device_sensor_desc);
-                        break;
-                    default:
-                        break;
-                }
-                Utility.showToast(ComposeLocationActivity.this, ModeInformation);
-//                ModeInfor.setText(ModeInformation);
-            }
-        });
     }
 
     /**

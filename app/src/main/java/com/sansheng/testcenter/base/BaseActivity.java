@@ -109,6 +109,10 @@ public  abstract class BaseActivity extends Activity implements View.OnClickList
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
+    protected void hideBottomLog (){
+        main_status_info.setVisibility(View.GONE);
+    }
+
     protected void showShortLog(boolean flag) {
 //        if(main_whole_log.getVisibility() == View.VISIBLE){
 //            main_sort_log.setVisibility(View.GONE);
