@@ -1,9 +1,14 @@
 package com.sansheng.testcenter.settings;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.view.SettingsPreference;
 import com.sansheng.testcenter.upgrade.AppUpgrade;
@@ -14,6 +19,8 @@ import com.sansheng.testcenter.upgrade.AppUpgrade;
 public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceClickListener {
 
     private SettingsPreference mCheckUpgradePreference;
+    private ActionBar mActionBar;
+    private FrameLayout mActionBarView;
 //    android:key="default_protocol"
 //    SettingsPreference:s_title="修改默认规约"
 //    android:key="resend_frequency"
@@ -36,6 +43,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings_preferences);
+        customizeActionbar();
         mCheckUpgradePreference = (SettingsPreference) findPreference("check_upgrade");
         mCheckUpgradePreference.setOnPreferenceClickListener(this);
     }
@@ -52,6 +60,28 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
             return true;
         }
         return false;
+    }
+
+    private void customizeActionbar() {
+        mActionBar = getActionBar();
+        if (mActionBar != null) {
+            mActionBarView = (FrameLayout) getLayoutInflater().inflate(
+                    R.layout.base_actionbar_view, null);
+            mActionBarView.findViewById(R.id.ic_back).setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View arg0) {
+                            onBackPressed();
+                        }
+                    });
+            TextView title = (TextView) mActionBarView.findViewById(R.id.ab_title);
+            title.setText("基本设置");
+            mActionBar.setCustomView(mActionBarView, new ActionBar.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            mActionBar.setDisplayShowCustomEnabled(true);
+            mActionBar.setDisplayShowHomeEnabled(false);
+            mActionBar.setDisplayShowTitleEnabled(false);
+        }
     }
 
 }
