@@ -1,7 +1,5 @@
-import com.sansheng.testcenter.bean.A;
-import com.sansheng.testcenter.bean.C;
-import com.sansheng.testcenter.bean.UserData;
-import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
+import com.sansheng.testcenter.bean.WhmBean;
+import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -12,7 +10,7 @@ import java.util.List;
 /**
  * Created by hua on 12/18/15.
  */
-public class Server {
+public class Server{
     private Socket socket = null;
     private BufferedReader in = null;
     private PrintWriter out = null;
@@ -34,6 +32,7 @@ public class Server {
         Server server = new Server();
         server.startServer();
     }
+
     public void startServer() {
         System.out.println(" by hua start server ... ");
 //        if(server != null && server.isBound() ){
@@ -51,7 +50,7 @@ public class Server {
                         clientList.add(client);
                         System.out.println(" by hua client conn ... ");
                         String msg = CONN_SUCCESS + socket.getInetAddress();
-                        sendmsg(socket.getInetAddress().toString(),msg,true);
+                        sendmsg(socket.getInetAddress().toString(),msg.getBytes(),true);
                         (new Thread(client)).start();
 
                     }
@@ -68,19 +67,20 @@ public class Server {
     public List<ConnClient> getClients(){
         return clientList;
     }
-    public void sendmsg(String ip,String msg,boolean all) {
+    public void sendmsg(String ip,byte[] data,boolean all) {
         for(ConnClient client : clientList){
             if(all || (client.connStatus && equals(client.clientIP))) {
-                client.sendmsg(msg);
+                client.sendmsg(data);
             }
         }
     }
-    public static class ConnClient implements Runnable{
+    private static class ConnClient implements Runnable{
         public String clientName;
         public String clientIP;
         public boolean connStatus = false;
         private Socket mSocket;
-        private BufferedReader serin = null;
+        private DataInputStream serin = null;
+        private  Thread watchDogThread;
         public Socket getSocket(){
             return mSocket;
         }
@@ -88,56 +88,40 @@ public class Server {
             mSocket = socket;
             connStatus = true;
             try {
-                serin = new BufferedReader(new InputStreamReader(mSocket.getInputStream()));
+                serin = new DataInputStream(mSocket.getInputStream());
             } catch (IOException e) {
                 e.printStackTrace();
                 connStatus = false;
             }
         }
-
-        public void sendmsg(String msg) {
+        private void watchDog(){
+            watchDogThread =new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(10000);
+                        sendmsg("watchDog".getBytes());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            watchDogThread.start();
+        }
+        public void sendmsg(byte[] data) {
             if(connStatus) {
-                BufferedOutputStream pout = null;
+                DataOutputStream pout = null;
                 try {
-
-                    pout = new BufferedOutputStream(getSocket().getOutputStream());
-                    TerProtocolCreater creater = new TerProtocolCreater();
-                    while(true) {
-                        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                        String str = br.readLine();
-                        System.out.println("you input cmd is "+str);
-                        if(!str.equalsIgnoreCase("end")) {
-                            TerProtocolCreater clazz = new TerProtocolCreater();
-                            //68 49 00 49 00 68
-                            // C: 4A
-                            // A : 10 12 64 00 02
-                            // AFN:0C
-                            // SEQ:F0
-                            // DA : 00 00
-                            // DT:01 00
-                            // suerdata:00 35 24 09 25 00
-                            // 56 16
-                            C c =new C(false,true,false,false,10);
-                            A a = new A(4114,25600,true,1);
-                            UserData u = new UserData();
-                            u.setAFN("0C");
-                            u.setSEQ("F0");
-                            u.setDataUnitTip_DA1("00");
-                            u.setDataUnitTip_DA2("00");
-                            u.setDataUnitTip_DT1("01");
-                            u.setDataUnitTip_DT2("00");
-                            u.setDataUnit("00 35 24 09 25 00".replace(" ",""));
-                            byte[] data = clazz.makeCommand(a,c ,u);
-                            pout.write(data);
-                            pout.flush();
-                        }else{
-                            System.out.println("we will quit ====> ...");
-                            System.exit(0);
-                        }
+                    pout = new DataOutputStream(getSocket().getOutputStream());
+                    try {
+                        pout.write(data);
+                        pout.write('\n');
+                        pout.flush();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                }finally {
                 }
             }
         }
@@ -145,17 +129,42 @@ public class Server {
         @Override
         public void run() {
             try {
+                if(watchDogThread != null && watchDogThread.isAlive()){
+                    watchDog();
+                }
                 while (true) {
                     String msg="";
-                    if ((msg = serin.readLine()) != null) {
-                        System.out.println(" by hua client info is "+msg);
-                        if (msg.equals("0x68 0x16")) {
-                            msg = "0x16 0x68";
-                        } else {
-                            msg = "ERRCODE";
+                    List<Byte> bytearr= new ArrayList<Byte>();
+                    int b = serin.read();
+                    while(true){
+                        if (b == '\n' || b == '\r' || b== -1){
+                            break;
+                        }else{
+                            System.out.println(b);
+                            bytearr.add((byte) b);
                         }
-                        sendmsg(msg);
+                        b = serin.read();
                     }
+                    byte[] orgb = new byte[bytearr.size()];
+                    for(int i=0;i<bytearr.size();i++ ){
+                        orgb[i]=bytearr.get(i);
+                    }
+                    String recvCmd = ProtocolUtils.printByte(orgb);
+                    String sendCmd = "";
+                    if(recvCmd.trim().equalsIgnoreCase("68 02 00 00 00 10 20 68 11 04 66 65 67 66 af 16".trim())) {
+                        sendCmd = "68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5D 16".replace(" ", "");
+                    }else if(recvCmd.trim().equalsIgnoreCase("watchdog")){
+
+                    }else{
+                       sendCmd =  ProtocolUtils.printByte("can not read cmd".getBytes());
+                    }
+                    //68 02 00 00 00 10 20 68 11 04 66 65 67 66 af 16
+                    WhmBean bean = WhmBean.parse(ProtocolUtils.
+                            hexStringToBytes(sendCmd));
+
+                    sendmsg(ProtocolUtils.hexStringToBytes(bean.toString()));
+
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
