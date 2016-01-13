@@ -3,6 +3,7 @@ package com.sansheng.testcenter.server;
 import android.content.Context;
 import com.sansheng.testcenter.controller.MainHandler;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +30,8 @@ public class ClientManager {
 
     public SocketClient createClient(String ip, int port) {
         SocketClient client = new SocketClient(context, mHandler, ip, port, this);
-        client.startClient();
-        clientList.add(client);
+            client.startClient();
+            clientList.add(client);
         return client;
     }
 

@@ -36,7 +36,9 @@ public class SocketClient {
     static final int CONN_OK = 0;
     static final int RECV_MSG = 1;
     static final int INPUT_ERR = -3;
+    private boolean running=false;
     private ClientManager manager;
+    private long lastSendTime;
     SocketClient(Context ctx , MainHandler handler,ClientManager cm){
         this(ctx,handler,null,-100,cm);
     }
@@ -51,16 +53,60 @@ public class SocketClient {
             PORT = port;
         }
     }
-//    void sendMessage(String msg){
-//        if (socket != null && socket.isConnected()) {
-//            if (!socket.isOutputShutdown()) {
-//                out.println(msg);
-////                out.write(msg.toCharArray());
-////                out.flush();
-//            }
-//        }
-//    }
-    void sendMessage(byte[] data){
+    void startClient() {
+        if(running)return;
+
+        lastSendTime=System.currentTimeMillis();
+        new Thread(new KeepAliveWatchDog()).start();
+
+    }
+    public void stop(){
+        System.out.println("--- by hua stop client");
+        if(running)running=false;
+    }
+    class KeepAliveWatchDog implements Runnable{
+        long checkDelay = 10;
+        long keepAliveDelay = 60000;
+        public void run() {
+            try {
+                if (socket == null || socket.isClosed()) {
+                    socket = new Socket(HOST, PORT);
+                    System.out.println("本地端口：" + socket.getLocalPort());
+                        in = new BufferedInputStream(socket.getInputStream());
+                        out = new DataOutputStream(
+                                socket.getOutputStream());
+                    running=true;
+                }
+                while(running){
+                    if(System.currentTimeMillis()-lastSendTime>keepAliveDelay){
+                        try {
+//                        sendMessage((new KeepAlive()).toString().getBytes());
+                            sendMessage("keepalive".getBytes());
+                            System.out.println("--- by hua --- KeepAliveWatchDog");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            stop();
+
+                        }
+                        lastSendTime = System.currentTimeMillis();
+                    }else{
+                        try {
+                            Thread.sleep(checkDelay);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                            stop();
+                        }
+                    }
+                }
+                new Thread(new ReceiveWatchDog()).start();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+
+        }
+    }
+    void sendMessage(byte[] data) {
         if (socket != null && socket.isConnected()) {
             if (!socket.isOutputShutdown()) {
                 try {
@@ -69,6 +115,7 @@ public class SocketClient {
                     out.flush();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    stop();
                 }
 //                out.write(msg.toCharArray());
 //                out.flush();
@@ -98,75 +145,74 @@ public class SocketClient {
             }
         }
     }
-    void startClient(){
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if (socket == null || socket.isClosed()) {
-                        socket = new Socket(HOST, PORT);
-                        in = new BufferedInputStream(socket.getInputStream());
-                        out = new DataOutputStream(
-                                socket.getOutputStream());
-                    }
-
-                    while (true) {
-                        if (!socket.isClosed()) {
-                            if (socket.isConnected()) {
-                                if (!socket.isInputShutdown()) {
-                                    if (in != null) {
+    class  ReceiveWatchDog implements Runnable{
+        @Override
+        public void run() {
+            try {
 
 
-                                        ArrayList<Byte> list = new ArrayList<Byte>();
-                                        int count = in.available();
-                                        int i = 0;
-                                        int ch = in.read();
-                                        if(ch == -1){
-                                            System.out.println("Service is outof connection !!");
-                                            break;
-                                        }//如果服务器直接发来-1,说明服务器已经断开
-                                        list.clear();
+                while (true) {
+                    if (!socket.isClosed()) {
+                        if (socket.isConnected()) {
+                            if (!socket.isInputShutdown()) {
+                                if (in != null) {
+
+
+                                    ArrayList<Byte> list = new ArrayList<Byte>();
+                                    int count = in.available();
+                                    int i = 0;
+                                    int ch = in.read();
+                                    if(ch == -1){
+                                        System.out.println("Service is outof connection !!");
+                                        break;
+                                    }//如果服务器直接发来-1,说明服务器已经断开
+                                    list.clear();
 //                                        while (ch != -1 && in.available() > 0) {
-                                        while (true) {
-                                            if (ch == '\n' || ch == '\r' ){
-                                                break;
-                                            }else{
-                                                //这里应该逐行解析,这里还需要考虑服务段了的情况
-                                                list.add((byte) ch);
-                                                System.out.println("by hua "+ch);
-                                            }
-                                            ch = in.read();
+                                    while (true) {
+                                        if (ch == '\n' || ch == '\r' ){
+                                            break;
+                                        }else{
+                                            //这里应该逐行解析,这里还需要考虑服务段了的情况
+                                            list.add((byte) ch);
+                                            System.out.println("by hua "+ch);
+                                        }
+                                        ch = in.read();
 
-                                        }
+                                    }
 //                                        list.add((byte) ch);
-                                        byte[] bs = new byte[list.size()];
-                                        for (int j = 0; j < list.size(); j++) {
-                                            bs[j] = list.get(j);
-                                        }
+                                    byte[] bs = new byte[list.size()];
+                                    for (int j = 0; j < list.size(); j++) {
+                                        bs[j] = list.get(j);
+                                    }
+                                    if(new String(bs).contains("keepalive")){
+                                        System.out.println("keepalive from server");
+                                        return;
+                                    }else if(new String(bs).contains("can not read cmd")){
+                                        System.out.println("can not read cmd");
+                                    }
 //                                        System.out.println("count is " + in.available());
-                                        ProtocolUtils.printByte(bs);
+                                    ProtocolUtils.printByte(bs);
 //                                        TerProtocolParse parse = new TerProtocolParse();
 //                                        BaseCommandData cmd = parse.checkCommand(bs);
-                                        WhmBean bean = WhmBean.parse(bs);
-                                        if(null == bean){
-                                            mMainHandler.sendMessage(getMessageObj(bs, RECV_MSG));
-                                        }else {
-                                            mMainHandler.sendMessage(getMessageObj(bean, RECV_MSG));
-                                        }
-//                                        in.close();//这里不能close，如果close，client将不能再处理service数据
+                                    WhmBean bean = WhmBean.parse(bs);
+                                    if(null == bean){
+                                        mMainHandler.sendMessage(getMessageObj(bs, RECV_MSG));
+                                    }else {
+                                        mMainHandler.sendMessage(getMessageObj(bean, RECV_MSG));
                                     }
+//                                        in.close();//这里不能close，如果close，client将不能再处理service数据
                                 }
                             }
                         }
                     }
-
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                    Log.d("", "login exception" + ex.getMessage());
-                    mMainHandler.sendMessage(getMessageStr("conn err", CONN_ERR));
                 }
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                Log.d("", "login exception" + ex.getMessage());
+                mMainHandler.sendMessage(getMessageStr("conn err", CONN_ERR));
             }
-        });
-        thread.start();
+        }
     }
+
 }
