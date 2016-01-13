@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.sansheng.testcenter.bean.WhmBean;
+import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +20,7 @@ import java.util.HashMap;
 public class MeterTestCenterListAdapter extends BaseAdapter {
     private HashMap<Integer, String> mSelectedItems = new HashMap<Integer, String>();
     private ArrayList<Integer> testItemList = new ArrayList<Integer>();
-    private double[] mValues;
+    private WhmBean bean;
     private String[] allItems;
     private Context mContext;
 
@@ -85,7 +87,35 @@ public class MeterTestCenterListAdapter extends BaseAdapter {
         }
         holder.describeView.setText(allItems[testItemList.get(position)]);
         try{
-            holder.explainView.setText(String.valueOf(mValues[position]));
+            String values = "";
+            switch (position){
+                case 0:
+                    byte[] decodeData = bean.getUserData();
+                    int len = (decodeData.length -bean.type.getLen())/4;
+                    if(len <=0) return ;
+                    int j = 0;
+                    for(int i=bean.type.getLen();i<decodeData.length;i=i+4){
+                        double x= ProtocolUtils.getbcdDec4bytes2(decodeData[i],decodeData[i+1]);
+                        if(values.length()>1)
+                            values = values+" ,"+x;
+                    }
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+            }
+            holder.explainView.setText(values);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -106,8 +136,8 @@ public class MeterTestCenterListAdapter extends BaseAdapter {
             testItemList.add(index);
         }
     }
-    public void setmSelectedItemsValues(double[] values){
-        mValues = values;
+    public void setmSelectedItemsValues(WhmBean bean){
+        this.bean = bean;
         notifyDataSetChanged();
     }
     public class ViewHolder {

@@ -157,8 +157,47 @@ public class Server{
                         String sendCmd = "";
                         if (recvCmd.trim().equalsIgnoreCase("68 02 00 00 00 10 20 68 11 04 66 65 67 66 af 16".trim())) {
                             sendCmd = "68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5D 16".replace(" ", "");
-                            String st = new String(orgb);
-                        }else if (new String(orgb).contains("keepalive")) {
+                        }
+                        else if (recvCmd.trim().equalsIgnoreCase("68 AA AA AA AA AA AA 68 13 00 DF 16".trim())) {
+                            sendCmd = "68 12 00 00 00 10 20 68 93 06 45 33 33 33 43 53 1F 16".replace(" ", "");
+                        }
+                        else if (recvCmd.trim().equalsIgnoreCase("68 12 00 00 00 10 20 68 11 04 33 32 34 33 F3 16".trim())) {
+                            //正向有功电能 1.29, 0.62, 0.6, 0.03, 0.02
+                            sendCmd = "68 12 00 00 00 10 20 68 91 18 33 32 34 33 5C 34 33 33 95 33 33 33 93 33 33 33 36 33 33 33 35 33 33 33 74 16".replace(" ", "");
+                        }
+                        else if (recvCmd.trim().equalsIgnoreCase("68 12 00 00 00 10 20 68 11 04 33 32 34 35 F5 16".trim())) {
+                            //三相电压: 225.6, -1, -1
+                            sendCmd = "68 12 00 00 00 10 20 68 91 0A 33 32 34 35 89 55 32 32 32 32 21 16".replace(" ", "");
+                        }
+                        else if (recvCmd.trim().equalsIgnoreCase("68 12 00 00 00 10 20 68 11 04 34 34 33 37 F9 16".trim())) {
+                            //日期: 2016-01-11 星期01
+                            sendCmd = "68 12 00 00 00 10 20 68 91 08 34 34 33 37 34 44 34 49 72 16".replace(" ", "");
+                        }
+                        else if (recvCmd.trim().equalsIgnoreCase("68 12 00 00 00 10 20 68 11 04 35 34 33 37 FA 16".trim())) {
+                            //时间: 21:53:55
+                            sendCmd = "68 12 00 00 00 10 20 68 91 07 35 34 33 37 88 86 54 DF 16".replace(" ", "");
+                        }
+                        else if (recvCmd.trim().equalsIgnoreCase("68 12 00 00 00 10 20 68 11 04 34 33 39 38 FF 16".trim())) {
+                            //上2次日冻结时间: 2015-10-9 0:00:00
+                            sendCmd = "68 12 00 00 00 10 20 68 91 09 34 33 39 38 33 33 3C 43 48 B1 16".replace(" ", "");
+                        }
+                        else if (recvCmd.trim().equalsIgnoreCase("68 12 00 00 00 10 20 68 11 04 33 35 C3 33 85 16".trim())) {
+                            //剩余金额: 198.56
+                            sendCmd = "68 12 00 00 00 10 20 68 91 08 33 35 C3 33 89 CB 34 33 C4 16".replace(" ", "");
+                        }
+                        else if (recvCmd.trim().equalsIgnoreCase("68 12 00 00 00 10 20 68 11 04 33 33 34 36 F7 16".trim())) {
+                            //ERR2 无请求数据
+                            sendCmd = "68 12 00 00 00 10 20 68 D1 01 35 19 16".replace(" ", "");
+                        }
+                        else if (recvCmd.trim().equalsIgnoreCase("68 12 00 00 00 10 20 68 11 04 33 40 63 36 33 16".trim())) {
+                            //开盖次数: 27
+                            sendCmd = "68 12 00 00 00 10 20 68 91 07 33 40 63 36 5A 33 33 76 16".replace(" ", "");
+                        }
+                        else if (recvCmd.trim().equalsIgnoreCase("68 12 00 00 00 10 20 68 11 04 34 33 33 50 11 16".trim())) {
+                            //跳闸次数: 0
+                            sendCmd = "68 12 00 00 00 10 20 68 91 07 34 33 33 50 33 33 33 2D 16".replace(" ", "");
+                        }
+                        else if (new String(orgb).contains("keepalive")) {
                             System.out.println("keepalive");
                             sendmsg("keepalive".getBytes());
                             continue;

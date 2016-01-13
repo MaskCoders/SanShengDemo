@@ -14,9 +14,10 @@ import android.widget.ListView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.view.PullListView;
-import com.sansheng.testcenter.utils.MeterUtilies;
+import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.module.MeterData;
+import com.sansheng.testcenter.utils.MeterUtilies;
 
 /**
  * Created by sunshaogang on 12/9/15.
@@ -137,7 +138,7 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
     }
 
     @Override
-    public void setValue(double[] values) {
+    public void setValue(WhmBean bean) {
 
     }
 

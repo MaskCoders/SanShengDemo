@@ -89,7 +89,7 @@ public class MainHandler extends Handler {
                 if(msg.obj instanceof WhmBean){
                     WhmBean bean = (WhmBean) msg.obj;
                     double arr[] = bean.getUserDataArr();
-                    mMainUI.setValue(arr);
+                    mMainUI.setValue(bean);
                 }
                 return;
             case CONN_SER_CLS:

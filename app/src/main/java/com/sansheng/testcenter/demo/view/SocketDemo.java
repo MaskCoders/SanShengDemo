@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
+import com.sansheng.testcenter.bean.WhmBean;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -284,7 +285,7 @@ public class SocketDemo extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
-    public void setValue(double[] values) {
+    public void setValue(WhmBean bean) {
 
     }
 }

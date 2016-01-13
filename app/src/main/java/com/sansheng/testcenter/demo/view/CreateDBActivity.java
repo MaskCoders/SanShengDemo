@@ -4,10 +4,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
+import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.module.MeterData;
-import com.sansheng.testcenter.R;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -81,7 +82,7 @@ public class CreateDBActivity extends BaseActivity {
     }
 
     @Override
-    public void setValue(double[] values) {
+    public void setValue(WhmBean bean) {
 
     }
 

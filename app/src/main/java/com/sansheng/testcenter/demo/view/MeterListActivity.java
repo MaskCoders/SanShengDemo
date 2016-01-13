@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.view.PullListView;
+import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.module.Meter;
 
@@ -142,7 +143,7 @@ public class MeterListActivity extends BaseActivity implements LoaderCallbacks<C
     }
 
     @Override
-    public void setValue(double[] values) {
+    public void setValue(WhmBean bean) {
 
     }
 

@@ -158,7 +158,7 @@ public class WhmActivity extends BaseActivity  {
     }
 
     @Override
-    public void setValue(double[] values) {
+    public void setValue(WhmBean bean) {
 
     }
 

@@ -82,7 +82,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
 
     private void initData() {
         main_status_info.setText("has conn the ser : ip-192.168,134,77 :  port-8001");
-        main_sort_log.setText("show the sort log");
+//        main_sort_log.setText("show the sort log");
     }
 
     @Override
@@ -209,8 +209,8 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     }
 
     @Override
-    public void setValue(double[] values) {
-        mAdapter.setmSelectedItemsValues(values);
+    public void setValue(WhmBean bean) {
+        mAdapter.setmSelectedItemsValues(bean);
     }
 
     @Override
