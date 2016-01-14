@@ -2,6 +2,7 @@ package com.sansheng.testcenter.bean;
 
 import com.sansheng.testcenter.base.*;
 import com.sansheng.testcenter.base.Const;
+import com.sansheng.testcenter.center.Protocol;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 
 import static com.sansheng.testcenter.base.Const.WhmConst.C.*;
@@ -13,7 +14,7 @@ public class WhmBean {
 
     public Const.WhmConst.C type;
     public String address;
-    private String userData;
+    public String userData;
     public static final byte HEAD_B = 104;//68
     public static final byte END_B  = 22;//16
     public int len = 1;
@@ -24,13 +25,13 @@ public class WhmBean {
     public byte[] getUserData(){
         return ProtocolUtils.hexStringToBytesDecode(userData);
     }
-    public double[] getUserDataArr(){
+    public double[] getUserDataArr(int key_len/*key_len是几个字符表示一个字*/){
         byte[] decodeData = getUserData();
-        int len = (decodeData.length -type.getLen())/4;
+        int len = (decodeData.length -type.getLen())/key_len;
         if(len <=0) return null;
         double[] data = new double[len];
         int j = 0;
-        for(int i=type.getLen();i<decodeData.length;i=i+4){
+        for(int i=type.getLen();i<decodeData.length-1;i=i+key_len){
             double x= ProtocolUtils.getbcdDec4bytes2(decodeData[i],decodeData[i+1]);
             data[j++] = x;
         }
@@ -143,24 +144,17 @@ public class WhmBean {
         String data = "00 FF 01 00".replace(" ","");
         WhmBean bean =  WhmBean.create(type,data,address);
 //        WhmBean bean2 = WhmBean.parse(ProtocolUtils.hexStringToBytes(bean.toString()));
-        WhmBean bean3 = WhmBean.parse(ProtocolUtils.hexStringToBytes("68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5B 16".replace(" ","")));
+        WhmBean bean3 = WhmBean.parse(ProtocolUtils.
+                hexStringToBytes("68 12 00 00 00 10 20 68 91 07 34 33 33 50 33 33 33 2D 16".replace(" ","")));
 
-        byte[] decodeData =  ProtocolUtils.hexStringToBytesDecode("33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33".replace(" ",""));
-        System.out.println(ProtocolUtils.bytes2hex(decodeData));
-//        for(int i=type.getLen();i<decodeData.length;i=i+4){
-//           double x= ProtocolUtils.getbcdDec4bytes2(decodeData[i],decodeData[i+1]);
-//            System.out.println(x);
-////            data[i-type.getLen()] =
-//        }
-//        System.out.println(bean.toString());
-//        System.out.println(ProtocolUtils.getbcdDec4bytes((byte)33,(byte)32));
-//        System.out.println(bean2.toString());
-        System.out.println(bean3.toString());
-        for(int i = 0;i < bean3.getUserDataArr().length;i++){
-
-            System.out.println(bean3.getUserDataArr()[i]);
+        System.out.println(ProtocolUtils.bytes2hex(bean3.getUserData()));
+        byte[] bdata =  bean3.getUserData();
+        String value = "";
+        for(int i = bdata.length-1;i >=bean3.type.getLen();i--){
+            //// 2015-10-9 0:00:00
+            value = value +ProtocolUtils.byte2hex(bdata[i]);
+            System.out.println(ProtocolUtils.byte2hex(bdata[i]));
         }
-//        System.out.println("68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5B 16".replace(" ",""));
-//        System.out.println(bean3.toString().equalsIgnoreCase("68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5B 16".replace(" ","")));
+        System.out.println(Double.valueOf(value));
     }
 }

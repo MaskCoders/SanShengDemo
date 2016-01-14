@@ -88,7 +88,7 @@ public class MainHandler extends Handler {
 
                 if(msg.obj instanceof WhmBean){
                     WhmBean bean = (WhmBean) msg.obj;
-                    double arr[] = bean.getUserDataArr();
+                    double arr[] = bean.getUserDataArr(4);
                     mMainUI.setValue(bean);
                 }
                 return;

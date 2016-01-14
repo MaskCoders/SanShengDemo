@@ -87,9 +87,19 @@ public class MeterTestCenterListAdapter extends BaseAdapter {
         }
         holder.describeView.setText(allItems[testItemList.get(position)]);
         try{
+            /**
+             <item>"当前表码"</item>
+             <item>"三相电压"</item>
+             <item>"电表时间"</item>
+             <item>"冻结时间"</item>
+             <item>"剩余金额"</item>
+             <item>"失压情况"</item>
+             <item>"开盖次数"</item>
+             <item>"跳闸次数"</item>
+             */
             String values = "";
             switch (position){
-                case 0:
+                case 0://当前表码
                     byte[] decodeData = bean.getUserData();
                     int len = (decodeData.length -bean.type.getLen())/4;
                     if(len <=0) return ;
@@ -100,19 +110,64 @@ public class MeterTestCenterListAdapter extends BaseAdapter {
                             values = values+" ,"+x;
                     }
                     break;
-                case 1:
+                case 1://三相电压
+                    decodeData = bean.getUserData();
+                    len = (decodeData.length -bean.type.getLen())/2;
+                    if(len <=0) return ;
+                    j = 0;
+                    for(int i=bean.type.getLen();i<decodeData.length;i=i+2){
+                        double x= ProtocolUtils.getbcdDec4bytes2(decodeData[i],decodeData[i+1]);
+                        if(values.length()>1)
+                            values = values+" ,"+x;
+                    }
                     break;
-                case 2:
+                case 2://电表时间
+                    decodeData = bean.getUserData();
+                    for(int i = decodeData.length-1;i >bean.type.getLen();i--){
+                        System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
+                        if(values.length()>1)
+                            values = values+" -- "+ProtocolUtils.byte2hex(decodeData[i]);
+                    }
                     break;
-                case 3:
+                case 3://冻结时间
+                    decodeData = bean.getUserData();
+                    for(int i = decodeData.length-1;i >=bean.type.getLen();i--){
+                        System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
+                        if(values.length()>1)
+                            values = values+":"+ProtocolUtils.byte2hex(decodeData[i]);
+                    }
+                    /* 时间需要2贞才可以，需要区别userdata前的数据
+                    decodeData = bean.getUserData();
+                    for(int i = decodeData.length-1;i >=bean.type.getLen();i--){
+                        System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
+                        if(values.length()>1)
+                            values = values+":"+ProtocolUtils.byte2hex(decodeData[i]);
+                    }
+                    */
                     break;
-                case 4:
+                case 4://剩余金额
+                    decodeData =  bean.getUserData();
+                    for(int i = decodeData.length-1;i >=bean.type.getLen();i--){
+                        //// 2015-10-9 0:00:00
+                        values = values +ProtocolUtils.byte2hex(decodeData[i]);
+                        System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
+                    }
+                    values = String.valueOf(Double.valueOf(values)/100);
+                    System.out.println(values);
                     break;
-                case 5:
+                case 5://失压情况
                     break;
-                case 6:
-                    break;
-                case 7:
+                case 6://开盖次数
+                    decodeData =  bean.getUserData();
+                    for(int i = decodeData.length-1;i >=bean.type.getLen();i--){
+                        //// 2015-10-9 0:00:00
+                        values = values +ProtocolUtils.byte2hex(decodeData[i]);
+                        System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
+                    }
+                    values = String.valueOf(Double.valueOf(values));
+                    System.out.println(values);
+                    //break;  开盖和跳闸逻辑相同
+                case 7://跳闸次数
                     break;
             }
             holder.explainView.setText(values);

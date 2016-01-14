@@ -39,7 +39,12 @@ public class ProtocolUtils {
      * @return
      */
     public static double getbcdDec4bytes2(byte a ,byte b){
-       return  Integer.valueOf(byte2hex(b))+Double.valueOf(byte2hex(a))/100;
+        try{
+
+            return  Integer.valueOf(byte2hex(b))+Double.valueOf(byte2hex(a))/100;
+        }catch (Exception e){
+            return -1;
+        }
     }
     public static String bytes2hex(byte[] bytes){
         StringBuffer sb = new StringBuffer();
