@@ -29,6 +29,7 @@ public  abstract class BaseActivity extends Activity implements View.OnClickList
     public final static int SETTINGS_VIEW = 7;//修改详情
     public final static int LOCATION_INFO = 8;//定位
     public final static int COMPOSE_LOCATION = 9;//新增现场信息
+    public final static int METER_TEST = 10;//电表检测
     private ActionBarCallback mActionBarCallback;
     protected StringBuffer logBuffer = new StringBuffer();
     protected DrawerLayout mDrawerLayout;
@@ -213,13 +214,16 @@ public  abstract class BaseActivity extends Activity implements View.OnClickList
                         mActionBarView.findViewById(R.id.ab_view).setVisibility(View.GONE);
                         break;
                     case SETTINGS_VIEW:
-                        ((TextView) mActionBarView.findViewById(R.id.ab_modify_title)).setText(getResources().getText(R.string.function_settings));
+                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_settings));
                         break;
                     case LOCATION_INFO:
-                        ((TextView) mActionBarView.findViewById(R.id.ab_modify_title)).setText(getResources().getText(R.string.function_gps));
+                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_gps));
                         break;
                     case COMPOSE_LOCATION:
-                        ((TextView) mActionBarView.findViewById(R.id.ab_modify_title)).setText(getResources().getText(R.string.function_compose_location));
+                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_compose_location));
+                        break;
+                    case METER_TEST:
+                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_socket));
                         break;
                     default:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(R.string.company_name);

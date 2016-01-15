@@ -137,6 +137,12 @@ public class MeterTestItemsDialog extends DialogFragment {
                 @Override
                 public void onClick(View v) {
                     holder.mCheckBox.setChecked(!holder.mCheckBox.isChecked());
+                    Log.e("ssg", "onClick position = " + position);
+                    if (!mSelectedItems.containsKey(position)) {
+                        mSelectedItems.put(position, testItems[position]);
+                    } else {
+                        mSelectedItems.remove(position);
+                    }
                 }
             });
             holder.mCheckBox.setChecked(mSelectedItems.containsKey(position));

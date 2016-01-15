@@ -133,15 +133,16 @@ public class WaySelectMeterDialog extends DialogFragment implements MeterSelectD
                 @Override
                 public void onClick(View v) {
                     switch (position) {
-                        case 0://手动输入
-                            composeMeterAddress();
-                            break;
-                        case 1://选择已有电表
+
+                        case 0://选择已有电表
                             MeterSelectDialog meterDialog = new MeterSelectDialog(WaySelectMeterDialog.this);
                             meterDialog.show(getActivity().getFragmentManager(), "select_meter");
                             break;
-                        case 2://读地址
+                        case 1://读地址
                             readMeterAddress();
+                            break;
+                        case 2://扫描一维码
+//                            composeMeterAddress();
                             break;
                         default:
                             break;

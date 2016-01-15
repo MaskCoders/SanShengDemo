@@ -126,4 +126,15 @@
         <item name="android:background">@color/transparent_color</item>
         <item name="android:textSize">@dimen/list_body_text_size_big</item>
     </style>
+    <style name="NomalTextStyle">
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <!--<item name="android:layout_height">@dimen/normal_text_view_height</item>-->
+        <!--<item name="android:background">@color/transparent_color</item>-->
+        <item name="android:textSize">@dimen/list_body_text_size_big</item>
+    </style>
 </resources>

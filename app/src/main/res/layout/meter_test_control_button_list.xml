@@ -6,7 +6,9 @@
 
     <!--<Button android:id="@+id/text1" style="@style/BtnStyle1"-->
             <!--android:text="读地址"/>-->
-    <Button android:id="@+id/text2" style="@style/BtnStyle1"
+    <com.sansheng.testcenter.base.view.DrawableCenterTextView
+            android:id="@+id/text2" style="@style/BtnStyle1"
+            android:drawableLeft="@drawable/left_icon_test"
             android:text="选择电表"/>
     <Button android:id="@+id/text5" style="@style/BtnStyle1"
             android:text="选择项目"/>

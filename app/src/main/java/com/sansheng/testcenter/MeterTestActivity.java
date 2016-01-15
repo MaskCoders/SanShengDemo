@@ -8,13 +8,12 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.*;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.Const;
 import com.sansheng.testcenter.base.MeterTestItemsDialog;
 import com.sansheng.testcenter.base.view.ConnectTypeDialog;
+import com.sansheng.testcenter.base.view.DrawableCenterTextView;
 import com.sansheng.testcenter.base.view.UIRevisableView;
 import com.sansheng.testcenter.base.view.WaySelectMeterDialog;
 import com.sansheng.testcenter.bean.WhmBean;
@@ -40,7 +39,7 @@ import java.util.HashMap;
 public class MeterTestActivity extends BaseActivity implements IServiceHandlerCallback,
         MeterTestItemsDialog.MeterTestCallback, WaySelectMeterDialog.WaySelectMeterCallback, ConnectTypeDialog.ConnectTypeCallback {
     Button text1;
-    Button text2;
+    DrawableCenterTextView text2;
     Button text3;
     Button text4;
     Button text5;
@@ -53,6 +52,13 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     Button conn;
     EditText whm_ip;
     EditText whm_port;
+
+    private EditText mEditMeterAddressView;
+    private LinearLayout mSelectChanel;
+    private TextView mChanelValue;
+    private LinearLayout mSelectItem;
+    private TextView mSelectItemValue;
+    private ImageView mSelectMeter;
 
     private ListView mListView;
     private MeterTestCenterListAdapter mAdapter;
@@ -78,6 +84,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         cmdCreater = new TerProtocolCreater();
 //        initData();
         hideBottomLog();
+        setActionBar(METER_TEST);
     }
 
     private void initData() {
@@ -89,7 +96,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     protected void initButtonList() {
         View inflate = getLayoutInflater().inflate(R.layout.meter_test_control_button_list, null);
         text1 = (Button) inflate.findViewById(R.id.text1);
-        text2 = (Button) inflate.findViewById(R.id.text2);
+        text2 = (DrawableCenterTextView) inflate.findViewById(R.id.text2);
         text3 = (Button) inflate.findViewById(R.id.text3);
         text4 = (Button) inflate.findViewById(R.id.text4);
         text5 = (Button) inflate.findViewById(R.id.text5);
@@ -127,12 +134,25 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     @Override
     protected void initCenter() {
         View inflate = getLayoutInflater().inflate(R.layout.meter_test_center_layout, null);
+        mEditMeterAddressView = (EditText) inflate.findViewById(R.id.meter_test_edit_text);
+        mSelectChanel = (LinearLayout) inflate.findViewById(R.id.meter_test_select_channel);
+        mChanelValue = (TextView) inflate.findViewById(R.id.meter_test_channel);
+        mSelectItem = (LinearLayout) inflate.findViewById(R.id.meter_test_select_test_item);
+        mSelectItemValue = (TextView) inflate.findViewById(R.id.meter_test_item);
+        mSelectMeter = (ImageView) inflate.findViewById(R.id.meter_test_other_input);
+
+        mSelectChanel.setOnClickListener(this);
+        mSelectItem.setOnClickListener(this);
+        mSelectMeter.setOnClickListener(this);
+
         mListView = (ListView) inflate.findViewById(R.id.list_view);
         mAdapter = new MeterTestCenterListAdapter(this);
         String result = EquipmentPreference.getPreferences(this).getSelectedMeterTest();
+        Log.e("ssg", "result = "  + result);
         if (!TextUtils.isEmpty(result)) {
-            mAdapter.setSelectedItemts(ModuleUtilites.jsonToMapForMeterTest(result, getResources().getStringArray(R.array.meter_test_items)));
+            result = "[\"0\",\"1\",\"2\"][\"0\",\"1\",\"2\"]";
         }
+        mAdapter.setSelectedItemts(ModuleUtilites.jsonToMapForMeterTest(result, getResources().getStringArray(R.array.meter_test_items)));
         mListView.setAdapter(mAdapter);
         main_info.addView(inflate);
     }
@@ -140,6 +160,15 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.meter_test_select_channel:
+                showConnectTypeDialog();
+                break;
+            case R.id.meter_test_other_input:
+                showWaySelectMeterDialog();
+                break;
+            case R.id.meter_test_select_test_item:
+                showTestItemsDialog();
+                break;
             case R.id.text1://显示日志
                 if (wholeIsShow()) {
                     showWholeLog(false);
@@ -297,6 +326,8 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     @Override
     public void onItemClick(int position) {
         Log.e("ssg", "选择的通讯类型 ＝ " + getResources().getStringArray(R.array.select_connect_type)[position]);
+        Log.e("ssg", "选择的通讯类型 ＝ " + position);
+        mChanelValue.setText(getResources().getStringArray(R.array.select_connect_type)[position]);
     }
 
 //    @Override

@@ -28,9 +28,9 @@
     </string-array>
 
     <string-array name="way_select_meter">
-        <item>"手动输入"</item>
         <item>"选择已有电表"</item>
         <item>"读地址"</item>
+        <item>"扫描一维码"</item>
     </string-array>
 
     <string-array name="select_connect_type">

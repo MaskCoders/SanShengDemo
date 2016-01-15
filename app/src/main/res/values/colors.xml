@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="main_color">#00766e</color>
+    <color name="hint_color">@color/green_03</color>
+
+    <color name="collocation_color_1">#990033</color>
+    <color name="collocation_color_2">#cccc00</color>
+
+    <color name="green_00">#33CCCC</color>
+    <color name="green_01">#00CC99</color>
+    <color name="green_02">#99FF99</color>
+    <color name="green_03">#44009966</color>
+    <color name="green_04">#33FF33</color>
+    <color name="green_05">#33FF00</color>
+    <color name="green_06">#99CC33</color>
+    <color name="green_07">#CCC333</color>
+    <color name="green_08">#66FFFF</color>
+    <color name="green_09">#99FFFF</color>
+
+    <color name="green_10">#66CCCC</color>
+    <color name="green_11">#66FFCC</color>
+    <color name="green_12">#66FF66</color>
+    <color name="green_13">#009933</color>
+    <color name="green_14">#00CC33</color>
+    <color name="green_15">#66FF00</color>
+    <color name="green_16">#336600</color>
+    <color name="green_17">#333000</color>
+    <color name="green_18">#33FFFF</color>
+    <color name="green_19">#339999</color>
+
+    <color name="green_20">#99FFCC</color>
+    <color name="green_21">#339933</color>
+    <color name="green_22">#33FF66</color>
+    <color name="green_23">#33CC33</color>
+    <color name="green_24">#99FF00</color>
+    <color name="green_25">#669900</color>
+    <color name="green_26">#666600</color>
+    <color name="green_27">#00FFFF</color>
+    <color name="green_28">#336666</color>
+    <color name="green_29">#00FF99</color>
+
+    <color name="green_30">#00FF66</color>
+    <color name="green_31">#66FF33</color>
+    <color name="green_32">#66CC00</color>
+    <color name="green_33">#99CC00</color>
+    <color name="green_34">#999933</color>
+    <color name="green_35">#66FF99</color>
+    <color name="green_36">#00FF00</color>
+    <color name="green_37">#00CC00</color>
+    <color name="green_38">#CCFF66</color>
+    <color name="green_39">#CCCC66</color>
+
+    <color name="green_40">#006633</color>
+    <color name="green_41">#33FF99</color>
+    <color name="green_42">#CCFF99</color>
+    <color name="green_43">#66CC33</color>
+    <color name="green_44">#33CC00</color>
+    <color name="green_45">#CCFF33</color>
+    <color name="green_46">#339900</color>
+    <color name="green_47">#CCFF00</color>
+    <color name="green_48">#999900</color>
+    <color name="green_49">#CCCC00</color>
+
+    <color name="green_50">#33CC66</color>
+    <color name="green_51">#99FF66</color>
+    <color name="green_52">#006600</color>
+    <color name="green_53">#00CC66</color>
+    <color name="green_54">#99FF33</color>
+    <color name="green_55">#99CC66</color>
+    <color name="green_56">#99CC66</color>
+    <color name="green_57">#00FF33</color>
+    <color name="green_58">#669900</color>
+    <color name="green_59">#669933</color>
+
+    <color name="pale_turquoise">#AFEEEE</color>
+    <color name="aqua">#00FFFF</color>
+    <color name="dark_turquoise">#00CED1</color>
+    <color name="lime_reen">#32CD32</color>
+    <color name="forest_green">#228B22</color>
+    <color name="green">#008000</color>
+    <color name="dark_green">#006400</color>
+    <color name="chartreuse">#7FFF00</color>
+    <color name="lawn_green">#7CFC00</color>
+    <color name="green_yellow">#ADFF2F</color>
 
     <color name="main_green">@color/main_color</color>
     <color name="main_green2">#886abd78</color>
