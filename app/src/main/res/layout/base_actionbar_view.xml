@@ -25,6 +25,18 @@
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:text="@string/company_name"/>
+        <com.sansheng.testcenter.base.view.DigitalClock
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ab_time"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:textSize="@dimen/list_hint_text_size"
+                android:textColor="@color/color_white"
+                android:shadowRadius="2.0"
+                />
+
     </RelativeLayout>
     <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
