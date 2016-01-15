@@ -72,12 +72,12 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         if (savedInstanceState != null) {
             mMeterType = savedInstanceState.getInt(MeterUtilies.PAMAR_METER_TYPE);
         }
-        getActionBar().hide();
+//        getActionBar().hide();
         mMainHandler = new MainHandler(this, this);
         mClientManager = ClientManager.getInstance(this, mMainHandler);
         cmdCreater = new TerProtocolCreater();
-        initData();
-        setTitle("电表检测");
+//        initData();
+        hideBottomLog();
     }
 
     private void initData() {
