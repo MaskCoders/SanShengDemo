@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.demo.view;
+package com.sansheng.testcenter.datamanager;
 
 import android.app.Fragment;
 import android.content.DialogInterface;

@@ -4,7 +4,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:background="@drawable/btn_sel"
                 android:layout_marginTop="@dimen/change_view_margin"
                 android:layout_marginBottom="@dimen/change_view_margin">
     <TextView

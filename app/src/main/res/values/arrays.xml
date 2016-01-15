@@ -3,13 +3,13 @@
     <string-array name="launcher_icon_array">
         <item>@string/function_socket</item>
         <item>@string/function_meter_list</item>
-        <item>@string/function_meter_data_list</item>
+        <item>@string/function_collect</item>
         <item>@string/function_create_data</item>
         <item>@string/function_test</item>
         <item>@string/function_check_update</item>
         <item>@string/function_gps</item>
         <item>@string/function_home</item>
-        <item>@string/function_collect</item>
+        <item>@string/function_meter_data_list</item>
         <item>@string/function_data_upload</item>
         <item>@string/function_info_collection</item>
         <item>@string/function_protocol</item>

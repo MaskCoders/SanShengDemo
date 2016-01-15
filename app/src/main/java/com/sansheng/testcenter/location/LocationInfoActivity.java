@@ -17,7 +17,7 @@ import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.view.PullListView;
 import com.sansheng.testcenter.bean.WhmBean;
-import com.sansheng.testcenter.demo.view.MeterDataFragment;
+import com.sansheng.testcenter.datamanager.MeterDataFragment;
 import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.module.LocationInfo;
 import com.sansheng.testcenter.module.MeterData;

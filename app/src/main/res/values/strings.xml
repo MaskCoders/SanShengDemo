@@ -12,13 +12,13 @@
 
     <string name="function_socket">单项表检测</string>
     <string name="function_meter_list">三相表检测</string>
-    <string name="function_meter_data_list">集中器检测</string>
+    <string name="function_meter_data_list">档案管理</string>
     <string name="function_create_data">本地模块检测</string>
     <string name="function_test">远程模块检测</string>
     <string name="function_check_update">台区识别</string>
     <string name="function_gps">GPS定位</string>
     <string name="function_home">国网376.1主站</string>
-    <string name="function_collect">档案管理</string>
+    <string name="function_collect">集中器检测</string>
     <string name="function_data_upload">数据补抄</string>
     <string name="function_info_collection">组网拓扑</string>
     <string name="function_protocol">规约解析</string>
@@ -135,4 +135,11 @@
     <string name="meter_test_read_address">读地址</string>
     <string name="meter_test_select_meter">选择电表</string>
     <string name="edit_meter_adders">输入电表地址</string>
+
+    <string name="meter_data_filter_start_time">开始时间</string>
+    <string name="meter_data_filter_end_time">结束时间</string>
+    <string name="meter_data_filter_select_collect">集中器</string>
+    <string name="meter_data_filter_select_meter">电表</string>
+    <string name="meter_data_filter_data_type">数据类型</string>
+    <string name="meter_data_filter_data_content">数据项</string>
 </resources>

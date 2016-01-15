@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:ModifyView="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:layout_marginLeft="20dp"
+                  android:layout_marginRight="20dp">
+        <!--开始时间-->
+        <com.sansheng.testcenter.base.view.UIRevisableView
+                android:id="@+id/start_time"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                ModifyView:title="@string/meter_data_filter_start_time"
+                ModifyView:content="@string/meter_detail_default_content"
+                android:gravity="center_vertical|right"
+                android:layout_alignParentRight="true"
+                android:minWidth="180dp"
+                android:background="@color/transparent_color"
+                android:textColor="@color/conversation_list_item_subject"
+                android:textSize="@dimen/list_body_text_size_big"/>
+        <include android:id="@+id/account_sync_email_line"
+                 layout="@layout/meter_detail_divider"/>
+        <!--结束时间-->
+        <com.sansheng.testcenter.base.view.UIRevisableView
+                android:id="@+id/end_time"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                ModifyView:title="@string/meter_data_filter_end_time"
+                ModifyView:content="@string/meter_detail_default_content"
+                android:gravity="center_vertical|right"
+                android:layout_alignParentRight="true"
+                android:minWidth="180dp"
+                android:background="@color/transparent_color"
+                android:textColor="@color/conversation_list_item_subject"
+                android:textSize="@dimen/list_body_text_size_big"/>
+        <include android:id="@+id/account_sync_email_line"
+                 layout="@layout/meter_detail_divider"/>
+        <!--集中器-->
+        <com.sansheng.testcenter.base.view.UIRevisableView
+                android:id="@+id/select_collect"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                ModifyView:title="@string/meter_data_filter_select_collect"
+                ModifyView:content="@string/meter_detail_default_content"
+                android:gravity="center_vertical|right"
+                android:layout_alignParentRight="true"
+                android:minWidth="180dp"
+                android:background="@color/transparent_color"
+                android:textColor="@color/conversation_list_item_subject"
+                android:textSize="@dimen/list_body_text_size_big"/>
+        <include android:id="@+id/account_sync_email_line"
+                 layout="@layout/meter_detail_divider"/>
+        <!--电表-->
+        <com.sansheng.testcenter.base.view.UIRevisableView
+                android:id="@+id/select_meter"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                ModifyView:title="@string/meter_data_filter_select_meter"
+                ModifyView:content="@string/meter_detail_default_content"
+                android:gravity="center_vertical|right"
+                android:layout_alignParentRight="true"
+                android:minWidth="180dp"
+                android:background="@color/transparent_color"
+                android:textColor="@color/conversation_list_item_subject"
+                android:textSize="@dimen/list_body_text_size_big"/>
+        <include android:id="@+id/account_sync_email_line"
+                 layout="@layout/meter_detail_divider"/>
+        <!-- 数据类型-->
+        <com.sansheng.testcenter.base.view.UIRevisableView
+                android:id="@+id/data_type"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                ModifyView:title="@string/meter_data_filter_data_type"
+                ModifyView:content="@string/meter_detail_default_content"
+                android:gravity="center_vertical|right"
+                android:layout_alignParentRight="true"
+                android:minWidth="180dp"
+                android:background="@color/transparent_color"
+                android:textColor="@color/conversation_list_item_subject"
+                android:textSize="@dimen/list_body_text_size_big"/>
+        <include android:id="@+id/account_sync_email_line"
+                 layout="@layout/meter_detail_divider"/>
+        <!-- 数据项-->
+        <com.sansheng.testcenter.base.view.UIRevisableView
+                android:id="@+id/data_content"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                ModifyView:title="@string/meter_data_filter_data_content"
+                ModifyView:content="@string/meter_detail_default_content"
+                android:gravity="center_vertical|right"
+                android:layout_alignParentRight="true"
+                android:minWidth="180dp"
+                android:background="@color/transparent_color"
+                android:textColor="@color/conversation_list_item_subject"
+                android:textSize="@dimen/list_body_text_size_big"/>
+        <include android:id="@+id/account_sync_email_line"
+                 layout="@layout/meter_detail_divider"/>
+
+    </LinearLayout>
+</ScrollView>

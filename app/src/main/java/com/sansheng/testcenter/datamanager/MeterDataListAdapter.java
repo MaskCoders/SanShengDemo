@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.demo.view;
+package com.sansheng.testcenter.datamanager;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,8 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.module.MeterData;
+import com.sansheng.testcenter.utils.MeterUtilies;
 
 /**
  * Created by sunshaogang on 12/9/15.
@@ -83,6 +83,7 @@ public class MeterDataListAdapter extends SimpleCursorAdapter {
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mActivity.setViewMode(MeterDataListActivity.VIEW_MODE_DETIAL);
                 mActivity.showDetailFragment(meterData);
             }
         });

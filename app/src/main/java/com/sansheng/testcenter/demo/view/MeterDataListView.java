@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.view.PullListView;
+import com.sansheng.testcenter.datamanager.MeterDataFragment;
 import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.module.MeterData;
@@ -52,7 +53,7 @@ public class MeterDataListView extends LinearLayout implements LoaderManager.Loa
     }
 
     private void initView(){
-        mRootView = LayoutInflater.from(mContext).inflate(R.layout.meter_data_list_layout, this, true);
+        mRootView = LayoutInflater.from(mContext).inflate(R.layout.meter_data_center_list_layout, this, true);
         mListView = (PullListView) findViewById(R.id.listview);
         mListView.setOnScrollListener(this);
         mEmptyView = findViewById(R.id.empty_view_group);

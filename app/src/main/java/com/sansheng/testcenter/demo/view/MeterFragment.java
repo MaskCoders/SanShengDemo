@@ -12,6 +12,7 @@ import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.base.view.UIRevisableView;
 import com.sansheng.testcenter.base.view.UIUnrevisableView;
+import com.sansheng.testcenter.datamanager.MeterDataListActivity;
 import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.module.Meter;
 

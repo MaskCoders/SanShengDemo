@@ -18,7 +18,7 @@ import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.base.MeterSelectDialog;
 import com.sansheng.testcenter.base.view.ProgressDailog;
 import com.sansheng.testcenter.center.CenterActivity;
-import com.sansheng.testcenter.demo.view.MeterDataListActivity;
+import com.sansheng.testcenter.datamanager.MeterDataListActivity;
 import com.sansheng.testcenter.location.LocationInfoActivity;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Meter;
