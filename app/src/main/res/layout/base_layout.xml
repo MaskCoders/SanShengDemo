@@ -53,21 +53,21 @@ android:id="@+id/drawer">
         <RelativeLayout android:layout_width="0dp" android:layout_height="fill_parent"
                         android:layout_weight="3" android:orientation="vertical"
                         android:background="@drawable/chip_back_blue" >
-            <TextView android:id="@+id/base_title" android:layout_width="fill_parent"
-                      android:layout_height="40dp"
-                      android:text="TITLE" android:textStyle="bold" android:textSize="20sp"
-                      android:textColor="@color/color_white" android:background="@drawable/base_controll_top_back"
-                      android:layout_alignParentTop="true" android:gravity="center" android:layout_marginLeft="2dp"
-                      android:layout_marginRight="2dp" android:layout_marginTop="2dp"/>
+            <!--<TextView android:id="@+id/base_title" android:layout_width="fill_parent"-->
+                      <!--android:layout_height="40dp"-->
+                      <!--android:text="TITLE" android:textStyle="bold" android:textSize="20sp"-->
+                      <!--android:textColor="@color/color_white" android:background="@drawable/base_controll_top_back"-->
+                      <!--android:layout_alignParentTop="true" android:gravity="center" android:layout_marginLeft="2dp"-->
+                      <!--android:layout_marginRight="2dp" android:layout_marginTop="2dp"/>-->
             <LinearLayout android:id="@+id/main_button_list" android:layout_width="fill_parent"
                           android:layout_height="wrap_content" android:orientation="vertical"
-                          android:layout_below="@id/base_title" android:padding="5dp"></LinearLayout>
-            <TextView android:id="@+id/back_btn" android:layout_width="fill_parent"
-                      android:layout_height="40dp" android:gravity="center"
-                      android:text="@string/capital_off" android:textStyle="bold" android:textSize="20sp"
-                      android:textColor="@color/color_white" android:background="@drawable/base_controll_bottom_back"
-                      android:layout_alignParentBottom="true" android:layout_marginBottom="2dp"
-                      android:layout_marginLeft="2dp" android:layout_marginRight="2dp"/>
+                          android:padding="5dp"></LinearLayout>
+            <!--<TextView android:id="@+id/back_btn" android:layout_width="fill_parent"-->
+                      <!--android:layout_height="40dp" android:gravity="center"-->
+                      <!--android:text="@string/capital_off" android:textStyle="bold" android:textSize="20sp"-->
+                      <!--android:textColor="@color/color_white" android:background="@drawable/base_controll_bottom_back"-->
+                      <!--android:layout_alignParentBottom="true" android:layout_marginBottom="2dp"-->
+                      <!--android:layout_marginLeft="2dp" android:layout_marginRight="2dp"/>-->
         </RelativeLayout>
     </LinearLayout>
     <!-- 抽屉-->
