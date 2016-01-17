@@ -98,54 +98,61 @@ public class MeterTestCenterListAdapter extends BaseAdapter {
              <item>"跳闸次数"</item>
              */
             String values = "";
+            String secType = bean.getSecType();
+            System.out.println("secType is "+secType+"   by hua");
             switch (position){
                 case 0://当前表码
+                    if(!secType.trim().equalsIgnoreCase("0001ff00"))break;
                     byte[] decodeData = bean.getUserData();
                     int len = (decodeData.length -bean.type.getLen())/4;
                     if(len <=0) return ;
                     int j = 0;
                     for(int i=bean.type.getLen();i<decodeData.length;i=i+4){
                         double x= ProtocolUtils.getbcdDec4bytes2(decodeData[i],decodeData[i+1]);
-                        if(values.length()>1)
+//                        if(!values.equals(""))
                             values = values+" ,"+x;
                     }
                     break;
                 case 1://三相电压
+                    if(!secType.trim().equalsIgnoreCase("0201ff00"))break;
                     decodeData = bean.getUserData();
                     len = (decodeData.length -bean.type.getLen())/2;
                     if(len <=0) return ;
                     j = 0;
                     for(int i=bean.type.getLen();i<decodeData.length;i=i+2){
                         double x= ProtocolUtils.getbcdDec4bytes2(decodeData[i],decodeData[i+1]);
-                        if(values.length()>1)
+//                        if(values.length()>1)
                             values = values+" ,"+x;
                     }
                     break;
                 case 2://电表时间
+                    if(!secType.trim().equalsIgnoreCase("04000101"))break;
                     decodeData = bean.getUserData();
                     for(int i = decodeData.length-1;i >bean.type.getLen();i--){
                         System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
-                        if(values.length()>1)
-                            values = values+" -- "+ProtocolUtils.byte2hex(decodeData[i]);
+//                         if(!values.equals(""))
+                            values = values+"-"+ProtocolUtils.byte2hex(decodeData[i]);
                     }
                     break;
                 case 3://冻结时间
+                    if(!secType.trim().equalsIgnoreCase("05060001"))break;
                     decodeData = bean.getUserData();
                     for(int i = decodeData.length-1;i >=bean.type.getLen();i--){
                         System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
-                        if(values.length()>1)
+//                         if(!values.equals(""))
                             values = values+":"+ProtocolUtils.byte2hex(decodeData[i]);
                     }
                     /* 时间需要2贞才可以，需要区别userdata前的数据
                     decodeData = bean.getUserData();
                     for(int i = decodeData.length-1;i >=bean.type.getLen();i--){
                         System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
-                        if(values.length()>1)
+                         if(!values.equals(""))
                             values = values+":"+ProtocolUtils.byte2hex(decodeData[i]);
                     }
                     */
                     break;
                 case 4://剩余金额
+                    if(!secType.trim().equalsIgnoreCase("00900200"))break;
                     decodeData =  bean.getUserData();
                     for(int i = decodeData.length-1;i >=bean.type.getLen();i--){
                         //// 2015-10-9 0:00:00
@@ -156,8 +163,10 @@ public class MeterTestCenterListAdapter extends BaseAdapter {
                     System.out.println(values);
                     break;
                 case 5://失压情况
+                    if(!secType.trim().equalsIgnoreCase("0001ff00"))break;
                     break;
                 case 6://开盖次数
+                    if(!secType.trim().equalsIgnoreCase("03300d00"))break;
                     decodeData =  bean.getUserData();
                     for(int i = decodeData.length-1;i >=bean.type.getLen();i--){
                         //// 2015-10-9 0:00:00
@@ -168,9 +177,19 @@ public class MeterTestCenterListAdapter extends BaseAdapter {
                     System.out.println(values);
                     //break;  开盖和跳闸逻辑相同
                 case 7://跳闸次数
+                    if(!secType.trim().equalsIgnoreCase("1d000001"))break;
+                    decodeData =  bean.getUserData();
+                    for(int i = decodeData.length-1;i >=bean.type.getLen();i--){
+                        //// 2015-10-9 0:00:00
+                        values = values +ProtocolUtils.byte2hex(decodeData[i]);
+                        System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
+                    }
+                    values = String.valueOf(Double.valueOf(values));
+                    System.out.println(values);
                     break;
             }
-            holder.explainView.setText(values);
+            if(holder.explainView.getText().toString().trim().equals(""))
+                 holder.explainView.setText(values);
         }catch(Exception e){
             e.printStackTrace();
         }

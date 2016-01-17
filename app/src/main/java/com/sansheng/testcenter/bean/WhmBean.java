@@ -1,11 +1,7 @@
 package com.sansheng.testcenter.bean;
 
-import com.sansheng.testcenter.base.*;
 import com.sansheng.testcenter.base.Const;
-import com.sansheng.testcenter.center.Protocol;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
-
-import static com.sansheng.testcenter.base.Const.WhmConst.C.*;
 
 /**
  * Created by hua on data.length()/26-data.length()/2-3.
@@ -18,12 +14,19 @@ public class WhmBean {
     public static final byte HEAD_B = 104;//68
     public static final byte END_B  = 22;//16
     public int len = 1;
-
+    public byte[] originData;
     public WhmBean() {
 
     }
     public byte[] getUserData(){
         return ProtocolUtils.hexStringToBytesDecode(userData);
+    }
+    public String getSecType(){
+        if(len>0) {
+            return ProtocolUtils.bytes2hex(ProtocolUtils.bytearr2bcd(originData,true,9,9+type.getLen()));
+        }else{
+            return null;
+        }
     }
     public double[] getUserDataArr(int key_len/*key_len是几个字符表示一个字*/){
         byte[] decodeData = getUserData();
@@ -97,14 +100,21 @@ public class WhmBean {
         return hex ;
     }
     public static WhmBean parse(byte[] data) {
-        WhmBean bean = new WhmBean();
-        boolean hashead = hasHEAD(data,bean);
-        boolean sumOK = sumOK(data,bean);
-        if(hashead && sumOK){
-            return bean;
-        }else{
+        try{
+            WhmBean bean = new WhmBean();
+            boolean hashead = hasHEAD(data,bean);
+            boolean sumOK = sumOK(data,bean);
+            if(hashead && sumOK){
+                bean.originData = data;
+                return bean;
+            }else{
+                return null;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
             return null;
         }
+
     }
     public static WhmBean create(Const.WhmConst.C type, String data, String ads) {
         WhmBean bean = new WhmBean();

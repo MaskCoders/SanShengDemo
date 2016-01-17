@@ -64,10 +64,49 @@ public class ProtocolUtils {
         return Integer.parseInt(hex,16);
 
     }
+    public static final String hex2bcd(String hex){
+       try{
+           StringBuffer sb = new StringBuffer();
+            for(int i=hex.length()-1;i>0;i=i-2){
+                sb.append(hex.charAt(i-1)).append(hex.charAt(i));
+            }
+           return sb.toString();
+       }catch (Exception e){
+           e.printStackTrace();
+       }
+        return null;
 
+
+    }
+    public static final byte[] bytearr2bcd(byte[] bytes,boolean decode,int from ,int to){
+        if(from <0 || to<0){
+            from = 0;
+            to = bytes.length-1;
+        }
+        byte[] tmp = new byte[to-from];
+        int j=0;
+        for(int i = to;i>from;i--){
+            byte b = bytes[i];
+            if(decode){
+                b = (byte) (byte2dec(b) - 0x33);
+            }
+            System.out.println("from is "+from+",to is "+to+", i is "+i+",b is "+b);
+            tmp[j++]=b;
+        }
+        return tmp;
+    }
+    public static final String hex2bcd(String hex,boolean decode){
+        StringBuffer sb = new StringBuffer();
+        for(int i= hex.length()-1;i<=0;i=i-2){
+            sb.append(hex.charAt(i)).append(hex.charAt(i-1));
+        }
+        return sb.toString();
+    }
     public static final void main(String[] args){
 
-        System.out.println(bcd2dec4hex("fe"));
+
+        byte[] tmp = bytearr2bcd(hexStringToBytes("34 33 33 50".replace(" ","")),true,0,3);
+        System.out.println(bytes2hex(tmp));
     }
     public static int bcd2dec4byte(int b){
         int h = (((int)b)<<4)&0xff;

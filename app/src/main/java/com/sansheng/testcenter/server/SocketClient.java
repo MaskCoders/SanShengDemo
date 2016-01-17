@@ -4,16 +4,15 @@ import android.content.Context;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
-import com.sansheng.testcenter.bean.BaseCommandData;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
-import com.sansheng.testcenter.tools.protocol.TerProtocolParse;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.logging.Handler;
 
 /**
  * Created by hua on 12/18/15.
@@ -72,11 +71,12 @@ public class SocketClient {
                 if (socket == null || socket.isClosed()) {
                     socket = new Socket(HOST, PORT);
                     System.out.println("本地端口：" + socket.getLocalPort());
-                        in = new BufferedInputStream(socket.getInputStream());
-                        out = new DataOutputStream(
+                    in = new BufferedInputStream(socket.getInputStream());
+                    out = new DataOutputStream(
                                 socket.getOutputStream());
                     running=true;
                 }
+                new Thread(new ReceiveWatchDog()).start();
                 while(running){
                     if(System.currentTimeMillis()-lastSendTime>keepAliveDelay){
                         try {
@@ -98,7 +98,6 @@ public class SocketClient {
                         }
                     }
                 }
-                new Thread(new ReceiveWatchDog()).start();
             } catch (IOException e) {
                 e.printStackTrace();
                 return;
@@ -156,7 +155,7 @@ public class SocketClient {
                         if (socket.isConnected()) {
                             if (!socket.isInputShutdown()) {
                                 if (in != null) {
-
+                                    System.out.println("client start listern..");
 
                                     ArrayList<Byte> list = new ArrayList<Byte>();
                                     int count = in.available();
@@ -196,7 +195,7 @@ public class SocketClient {
 //                                        BaseCommandData cmd = parse.checkCommand(bs);
                                     WhmBean bean = WhmBean.parse(bs);
                                     if(null == bean){
-                                        mMainHandler.sendMessage(getMessageObj(bs, RECV_MSG));
+                                        mMainHandler.sendMessage(getMessageObj(new String(bs), RECV_MSG));
                                     }else {
                                         mMainHandler.sendMessage(getMessageObj(bean, RECV_MSG));
                                     }

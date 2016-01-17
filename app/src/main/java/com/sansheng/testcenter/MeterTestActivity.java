@@ -135,6 +135,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     protected void initCenter() {
         View inflate = getLayoutInflater().inflate(R.layout.meter_test_center_layout, null);
         mEditMeterAddressView = (EditText) inflate.findViewById(R.id.meter_test_edit_text);
+        mEditMeterAddressView.setText("201000000012");
         mSelectChanel = (LinearLayout) inflate.findViewById(R.id.meter_test_select_channel);
         mChanelValue = (TextView) inflate.findViewById(R.id.meter_test_channel);
         mSelectItem = (LinearLayout) inflate.findViewById(R.id.meter_test_select_test_item);
@@ -266,28 +267,58 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         ConnectTypeDialog connectTypeDialog = new ConnectTypeDialog(MeterTestActivity.this);
         connectTypeDialog.show(getFragmentManager(), "select_connect_type");
     }
-
     private void startTest() {
         Log.e("ssg", "开始检测");
-        //                logBuffer.append("68 49 00 49 00 68 4A 10 12 64 00 02 0C F0 00 00 01 00 00 35 24 09 25 00 56 16".replace(" ",""));
-        String address = "02 00 00 00 10 20".replace(" ","");
-        Const.WhmConst.C type = Const.WhmConst.C.MAIN_REQUEST_READ_DATA;
-        String data = "33 32 34 33 ".replace(" ","");
-        WhmBean bean =  WhmBean.create(type,data,address);
-        //.append("\n");
-//                SpannableString span = new SpannableString(time+logBuffer.toString());
-//                span.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.contact_list_text_color_selected)),
-//                        0, time.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                main_whole_log.append(span);
-//                main_sort_log.setText(span);
-//                showShortLog(true);
-        ;
-        Message msg = new Message();
-        msg.obj = bean.toString();
-        msg.what = Const.SEND_MSG;
-        mMainHandler.sendMessage(msg);
-        System.out.println("by hua : "+bean.toString());
-        mClientManager.sendMessage(mClient, ProtocolUtils.hexStringToBytes(bean.toString()));
+        final String address ;
+        try {
+            address = mEditMeterAddressView.getText().toString();
+            ProtocolUtils.hex2bcd(address);
+
+        }catch (Exception e){
+            Toast.makeText(this,"地址格式有误",1).show();
+            return;
+        }
+        Thread command = new Thread(new Runnable() {
+            private void sendCommand(String data) throws InterruptedException {
+                data = ProtocolUtils.bytes2hex(ProtocolUtils.hexStringToBytesDecode(data));
+                System.out.println("data: "+data);
+                Thread.sleep(1000);
+                String address = "12 00 00 00 10 20".replace(" ","");
+                Const.WhmConst.C type = Const.WhmConst.C.MAIN_REQUEST_READ_DATA;
+                WhmBean bean =  WhmBean.create(type,data,address);
+                Message msg = new Message();
+                msg.obj = bean.toString();
+                msg.what = Const.SEND_MSG;
+                mMainHandler.sendMessage(msg);
+                System.out.println("by hua : "+bean.toString());
+                mClientManager.sendMessage(mClient, ProtocolUtils.hexStringToBytes(bean.toString()));
+            }
+            @Override
+            public void run() {
+                try {
+                    String data = "33 32 34 33 ".replace(" ","");
+                    sendCommand(data);
+                    data = "33 32 34 35".replace(" ","");
+                    sendCommand(data);
+                    data = "34 34 33 37".replace(" ","");
+                    sendCommand(data);
+                    data = "35 34 33 37".replace(" ","");
+                    sendCommand(data);
+                    data = "34 33 39 38".replace(" ","");
+                    sendCommand(data);
+                    data = "33 35 C3 33".replace(" ","");
+                    sendCommand(data);
+                    data = "33 40 63 36".replace(" ","");
+                    sendCommand(data);
+                    data = "34 33 33 50".replace(" ","");
+                    sendCommand(data);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        command.start();
+
     }
 
     private void setMeterTime() {

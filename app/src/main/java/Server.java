@@ -108,9 +108,13 @@ public class Server{
                         pout.flush();
                     } catch (Exception e) {
                         e.printStackTrace();
+                        overThis();
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    overThis();
+
                 }
             }
         }
@@ -144,7 +148,6 @@ public class Server{
                             if (b == '\n' || b == '\r' || b == -1) {
                                 break;
                             } else {
-                                System.out.println(b);
                                 bytearr.add((byte) b);
                             }
                             b = serin.read();
@@ -155,8 +158,8 @@ public class Server{
                         }
                         String recvCmd = ProtocolUtils.printByte(orgb);
                         String sendCmd = "";
-                        if (recvCmd.trim().equalsIgnoreCase("68 02 00 00 00 10 20 68 11 04 66 65 67 66 af 16".trim())) {
-                            sendCmd = "68 02 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5D 16".replace(" ", "");
+                        if (recvCmd.trim().equalsIgnoreCase("68 12 00 00 00 10 20 68 11 04 66 65 67 66 bf 16".trim())) {
+                            sendCmd = "68 12 00 00 00 10 20 68 91 18 33 32 34 33 67 5C 33 33 99 3A 33 33 48 39 33 33 B3 37 33 33 A4 43 33 33 5D 16".replace(" ", "");
                         }
                         else if (recvCmd.trim().equalsIgnoreCase("68 AA AA AA AA AA AA 68 13 00 DF 16".trim())) {
                             sendCmd = "68 12 00 00 00 10 20 68 93 06 45 33 33 33 43 53 1F 16".replace(" ", "");
