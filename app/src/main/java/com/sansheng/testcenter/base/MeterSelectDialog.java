@@ -66,7 +66,7 @@ public class MeterSelectDialog extends DialogFragment implements LoaderManager.L
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    mAdapter.addAllMeters();
+                    mAdapter.sellectAll();
                 } else {
                     mAdapter.getSelectedMeters().clear();
                 }

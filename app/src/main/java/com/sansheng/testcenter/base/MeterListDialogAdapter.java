@@ -84,12 +84,18 @@ public class MeterListDialogAdapter extends SimpleCursorAdapter {
         holder.meterType.setImageResource(meter.mDa == 0 ? R.drawable.single_meter : R.drawable.three_meter);//单项 v 三项
         holder.meterId.setText(String.valueOf(meter.mMeterNum));
         holder.meterName.setText(String.valueOf(meter.mMeterName));
-//        holder.infoLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showDetailFragment(meter);
-//            }
-//        });
+        holder.infoLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.meterCheckBox.setChecked(!holder.meterCheckBox.isChecked());
+//                Log.e("ssg", "onClick position = " + position);
+                if (!mSelectedMeters.containsKey(meter.mMeterAddress)) {
+                    mSelectedMeters.put(meter.mMeterAddress, meter);
+                } else {
+                    mSelectedMeters.remove(meter.mMeterAddress);
+                }
+            }
+        });
         holder.meterCheckBox.setChecked(mSelectedMeters.containsKey(meter.mMeterAddress));
         holder.meterCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +131,7 @@ public class MeterListDialogAdapter extends SimpleCursorAdapter {
     }
 
 
-    public void addAllMeters() {
+    public void sellectAll() {
 
     }
 }

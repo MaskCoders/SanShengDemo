@@ -6,7 +6,10 @@ import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.demo.view.CollectListActivity;
 import com.sansheng.testcenter.module.Collect;
@@ -42,7 +45,7 @@ public class CollectListDialogAdapter extends SimpleCursorAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
-        Cursor cursor = (Cursor)getItem(position);
+        Cursor cursor = (Cursor) getItem(position);
         if (convertView != null) {
             viewHolder = (ViewHolder) convertView.getTag();
         }
@@ -55,6 +58,7 @@ public class CollectListDialogAdapter extends SimpleCursorAdapter {
         fillDataToViewHolder(cursor, viewHolder);
         return convertView;
     }
+
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         //do nothing
@@ -68,7 +72,7 @@ public class CollectListDialogAdapter extends SimpleCursorAdapter {
         return holder;
     }
 
-    private void fillDataToViewHolder(final Cursor cursor, final ViewHolder holder) {
+    private void fillDataToViewHolder(/*final int position, */final Cursor cursor, final ViewHolder holder) {
         final Collect collect = new Collect();
         collect.restore(cursor);
         if (collect.mId == 0) {//无此条数据
@@ -81,14 +85,21 @@ public class CollectListDialogAdapter extends SimpleCursorAdapter {
             public void onClick(View v) {
                 //show detail
 //                mActivity.showDetailFragment(collect);
+                holder.mCheckBox.setChecked(!holder.mCheckBox.isChecked());
+//                Log.e("ssg", "onClick position = " + position);
+                if (!mSelectedCollects.containsKey(collect.mCommonAddress)) {
+                    mSelectedCollects.put(collect.mCommonAddress, collect);
+                } else {
+                    mSelectedCollects.remove(collect.mCommonAddress);
+                }
             }
         });
         holder.mCheckBox.setChecked(mSelectedCollects.containsKey(collect.mCommonAddress));
-        holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.mCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //do something
-                if (isChecked) {
+            public void onClick(View v) {
+//                Log.e("ssg", "onClick position = " + position);
+                if (!mSelectedCollects.containsKey(collect.mCommonAddress)) {
                     mSelectedCollects.put(collect.mCommonAddress, collect);
                 } else {
                     mSelectedCollects.remove(collect.mCommonAddress);
@@ -97,7 +108,7 @@ public class CollectListDialogAdapter extends SimpleCursorAdapter {
         });
     }
 
-    public HashMap<String, Collect> getSelectedCollects(){
+    public HashMap<String, Collect> getSelectedCollects() {
         return mSelectedCollects;
     }
 

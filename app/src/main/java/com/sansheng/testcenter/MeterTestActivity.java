@@ -1,5 +1,7 @@
 package com.sansheng.testcenter;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,15 +13,14 @@ import android.view.View;
 import android.widget.*;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.Const;
+import com.sansheng.testcenter.base.MeterSelectFragment;
 import com.sansheng.testcenter.base.MeterTestItemsDialog;
-import com.sansheng.testcenter.base.view.ConnectTypeDialog;
-import com.sansheng.testcenter.base.view.DrawableCenterTextView;
-import com.sansheng.testcenter.base.view.UIRevisableView;
-import com.sansheng.testcenter.base.view.WaySelectMeterDialog;
+import com.sansheng.testcenter.base.view.*;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.controller.ConnectionService;
 import com.sansheng.testcenter.controller.MainHandler;
+import com.sansheng.testcenter.datamanager.MeterDataFilterFragment;
 import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.module.ModuleUtilites;
 import com.sansheng.testcenter.provider.EquipmentPreference;
@@ -29,6 +30,7 @@ import com.sansheng.testcenter.server.SocketClient;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
 import com.sansheng.testcenter.utils.MeterUtilies;
+import com.sansheng.testcenter.utils.Utility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,12 +40,14 @@ import java.util.HashMap;
  */
 public class MeterTestActivity extends BaseActivity implements IServiceHandlerCallback,
         MeterTestItemsDialog.MeterTestCallback, WaySelectMeterDialog.WaySelectMeterCallback, ConnectTypeDialog.ConnectTypeCallback {
-    Button text1;
-    DrawableCenterTextView text2;
-    Button text3;
-    Button text4;
-    Button text5;
-    Button text6;
+    DrawableCenterTextView text1;
+    //    DrawableCenterTextView text2;
+    DrawableCenterTextView text3;
+    DrawableCenterTextView text4;
+    //    DrawableCenterTextView text5;
+//    DrawableCenterTextView text6;
+    DrawableCenterTextView confirm;
+    DrawableCenterTextView cancel;
     UIRevisableView mAddressView;
     UIRevisableView mConnTypeView;
     UIRevisableView mReadAddressView;
@@ -52,6 +56,9 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     Button conn;
     EditText whm_ip;
     EditText whm_port;
+
+    private LinearLayout mHomeController;
+    private LinearLayout mSelectMeterController;
 
     private EditText mEditMeterAddressView;
     private LinearLayout mSelectChanel;
@@ -68,6 +75,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     private ClientManager mClientManager;
     private TerProtocolCreater cmdCreater;
     private Meter mMeter;
+    private HashMap<String, Meter> mSelectMeters;
 
 
     private static int mMeterType = MeterUtilies.METER_TEST_TYPE_SINGLE;
@@ -95,18 +103,28 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     @Override
     protected void initButtonList() {
         View inflate = getLayoutInflater().inflate(R.layout.meter_test_control_button_list, null);
-        text1 = (Button) inflate.findViewById(R.id.text1);
-        text2 = (DrawableCenterTextView) inflate.findViewById(R.id.text2);
-        text3 = (Button) inflate.findViewById(R.id.text3);
-        text4 = (Button) inflate.findViewById(R.id.text4);
-        text5 = (Button) inflate.findViewById(R.id.text5);
-        text6 = (Button) inflate.findViewById(R.id.text6);
+        mHomeController = (LinearLayout) inflate.findViewById(R.id.meter_test_control_home);
+        mSelectMeterController = (LinearLayout) inflate.findViewById(R.id.meter_test_control_select_meter);
+        text1 = (DrawableCenterTextView) inflate.findViewById(R.id.text1);
+//        text2 = (DrawableCenterTextView) inflate.findViewById(R.id.text2);/
+        text3 = (DrawableCenterTextView) inflate.findViewById(R.id.text3);
+        text4 = (DrawableCenterTextView) inflate.findViewById(R.id.text4);
+//        text5 = (Button) inflate.findViewById(R.id.text5);
+//        text6 = (Button) inflate.findViewById(R.id.text6);
+        confirm = (DrawableCenterTextView) inflate.findViewById(R.id.confirm);
+        cancel = (DrawableCenterTextView) inflate.findViewById(R.id.cancel);
+
+        mHomeController.setOnClickListener(this);
+        mSelectMeterController.setOnClickListener(this);
+        confirm.setOnClickListener(this);
+        cancel.setOnClickListener(this);
+
         text1.setOnClickListener(this);
-        text2.setOnClickListener(this);
+//        text2.setOnClickListener(this);
         text3.setOnClickListener(this);
         text4.setOnClickListener(this);
-        text5.setOnClickListener(this);
-        text6.setOnClickListener(this);
+//        text5.setOnClickListener(this);
+//        text6.setOnClickListener(this);
         main_button_list.addView(inflate);
     }
 
@@ -149,7 +167,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         mListView = (ListView) inflate.findViewById(R.id.list_view);
         mAdapter = new MeterTestCenterListAdapter(this);
         String result = EquipmentPreference.getPreferences(this).getSelectedMeterTest();
-        Log.e("ssg", "result = "  + result);
+        Log.e("ssg", "result = " + result);
         if (!TextUtils.isEmpty(result)) {
             result = "[\"0\",\"1\",\"2\"][\"0\",\"1\",\"2\"]";
         }
@@ -161,6 +179,21 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.confirm:
+                MeterSelectFragment fragment = (MeterSelectFragment) getFragmentManager().findFragmentByTag("MeterSelectFragment");
+                if (fragment != null) {
+                    mSelectMeters = fragment.getSelectedMeters();
+                    if (mSelectMeters != null) {
+                        Log.e("ssg", "选中的电表数量 = " + mSelectMeters.size());
+                    }
+                }
+                showHomeController();
+                removeFragment("MeterSelectFragment");
+                break;
+            case R.id.cancel:
+                showHomeController();
+                removeFragment("MeterSelectFragment");
+                break;
             case R.id.meter_test_select_channel:
                 showConnectTypeDialog();
                 break;
@@ -179,10 +212,10 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
                     text1.setText("关闭日志");
                 }
                 break;
-            case R.id.text2:
-                //选择电表,弹出对话框选择 1、输入地址 2、选择已有电表 3、读地址，从已连接的设备中获取电表地址init
-                showWaySelectMeterDialog();
-                break;
+//            case R.id.text2:
+//                //选择电表,弹出对话框选择 1、输入地址 2、选择已有电表 3、读地址，从已连接的设备中获取电表地址init
+//                showWaySelectMeterDialog();
+//                break;
             case R.id.text3:
                 //开始按钮
                 startTest();
@@ -191,14 +224,14 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
                 //设置时钟
                 setMeterTime();
                 break;
-            case R.id.text5:
-                showTestItemsDialog();
-                //选择检测项目
-                break;
-            case R.id.text6:
-                showConnectTypeDialog();
-                //弹出对话框选择通讯类型
-                break;
+//            case R.id.text5:
+//                showTestItemsDialog();
+//                //选择检测项目
+//                break;
+//            case R.id.text6:
+//                showConnectTypeDialog();
+//                //弹出对话框选择通讯类型
+//                break;
             case R.id.meter_address:
                 Intent intent = new Intent(MeterTestActivity.this, MSocketServer.class);
                 startService(intent);
@@ -217,7 +250,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
                 mClientManager.createClient(null, -100);
                 break;
             case R.id.conn:
-                mClient = mClientManager.createClient(whm_ip.getText().toString(),Integer.valueOf(whm_port.getText().toString()));
+                mClient = mClientManager.createClient(whm_ip.getText().toString(), Integer.valueOf(whm_port.getText().toString()));
                 break;
         }
         super.onClick(v);
@@ -267,50 +300,52 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         ConnectTypeDialog connectTypeDialog = new ConnectTypeDialog(MeterTestActivity.this);
         connectTypeDialog.show(getFragmentManager(), "select_connect_type");
     }
+
     private void startTest() {
         Log.e("ssg", "开始检测");
-        final String address ;
+        final String address;
         try {
             address = mEditMeterAddressView.getText().toString();
             ProtocolUtils.hex2bcd(address);
 
-        }catch (Exception e){
-            Toast.makeText(this,"地址格式有误",1).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "地址格式有误", 1).show();
             return;
         }
         Thread command = new Thread(new Runnable() {
             private void sendCommand(String data) throws InterruptedException {
                 data = ProtocolUtils.bytes2hex(ProtocolUtils.hexStringToBytesDecode(data));
-                System.out.println("data: "+data);
+                System.out.println("data: " + data);
                 Thread.sleep(1000);
-                String address = "12 00 00 00 10 20".replace(" ","");
+                String address = "12 00 00 00 10 20".replace(" ", "");
                 Const.WhmConst.C type = Const.WhmConst.C.MAIN_REQUEST_READ_DATA;
-                WhmBean bean =  WhmBean.create(type,data,address);
+                WhmBean bean = WhmBean.create(type, data, address);
                 Message msg = new Message();
                 msg.obj = bean.toString();
                 msg.what = Const.SEND_MSG;
                 mMainHandler.sendMessage(msg);
-                System.out.println("by hua : "+bean.toString());
+                System.out.println("by hua : " + bean.toString());
                 mClientManager.sendMessage(mClient, ProtocolUtils.hexStringToBytes(bean.toString()));
             }
+
             @Override
             public void run() {
                 try {
-                    String data = "33 32 34 33 ".replace(" ","");
+                    String data = "33 32 34 33 ".replace(" ", "");
                     sendCommand(data);
-                    data = "33 32 34 35".replace(" ","");
+                    data = "33 32 34 35".replace(" ", "");
                     sendCommand(data);
-                    data = "34 34 33 37".replace(" ","");
+                    data = "34 34 33 37".replace(" ", "");
                     sendCommand(data);
-                    data = "35 34 33 37".replace(" ","");
+                    data = "35 34 33 37".replace(" ", "");
                     sendCommand(data);
-                    data = "34 33 39 38".replace(" ","");
+                    data = "34 33 39 38".replace(" ", "");
                     sendCommand(data);
-                    data = "33 35 C3 33".replace(" ","");
+                    data = "33 35 C3 33".replace(" ", "");
                     sendCommand(data);
-                    data = "33 40 63 36".replace(" ","");
+                    data = "33 40 63 36".replace(" ", "");
                     sendCommand(data);
-                    data = "34 33 33 50".replace(" ","");
+                    data = "34 33 33 50".replace(" ", "");
                     sendCommand(data);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -349,9 +384,37 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     public void onSelectMeterPositiveClick(HashMap<String, Meter> meters) {
         if (meters == null || meters.size() == 0) {
             Log.e("ssg", "selected no meter");
-        }else {
+        } else {
             Log.e("ssg", "selected meters size = " + meters.size());
         }
+    }
+
+    @Override
+    public void onItemSelected(int position) {
+        switch (position) {
+            case 0://选择已有电表
+                showSelectFragment();
+                showSelectMeterController();
+                break;
+            case 1://读地址
+                readMeterAddress();
+                break;
+            case 2://扫描一维码
+                scanMeterAddress();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void showSelectMeterController() {
+        mHomeController.setVisibility(View.GONE);
+        mSelectMeterController.setVisibility(View.VISIBLE);
+    }
+
+    private void showHomeController() {
+        mHomeController.setVisibility(View.VISIBLE);
+        mSelectMeterController.setVisibility(View.GONE);
     }
 
     @Override
@@ -369,5 +432,28 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
 //            Log.e("ssg", "selected meters size = " + meters.size());
 //        }
 //    }
+
+    public void showSelectFragment() {
+        MeterSelectFragment fragment = new MeterSelectFragment();
+        MeterUtilies.showFragment(getFragmentManager(), null, fragment, R.id.meter_content,
+                FragmentTransaction.TRANSIT_FRAGMENT_OPEN, "MeterSelectFragment");
+    }
+
+    public void removeFragment(String tag) {
+        Fragment fragment = getFragmentManager().findFragmentByTag(tag);
+        if (fragment != null) {
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.remove(fragment);
+            fragmentTransaction.commitAllowingStateLoss();
+        }
+    }
+
+    private void readMeterAddress() {
+        Log.e("ssg", "从已连接的设备中读取电表地址");
+    }
+
+    private void scanMeterAddress() {
+        Log.e("ssg", "扫描一维码获取电表地址");
+    }
 
 }

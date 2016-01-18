@@ -146,18 +146,6 @@ public class MeterTestItemsDialog extends DialogFragment {
                 }
             });
             holder.mCheckBox.setChecked(mSelectedItems.containsKey(position));
-//            holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                @Override
-//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                    Log.e("ssg", "position = " + position);
-//                    if (isChecked) {
-//                        mSelectedItems.put(position, testItems[position]);
-//                    } else {
-//                        mSelectedItems.remove(position);
-//                    }
-//                    Log.e("ssg", "mSelectedItems size = " + mSelectedItems.size());
-//                }
-//            });
             holder.mCheckBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

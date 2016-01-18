@@ -7,7 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.MeterSelectDialog;
 import com.sansheng.testcenter.module.Meter;
@@ -21,6 +24,7 @@ import java.util.HashMap;
 public class WaySelectMeterDialog extends DialogFragment implements MeterSelectDialog.MeterCallback{
 
     private View mRootView;
+
     private ListView mListView;
     private AnswerDialog mDialog;
     private MeterTestAdapter mAdapter;
@@ -132,21 +136,8 @@ public class WaySelectMeterDialog extends DialogFragment implements MeterSelectD
             holder.itemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    switch (position) {
 
-                        case 0://选择已有电表
-                            MeterSelectDialog meterDialog = new MeterSelectDialog(WaySelectMeterDialog.this);
-                            meterDialog.show(getActivity().getFragmentManager(), "select_meter");
-                            break;
-                        case 1://读地址
-                            readMeterAddress();
-                            break;
-                        case 2://扫描一维码
-//                            composeMeterAddress();
-                            break;
-                        default:
-                            break;
-                    }
+                    mCallback.onItemSelected(position);
                     mDialog.dismiss();
                 }
             });
@@ -196,6 +187,7 @@ public class WaySelectMeterDialog extends DialogFragment implements MeterSelectD
 
     public interface WaySelectMeterCallback {
         void onSelectMeterPositiveClick(HashMap<String, Meter> meters);
+        void onItemSelected(int position);
     }
 
 }
