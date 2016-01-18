@@ -169,7 +169,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         String result = EquipmentPreference.getPreferences(this).getSelectedMeterTest();
         Log.e("ssg", "result = " + result);
         if (TextUtils.isEmpty(result)) {
-            result = "[\"0\",\"1\",\"2\"][\"0\",\"1\",\"2\"]";
+            result = "[\"0\",\"1\",\"2\"]";
         }
         mAdapter.setSelectedItemts(ModuleUtilites.jsonToMapForMeterTest(result, getResources().getStringArray(R.array.meter_test_items)));
         mListView.setAdapter(mAdapter);
