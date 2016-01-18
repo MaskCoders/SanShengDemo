@@ -99,7 +99,8 @@
         <item name="android:background">@drawable/btn_sel</item>
         <item name="android:textSize">@dimen/list_body_text_size_big</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
     </style>
     <style name="MeterTestCenterListTextStyle">
         <item name="android:singleLine">true</item>
