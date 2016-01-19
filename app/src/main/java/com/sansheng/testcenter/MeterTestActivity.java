@@ -15,12 +15,13 @@ import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.Const;
 import com.sansheng.testcenter.base.MeterSelectFragment;
 import com.sansheng.testcenter.base.MeterTestItemsDialog;
-import com.sansheng.testcenter.base.view.*;
+import com.sansheng.testcenter.base.view.ConnectTypeDialog;
+import com.sansheng.testcenter.base.view.DrawableCenterTextView;
+import com.sansheng.testcenter.base.view.WaySelectMeterDialog;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.controller.ConnectionService;
 import com.sansheng.testcenter.controller.MainHandler;
-import com.sansheng.testcenter.datamanager.MeterDataFilterFragment;
 import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.module.ModuleUtilites;
 import com.sansheng.testcenter.provider.EquipmentPreference;
@@ -48,10 +49,10 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
 //    DrawableCenterTextView text6;
     DrawableCenterTextView confirm;
     DrawableCenterTextView cancel;
-    UIRevisableView mAddressView;
-    UIRevisableView mConnTypeView;
-    UIRevisableView mReadAddressView;
-    UIRevisableView mSelectAddressView;
+//    UIRevisableView mAddressView;
+//    UIRevisableView mConnTypeView;
+//    UIRevisableView mReadAddressView;
+//    UIRevisableView mSelectAddressView;
 
     Button conn;
     EditText whm_ip;
@@ -309,7 +310,8 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
             ProtocolUtils.hex2bcd(address);
 
         } catch (Exception e) {
-            Toast.makeText(this, "地址格式有误", 1).show();
+//            Toast.makeText(this, "地址格式有误", 1).show();
+            Utility.showToast(this, "地址格式有误");
             return;
         }
         Thread command = new Thread(new Runnable() {

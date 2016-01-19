@@ -12,7 +12,8 @@ import java.text.SimpleDateFormat;
  * Created by sunshaogang on 12/10/15.
  */
 public class MeterUtilies {
-    public static final int NAME_MAX_BYTE_LENGTH = 30;
+
+    public static final int METER_ADDRESS_MAX_BYTE_LENGTH = 18;//数字1:1
     public static final String PAMAR_METER_TYPE = "meter_type";
     public static final String PARAM_METER = "meter";
     public static final int METER_TEST_TYPE_SINGLE = 0;
