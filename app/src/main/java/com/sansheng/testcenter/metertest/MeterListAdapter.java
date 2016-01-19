@@ -82,7 +82,7 @@ public class MeterListAdapter extends SimpleCursorAdapter {
         if (meter.mId == 0) {//无此条数据
             return;
         }
-        holder.meterType.setImageResource(meter.mDa == 0 ? R.drawable.single_meter : R.drawable.three_meter);//单项 v 三项
+        holder.meterType.setImageResource(meter.mType == 0 ? R.drawable.single_meter : R.drawable.three_meter);//单项 v 三项
         holder.meterId.setText(String.valueOf(meter.mDa));
         holder.meterName.setText(String.valueOf(meter.mMeterName));
         holder.infoLayout.setOnClickListener(new View.OnClickListener() {
