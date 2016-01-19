@@ -108,7 +108,7 @@
         <activity android:name=".location.LocationInfoActivity"
                   android:screenOrientation="sensorLandscape">
         </activity>
-        <activity android:name=".MeterTestActivity"
+        <activity android:name=".metertest.MeterTestActivity"
                   android:screenOrientation="sensorLandscape">
         </activity>
         <provider

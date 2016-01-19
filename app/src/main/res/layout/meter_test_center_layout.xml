@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/meter_test_edit_text"
                     android:layout_marginLeft="50dp"
-                    android:maxLength="18"
+                    android:maxLength="12"
                     android:hint="输入电表地址"
                     style="@style/NomalTextStyle"
                     android:numeric="integer"

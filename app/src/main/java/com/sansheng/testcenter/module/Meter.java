@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 /**
  * Created by sunshaogang on 12/17/15.
@@ -79,7 +80,8 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         if (test) {
             mConcentratorId = id % 2;
             mMeterName = "电表名称" + id;
-            mMeterAddress = "电表地址" + id;
+            mMeterAddress = String.format("%012d", id);
+            Log.e("ssg", "mMeterAddress = " + mMeterAddress);
             mMeterNum = id;
             mDa = id;
             mType = id % 2;

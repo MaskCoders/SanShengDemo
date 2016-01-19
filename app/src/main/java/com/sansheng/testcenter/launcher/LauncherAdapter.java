@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.sansheng.testcenter.MeterTestActivity;
+import com.sansheng.testcenter.metertest.MeterTestActivity;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.CollectSelectDialog;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;

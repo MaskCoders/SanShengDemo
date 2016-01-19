@@ -1,4 +1,4 @@
-package com.sansheng.testcenter;
+package com.sansheng.testcenter.metertest;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
+import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.Const;
 import com.sansheng.testcenter.base.MeterSelectFragment;
@@ -76,7 +77,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     private ClientManager mClientManager;
     private TerProtocolCreater cmdCreater;
     private Meter mMeter;
-    private HashMap<String, Meter> mSelectMeters;
+//    private HashMap<String, Meter> mSelectMeters;
 
 
     private static int mMeterType = MeterUtilies.METER_TEST_TYPE_SINGLE;
@@ -154,7 +155,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     protected void initCenter() {
         View inflate = getLayoutInflater().inflate(R.layout.meter_test_center_layout, null);
         mEditMeterAddressView = (EditText) inflate.findViewById(R.id.meter_test_edit_text);
-        mEditMeterAddressView.setText("201000000012");
+//        mEditMeterAddressView.setText("201000000012");
         mSelectChanel = (LinearLayout) inflate.findViewById(R.id.meter_test_select_channel);
         mChanelValue = (TextView) inflate.findViewById(R.id.meter_test_channel);
         mSelectItem = (LinearLayout) inflate.findViewById(R.id.meter_test_select_test_item);
@@ -183,9 +184,12 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
             case R.id.confirm:
                 MeterSelectFragment fragment = (MeterSelectFragment) getFragmentManager().findFragmentByTag("MeterSelectFragment");
                 if (fragment != null) {
-                    mSelectMeters = fragment.getSelectedMeters();
-                    if (mSelectMeters != null) {
-                        Log.e("ssg", "选中的电表数量 = " + mSelectMeters.size());
+                    HashMap<String, Meter> selectMeters = fragment.getSelectedMeters();
+                    if (selectMeters != null) {
+                        Log.e("ssg", "选中的电表数量 = " + selectMeters.size());
+                        ArrayList<Meter> meters = new ArrayList<Meter>(selectMeters.values());
+                        mMeter = meters.get(0);
+                        mEditMeterAddressView.setText(mMeter.mMeterAddress);
                     }
                 }
                 showHomeController();
@@ -425,15 +429,6 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         Log.e("ssg", "选择的通讯类型 ＝ " + position);
         mChanelValue.setText(getResources().getStringArray(R.array.select_connect_type)[position]);
     }
-
-//    @Override
-//    public void onMeterPositiveClick(HashMap<String, Meter> meters) {
-//        if (meters == null || meters.size() == 0) {
-//            Log.e("ssg", "selected no meter");
-//        }else {
-//            Log.e("ssg", "selected meters size = " + meters.size());
-//        }
-//    }
 
     public void showSelectFragment() {
         MeterSelectFragment fragment = new MeterSelectFragment();

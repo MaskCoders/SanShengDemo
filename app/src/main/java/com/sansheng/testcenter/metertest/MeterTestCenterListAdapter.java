@@ -1,4 +1,4 @@
-package com.sansheng.testcenter;
+package com.sansheng.testcenter.metertest;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 
