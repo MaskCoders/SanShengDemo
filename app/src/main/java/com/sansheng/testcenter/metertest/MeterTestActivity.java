@@ -102,6 +102,12 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        showHomeView();
+    }
+
+    @Override
     protected void initButtonList() {
         View inflate = getLayoutInflater().inflate(R.layout.meter_test_control_button_list, null);
         mHomeController = (LinearLayout) inflate.findViewById(R.id.meter_test_control_home);
@@ -191,12 +197,10 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
                         mEditMeterAddressView.setText(mMeter.mMeterAddress);
                     }
                 }
-                showHomeController();
-                removeFragment("MeterSelectFragment");
+                showHomeView();
                 break;
             case R.id.cancel:
-                showHomeController();
-                removeFragment("MeterSelectFragment");
+                showHomeView();
                 break;
             case R.id.meter_test_select_channel:
                 showConnectTypeDialog();
@@ -442,6 +446,11 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
             fragmentTransaction.remove(fragment);
             fragmentTransaction.commitAllowingStateLoss();
         }
+    }
+
+    public void showHomeView(){
+        showHomeController();
+        removeFragment("MeterSelectFragment");
     }
 
     private void readMeterAddress() {
