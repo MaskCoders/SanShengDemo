@@ -2,7 +2,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:background="@drawable/chip_back_blue">
+              android:background="@drawable/chip_back_white">
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
         </LinearLayout>
     </LinearLayout>
     <View
-            android:background="@color/color_white"
+            android:background="@color/spinner_selected_color"
             android:layout_width="match_parent"
             android:clickable="true"
             android:layout_height="3dp"/>

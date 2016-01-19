@@ -12,9 +12,9 @@
             <stroke
             android:dashGap="0dp"
             android:width="2dp"
-            android:color="@color/color_white" />
+            android:color="@color/spinner_selected_color" />
 
-            <solid android:color="@color/sky_blue2"/>
+            <solid android:color="@color/color_white"/>
         </shape>
     </item>
     <!--<item android:state_pressed="true" >-->

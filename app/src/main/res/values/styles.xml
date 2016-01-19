@@ -96,7 +96,7 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:layout_width">fill_parent</item>
-        <item name="android:background">@drawable/btn_sel</item>
+        <item name="android:background">@drawable/btn_background_orange</item>
         <item name="android:textSize">@dimen/list_body_text_size_big</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginTop">3dp</item>
@@ -109,6 +109,7 @@
         <item name="android:layout_height">@dimen/collect_list_item_height</item>
         <item name="android:background">@color/transparent_color</item>
         <item name="android:textSize">@dimen/list_body_text_size_big</item>
+        <item name="android:textColor">@drawable/center_text_selector</item>
     </style>
     <style name="LocationInfoTextStyle">
         <item name="android:gravity">center_vertical</item>
@@ -137,5 +138,6 @@
         <!--<item name="android:layout_height">@dimen/normal_text_view_height</item>-->
         <!--<item name="android:background">@color/transparent_color</item>-->
         <item name="android:textSize">@dimen/list_body_text_size_big</item>
+        <item name="android:textColor">@drawable/center_text_selector</item>
     </style>
 </resources>

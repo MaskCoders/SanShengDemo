@@ -6,6 +6,17 @@
     <color name="collocation_color_1">#990033</color>
     <color name="collocation_color_2">#cccc00</color>
 
+    <color name="tra_blue">#d3e9ef</color>
+
+    <color name="new_color">#eab231</color>
+    <color name="new_color1">#78bf59</color>
+    <color name="new_color2">#fe6d36</color>
+    <!--色块-->
+    <color name="new_color3">#4692f9</color>
+    <color name="new_color4">#e49d6a</color>
+    <color name="new_color5">#78bf58</color>
+    <color name="new_color6">#ee6d6d</color>
+
     <color name="green_00">#33CCCC</color>
     <color name="green_01">#00CC99</color>
     <color name="green_02">#99FF99</color>
@@ -155,6 +166,6 @@
     <color name="color_white">#fff</color>
     <color name="color_black">#000000</color>
     <color name="sky_blue">#87ceeb</color>
-    <color name="sky_blue2">#3387ceeb</color>
+    <color name="sky_blue2">@color/tra_blue</color>
     <color name="contact_list_text_color_selected">#00bdc1</color>
 </resources>

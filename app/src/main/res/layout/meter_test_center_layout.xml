@@ -23,7 +23,7 @@
 
             <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:id="@+id/meter_test_select_channel"
                     android:layout_gravity="center_vertical">
                 <TextView
@@ -37,7 +37,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="10dp"
                         android:id="@+id/meter_test_channel_btn"
                         android:src="@drawable/btn_chanle_selector"/>
             </LinearLayout>
@@ -47,7 +47,8 @@
                     android:id="@+id/meter_test_edit_text"
                     android:layout_marginLeft="50dp"
                     android:hint="输入电表地址"
-                    style="@style/NomalTextStyle"/>
+                    style="@style/NomalTextStyle"
+                    />
             <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
@@ -90,13 +91,13 @@
             <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_gravity="center_vertical"
                     android:id="@+id/meter_test_select_test_item_icon"
                     android:src="@drawable/btn_select_selector"/>
         </LinearLayout>
         <View
-                android:background="@color/color_white"
+                android:background="@color/spinner_selected_color"
                 android:layout_width="match_parent"
                 android:clickable="true"
                 android:layout_height="3dp"/>

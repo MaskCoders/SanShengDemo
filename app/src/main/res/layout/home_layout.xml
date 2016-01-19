@@ -37,16 +37,16 @@
 
             <Button android:id="@+id/send" android:layout_width="fill_parent" android:layout_height="0dp"
                     android:layout_weight="1" android:paddingBottom="5dp" android:textColor="#fff"
-                    android:text="@string/send" android:background="@drawable/btn_sel"/>
+                    android:text="@string/send" android:background="@drawable/btn_background_orange"/>
             <Button android:id="@+id/cls" android:layout_width="fill_parent" android:layout_height="0dp"
                     android:layout_weight="1" android:paddingBottom="5dp" android:textColor="#fff"
-                    android:text="@string/clear" android:background="@drawable/btn_sel"/>
+                    android:text="@string/clear" android:background="@drawable/btn_background_orange"/>
             <Button android:id="@+id/conn" android:layout_width="fill_parent" android:layout_height="0dp"
                     android:layout_weight="1" android:paddingBottom="5dp" android:textColor="#fff"
-                    android:text="@string/conn" android:background="@drawable/btn_sel"/>
+                    android:text="@string/conn" android:background="@drawable/btn_background_orange"/>
             <Button android:id="@+id/startser" android:layout_width="fill_parent" android:layout_height="0dp"
                     android:layout_weight="1" android:paddingBottom="5dp" android:textColor="#fff"
-                    android:text="@string/start_ser" android:background="@drawable/btn_sel"/>
+                    android:text="@string/start_ser" android:background="@drawable/btn_background_orange"/>
         </LinearLayout>
     </LinearLayout>
 
