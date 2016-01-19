@@ -1,6 +1,8 @@
-package com.sansheng.testcenter.base;
+package com.sansheng.testcenter.metertest;
 
-import android.app.*;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
@@ -12,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.base.view.AnswerDialog;
 import com.sansheng.testcenter.base.view.PullListView;
 import com.sansheng.testcenter.datamanager.MeterDataFragment;
 import com.sansheng.testcenter.module.Collect;
@@ -20,6 +21,7 @@ import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.utils.MeterUtilies;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -35,63 +37,18 @@ public class MeterSelectFragment extends Fragment implements LoaderManager.Loade
     private LinearLayout mSelectAllView;
     private CheckBox mSelectAllCheckBox;
     private ListView mListView;
-    private MeterListDialogAdapter mAdapter;
+    private MeterListAdapter mAdapter;
     private int mLastVisibleItem;
     private static final int LOADER_ID_FILTER_DEFAULT = 0;
     private int mOriginLength = Integer.MAX_VALUE;//默认初始显示数量
     private final static int DOWNSIDE_INCREASE_COUNT = 10;//每次增加数量
-    private AnswerDialog mDialog;
-    private MeterCallback callback;
     private String collectIds;
+    private ArrayList<Collect> collectList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
-//        @Override
-//        public Dialog onCreateDialog(Bundle savedInstanceState) {
-//            mDialog = new AnswerDialog(getActivity());
-//            mDialog.show();
-//            mDialog.setTitleText("选择电表");
-//            LayoutInflater inflater = LayoutInflater.from(getActivity());
-//            mRootView = inflater.inflate(R.layout.meter_dialog_list_layout, null);
-//            mSelectCollectView = (TextView) mRootView.findViewById(R.id.meter_select_collect);
-//            mFilterView = (EditText) mRootView.findViewById(R.id.meter_select_filter);
-//            mSelectAllView = (CheckBox) mRootView.findViewById(R.id.meter_select_all);
-//            mSelectAllView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                @Override
-//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                    if (isChecked) {
-//                        mAdapter.addAllMeters();
-//                    } else {
-//                        mAdapter.getSelectedMeters().clear();
-//                    }
-//                }
-//            });
-//            mListView = (PullListView) mRootView.findViewById(R.id.listview);
-//            mListView.setOnScrollListener(this);
-//            mListView.hideFooterView();
-////        mEmptyView = mRootView.findViewById(R.id.empty_view_group);
-//            mAdapter = new MeterListDialogAdapter(getActivity(), null);
-//            mListView.setAdapter(mAdapter);
-//            getLoaderManager().initLoader(LOADER_ID_FILTER_DEFAULT, null, this);
-//            mDialog.setCustomView(mRootView);
-//            mDialog.setNegativeButton(R.string.cancel, new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    mDialog.dismiss();
-//                }
-//            });
-//            mDialog.setPositiveButton(R.string.confirm, new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    mDialog.dismiss();
-//                    callback.onMeterPositiveClick(mAdapter.getSelectedMeters());
-//                }
-//            });
-//            return mDialog;
-//        }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -114,31 +71,30 @@ public class MeterSelectFragment extends Fragment implements LoaderManager.Loade
                 showCollectDialog();
             }
         });
+        mSelectAllCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mSelectAllCheckBox.isChecked()) {
+                    mAdapter.sellectAll(true);
+                } else {
+                    mAdapter.sellectAll(false);
+                }
+            }
+        });
         mSelectAllView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!mSelectAllCheckBox.isChecked()) {
-                    mAdapter.sellectAll();
+                    mSelectAllCheckBox.setChecked(true);
+                    mAdapter.sellectAll(true);
                 } else {
-                    mAdapter.getSelectedMeters().clear();
+                    mSelectAllCheckBox.setChecked(false);
+                    mAdapter.sellectAll(false);
                 }
             }
         });
-//        mSelectAllCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    mAdapter.addAllMeters();
-//                } else {
-//                    mAdapter.getSelectedMeters().clear();
-//                }
-//            }
-//        });
         mListView = (ListView) mRootView.findViewById(R.id.list_view);
-//            mListView.setOnScrollListener(this);
-//            mListView.hideFooterView();
-//        mEmptyView = mRootView.findViewById(R.id.empty_view_group);
-        mAdapter = new MeterListDialogAdapter(getActivity(), null);
+        mAdapter = new MeterListAdapter(getActivity(), null);
         mListView.setAdapter(mAdapter);
         getLoaderManager().initLoader(LOADER_ID_FILTER_DEFAULT, null, this);
         return mRootView;
@@ -146,34 +102,26 @@ public class MeterSelectFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        collectIds = String.valueOf(0);
+        int type = ((MeterTestActivity)getActivity()).getTestMeterType();
+        Log.e("ssg", "type = " + type);
         StringBuilder selection = new StringBuilder();
         if (TextUtils.isEmpty(collectIds)) {
             selection.append(" 1=1 ");
         } else {//如必要,根据选中的集中器显示相应的电表以供选择
             selection.append(Meter.COLLECT_ID).append(" in ").append("(").append(collectIds).append(")");
         }
+        selection.append(" AND ").append(Meter.METER_TYPE).append("=").append(type);
         return new CursorLoader(getActivity(), Meter.CONTENT_URI, Meter.CONTENT_PROJECTION, selection.toString(),
                 null, Meter.ID + " " + Content.DESC + " LIMIT " + mOriginLength);
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {//加载更多。
-        if (mAdapter.getCount() != 0 && data != null && mAdapter.getCount() == data.getCount()) {
-//                mListView.setNoMoreData();
-            mAdapter.swapCursor(data);
-            return;
-        }
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         int id = loader.getId();
         if (id == LOADER_ID_FILTER_DEFAULT) {
-            if (data != null && data.moveToFirst()) {
+            if (data != null) {
                 mAdapter.swapCursor(data);
-//                    mListView.onCompleteLoadMore(PullListView.LOAD_MORE_STATUS_USELESS);
             }
-        }
-        if ((data == null || !data.moveToFirst()) && mListView != null) {
-//            mListView.setEmptyView(mEmptyView);
-            return;
         }
     }
 
@@ -187,7 +135,6 @@ public class MeterSelectFragment extends Fragment implements LoaderManager.Loade
         if (mLastVisibleItem >= mListView.getCount() - DOWNSIDE_INCREASE_COUNT / 2 && scrollState == SCROLL_STATE_IDLE) {
             mOriginLength += DOWNSIDE_INCREASE_COUNT;
             getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, this);
-//                mListView.setFooterViewStatic();
         }
     }
 
@@ -215,10 +162,11 @@ public class MeterSelectFragment extends Fragment implements LoaderManager.Loade
         getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, this);
     }
 
-    private void showCollectDialog(){
+    private void showCollectDialog() {
         CollectSelectDialog collectDialog = new CollectSelectDialog(this);
         collectDialog.show(getActivity().getFragmentManager(), "select_collects");
     }
+
     @Override
     public void onCollectNegativeClick() {
 
@@ -228,6 +176,20 @@ public class MeterSelectFragment extends Fragment implements LoaderManager.Loade
     public void onCollectPositiveClick(HashMap<String, Collect> collects) {
         //get collect list
         Log.e("ssg", "selected collects size = " + collects.size());
+        if (collects != null && collects.size() > 0) {
+            collectIds = "";
+            collectList = new ArrayList<Collect>(collects.values());
+            mSelectedCollect.setText(collectList.get(0).mCollectName
+                    + "[" + collectList.size() + "]");
+            for (Collect collect : collectList) {
+                if (!TextUtils.isEmpty(collectIds)) {
+                    collectIds += ",";
+                }
+                collectIds += String.valueOf(collect.mId);
+            }
+            Log.e("ssg", "collectIds = " + collectIds);
+            restartLoader();
+        }
     }
 
     public interface MeterCallback {

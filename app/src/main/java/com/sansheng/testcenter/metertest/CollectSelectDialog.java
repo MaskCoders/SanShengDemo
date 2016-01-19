@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.base;
+package com.sansheng.testcenter.metertest;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -8,7 +8,6 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +16,10 @@ import android.widget.ListView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.view.AnswerDialog;
 import com.sansheng.testcenter.base.view.PullListView;
-import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.datamanager.MeterDataFragment;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Content;
+import com.sansheng.testcenter.utils.MeterUtilies;
 
 import java.util.HashMap;
 
@@ -30,7 +29,7 @@ import java.util.HashMap;
 public class CollectSelectDialog extends DialogFragment implements LoaderManager.LoaderCallbacks<Cursor>, ListView.OnScrollListener, PullListView.OnLoadMoreListener {
     private View mRootView;
 //    private View mEmptyView;
-    private PullListView mListView;
+    private ListView mListView;
     private CollectListDialogAdapter mAdapter;
     private int mLastVisibleItem;
     private static final int LOADER_ID_FILTER_DEFAULT = 0;
@@ -58,10 +57,8 @@ public class CollectSelectDialog extends DialogFragment implements LoaderManager
         mDialog.setTitleText("选择集中器");
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         mRootView = inflater.inflate(R.layout.collect_list_layout, null);
-        mListView = (PullListView) mRootView.findViewById(R.id.listview);
+        mListView = (ListView) mRootView.findViewById(R.id.list_view);
         mListView.setOnScrollListener(this);
-        mListView.hideFooterView();
-//        mEmptyView = mRootView.findViewById(R.id.empty_view_group);
         mAdapter = new CollectListDialogAdapter(getActivity(), null);
         mListView.setAdapter(mAdapter);
         getLoaderManager().initLoader(LOADER_ID_FILTER_DEFAULT, null, this);
@@ -97,22 +94,11 @@ public class CollectSelectDialog extends DialogFragment implements LoaderManager
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {//加载更多。
-        Log.e("ssg", "cursor count = " + data.getCount());
-        if (mAdapter.getCount() != 0 && data != null && mAdapter.getCount() == data.getCount()) {
-            mListView.setNoMoreData();
-            mAdapter.swapCursor(data);
-            return;
-        }
         int id = loader.getId();
         if (id == LOADER_ID_FILTER_DEFAULT) {
             if (data != null && data.moveToFirst()) {
                 mAdapter.swapCursor(data);
-                mListView.onCompleteLoadMore(PullListView.LOAD_MORE_STATUS_USELESS);
             }
-        }
-        if ((data == null || !data.moveToFirst()) && mListView != null) {
-//            mListView.setEmptyView(mEmptyView);
-            return;
         }
     }
 
@@ -126,7 +112,6 @@ public class CollectSelectDialog extends DialogFragment implements LoaderManager
         if (mLastVisibleItem >= mListView.getCount() - DOWNSIDE_INCREASE_COUNT / 2 && scrollState == SCROLL_STATE_IDLE) {
             mOriginLength += DOWNSIDE_INCREASE_COUNT;
             getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, this);
-            mListView.setFooterViewStatic();
         }
     }
 

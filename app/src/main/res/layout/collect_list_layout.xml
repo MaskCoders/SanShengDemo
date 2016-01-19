@@ -8,8 +8,8 @@
             android:layout_marginLeft="@dimen/list_margin"
             android:layout_marginRight="@dimen/list_margin"
             android:orientation="vertical">
-        <com.sansheng.testcenter.base.view.PullListView
-                android:id="@+id/listview"
+        <ListView
+                android:id="@+id/list_view"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:listSelector="@android:color/transparent"

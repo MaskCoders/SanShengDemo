@@ -13,7 +13,6 @@
         <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/meter_select_collect"
@@ -31,10 +30,10 @@
                     android:src="@drawable/btn_collect_selector"/>
         </LinearLayout>
         <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
                 android:id="@+id/meter_select_filter"
-                android:layout_weight="1"
                 style="@style/NomalTextStyle"
                 android:hint="输入查询条件"/>
         <ImageView
@@ -42,8 +41,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="20dp"
                 android:id="@+id/meter_select_filter_search"
                 android:src="@drawable/btn_search_selector"/>
         <LinearLayout

@@ -14,7 +14,6 @@ import android.widget.*;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.Const;
-import com.sansheng.testcenter.base.MeterSelectFragment;
 import com.sansheng.testcenter.base.MeterTestItemsDialog;
 import com.sansheng.testcenter.base.view.ConnectTypeDialog;
 import com.sansheng.testcenter.base.view.DrawableCenterTextView;
@@ -85,10 +84,10 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            mMeterType = savedInstanceState.getInt(MeterUtilies.PAMAR_METER_TYPE);
+        if (getIntent() !=null) {
+            mMeterType = getIntent().getIntExtra(MeterUtilies.PAMAR_METER_TYPE, MeterUtilies.METER_TEST_TYPE_SINGLE);
+            Log.e("ssg", "mMeterType = " + mMeterType);
         }
-//        getActionBar().hide();
         mMainHandler = new MainHandler(this, this);
         mClientManager = ClientManager.getInstance(this, mMainHandler);
         cmdCreater = new TerProtocolCreater();
@@ -451,6 +450,10 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
 
     private void scanMeterAddress() {
         Log.e("ssg", "扫描一维码获取电表地址");
+    }
+
+    public int getTestMeterType() {
+        return mMeterType;
     }
 
 }

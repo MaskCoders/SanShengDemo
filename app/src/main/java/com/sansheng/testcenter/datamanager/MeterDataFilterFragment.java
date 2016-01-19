@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.base.CollectSelectDialog;
+import com.sansheng.testcenter.metertest.CollectSelectDialog;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.base.MeterSelectDialog;
 import com.sansheng.testcenter.base.view.SettingsRadioDialog;

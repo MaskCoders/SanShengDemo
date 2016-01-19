@@ -17,6 +17,7 @@ import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.view.AnswerDialog;
 import com.sansheng.testcenter.base.view.PullListView;
 import com.sansheng.testcenter.datamanager.MeterDataFragment;
+import com.sansheng.testcenter.metertest.MeterListAdapter;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.module.Meter;
@@ -34,7 +35,7 @@ public class MeterSelectDialog extends DialogFragment implements LoaderManager.L
     private EditText mFilterView;
     private CheckBox mSelectAllView;
     private PullListView mListView;
-    private MeterListDialogAdapter mAdapter;
+    private MeterListAdapter mAdapter;
     private int mLastVisibleItem;
     private static final int LOADER_ID_FILTER_DEFAULT = 0;
     private int mOriginLength = Integer.MAX_VALUE;//默认初始显示数量
@@ -66,7 +67,7 @@ public class MeterSelectDialog extends DialogFragment implements LoaderManager.L
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    mAdapter.sellectAll();
+                    mAdapter.sellectAll(true);
                 } else {
                     mAdapter.getSelectedMeters().clear();
                 }
@@ -76,7 +77,7 @@ public class MeterSelectDialog extends DialogFragment implements LoaderManager.L
         mListView.setOnScrollListener(this);
         mListView.hideFooterView();
 //        mEmptyView = mRootView.findViewById(R.id.empty_view_group);
-        mAdapter = new MeterListDialogAdapter(getActivity(), null);
+        mAdapter = new MeterListAdapter(getActivity(), null);
         mListView.setAdapter(mAdapter);
         getLoaderManager().initLoader(LOADER_ID_FILTER_DEFAULT, null, this);
         mDialog.setCustomView(mRootView);
