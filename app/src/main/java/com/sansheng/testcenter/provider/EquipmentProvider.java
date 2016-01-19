@@ -154,6 +154,7 @@ public class EquipmentProvider extends ContentProvider {
                     sql = buildMeterQuery(tableName, projection, selection, sortOrder);
                     Log.e("ssg", "meter sql = " + sql);
                     cursor = db.rawQuery(sql, selectionArgs);
+                    Log.e("ssg", "cursor =  " + cursor.getCount());
                     break;
                 case METER_ID:
                     break;
@@ -168,6 +169,7 @@ public class EquipmentProvider extends ContentProvider {
                 default:
                     cursor = db.query(tableName, projection, selection, selectionArgs, null, null, sortOrder, limit);
                     break;
+
             }
         } catch (Exception e) {
             return null;

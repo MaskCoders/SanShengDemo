@@ -137,6 +137,9 @@ public class MeterListAdapter extends SimpleCursorAdapter {
 
     private void selectAllMeters(){
         Cursor cursor = getCursor();
+        if (cursor == null || cursor.getCount() == 0) {
+            return;
+        }
         for (cursor.moveToLast(); !cursor.isBeforeFirst(); cursor.moveToPrevious()) {
             final Meter meter = new Meter();
             meter.restore(cursor);

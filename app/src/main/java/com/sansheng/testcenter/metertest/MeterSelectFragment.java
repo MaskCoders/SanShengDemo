@@ -40,10 +40,12 @@ public class MeterSelectFragment extends Fragment implements LoaderManager.Loade
     private MeterListAdapter mAdapter;
     private int mLastVisibleItem;
     private static final int LOADER_ID_FILTER_DEFAULT = 0;
+    private static final int LOADER_ID_FILTER_FUZZY = 1;
     private int mOriginLength = Integer.MAX_VALUE;//默认初始显示数量
     private final static int DOWNSIDE_INCREASE_COUNT = 10;//每次增加数量
     private String collectIds;
     private ArrayList<Collect> collectList;
+    private static String mEditTextValue;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,9 @@ public class MeterSelectFragment extends Fragment implements LoaderManager.Loade
             @Override
             public void onClick(View v) {
                 Log.e("ssg", " 开始查询");
+                mEditTextValue = mFilterView.getText().toString();
+                restartLoader(LOADER_ID_FILTER_FUZZY);
+
             }
         });
         mSelectCollectView.setOnClickListener(new View.OnClickListener() {
@@ -102,26 +107,41 @@ public class MeterSelectFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        int type = ((MeterTestActivity)getActivity()).getTestMeterType();
+        int type = ((MeterTestActivity) getActivity()).getTestMeterType();
         Log.e("ssg", "type = " + type);
         StringBuilder selection = new StringBuilder();
-        if (TextUtils.isEmpty(collectIds)) {
-            selection.append(" 1=1 ");
-        } else {//如必要,根据选中的集中器显示相应的电表以供选择
-            selection.append(Meter.COLLECT_ID).append(" in ").append("(").append(collectIds).append(")");
+
+        switch (id) {
+            case LOADER_ID_FILTER_FUZZY://暂时支持 名称、节点、地址 三个字段的模糊查询
+                if (!TextUtils.isEmpty(mEditTextValue)) {
+                    selection.append("(");
+                    selection.append(Meter.METER_NAME).append(" LIKE ").append("'%" + mEditTextValue + "%'").append(" OR ");
+                    selection.append(Meter.DA).append(" LIKE ").append("'%" + mEditTextValue + "%'").append(" OR ");
+                    selection.append(Meter.METER_ADDRESS).append(" LIKE ").append("'%" + mEditTextValue + "%'");
+                    selection.append(")");
+                    selection.append(" AND ");
+                    mEditTextValue = "";
+                }
+                break;
+            case LOADER_ID_FILTER_DEFAULT:
+            default:
+
+                break;
         }
-        selection.append(" AND ").append(Meter.METER_TYPE).append("=").append(type);
+        if (!TextUtils.isEmpty(collectIds)) {//如必要,根据选中的集中器显示相应的电表以供选择
+            selection.append(Meter.COLLECT_ID).append(" in ").append("(").append(collectIds).append(")").append(" AND ");
+        }
+        selection.append(Meter.METER_TYPE).append("=").append(type);
         return new CursorLoader(getActivity(), Meter.CONTENT_URI, Meter.CONTENT_PROJECTION, selection.toString(),
                 null, Meter.ID + " " + Content.DESC + " LIMIT " + mOriginLength);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        int id = loader.getId();
-        if (id == LOADER_ID_FILTER_DEFAULT) {
-            if (data != null) {
-                mAdapter.swapCursor(data);
-            }
+        if (data != null) {
+            Log.e("ssg", "data.getCount() = " + data.getCount());
+            mAdapter.swapCursor(data);
+
         }
     }
 
@@ -158,8 +178,8 @@ public class MeterSelectFragment extends Fragment implements LoaderManager.Loade
         MeterUtilies.showFragment(getFragmentManager(), null, fragment, R.id.meter_content, FragmentTransaction.TRANSIT_FRAGMENT_OPEN, String.valueOf(collect.mId));
     }
 
-    public void restartLoader() {
-        getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, this);
+    public void restartLoader(int id) {
+        getLoaderManager().restartLoader(id, null, this);
     }
 
     private void showCollectDialog() {
@@ -188,7 +208,7 @@ public class MeterSelectFragment extends Fragment implements LoaderManager.Loade
                 collectIds += String.valueOf(collect.mId);
             }
             Log.e("ssg", "collectIds = " + collectIds);
-            restartLoader();
+            restartLoader(LOADER_ID_FILTER_DEFAULT);
         }
     }
 
