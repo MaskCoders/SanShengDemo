@@ -10,17 +10,17 @@
             android:orientation="vertical"
             android:id="@+id/meter_test_control_home">
         <com.sansheng.testcenter.base.view.DrawableCenterTextView
-                android:id="@+id/text3" style="@style/BtnStyle1"
+                android:id="@+id/start_test" style="@style/BtnStyle1"
                 android:drawableLeft="@drawable/left_icon_start1"
                 android:text="开始检测"/>
         <com.sansheng.testcenter.base.view.DrawableCenterTextView
-                android:id="@+id/text4" style="@style/BtnStyle1"
+                android:id="@+id/new_collect" style="@style/BtnStyle1"
                 android:drawableLeft="@drawable/left_icon_clock1"
-                android:text="设置时钟"/>
+                android:text="新建终端"/>
         <com.sansheng.testcenter.base.view.DrawableCenterTextView
-                android:id="@+id/text1" style="@style/BtnStyle1"
+                android:id="@+id/delete" style="@style/BtnStyle1"
                 android:drawableLeft="@drawable/left_icon_log"
-                android:text="显示日志"/>
+                android:text="删除终端"/>
     </LinearLayout>
 
     <LinearLayout

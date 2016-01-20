@@ -70,7 +70,7 @@ public class DBHelper extends SQLiteOpenHelper {
             "  `"+ Content.CollectColumns.PASSWORD + "` text,\n" +
             "  `"+ Content.CollectColumns.CHANNEL_TYPE + "` integer not null default 0,\n" +
             "  `"+ Content.CollectColumns.TERMINAL_IP + "` text,\n" +
-            "  `"+ Content.CollectColumns.TERMINAL_PORT + "` integer not null default 0,\n" +
+            "  `"+ Content.CollectColumns.TERMINAL_PORT + "` text,\n" +
             "  `"+ Content.CollectColumns.BAUDRATE_ID + "` integer not null default 0\n" +
             ")";
 

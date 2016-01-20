@@ -41,6 +41,13 @@
         <item>"通用载波"</item>
     </string-array>
 
+    <string-array name="collect_channel_type">
+        <item>"终端作为客户端"</item>
+        <item>"终端作为服务端"</item>
+        <item>"RS232"</item>
+        <item>"RS485"</item>
+        <item>"红外"</item>
+    </string-array>
     <string-array name="crop_image_from">
         <item>@string/crop_image_from_gallery</item>
         <item>@string/crop_image_from_camera</item>

@@ -17,7 +17,7 @@ public class Collect extends Content implements Content.CollectColumns, Parcelab
     public String mPassword;
     public int mChannelType;
     public String mTerminalIp;
-    public int mTerminalPort;
+    public String mTerminalPort;
     public int mBaudRateId;
 
     public static final int ID_INDEX = 0;
@@ -70,7 +70,7 @@ public class Collect extends Content implements Content.CollectColumns, Parcelab
         mPassword = cursor.getString(PASSWORD_INDEX);
         mChannelType = cursor.getInt(CHANNEL_TYPE_INDEX);
         mTerminalIp = cursor.getString(TERMINAL_IP_INDEX);
-        mTerminalPort = cursor.getInt(TERMINAL_PORT_INDEX);
+        mTerminalPort = cursor.getString(TERMINAL_PORT_INDEX);
         mBaudRateId = cursor.getInt(BAUDRATE_ID_INDEX);
     }
 
@@ -97,7 +97,7 @@ public class Collect extends Content implements Content.CollectColumns, Parcelab
         dest.writeString(mPassword);
         dest.writeInt(mChannelType);
         dest.writeString(mTerminalIp);
-        dest.writeInt(mTerminalPort);
+        dest.writeString(mTerminalPort);
         dest.writeInt(mBaudRateId);
     }
 
@@ -109,7 +109,7 @@ public class Collect extends Content implements Content.CollectColumns, Parcelab
             mPassword = "00000000";
             mChannelType = 0;
             mTerminalIp = "ip:" + id;
-            mTerminalPort = 9001;
+            mTerminalPort = "9001";
             mBaudRateId = id;
         }
     }
@@ -134,7 +134,7 @@ public class Collect extends Content implements Content.CollectColumns, Parcelab
         mPassword = in.readString();
         mChannelType = in.readInt();
         mTerminalIp = in.readString();
-        mTerminalPort = in.readInt();
+        mTerminalPort = in.readString();
         mBaudRateId = in.readInt();
     }
 

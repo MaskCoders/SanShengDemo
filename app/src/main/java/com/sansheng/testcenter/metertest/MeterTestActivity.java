@@ -41,22 +41,15 @@ import java.util.HashMap;
  */
 public class MeterTestActivity extends BaseActivity implements IServiceHandlerCallback,
         MeterTestItemsDialog.MeterTestCallback, WaySelectMeterDialog.WaySelectMeterCallback, ConnectTypeDialog.ConnectTypeCallback {
-    DrawableCenterTextView text1;
-    //    DrawableCenterTextView text2;
-    DrawableCenterTextView text3;
-    DrawableCenterTextView text4;
-    //    DrawableCenterTextView text5;
-//    DrawableCenterTextView text6;
-    DrawableCenterTextView confirm;
-    DrawableCenterTextView cancel;
-//    UIRevisableView mAddressView;
-//    UIRevisableView mConnTypeView;
-//    UIRevisableView mReadAddressView;
-//    UIRevisableView mSelectAddressView;
+    private DrawableCenterTextView text1;
+    private DrawableCenterTextView text3;
+    private DrawableCenterTextView text4;
+    private DrawableCenterTextView confirm;
+    private DrawableCenterTextView cancel;
 
-    Button conn;
-    EditText whm_ip;
-    EditText whm_port;
+    private Button conn;
+    private EditText whm_ip;
+    private EditText whm_port;
 
     private LinearLayout mHomeController;
     private LinearLayout mSelectMeterController;
@@ -84,7 +77,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getIntent() !=null) {
+        if (getIntent() != null) {
             mMeterType = getIntent().getIntExtra(MeterUtilies.PAMAR_METER_TYPE, MeterUtilies.METER_TEST_TYPE_SINGLE);
             Log.e("ssg", "mMeterType = " + mMeterType);
         }
@@ -190,12 +183,14 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
                 MeterSelectFragment fragment = (MeterSelectFragment) getFragmentManager().findFragmentByTag("MeterSelectFragment");
                 if (fragment != null) {
                     HashMap<String, Meter> selectMeters = fragment.getSelectedMeters();
-                    if (selectMeters != null) {
+                    if (selectMeters != null && selectMeters.size() > 0) {
                         Log.e("ssg", "选中的电表数量 = " + selectMeters.size());
                         ArrayList<Meter> meters = new ArrayList<Meter>(selectMeters.values());
                         mMeter = meters.get(0);
                         mEditMeterAddressView.setText(mMeter.mMeterAddress);
                     }
+                } else {
+                    Utility.showToast(this, "未选择任务电表");
                 }
                 showHomeView();
                 break;
@@ -448,7 +443,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         }
     }
 
-    public void showHomeView(){
+    public void showHomeView() {
         showHomeController();
         removeFragment("MeterSelectFragment");
     }

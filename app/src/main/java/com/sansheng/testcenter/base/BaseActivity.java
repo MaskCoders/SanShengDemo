@@ -30,6 +30,7 @@ public  abstract class BaseActivity extends Activity implements View.OnClickList
     public final static int LOCATION_INFO = 8;//定位
     public final static int COMPOSE_LOCATION = 9;//新增现场信息
     public final static int METER_TEST = 10;//电表检测
+    public final static int COLLECT_TEST = 11;//电表检测
     private ActionBarCallback mActionBarCallback;
     protected StringBuffer logBuffer = new StringBuffer();
     protected DrawerLayout mDrawerLayout;
@@ -224,6 +225,9 @@ public  abstract class BaseActivity extends Activity implements View.OnClickList
                         break;
                     case METER_TEST:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_socket));
+                        break;
+                    case COLLECT_TEST:
+                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_collect));
                         break;
                     default:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(R.string.company_name);
