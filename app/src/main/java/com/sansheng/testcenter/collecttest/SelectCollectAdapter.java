@@ -14,11 +14,11 @@ import java.util.HashMap;
 /**
  * Created by sunshaogang on 12/24/15.
  */
-public class CollectTestAdapter extends SimpleCursorAdapter {
-    private CollectTestActivity mActivity;
+public class SelectCollectAdapter extends SimpleCursorAdapter {
+    private SelectCollectActivity mActivity;
     private HashMap<String, Collect> mSelectedCollects = new HashMap<String, Collect>();
 
-    public CollectTestAdapter(CollectTestActivity context, Cursor cursor) {
+    public SelectCollectAdapter(SelectCollectActivity context, Cursor cursor) {
         super(context, android.R.layout.simple_list_item_1, cursor, Collect.CONTENT_PROJECTION,
                 Collect.ID_INDEX_PROJECTION, 0);
         this.mActivity = context;

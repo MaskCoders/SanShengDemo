@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.sansheng.testcenter.collecttest.CollectTestActivity;
+import com.sansheng.testcenter.collecttest.SelectCollectActivity;
 import com.sansheng.testcenter.metertest.MeterTestActivity;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.metertest.CollectSelectDialog;
@@ -108,7 +108,7 @@ public class LauncherAdapter extends BaseAdapter implements CollectSelectDialog.
                         case 2://集中器检测
 //                            CollectSelectDialog collectDialog = new CollectSelectDialog(LauncherAdapter.this);
 //                            collectDialog.show(mContext.getFragmentManager(), "select_collects");
-                            intent.setClass(mContext, CollectTestActivity.class);
+                            intent.setClass(mContext, SelectCollectActivity.class);
                             mContext.startActivity(intent);
                             break;
                         case 3://本地模块检测
