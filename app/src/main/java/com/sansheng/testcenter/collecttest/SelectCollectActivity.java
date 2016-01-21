@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -42,7 +43,6 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
     private static final int LOADER_ID_FILTER_DEFAULT = 0;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +58,7 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
 
     @Override
     protected void initButtonList() {
-        View inflate = getLayoutInflater().inflate(R.layout.collect_test_control_button_list, null);
+        View inflate = getLayoutInflater().inflate(R.layout.collect_select_control_button_list, null);
         mHomeController = (LinearLayout) inflate.findViewById(R.id.meter_test_control_home);
         mCollectDetailController = (LinearLayout) inflate.findViewById(R.id.meter_test_control_select_meter);
         text1 = (DrawableCenterTextView) inflate.findViewById(R.id.start_test);
@@ -85,7 +85,7 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
 
     @Override
     protected void initCenter() {
-        View inflate = getLayoutInflater().inflate(R.layout.collect_test_list_layout, null);
+        View inflate = getLayoutInflater().inflate(R.layout.collect_select_list_layout, null);
         mListView = (ListView) inflate.findViewById(R.id.list_view);
         mAdapter = new SelectCollectAdapter(this, null);
         mListView.setAdapter(mAdapter);
@@ -161,7 +161,7 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
         Bundle bundle = new Bundle();
         bundle.putParcelable(CollectTestUtils.PARAM_COLLECT, collect);
         fragment.setArguments(bundle);
-        MeterUtilies.showFragment(getFragmentManager(), null, fragment, R.id.meter_content,
+        MeterUtilies.showFragment(getFragmentManager(), null, fragment, R.id.content,
                 FragmentTransaction.TRANSIT_FRAGMENT_OPEN, "CollectDetailFragment");
     }
 
@@ -189,13 +189,16 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
         mCollectDetailController.setVisibility(View.VISIBLE);
     }
 
-    private void showNewCollect(){
+    private void showNewCollect() {
         Log.e("ssg", "新建终端");
         showDetailFragment(null);
     }
 
     private void startTest() {
         Log.e("ssg", "开始检测");
+        Intent intent = new Intent();
+        intent.setClass(this, CollectTestActivity.class);
+        startActivity(intent);
     }
 
     private void deleteCollect() {

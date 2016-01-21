@@ -14,7 +14,7 @@
             android:dividerHeight="1dp"
             android:scrollbarStyle="insideOverlay"
             android:clickable="false"/>
-    <FrameLayout android:id="@+id/meter_content"
+    <FrameLayout android:id="@+id/content"
                  android:layout_width="match_parent"
                  android:layout_height="match_parent">
     </FrameLayout>

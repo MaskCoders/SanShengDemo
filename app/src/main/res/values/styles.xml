@@ -140,4 +140,16 @@
         <item name="android:textSize">@dimen/list_body_text_size_big</item>
         <item name="android:textColor">@drawable/center_text_selector</item>
     </style>
+    <style name="TabHostStyle">
+        <item name="android:textColor">@color/color_white</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:background">@drawable/btn_background_orange_to_green</item>
+        <item name="android:textSize">@dimen/list_body_text_size_big</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+    </style>
 </resources>

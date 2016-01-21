@@ -40,7 +40,7 @@ public class CollectDetailFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.collect_test_detail_layout, container, false);
+        mRootView = inflater.inflate(R.layout.collect_select_detail_layout, container, false);
         mEditName = (EditText) mRootView.findViewById(R.id.collect_name);
         mEditAddress = (EditText) mRootView.findViewById(R.id.collect_name);
         mEditPassword = (EditText) mRootView.findViewById(R.id.collect_name);
@@ -68,6 +68,7 @@ public class CollectDetailFragment extends Fragment {
         super.onDestroyView();
     }
 
+    //保存当前的终端
     private void save(){
 
     }
