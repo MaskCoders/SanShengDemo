@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/collect_address"
+              android:layout_gravity="center"
+              android:gravity="center"
+              android:layout_marginTop="8dp"
+              android:layout_marginBottom="8dp"
+              android:textSize="@dimen/list_body_text_size_big"
+              android:text="终端地址"/>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/collect_test_control_1">
+        <com.sansheng.testcenter.base.view.DrawableCenterTextView
+                android:id="@+id/para_compare" style="@style/BtnStyle1"
+                android:drawableLeft="@drawable/left_icon_start1"
+                android:text="参数对比"/>
+        <com.sansheng.testcenter.base.view.DrawableCenterTextView
+                android:id="@+id/read_standard" style="@style/BtnStyle1"
+                android:drawableLeft="@drawable/left_icon_clock1"
+                android:text="读标准值"/>
+        <com.sansheng.testcenter.base.view.DrawableCenterTextView
+                android:id="@+id/select_item" style="@style/BtnStyle1"
+                android:drawableLeft="@drawable/left_icon_clock1"
+                android:text="选择项目"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/collect_test_control_2"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+        <com.sansheng.testcenter.base.view.DrawableCenterTextView
+                android:id="@+id/events_compare" style="@style/BtnStyle1"
+                android:drawableLeft="@drawable/left_icon_confirm1"
+                android:text="档案对比"/>
+        <com.sansheng.testcenter.base.view.DrawableCenterTextView
+                android:id="@+id/delete_all" style="@style/BtnStyle1"
+                android:drawableLeft="@drawable/left_icon_cancel1"
+                android:text="全部删除"/>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/collect_test_control_3"
+            android:orientation="vertical"
+            android:visibility="gone">
+        <com.sansheng.testcenter.base.view.DrawableCenterTextView
+                android:id="@+id/read_meters" style="@style/BtnStyle1"
+                android:drawableLeft="@drawable/left_icon_confirm1"
+                android:text="抄读表码"/>
+        <com.sansheng.testcenter.base.view.DrawableCenterTextView
+                android:id="@+id/date_region" style="@style/BtnStyle1"
+                android:drawableLeft="@drawable/left_icon_cancel1"
+                android:text="时间区域"/>
+        <com.sansheng.testcenter.base.view.DrawableCenterTextView
+                android:id="@+id/analysis" style="@style/BtnStyle1"
+                android:drawableLeft="@drawable/left_icon_cancel1"
+                android:text="分析漏抄"/>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/collect_test_control_4"
+            android:orientation="vertical"
+            android:visibility="gone">
+        <com.sansheng.testcenter.base.view.DrawableCenterTextView
+                android:id="@+id/read_events" style="@style/BtnStyle1"
+                android:drawableLeft="@drawable/left_icon_confirm1"
+                android:text="读取事件"/>
+        <com.sansheng.testcenter.base.view.DrawableCenterTextView
+                android:id="@+id/events_manager" style="@style/BtnStyle1"
+                android:drawableLeft="@drawable/left_icon_cancel1"
+                android:text="事件管理"/>
+
+    </LinearLayout>
+
+    <com.sansheng.testcenter.base.view.DrawableCenterTextView
+            android:id="@+id/show_log" style="@style/BtnStyle1"
+            android:drawableLeft="@drawable/left_icon_log"
+            android:text="显示日志"/>
+</LinearLayout>

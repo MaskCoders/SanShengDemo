@@ -11,25 +11,25 @@
         <TextView
                 android:layout_width="wrap_content"
                 style="@style/TabHostStyle"
-                android:text="tab1"
+                android:text="基本参数"
                 android:layout_weight="1"
                 android:id="@+id/tab1"/>
         <TextView
                 android:layout_width="wrap_content"
                 style="@style/TabHostStyle"
-                android:text="tab2"
+                android:text="档案对比"
                 android:layout_weight="1"
                 android:id="@+id/tab2"/>
         <TextView
                 android:layout_width="wrap_content"
                 style="@style/TabHostStyle"
-                android:text="tab3"
+                android:text="抄表分析"
                 android:layout_weight="1"
                 android:id="@+id/tab3"/>
         <TextView
                 android:layout_width="wrap_content"
                 style="@style/TabHostStyle"
-                android:text="tab4"
+                android:text="事件统计"
                 android:layout_weight="1"
                 android:id="@+id/tab4"/>
     </LinearLayout>

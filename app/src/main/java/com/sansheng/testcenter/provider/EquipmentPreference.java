@@ -11,8 +11,8 @@ public class EquipmentPreference {
     private static final String TAG = "EquipmentPreference";
     private static final String PREFERENCES_FILE = "Equipment";
     //    com.sansheng.testcenter_preferences
-    private static final String DEFAULT_AGREEMENT = "default_protocol";
-    private static final String RESEND_FREQUENCY = "resend_frequency";
+    private static final String METER_TEST_SELECT_ITEM = "meter_test";
+    private static final String COLLECT_TEST_SELECT_ITEM = "collect_test";
     private static final String REQUEST_TIME_OUT = "request_time_out";
     private static final String LOG_TEXT_SIZE = "log_text_size";
     private static final String AGREEMENT_SHOW_LENGTH = "protocol_show_length";
@@ -38,11 +38,20 @@ public class EquipmentPreference {
 
     //记录上次选择的电表检测项目
     public void setSelectedMeterTest(String selected){
-        mSharedPreferences.edit().putString(DEFAULT_AGREEMENT, selected).apply();
+        mSharedPreferences.edit().putString(METER_TEST_SELECT_ITEM, selected).apply();
     }
 
     public String getSelectedMeterTest(){
-        return mSharedPreferences.getString(DEFAULT_AGREEMENT, null);
+        return mSharedPreferences.getString(METER_TEST_SELECT_ITEM, null);
+    }
+
+    //记录上次选择的集中器检测项目
+    public void setSelectedCollectTest(String selected){
+        mSharedPreferences.edit().putString(COLLECT_TEST_SELECT_ITEM, selected).apply();
+    }
+
+    public String getSelectedCollectTest(){
+        return mSharedPreferences.getString(COLLECT_TEST_SELECT_ITEM, null);
     }
 
     /**

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/collect_test_center_item">
+    <TextView
+            android:layout_width="100dp"
+            android:id="@+id/collect_test_item"
+            android:text="项目"
+            style="@style/MeterTestCenterListTextStyle"
+            android:textColor="@color/color_black"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/collect_test_result"
+            android:layout_weight="1"
+            android:text="检测结果"
+            style="@style/MeterTestCenterListTextStyle"
+            android:textColor="@color/main_green"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/collect_test_explain"
+            android:layout_weight="1"
+            android:text="说明"
+            style="@style/MeterTestCenterListTextStyle"
+            android:textColor="@color/err_msg_tip"/>
+</LinearLayout>

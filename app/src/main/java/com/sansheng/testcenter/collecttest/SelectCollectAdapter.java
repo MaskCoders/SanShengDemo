@@ -9,14 +9,15 @@ import android.widget.*;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.module.Collect;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * Created by sunshaogang on 12/24/15.
  */
 public class SelectCollectAdapter extends SimpleCursorAdapter {
     private SelectCollectActivity mActivity;
-    private HashMap<String, Collect> mSelectedCollects = new HashMap<String, Collect>();
+//    private HashMap<String, Collect> mSelectedCollects = new HashMap<String, Collect>();
+    private ArrayList<Collect> mSelectedCollects = new ArrayList<Collect>();
 
     public SelectCollectAdapter(SelectCollectActivity context, Cursor cursor) {
         super(context, android.R.layout.simple_list_item_1, cursor, Collect.CONTENT_PROJECTION,
@@ -77,23 +78,23 @@ public class SelectCollectAdapter extends SimpleCursorAdapter {
                 mActivity.showDetailFragment(collect);
             }
         });
-        holder.mCheckBox.setChecked(mSelectedCollects.containsKey(collect.mCommonAddress));
+        holder.mCheckBox.setChecked(mSelectedCollects.contains(collect));
         holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //do something
 //                Log.e("ssg", "isChecked = " + isChecked);
                 if (isChecked) {
-                    mSelectedCollects.put(collect.mCommonAddress, collect);
+                    mSelectedCollects.add(collect);
                 } else {
-                    mSelectedCollects.remove(collect.mCommonAddress);
+                    mSelectedCollects.remove(collect);
                 }
 //                Log.e("ssg", "mSelectCollects size = " + mSelectCollects.size());
             }
         });
     }
 
-    public HashMap<String, Collect> getSelectedCollects(){
+    public ArrayList<Collect> getSelectedCollects(){
         return mSelectedCollects;
     }
 

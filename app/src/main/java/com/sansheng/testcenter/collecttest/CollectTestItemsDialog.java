@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.base;
+package com.sansheng.testcenter.collecttest;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -16,17 +16,17 @@ import java.util.HashMap;
 /**
  * Created by sunshaogang on 1/4/16.
  */
-public class MeterTestItemsDialog extends DialogFragment {
+public class CollectTestItemsDialog extends DialogFragment {
     private View mRootView;
     private ListView mListView;
     private AnswerDialog mDialog;
-    private MeterTestCallback callback;
-    private MeterTestAdapter mAdapter;
+    private CollectTestCallback callback;
+    private CollectTestAdapter mAdapter;
 
-    public MeterTestItemsDialog() {
+    public CollectTestItemsDialog() {
     }
 
-    public MeterTestItemsDialog(MeterTestCallback callback) {
+    public CollectTestItemsDialog(CollectTestCallback callback) {
         this.callback = callback;
     }
 
@@ -41,15 +41,15 @@ public class MeterTestItemsDialog extends DialogFragment {
         mDialog.show();
         mDialog.setTitleText("选择测试项目");
         LayoutInflater inflater = LayoutInflater.from(getActivity());
-        mRootView = inflater.inflate(R.layout.meter_test_dialog_layout, null);
-        mListView = (ListView) mRootView.findViewById(R.id.listview);
-        mAdapter = new MeterTestAdapter();
+        mRootView = inflater.inflate(R.layout.collect_test_item_dialog_layout, null);
+        mListView = (ListView) mRootView.findViewById(R.id.list_view);
+        mAdapter = new CollectTestAdapter();
         mListView.setAdapter(mAdapter);
         mDialog.setCustomView(mRootView);
         mDialog.setNegativeButton(R.string.cancel, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callback.onMeterItemNegativeClick();
+                callback.onCollectItemNegativeClick();
                 mDialog.dismiss();
             }
         });
@@ -57,7 +57,7 @@ public class MeterTestItemsDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 mDialog.dismiss();
-                callback.onMeterItemPositiveClick(mAdapter.getSelectedCollects());
+                callback.onCollectItemPositiveClick(mAdapter.getSelectedCollects());
             }
         });
         return mDialog;
@@ -68,19 +68,19 @@ public class MeterTestItemsDialog extends DialogFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    public interface MeterTestCallback {
-        void onMeterItemNegativeClick();
-        void onMeterItemPositiveClick(HashMap<Integer, String> collects);
+    public interface CollectTestCallback {
+        void onCollectItemNegativeClick();
+        void onCollectItemPositiveClick(HashMap<Integer, String> collects);
     }
 
-    class MeterTestAdapter extends BaseAdapter {
+    class CollectTestAdapter extends BaseAdapter {
 
         private String[] testItems;
         private HashMap<Integer, String> mSelectedItems = new HashMap<Integer, String>();
 
         public String[] getTestItems(){
             if (testItems == null || testItems.length == 0) {
-                testItems = getResources().getStringArray(R.array.meter_test_items);
+                testItems = getResources().getStringArray(R.array.collect_test_select_items);
             }
             return testItems;
         }
@@ -111,7 +111,7 @@ public class MeterTestItemsDialog extends DialogFragment {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
             if (viewHolder == null) {
-                convertView = LayoutInflater.from(getActivity()).inflate(R.layout.meter_test_item_layout, null);
+                convertView = LayoutInflater.from(getActivity()).inflate(R.layout.collect_test_dialog_item_layout, null);
                 viewHolder = new ViewHolder();
                 initViewHolder(viewHolder, convertView);
                 convertView.setTag(viewHolder);
@@ -121,9 +121,9 @@ public class MeterTestItemsDialog extends DialogFragment {
         }
 
         ViewHolder initViewHolder(final ViewHolder holder, View view) {
-            holder.itemLayout = (LinearLayout) view.findViewById(R.id.meter_test_item);
-            holder.describeView = (TextView) view.findViewById(R.id.meter_test_item_describe);
-            holder.mCheckBox = (CheckBox) view.findViewById(R.id.meter_test_checkbox);
+            holder.itemLayout = (LinearLayout) view.findViewById(R.id.collect_test_item);
+            holder.describeView = (TextView) view.findViewById(R.id.collect_test_item_describe);
+            holder.mCheckBox = (CheckBox) view.findViewById(R.id.collect_test_checkbox);
             return holder;
         }
 

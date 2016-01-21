@@ -21,7 +21,9 @@ import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.utils.MeterUtilies;
+import com.sansheng.testcenter.utils.Utility;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -58,9 +60,9 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
 
     @Override
     protected void initButtonList() {
-        View inflate = getLayoutInflater().inflate(R.layout.collect_select_control_button_list, null);
-        mHomeController = (LinearLayout) inflate.findViewById(R.id.meter_test_control_home);
-        mCollectDetailController = (LinearLayout) inflate.findViewById(R.id.meter_test_control_select_meter);
+        View inflate = getLayoutInflater().inflate(R.layout.collect_select_control_layout, null);
+        mHomeController = (LinearLayout) inflate.findViewById(R.id.collect_test_control_home);
+        mCollectDetailController = (LinearLayout) inflate.findViewById(R.id.collect_test_control_select_meter);
         text1 = (DrawableCenterTextView) inflate.findViewById(R.id.start_test);
         text3 = (DrawableCenterTextView) inflate.findViewById(R.id.new_collect);
         text4 = (DrawableCenterTextView) inflate.findViewById(R.id.delete);
@@ -196,7 +198,22 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
 
     private void startTest() {
         Log.e("ssg", "开始检测");
+        if (mAdapter == null) {
+            return;
+        }
+        ArrayList<Collect> collects = mAdapter.getSelectedCollects();
+        if (collects == null || collects.size() == 0) {
+            Utility.showToast(this, "未选择集中器");
+            return;
+        }
+        if (mAdapter.getSelectedCollects().size() > 1) {
+            Utility.showToast(this, "只能选择一个集中器");
+            return;
+        }
         Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(CollectTestUtils.PARAM_COLLECT, collects.get(0));
+        intent.putExtras(bundle);
         intent.setClass(this, CollectTestActivity.class);
         startActivity(intent);
     }
