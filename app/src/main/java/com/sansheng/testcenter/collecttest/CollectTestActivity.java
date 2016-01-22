@@ -142,7 +142,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
 
     @Override
     public void onClick(View v) {
-        clearStatus();
+
         switch (v.getId()) {
             case R.id.tab1:
                 if (tab1Fragment == null) {
@@ -236,7 +236,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
     }
 
     private void replaceFragment(BaseTabFragment newFragment) {
-
+        clearStatus();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (!newFragment.isAdded()) {
             transaction.replace(R.id.content, newFragment, newFragment.getFragmentTag());
@@ -306,6 +306,10 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
             showWholeLog(true);
             showLog.setText("关闭日志");
         }
+    }
+
+    public Collect getCollect(){
+        return mCollect;
     }
 
     @Override

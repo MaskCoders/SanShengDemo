@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import com.sansheng.testcenter.R;
 
 /**
@@ -16,6 +17,11 @@ public class Fragment3 extends BaseTabFragment {
     public static final String TAG = "Fragment3";
     private View mRootView;
     private Spinner mTimeSpinner;
+    private TextView mCollectName;
+    private TextView mCollectAddress;
+    private TextView mCollectChannel;
+    private TextView mCollectIp;
+    private TextView mCollectMiss;
 
     public Fragment3() {
     }
@@ -34,6 +40,16 @@ public class Fragment3 extends BaseTabFragment {
 //      adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mTimeSpinner.setAdapter(adapter);
         mTimeSpinner.setSelection(0, true);
+        mCollectName = (TextView) mRootView.findViewById(R.id.collect_name);
+        mCollectAddress = (TextView) mRootView.findViewById(R.id.collect_address);
+        mCollectChannel = (TextView) mRootView.findViewById(R.id.collect_channel);
+        mCollectIp = (TextView) mRootView.findViewById(R.id.collect_ip);
+        mCollectMiss = (TextView) mRootView.findViewById(R.id.collect_miss);
+        mCollectName.setText(mCollect.mCollectName);
+        mCollectAddress.setText(mCollect.mCommonAddress);
+        mCollectChannel.setText(CollectTestUtils.channelItems(getActivity())[mCollect.mChannelType]);
+        mCollectIp.setText(mCollect.mTerminalIp);
+        mCollectMiss.setText("");
         return mRootView;
     }
 

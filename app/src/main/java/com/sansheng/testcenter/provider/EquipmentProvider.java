@@ -234,6 +234,8 @@ public class EquipmentProvider extends ContentProvider {
                 case METERDATA_ID:
                 case LOCATION:
                 case LOCATION_ID:
+                case COLLECT:
+                case COLLECT_ID:
                     break;
             }
             result = db.delete(tableName, selection, selectionArgs);
@@ -260,8 +262,11 @@ public class EquipmentProvider extends ContentProvider {
                     break;
                 case METERDATA:
                     break;
+                case COLLECT:
+                    break;
                 case METER_ID:
                 case METERDATA_ID:
+                case COLLECT_ID:
                     String id = uri.getLastPathSegment();
                     selection = whereWithId(id, selection);
                     break;

@@ -47,18 +47,24 @@ public class CollectDetailFragment extends Fragment {
         mEditPassword = (EditText) mRootView.findViewById(R.id.collect_password);
         mChannel = (Spinner) mRootView.findViewById(R.id.collect_channel);
         mEditPort = (EditText) mRootView.findViewById(R.id.collect_port);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.collect_channel_type, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mChannel.setAdapter(adapter);
         if (mCollect != null) {
             mEditName.setText(mCollect.mCollectName);
             mEditAddress.setText(mCollect.mCommonAddress);
             mEditPassword.setText(mCollect.mPassword);
-            ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.collect_channel_type, android.R.layout.simple_spinner_item);
-//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            mChannel.setAdapter(adapter);
             mChannel.setSelection(mCollect.mChannelType, true);
             mEditPort.setText(mCollect.mTerminalPort);
         } else {
             mCollect = new Collect();
         }
+        mRootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                return;
+            }
+        });
         return mRootView;
     }
 

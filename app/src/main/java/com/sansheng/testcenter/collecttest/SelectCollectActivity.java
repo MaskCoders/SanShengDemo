@@ -98,10 +98,10 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
         switch (v.getId()) {
             case R.id.confirm:
                 saveCurrentCollect();
-                showHomeView();
+                onBackPressed();
                 break;
             case R.id.cancel:
-                showHomeView();
+                onBackPressed();
                 break;
             case R.id.start_test://开始按钮
                 startTest();
@@ -147,8 +147,10 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         showHomeView();
+        int count = getFragmentManager().getBackStackEntryCount();
+        Log.e("ssg", "count = " + count);
+        super.onBackPressed();
     }
 
     public void showDetailFragment(Collect collect) {
@@ -162,6 +164,8 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
     }
 
     public void removeFragment(String tag) {
+        int count = getFragmentManager().getBackStackEntryCount();
+        Log.e("ssg", "removeFragment count = " + count);
         Fragment fragment = getFragmentManager().findFragmentByTag(tag);
         if (fragment != null) {
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -173,6 +177,9 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
     public void showHomeView() {
         showHomeController();
         removeFragment("CollectDetailFragment");
+        if (mAdapter != null && mAdapter.getCount() > 0) {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     private void showHomeController() {
@@ -225,8 +232,10 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
         }
         if (collect != null && collect.isEffective()) {
             if (collect.isSaved()) {
+                Log.e("ssg", "collect update = " + collect.mChannelType);
                 collect.update(this);
             } else {
+                Log.e("ssg", "collect save = " + collect.mChannelType);
                 collect.save(this);
             }
         }
