@@ -91,7 +91,7 @@ public class Collect extends Content implements Content.CollectColumns, Parcelab
     }
 
     public boolean isEffective() {
-        if (TextUtils.isEmpty(mCommonAddress)) {
+        if (TextUtils.isEmpty(mCollectName)) {
             return false;
         }
         if (TextUtils.isEmpty(mPassword)) {

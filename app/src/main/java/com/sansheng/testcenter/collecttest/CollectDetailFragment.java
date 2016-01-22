@@ -52,7 +52,7 @@ public class CollectDetailFragment extends Fragment {
         mChannel.setAdapter(adapter);
         if (mCollect != null) {
             mEditName.setText(mCollect.mCollectName);
-            mEditAddress.setText(mCollect.mCommonAddress);
+            mEditAddress.setText(mCollect.mTerminalIp);
             mEditPassword.setText(mCollect.mPassword);
             mChannel.setSelection(mCollect.mChannelType, true);
             mEditPort.setText(mCollect.mTerminalPort);
@@ -84,7 +84,7 @@ public class CollectDetailFragment extends Fragment {
             mCollect = new Collect();
         }
         mCollect.mCollectName = mEditName.getText().toString();
-        mCollect.mCommonAddress = mEditAddress.getText().toString();
+        mCollect.mTerminalIp = mEditAddress.getText().toString();
         mCollect.mPassword = mEditPassword.getText().toString();
         mCollect.mChannelType = mChannel.getSelectedItemPosition();
         mCollect.mTerminalPort = mEditPort.getText().toString();

@@ -69,7 +69,7 @@ public class SelectCollectAdapter extends SimpleCursorAdapter {
             return;
         }
         holder.collectName.setText(String.valueOf(collect.mCollectName));
-        holder.collectAddress.setText(collect.mCommonAddress);
+        holder.collectAddress.setText(collect.mTerminalIp);
         holder.collectChannel.setText(CollectTestUtils.channelItems(mActivity)[collect.mChannelType]);
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override

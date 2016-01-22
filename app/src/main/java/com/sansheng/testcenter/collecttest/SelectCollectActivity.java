@@ -97,8 +97,9 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.confirm:
-                saveCurrentCollect();
-                onBackPressed();
+                if (saveCurrentCollect()) {
+                    onBackPressed();
+                }
                 break;
             case R.id.cancel:
                 onBackPressed();
@@ -225,12 +226,11 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
         Log.e("ssg", "删除终端");
     }
 
-    private void saveCurrentCollect() {
+    private boolean saveCurrentCollect() {
         Collect collect = null;
         CollectDetailFragment fragment = (CollectDetailFragment) getFragmentManager().findFragmentByTag("CollectDetailFragment");
         if (fragment != null) {
             collect = fragment.getCollect();
-
         }
         if (collect != null && collect.isEffective()) {
             if (collect.isSaved()) {
@@ -240,6 +240,10 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
                 Log.e("ssg", "collect save = " + collect.mChannelType);
                 collect.save(this);
             }
+            return true;
+        } else {
+            Utility.showToast(this, "集中器信息不完整");
+            return false;
         }
     }
 
