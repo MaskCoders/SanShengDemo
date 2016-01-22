@@ -64,6 +64,12 @@
         <item>"RS485"</item>
         <item>"红外"</item>
     </string-array>
+
+    <string-array name="collect_time_range">
+        <item>"最近3天"</item>
+        <item>"最近7天"</item>
+    </string-array>
+
     <string-array name="crop_image_from">
         <item>@string/crop_image_from_gallery</item>
         <item>@string/crop_image_from_camera</item>

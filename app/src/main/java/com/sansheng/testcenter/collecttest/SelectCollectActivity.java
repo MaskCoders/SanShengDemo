@@ -16,15 +16,12 @@ import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.view.DrawableCenterTextView;
 import com.sansheng.testcenter.bean.WhmBean;
-import com.sansheng.testcenter.metertest.MeterSelectFragment;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Content;
-import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.utils.Utility;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by sunshaogang on 1/20/16.
@@ -100,16 +97,7 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.confirm:
-                MeterSelectFragment fragment = (MeterSelectFragment) getFragmentManager().findFragmentByTag("MeterSelectFragment");
-                if (fragment != null) {
-                    HashMap<String, Meter> selectMeters = fragment.getSelectedMeters();
-                    if (selectMeters != null) {
-                        Log.e("ssg", "选中的电表数量 = " + selectMeters.size());
-//                        ArrayList<Meter> meters = new ArrayList<Meter>(selectMeters.values());
-//                        mMeter = meters.get(0);
-//                        mEditMeterAddressView.setText(mMeter.mMeterAddress);
-                    }
-                }
+                saveCurrentCollect();
                 showHomeView();
                 break;
             case R.id.cancel:
@@ -155,6 +143,12 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        showHomeView();
     }
 
     public void showDetailFragment(Collect collect) {
@@ -220,6 +214,22 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
 
     private void deleteCollect() {
         Log.e("ssg", "删除终端");
+    }
+
+    private void saveCurrentCollect() {
+        Collect collect = null;
+        CollectDetailFragment fragment = (CollectDetailFragment) getFragmentManager().findFragmentByTag("CollectDetailFragment");
+        if (fragment != null) {
+            collect = fragment.getCollect();
+
+        }
+        if (collect != null && collect.isEffective()) {
+            if (collect.isSaved()) {
+                collect.update(this);
+            } else {
+                collect.save(this);
+            }
+        }
     }
 
 }

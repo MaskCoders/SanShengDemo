@@ -40,7 +40,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
     private DrawableCenterTextView eventsCompare;
     private DrawableCenterTextView deleteAll;
     private DrawableCenterTextView readMeters;
-    private DrawableCenterTextView dateRegion;
+//    private Spinner dateRegion;
     private DrawableCenterTextView analysis;
     private DrawableCenterTextView read_events;
     private DrawableCenterTextView events_manager;
@@ -86,12 +86,16 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
         deleteAll = (DrawableCenterTextView) inflate.findViewById(R.id.delete_all);
         //mButtonList3
         readMeters = (DrawableCenterTextView) inflate.findViewById(R.id.read_meters);
-        dateRegion = (DrawableCenterTextView) inflate.findViewById(R.id.date_region);
+//        dateRegion = (Spinner) inflate.findViewById(R.id.date_region);
         analysis = (DrawableCenterTextView) inflate.findViewById(R.id.analysis);
         //mButtonList4
         read_events = (DrawableCenterTextView) inflate.findViewById(R.id.read_events);
         events_manager = (DrawableCenterTextView) inflate.findViewById(R.id.events_manager);
 
+//        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.collect_time_range, android.R.layout.simple_spinner_item);
+//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        dateRegion.setAdapter(adapter);
+//        dateRegion.setSelection(0, true);
         collectAddress.setText(mCollect.mCommonAddress);
         showLog.setOnClickListener(this);
         paraCompare.setOnClickListener(this);
@@ -100,7 +104,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
         eventsCompare.setOnClickListener(this);
         deleteAll.setOnClickListener(this);
         readMeters.setOnClickListener(this);
-        dateRegion.setOnClickListener(this);
+//        dateRegion.setOnClickListener(this);
         analysis.setOnClickListener(this);
         read_events.setOnClickListener(this);
         events_manager.setOnClickListener(this);

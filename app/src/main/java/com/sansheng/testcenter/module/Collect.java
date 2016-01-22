@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 /**
  * Created by sunshaogang on 12/17/15.
@@ -31,7 +32,7 @@ public class Collect extends Content implements Content.CollectColumns, Parcelab
 
 
     public static final String[] CONTENT_PROJECTION = {
-            ID, COMM_ADDRESS, COLLECT_NAME, PASSWORD, CHANNEL_TYPE, TERMINAL_IP,TERMINAL_PORT, BAUDRATE_ID};
+            ID, COMM_ADDRESS, COLLECT_NAME, PASSWORD, CHANNEL_TYPE, TERMINAL_IP, TERMINAL_PORT, BAUDRATE_ID};
 
     public static final int[] ID_INDEX_PROJECTION = {
             ID_INDEX, COMM_ADDRESS_INDEX, COLLECT_NAME_INDEX, PASSWORD_INDEX, CHANNEL_TYPE_INDEX, TERMINAL_IP_INDEX,
@@ -45,6 +46,7 @@ public class Collect extends Content implements Content.CollectColumns, Parcelab
     public Collect() {
         mBaseUri = CONTENT_URI;
     }
+
     public static void init() {
         CONTENT_URI = Uri.parse(Content.BASE_CONTENT_URI + "/collect");
     }
@@ -88,6 +90,21 @@ public class Collect extends Content implements Content.CollectColumns, Parcelab
         super.update(context, toContentValues());
     }
 
+    public boolean isEffective() {
+        if (TextUtils.isEmpty(mCommonAddress)) {
+            return false;
+        }
+        if (TextUtils.isEmpty(mPassword)) {
+            return false;
+        }
+        if (TextUtils.isEmpty(mTerminalIp)) {
+            return false;
+        }
+        if (TextUtils.isEmpty(mTerminalPort)) {
+            return false;
+        }
+        return true;
+    }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -107,7 +124,7 @@ public class Collect extends Content implements Content.CollectColumns, Parcelab
             mCommonAddress = "地址" + id;
             mCollectName = "名称" + id;
             mPassword = "00000000";
-            mChannelType = 0;
+            mChannelType = id % 5;
             mTerminalIp = "ip:" + id;
             mTerminalPort = "9001";
             mBaudRateId = id;
@@ -139,7 +156,7 @@ public class Collect extends Content implements Content.CollectColumns, Parcelab
     }
 
     public String toString() {
-        return  "[" + ID + " : " + mId + "]" + "\n" +
+        return "[" + ID + " : " + mId + "]" + "\n" +
                 "[" + COLLECT_NAME + " : " + mCollectName + "]" + "\n";
     }
 }
