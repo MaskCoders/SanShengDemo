@@ -5,14 +5,13 @@
               android:layout_height="@dimen/meter_data_list_item_height"
               android:id="@+id/collect_item">
     <TextView
-            android:layout_width="@dimen/collect_item1_width"
+            android:layout_width="80dp"
             android:id="@+id/collect_name"
             style="@style/ListTextView"
             android:text="终端名称"/>
     <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:id="@+id/collect_address"
-            android:layout_weight="1"
             style="@style/ListTextView"
             android:text="通讯地址"/>
     <TextView
@@ -22,9 +21,8 @@
             style="@style/ListTextView"
             android:text="连接信道"/>
     <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:id="@+id/connect_state"
-            android:layout_weight="1"
             style="@style/ListTextView"
             android:text="连接状态"/>
     <CheckBox

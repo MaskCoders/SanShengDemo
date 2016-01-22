@@ -177,9 +177,11 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
     public void showHomeView() {
         showHomeController();
         removeFragment("CollectDetailFragment");
-        if (mAdapter != null && mAdapter.getCount() > 0) {
-            mAdapter.notifyDataSetChanged();
-        }
+        restartLoader(LOADER_ID_FILTER_DEFAULT);
+    }
+
+    public void restartLoader(int id) {
+        getLoaderManager().restartLoader(id, null, this);
     }
 
     private void showHomeController() {
