@@ -24,7 +24,7 @@ public class Fragment4 extends BaseTabFragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.collect_test_fragment1_layout, container, false);
+        mRootView = inflater.inflate(R.layout.collect_test_fragment4_layout, container, false);
         return mRootView;
     }
     @Override

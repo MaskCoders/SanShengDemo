@@ -6,14 +6,16 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+import com.sansheng.testcenter.utils.MeterUtilies;
 
 /**
  * Created by sunshaogang on 12/17/15.
  */
-public class EquipmentException extends Content implements Content.EquipmentExceptionColumns, Parcelable {
+public class Event extends Content implements Content.EventColumns, Parcelable {
 
     public int mCollectId;
-    public long mHappenTime;
+    public String mHappenTime;
     public int mType;
     public int mPm;
     public int mFlag;
@@ -34,15 +36,27 @@ public class EquipmentException extends Content implements Content.EquipmentExce
             ID_INDEX, COLLECT_ID_INDEX, HEPPEN_TIME_INDEX, TYPE_INDEX, PM_INDEX, FLAG_INDEX, NOTE_INDEX};
 
 
-    public static final String TABLE_NAME = "exception";
+    public static final String TABLE_NAME = "event";
     public static Uri CONTENT_URI;
 
-    public EquipmentException() {
+    public Event() {
         mBaseUri = CONTENT_URI;
     }
 
     public static void init() {
-        CONTENT_URI = Uri.parse(Content.BASE_CONTENT_URI + "/exception");
+        CONTENT_URI = Uri.parse(Content.BASE_CONTENT_URI + "/event");
+    }
+
+    public Event(boolean test, int id) {
+        mBaseUri = CONTENT_URI;
+        if (test) {
+            mCollectId = 0;
+            mHappenTime = MeterUtilies.getSanShengTime(System.currentTimeMillis());
+            mType = 0;
+            mPm = id;
+            mNote = " this is an example == " + id;
+            Log.e("ssg", "mCollectId = " + mCollectId);
+        }
     }
 
     @Override
@@ -61,7 +75,7 @@ public class EquipmentException extends Content implements Content.EquipmentExce
     public void restore(Cursor cursor) {
         mId = cursor.getLong(ID_INDEX);
         mCollectId = cursor.getInt(COLLECT_ID_INDEX);
-        mHappenTime = cursor.getLong(HEPPEN_TIME_INDEX);
+        mHappenTime = cursor.getString(HEPPEN_TIME_INDEX);
         mType = cursor.getInt(TYPE_INDEX);
         mPm = cursor.getInt(PM_INDEX);
         mFlag = cursor.getInt(FLAG_INDEX);
@@ -87,30 +101,30 @@ public class EquipmentException extends Content implements Content.EquipmentExce
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(mId);
         dest.writeInt(mCollectId);
-        dest.writeLong(mHappenTime);
+        dest.writeString(mHappenTime);
         dest.writeInt(mType);
         dest.writeInt(mPm);
         dest.writeInt(mFlag);
         dest.writeString(mNote);
     }
 
-    public static final Creator<EquipmentException> CREATOR
-            = new Creator<EquipmentException>() {
+    public static final Creator<Event> CREATOR
+            = new Creator<Event>() {
         @Override
-        public EquipmentException createFromParcel(Parcel in) {
-            return new EquipmentException(in);
+        public Event createFromParcel(Parcel in) {
+            return new Event(in);
         }
 
         @Override
-        public EquipmentException[] newArray(int size) {
-            return new EquipmentException[size];
+        public Event[] newArray(int size) {
+            return new Event[size];
         }
     };
 
-    public EquipmentException(Parcel in) {
+    public Event(Parcel in) {
         mId = in.readLong();
         mCollectId = in.readInt();
-        mHappenTime = in.readLong();
+        mHappenTime = in.readString();
         mType = in.readInt();
         mPm = in.readInt();
         mFlag = in.readInt();

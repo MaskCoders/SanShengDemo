@@ -2,6 +2,7 @@ package com.sansheng.testcenter.collecttest;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -366,5 +367,8 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
 
     private void eventsManager() {
         Log.e("ssg", "事件管理");
+        Intent intent = new Intent();
+        intent.setClass(this, EventManagerActivity.class);
+        startActivity(intent);
     }
 }

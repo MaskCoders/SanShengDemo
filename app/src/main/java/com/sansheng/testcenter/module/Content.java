@@ -137,7 +137,7 @@ public abstract class Content {
         MeterData.init();
         Collect.init();
         CollectParam.init();
-        EquipmentException.init();
+        Event.init();
         Concentrator.init();
         LocationInfo.init();
     }
@@ -212,7 +212,7 @@ public abstract class Content {
     }
 
 
-    public static interface EquipmentExceptionColumns {
+    public static interface EventColumns {
         public static final String ID = "_id";
         public static final String COLLECT_ID = "collectId";
         public static final String HEPPEN_TIME = "heppenTime";

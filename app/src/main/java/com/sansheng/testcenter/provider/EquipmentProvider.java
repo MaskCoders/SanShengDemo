@@ -51,10 +51,10 @@ public class EquipmentProvider extends ContentProvider {
     private static final int COLLECT_PARAM_BASE = 0x4000;
     private static final int COLLECT_PARAM = COLLECT_PARAM_BASE;
     private static final int COLLECT_PARAM_ID = COLLECT_PARAM_BASE + 2;
-    //exception
-    private static final int EXCEPTION_BASE = 0x5000;
-    private static final int EXCEPTION = EXCEPTION_BASE;
-    private static final int EXCEPTION_ID = EXCEPTION_BASE + 2;
+    //event
+    private static final int EVENT_BASE = 0x5000;
+    private static final int EVENT = EVENT_BASE;
+    private static final int EVENT_ID = EVENT_BASE + 2;
     //location
     private static final int LOCATION_BASE = 0x6000;
     private static final int LOCATION = LOCATION_BASE;
@@ -71,7 +71,7 @@ public class EquipmentProvider extends ContentProvider {
         array.put(CONCENTRATOR_BASE >> BASE_SHIFT, Concentrator.TABLE_NAME);
         array.put(COLLECT_BASE >> BASE_SHIFT, Collect.TABLE_NAME);
         array.put(COLLECT_PARAM_BASE >> BASE_SHIFT, CollectParam.TABLE_NAME);
-        array.put(EXCEPTION_BASE >> BASE_SHIFT, EquipmentException.TABLE_NAME);
+        array.put(EVENT_BASE >> BASE_SHIFT, Event.TABLE_NAME);
         array.put(LOCATION_BASE >> BASE_SHIFT, LocationInfo.TABLE_NAME);
         TABLE_NAMES = array;
     }
@@ -114,8 +114,8 @@ public class EquipmentProvider extends ContentProvider {
         mURIMatcher.addURI(Content.AUTHORITY, "collect/#", COLLECT_ID);
         mURIMatcher.addURI(Content.AUTHORITY, "collectparam", COLLECT_PARAM);
         mURIMatcher.addURI(Content.AUTHORITY, "collectparam/#", COLLECT_PARAM_ID);
-        mURIMatcher.addURI(Content.AUTHORITY, "except", EXCEPTION);
-        mURIMatcher.addURI(Content.AUTHORITY, "except/#", EXCEPTION_ID);
+        mURIMatcher.addURI(Content.AUTHORITY, "event", EVENT);
+        mURIMatcher.addURI(Content.AUTHORITY, "event/#", EVENT_ID);
         mURIMatcher.addURI(Content.AUTHORITY, "location", LOCATION);
         mURIMatcher.addURI(Content.AUTHORITY, "location/#", LOCATION_ID);
     }
@@ -300,10 +300,10 @@ public class EquipmentProvider extends ContentProvider {
                 return "vnd.android.cursor.dir/collectparam/";
             case COLLECT_PARAM_ID:
                 return "vnd.android.cursor.dir/collectparam/#";
-            case EXCEPTION:
-                return "vnd.android.cursor.dir/except/";
-            case EXCEPTION_ID:
-                return "vnd.android.cursor.dir/except/#";
+            case EVENT:
+                return "vnd.android.cursor.dir/event/";
+            case EVENT_ID:
+                return "vnd.android.cursor.dir/event/#";
             case LOCATION:
                 return "vnd.android.cursor.dir/location/";
             case LOCATION_ID:

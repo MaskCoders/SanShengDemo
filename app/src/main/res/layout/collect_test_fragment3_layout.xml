@@ -2,6 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="300dp">
-
+              android:layout_height="match_parent">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/NomalTextStyle"
+            android:id="@+id/collect_name"
+            android:text="集中器名称"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/NomalTextStyle"
+            android:id="@+id/collect_address"
+            android:text="集中器地址"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/NomalTextStyle"
+            android:id="@+id/collect_channel"
+            android:text="信道类型"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/NomalTextStyle"
+            android:id="@+id/collect_ip"
+            android:text="集中器ip地址"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/NomalTextStyle"
+            android:id="@+id/collect_miss"
+            android:text="漏抄"/>
 </LinearLayout>

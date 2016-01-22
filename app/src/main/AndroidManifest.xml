@@ -117,6 +117,9 @@
         <activity android:name=".collecttest.CollectTestActivity"
                   android:screenOrientation="sensorLandscape">
         </activity>
+        <activity android:name=".collecttest.EventManagerActivity"
+                  android:screenOrientation="sensorLandscape">
+        </activity>
         <provider
                 android:name=".provider.EquipmentProvider"
                 android:authorities="${applicationId}.provider.Equipment"

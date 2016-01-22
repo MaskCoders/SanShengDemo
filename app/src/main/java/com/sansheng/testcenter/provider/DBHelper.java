@@ -82,14 +82,14 @@ public class DBHelper extends SQLiteOpenHelper {
             "  `"+ Content.CollectParamColumns.PARAM + "` text\n" +
             ")";
 
-    private String createExceptionTable = "CREATE TABLE IF NOT EXISTS `" + EquipmentException.TABLE_NAME +"` (\n" +
-            "  `"+ Content.EquipmentExceptionColumns.ID + "` integer primary key autoincrement,\n" +
-            "  `"+ Content.EquipmentExceptionColumns.COLLECT_ID + "` integer not null default 0,\n" +
-            "  `"+ Content.EquipmentExceptionColumns.HEPPEN_TIME + "` bigInteger not null default 0,\n" +
-            "  `"+ Content.EquipmentExceptionColumns.TYPE + "` integer not null default 0,\n" +
-            "  `"+ Content.EquipmentExceptionColumns.PM + "` integer not null default 0,\n" +
-            "  `"+ Content.EquipmentExceptionColumns.FLAG + "` integer not null default 0,\n" +
-            "  `"+ Content.EquipmentExceptionColumns.NOTE + "` text\n" +
+    private String createExceptionTable = "CREATE TABLE IF NOT EXISTS `" + Event.TABLE_NAME +"` (\n" +
+            "  `"+ Content.EventColumns.ID + "` integer primary key autoincrement,\n" +
+            "  `"+ Content.EventColumns.COLLECT_ID + "` integer not null default 0,\n" +
+            "  `"+ Content.EventColumns.HEPPEN_TIME + "` text,\n" +
+            "  `"+ Content.EventColumns.TYPE + "` integer not null default 0,\n" +
+            "  `"+ Content.EventColumns.PM + "` integer not null default 0,\n" +
+            "  `"+ Content.EventColumns.FLAG + "` integer not null default 0,\n" +
+            "  `"+ Content.EventColumns.NOTE + "` text\n" +
             ")";
 
     private String createLocationTable = "CREATE TABLE IF NOT EXISTS `" + LocationInfo.TABLE_NAME +"` (\n" +
@@ -135,7 +135,7 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL("DELETE FROM " + Concentrator.TABLE_NAME);
             db.execSQL("DELETE FROM " + Collect.TABLE_NAME);
             db.execSQL("DELETE FROM " + CollectParam.TABLE_NAME);
-            db.execSQL("DELETE FROM " + EquipmentException.TABLE_NAME);
+            db.execSQL("DELETE FROM " + Event.TABLE_NAME);
             return true;
         } catch (Exception e) {
             Log.e("DbHelper", e.toString());

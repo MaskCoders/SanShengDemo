@@ -22,6 +22,7 @@ import com.sansheng.testcenter.center.CenterActivity;
 import com.sansheng.testcenter.datamanager.MeterDataListActivity;
 import com.sansheng.testcenter.location.LocationInfoActivity;
 import com.sansheng.testcenter.module.Collect;
+import com.sansheng.testcenter.module.Event;
 import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.module.MeterData;
 import com.sansheng.testcenter.settings.SettingsActivity;
@@ -217,6 +218,10 @@ public class LauncherAdapter extends BaseAdapter implements CollectSelectDialog.
             }
             for (int i = 1; i < 11; i++) {
                 Collect collect = new Collect(true, i);
+                collect.save(mContext);
+            }
+            for (int i = 1; i < 11; i++) {
+                Event collect = new Event(true, i);
                 collect.save(mContext);
             }
             hideProgressDialog();

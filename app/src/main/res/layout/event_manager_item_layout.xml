@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/meter_data_list_item_height"
+              android:id="@+id/event_item">
+    <TextView
+            android:layout_width="40dp"
+            android:id="@+id/event_code"
+            style="@style/ListTextView"
+            android:text="事件代码"/>
+    <TextView
+            android:layout_width="200dp"
+            android:id="@+id/event_time"
+            style="@style/ListTextView"
+            android:text="发生时间"/>
+    <TextView
+            android:layout_width="40dp"
+            android:id="@+id/event_flag"
+            style="@style/ListTextView"
+            android:text="事件标志"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/event_explain"
+            android:layout_weight="1"
+            style="@style/ListTextView"
+            android:text="说明"/>
+
+</LinearLayout>

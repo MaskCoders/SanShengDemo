@@ -141,7 +141,6 @@ public class MeterSelectFragment extends Fragment implements LoaderManager.Loade
         if (data != null) {
             Log.e("ssg", "data.getCount() = " + data.getCount());
             mAdapter.swapCursor(data);
-
         }
     }
 
