@@ -12,6 +12,8 @@ import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.module.ModuleUtilites;
 import com.sansheng.testcenter.provider.EquipmentPreference;
 
+import java.util.HashMap;
+
 /**
  * Created by sunshaogang on 1/20/16.
  */
@@ -35,16 +37,19 @@ public class Fragment1 extends BaseTabFragment{
         mRootView = inflater.inflate(R.layout.collect_test_fragment1_layout, container, false);
         mListView = (ListView) mRootView.findViewById(R.id.list_view);
         mAdapter = new CollectTestItemAdapter(getActivity());
+        mAdapter.setSelectedItemts(getSelectProject());
+        mListView.setAdapter(mAdapter);
+        return mRootView;
+    }
+    private HashMap<Integer, String> getSelectProject(){
         String result = EquipmentPreference.getPreferences(getActivity()).getSelectedCollectTest();
         Log.e("ssg", "result = " + result);
         if (TextUtils.isEmpty(result)) {
             result = "[\"0\",\"1\",\"2\"]";
         }
-        mAdapter.setSelectedItemts(ModuleUtilites.jsonToMapForMeterTest(result, getResources().getStringArray(R.array.meter_test_items)));
-        mListView.setAdapter(mAdapter);
-        return mRootView;
-    }
+       return ModuleUtilites.jsonToMapForMeterTest(result, getResources().getStringArray(R.array.meter_test_items));
 
+    }
     @Override
     public String getFragmentTag() {
         return TAG;

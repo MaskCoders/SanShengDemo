@@ -81,6 +81,12 @@
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
+        <activity android:name="com.sansheng.testcenter.view.ComAssistantActivity"
+                  android:screenOrientation="sensorLandscape">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".settings.SettingsActivity"
                   android:screenOrientation="sensorLandscape">
             <intent-filter>

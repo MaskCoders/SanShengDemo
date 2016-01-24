@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.text.SpannableString;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.*;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
@@ -81,6 +82,7 @@ public  abstract class BaseActivity extends Activity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         customizeActionbar();
         initBaseViews();
     }

@@ -17,6 +17,7 @@ import com.sansheng.testcenter.base.Const;
 import com.sansheng.testcenter.base.view.ConnectTypeDialog;
 import com.sansheng.testcenter.base.view.DrawableCenterTextView;
 import com.sansheng.testcenter.base.view.WaySelectMeterDialog;
+import com.sansheng.testcenter.bean.ChannelFactory;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.controller.ConnectionService;
@@ -29,11 +30,17 @@ import com.sansheng.testcenter.server.MSocketServer;
 import com.sansheng.testcenter.server.SocketClient;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
+import com.sansheng.testcenter.tools.serial.SerialHelper;
 import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.utils.Utility;
 
+import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+
+import static com.sansheng.testcenter.base.Const.CONN_ERR;
 
 /**
  * Created by sunshaogang on 1/4/16.
@@ -56,6 +63,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     private EditText mEditMeterAddressView;
     private LinearLayout mSelectChanel;
     private TextView mChanelValue;
+    private SerialHelper nowChannel;
     private LinearLayout mSelectItem;
     private TextView mSelectItemValue;
     private ImageView mSelectMeter;
@@ -320,37 +328,74 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
                 data = ProtocolUtils.bytes2hex(ProtocolUtils.hexStringToBytesDecode(data));
                 System.out.println("data: " + data);
                 Thread.sleep(1000);
+
                 String address = "12 00 00 00 10 20".replace(" ", "");
+                try {
+                    address = mEditMeterAddressView.getText().toString();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 Const.WhmConst.C type = Const.WhmConst.C.MAIN_REQUEST_READ_DATA;
                 WhmBean bean = WhmBean.create(type, data, address);
                 Message msg = new Message();
                 msg.obj = bean.toString();
                 msg.what = Const.SEND_MSG;
                 mMainHandler.sendMessage(msg);
-                System.out.println("by hua : " + bean.toString());
-                mClientManager.sendMessage(mClient, ProtocolUtils.hexStringToBytes(bean.toString()));
+//                System.out.println("by hua : " + bean.toString());
+//                mClientManager.sendMessage(mClient, ProtocolUtils.hexStringToBytes(bean.toString()));
+                nowChannel.sendHex(bean.toString());
             }
+            private HashMap<Integer, String> getSelectProject(){
+                String result = EquipmentPreference.getPreferences(MeterTestActivity.this).getSelectedCollectTest();
+                Log.e("ssg", "result = " + result);
+                if (TextUtils.isEmpty(result)) {
+                    result = "[\"0\",\"1\",\"2\"]";
+                }
+                return ModuleUtilites.jsonToMapForMeterTest(result, getResources().getStringArray(R.array.meter_test_items));
 
+            }
             @Override
             public void run() {
                 try {
-                    String data = "33 32 34 33 ".replace(" ", "");
-                    sendCommand(data);
-                    data = "33 32 34 35".replace(" ", "");
-                    sendCommand(data);
-                    data = "34 34 33 37".replace(" ", "");
-                    sendCommand(data);
-                    data = "35 34 33 37".replace(" ", "");
-                    sendCommand(data);
-                    data = "34 33 39 38".replace(" ", "");
-                    sendCommand(data);
-                    data = "33 35 C3 33".replace(" ", "");
-                    sendCommand(data);
-                    data = "33 40 63 36".replace(" ", "");
-                    sendCommand(data);
-                    data = "34 33 33 50".replace(" ", "");
-                    sendCommand(data);
-                } catch (InterruptedException e) {
+                    HashMap<Integer, String> map = getSelectProject();
+                    Iterator it = map.keySet().iterator();
+                    while(it.hasNext()){
+
+                        Integer index = (Integer) it.next();
+                        String data = null;
+                        System.out.println("hua : the selected num is "+index);
+                        switch(index){
+                            case 0:
+                                data = "33 32 34 33 ".replace(" ", "");//正向有功电能s
+                                break;
+                            case 1:
+                                data = "33 32 34 35".replace(" ", ""); //三相电压
+                                break;
+                            case 2:
+                                data = "34 34 33 37".replace(" ", "");//日期: 2016-01-11 星期01
+                                break;
+                            case 3:
+                                data = "34 33 39 38".replace(" ", ""); //上次日冻结时间
+                                break;
+                            case 4:
+                                data = "33 35 C3 33".replace(" ", "");//剩余金额:
+                                break;
+                            case 5:
+                                data = "33 40 63 36".replace(" ", "");//开盖次数
+                                break;
+                            case 6:
+                                data = "33 40 63 36".replace(" ", "");//开盖次数
+                                break;
+                            case 7:
+                                data = "34 33 33 50".replace(" ", "");//跳闸次数
+                                break;
+                        }
+
+                        sendCommand(data);
+                    }
+
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -422,9 +467,32 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
 
     @Override
     public void onItemClick(int position) {
-        Log.e("ssg", "选择的通讯类型 ＝ " + getResources().getStringArray(R.array.select_connect_type)[position]);
+        String name = getResources().getStringArray(R.array.select_connect_type)[position];
+        Log.e("ssg", "选择的通讯类型 ＝ " + name);
         Log.e("ssg", "选择的通讯类型 ＝ " + position);
-        mChanelValue.setText(getResources().getStringArray(R.array.select_connect_type)[position]);
+        mChanelValue.setText(name);
+        nowChannel = ChannelFactory.getInstance(position, true,mMainHandler,this);
+        openComPort(nowChannel);
+    }
+
+
+    private void openComPort(SerialHelper ComPort) {
+        Message msg = new Message();
+        msg.what = CONN_ERR;
+        try {
+            ComPort.open();
+        } catch (SecurityException e) {
+            msg.obj = "打开串口失败:没有串口读/写权限!";
+            mMainHandler.sendMessage(msg);
+        } catch (IOException e) {
+            msg.obj = "打开串口失败:未知错误!";
+            mMainHandler.sendMessage(msg);
+            ;
+        } catch (InvalidParameterException e) {
+            msg.obj = "打开串口失败:参数错误!";
+            mMainHandler.sendMessage(msg);
+        }
+
     }
 
     public void showSelectFragment() {

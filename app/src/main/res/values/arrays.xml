@@ -60,9 +60,9 @@
     <string-array name="collect_channel_type">
         <item>"终端作为客户端"</item>
         <item>"终端作为服务端"</item>
-        <item>"RS232"</item>
-        <item>"RS485"</item>
         <item>"红外"</item>
+        <item>"RS485"</item>
+        <item>"RS232"</item>
     </string-array>
 
     <string-array name="collect_time_range">

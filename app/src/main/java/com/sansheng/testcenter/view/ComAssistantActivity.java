@@ -1,6 +1,5 @@
 package com.sansheng.testcenter.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -17,12 +16,14 @@ import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.*;
+import android_serialport_api.SerialPortFinder;
 import com.sansheng.testcenter.R;
+import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.bean.AssistBean;
 import com.sansheng.testcenter.bean.ComBean;
+import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.tools.serial.MyFunc;
 import com.sansheng.testcenter.tools.serial.SerialHelper;
-import com.sansheng.testcenter.tools.serial.SerialPortFinder;
 
 import java.io.*;
 import java.security.InvalidParameterException;
@@ -32,13 +33,14 @@ import java.util.List;
 import java.util.Queue;
 
 /**
- * serialport api��jniȡ��http://code.google.com/p/android-serialport-api/
+ * serialport api和jni取自http://code.google.com/p/android-serialport-api/
  * @author benjaminwan
- * �������֣�֧��4����ͬʱ��д
- * ��������ʱ�Զ����������豸
- * n,8,1��û��ѡ
+ * 串口助手，支持4串口同时读写
+ * 程序载入时自动搜索串口设备
+ * n,8,1，没得选
  */
-public class ComAssistantActivity extends Activity {
+
+public class ComAssistantActivity extends BaseActivity {
 	EditText editTextRecDisp,editTextLines,editTextCOMA,editTextCOMB,editTextCOMC,editTextCOMD;
 	EditText editTextTimeCOMA,editTextTimeCOMB,editTextTimeCOMC,editTextTimeCOMD;
 	CheckBox checkBoxAutoClear,checkBoxAutoCOMA,checkBoxAutoCOMB,checkBoxAutoCOMC,checkBoxAutoCOMD;
@@ -47,11 +49,12 @@ public class ComAssistantActivity extends Activity {
 	Spinner SpinnerCOMA,SpinnerCOMB,SpinnerCOMC,SpinnerCOMD;
 	Spinner SpinnerBaudRateCOMA,SpinnerBaudRateCOMB,SpinnerBaudRateCOMC,SpinnerBaudRateCOMD;
 	RadioButton radioButtonTxt,radioButtonHex;
-	SerialControl ComA,ComB,ComC,ComD;//4������
-	DispQueueThread DispQueue;//ˢ����ʾ�߳�
-	SerialPortFinder mSerialPortFinder;//�����豸����
-	AssistBean AssistData;//���ڽ���������л��ͷ����л�
-	int iRecLines=0;//����������
+	SerialControl ComA,ComB,ComC,ComD;//4个串口
+	DispQueueThread DispQueue;//刷新显示线程
+	SerialPortFinder mSerialPortFinder;//串口设备搜索
+	AssistBean AssistData;//用于界面数据序列化和反序列化
+	int iRecLines=0;//接收区行数
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +69,23 @@ public class ComAssistantActivity extends Activity {
         AssistData = getAssistData();
         setControls();
     }
-    @Override
+
+	@Override
+	protected void initButtonList() {
+
+	}
+
+	@Override
+	protected void initConnList() {
+
+	}
+
+	@Override
+	protected void initCenter() {
+
+	}
+
+	@Override
     public void onDestroy(){
     	saveAssistData(AssistData);
     	CloseComPort(ComA);
@@ -174,10 +193,10 @@ public class ComAssistantActivity extends Activity {
     	SpinnerBaudRateCOMB.setAdapter(adapter);
     	SpinnerBaudRateCOMC.setAdapter(adapter);
     	SpinnerBaudRateCOMD.setAdapter(adapter);
-    	SpinnerBaudRateCOMA.setSelection(12);
-    	SpinnerBaudRateCOMB.setSelection(12);
-    	SpinnerBaudRateCOMC.setSelection(12);
-    	SpinnerBaudRateCOMD.setSelection(12);
+    	SpinnerBaudRateCOMA.setSelection(8);
+    	SpinnerBaudRateCOMB.setSelection(8);
+    	SpinnerBaudRateCOMC.setSelection(8);
+    	SpinnerBaudRateCOMD.setSelection(8);
     	
     	mSerialPortFinder= new SerialPortFinder();
     	String[] entryValues = mSerialPortFinder.getAllDevicesPath();
@@ -218,7 +237,13 @@ public class ComAssistantActivity extends Activity {
 		SpinnerBaudRateCOMD.setOnItemSelectedListener(new ItemSelectedEvent());
 		DispAssistData(AssistData);
 	}
-    //----------------------------------------------------���ںŻ����ʱ仯ʱ���رմ򿪵Ĵ���
+
+	@Override
+	public void setValue(WhmBean bean) {
+
+	}
+
+	//----------------------------------------------------串口号或波特率变化时，关闭打开的串口
     class ItemSelectedEvent implements Spinner.OnItemSelectedListener{
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 		{
@@ -249,7 +274,7 @@ public class ComAssistantActivity extends Activity {
 		{}
     	
     }
-    //----------------------------------------------------�༭�򽹵�ת���¼�
+	//----------------------------------------------------编辑框焦点转移事件
     class FocusChangeEvent implements EditText.OnFocusChangeListener{
 		public void onFocusChange(View v, boolean hasFocus)
 		{
@@ -280,7 +305,7 @@ public class ComAssistantActivity extends Activity {
 			}
 		}
     }
-    //----------------------------------------------------�༭������¼�
+	//----------------------------------------------------编辑框完成事件
     class EditorActionEvent implements EditText.OnEditorActionListener{
 		public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
 		{
@@ -312,7 +337,7 @@ public class ComAssistantActivity extends Activity {
 			return false;
 		}
     }
-    //----------------------------------------------------Txt��Hexģʽѡ��
+	//----------------------------------------------------Txt、Hex模式选择
     class radioButtonClickEvent implements RadioButton.OnClickListener{
 		public void onClick(View v)
 		{
@@ -418,13 +443,13 @@ public class ComAssistantActivity extends Activity {
 				if (isChecked){
 					if (toggleButtonCOMB.isChecked() && SpinnerCOMA.getSelectedItemPosition()==SpinnerCOMB.getSelectedItemPosition())
 					{
-						ShowMessage("����"+SpinnerCOMA.getSelectedItem().toString()+"�Ѵ�");
+						ShowMessage("串口"+SpinnerCOMA.getSelectedItem().toString()+"已打开");
 						buttonView.setChecked(false);
 					}else if (toggleButtonCOMC.isChecked() && SpinnerCOMA.getSelectedItemPosition()==SpinnerCOMC.getSelectedItemPosition()) {
-						ShowMessage("����"+SpinnerCOMA.getSelectedItem().toString()+"�Ѵ�");
+						ShowMessage("串口"+SpinnerCOMA.getSelectedItem().toString()+"已打开");
 						buttonView.setChecked(false);
 					}else if (toggleButtonCOMD.isChecked() && SpinnerCOMA.getSelectedItemPosition()==SpinnerCOMD.getSelectedItemPosition()) {
-						ShowMessage("����"+SpinnerCOMA.getSelectedItem().toString()+"�Ѵ�");
+						ShowMessage("串口"+SpinnerCOMA.getSelectedItem().toString()+"已打开");
 						buttonView.setChecked(false);
 					}else {
 //						ComA=new SerialControl("/dev/s3c2410_serial0", "9600");
@@ -506,7 +531,7 @@ public class ComAssistantActivity extends Activity {
 		}
     }
     //----------------------------------------------------���ڿ�����
-    private  class SerialControl extends SerialHelper{
+    public static  class SerialControl extends SerialHelper{
 
 //		public SerialControl(String sPort, String sBaudRate){
 //			super(sPort, sBaudRate);
@@ -514,11 +539,11 @@ public class ComAssistantActivity extends Activity {
 		public SerialControl(){
 		}
 
-		@Override
-		protected void onDataReceived(final ComBean ComRecData)
-		{
-			DispQueue.AddQueue(ComRecData);
-		}
+//		@Override
+//		protected void onDataReceived(final ComBean ComRecData)
+//		{
+////			DispQueue.AddQueue(ComRecData);
+//		}
     }
     //----------------------------------------------------ˢ����ʾ�߳�
     private class DispQueueThread extends Thread{
@@ -553,8 +578,9 @@ public class ComAssistantActivity extends Activity {
 			QueueList.add(ComData);
 		}
 	}
-    //----------------------------------------------------ˢ�½������
-    private void DispAssistData(AssistBean AssistData)
+	//----------------------------------------------------刷新界面数据
+
+	private void DispAssistData(AssistBean AssistData)
 	{
     	editTextCOMA.setText(AssistData.getSendA());
     	editTextCOMB.setText(AssistData.getSendB());
@@ -580,8 +606,9 @@ public class ComAssistantActivity extends Activity {
     	setDelayTime(editTextTimeCOMC);
     	setDelayTime(editTextTimeCOMD);
 	}
-    //----------------------------------------------------���桢��ȡ�������
-    private void saveAssistData(AssistBean AssistData) { 
+	//----------------------------------------------------保存、获取界面数据
+
+	private void saveAssistData(AssistBean AssistData) {
     	AssistData.sTimeA = editTextTimeCOMA.getText().toString();
     	AssistData.sTimeB = editTextTimeCOMB.getText().toString();
     	AssistData.sTimeC = editTextTimeCOMC.getText().toString();
@@ -715,6 +742,8 @@ public class ComAssistantActivity extends Activity {
 			}else if (radioButtonHex.isChecked()) {
 				ComPort.sendHex(sOut);
 			}
+		}else {
+			Toast.makeText(this,"ComPort is closed",1).show();
 		}
     }
     //----------------------------------------------------�رմ���
@@ -726,17 +755,18 @@ public class ComAssistantActivity extends Activity {
     }
     //----------------------------------------------------�򿪴���
     private void OpenComPort(SerialHelper ComPort){
-    	try
+		try
 		{
 			ComPort.open();
 		} catch (SecurityException e) {
-			ShowMessage("�򿪴���ʧ��:û�д��ڶ�/дȨ��!");
+			ShowMessage("打开串口失败:没有串口读/写权限!");
 		} catch (IOException e) {
-			ShowMessage("�򿪴���ʧ��:δ֪����!");
+			ShowMessage("打开串口失败:未知错误!");
 		} catch (InvalidParameterException e) {
-			ShowMessage("�򿪴���ʧ��:�������!");
+			ShowMessage("打开串口失败:参数错误!");
 		}
-    }
+
+	}
     //------------------------------------------��ʾ��Ϣ
   	private void ShowMessage(String sMsg)
   	{

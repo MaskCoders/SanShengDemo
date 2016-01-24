@@ -28,6 +28,7 @@ import com.sansheng.testcenter.module.MeterData;
 import com.sansheng.testcenter.settings.SettingsActivity;
 import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.utils.Utility;
+import com.sansheng.testcenter.view.ComAssistantActivity;
 import com.sansheng.testcenter.view.TestBaseActivity;
 
 import java.util.HashMap;
@@ -113,7 +114,7 @@ public class LauncherAdapter extends BaseAdapter implements CollectSelectDialog.
                             mContext.startActivity(intent);
                             break;
                         case 3://本地模块检测
-                            intent.setClass(mContext, TestBaseActivity.class);
+                            intent.setClass(mContext, ComAssistantActivity.class);
                             mContext.startActivity(intent);
                             break;
                         case 4://远程模块检测

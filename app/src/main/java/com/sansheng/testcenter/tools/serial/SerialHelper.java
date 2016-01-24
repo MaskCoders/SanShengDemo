@@ -1,7 +1,11 @@
 package com.sansheng.testcenter.tools.serial;
 
 
+import android_serialport_api.SerialPort;
 import com.sansheng.testcenter.bean.ComBean;
+import com.sansheng.testcenter.bean.WhmBean;
+import com.sansheng.testcenter.callback.IServiceHandlerCallback;
+import com.sansheng.testcenter.controller.MainHandler;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,30 +17,26 @@ import java.security.InvalidParameterException;
  * @author benjaminwan
  *���ڸ������
  */
-public abstract class SerialHelper{
+public  class SerialHelper{
 	private SerialPort mSerialPort;
 	private OutputStream mOutputStream;
 	private InputStream mInputStream;
 	private ReadThread mReadThread;
 	private SendThread mSendThread;
+	private MainHandler mainHandler;
 	private String sPort="/dev/s3c2410_serial0";
 	private int iBaudRate=9600;
 	private boolean _isOpen=false;
 	private byte[] _bLoopData=new byte[]{0x30};
 	private int iDelay=500;
+	private IServiceHandlerCallback callback;
 	//----------------------------------------------------
-	public SerialHelper(String sPort,int iBaudRate){
+	public SerialHelper(){}
+	public SerialHelper(String sPort,int iBaudRate,MainHandler handler,IServiceHandlerCallback cb){
 		this.sPort = sPort;
 		this.iBaudRate=iBaudRate;
-	}
-	public SerialHelper(){
-		this("/dev/s3c2410_serial0",9600);
-	}
-	public SerialHelper(String sPort){
-		this(sPort,9600);
-	}
-	public SerialHelper(String sPort,String sBaudRate){
-		this(sPort,Integer.parseInt(sBaudRate));
+		mainHandler = handler;
+		callback = cb;
 	}
 	//----------------------------------------------------
 	public void open() throws SecurityException, IOException,InvalidParameterException{
@@ -72,12 +72,16 @@ public abstract class SerialHelper{
 	}
 	//----------------------------------------------------
 	public void sendHex(String sHex){
+//		String hex = "fefefefe68 12 00 00 00 10 20 68 11 04 33 32 34 33 F3 16".replace(" ","");
 		byte[] bOutArray = MyFunc.HexToByteArr(sHex);
-		send(bOutArray);		
+		send(bOutArray);
 	}
 	//----------------------------------------------------
 	public void sendTxt(String sTxt){
 		byte[] bOutArray =sTxt.getBytes();
+//		String hex = "fefefefe68aaaaaaaaaaaa681300df16";
+//		bOutArray = ProtocolUtils.hexStringToBytes(hex);
+//		System.out.println("hua : "+hex);
 		send(bOutArray);		
 	}
 	//----------------------------------------------------
@@ -239,6 +243,9 @@ public abstract class SerialHelper{
 		}
 	}
 	//----------------------------------------------------
-	protected abstract void onDataReceived(ComBean ComRecData);
+	public  void onDataReceived(ComBean ComRecData){
+		WhmBean bean = WhmBean.parse(ComRecData.bRec);
+		callback.setValue(bean);
+	};
 
 }

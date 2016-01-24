@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.bean.WhmBean;
@@ -109,7 +110,9 @@ public class MainHandler extends Handler {
             case CONN_OK:
                 break;
             case CONN_ERR:
-                content = mContext.getResources().getString(R.string.conn_ser_err1) + ":" + content + "\n";
+                if(TextUtils.isEmpty(msg.obj.toString())) {
+                    content = mContext.getResources().getString(R.string.conn_ser_err1) + ":" + content + "\n";
+                }
                 SpannableString sserror = getErrSS(content);
                 mMainUI.pullShortLog(sserror);
                 mMainUI.pullWholeLog(sserror);
