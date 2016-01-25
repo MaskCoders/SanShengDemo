@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -224,6 +225,30 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
 
     private void deleteCollect() {
         Log.e("ssg", "删除终端");
+        ArrayList<Collect> collects = mAdapter.getSelectedCollects();
+        if (collects == null || collects.size() == 0) {
+            Utility.showToast(this, "未选择集中器");
+            return;
+        }
+        String ids = "";
+        for (Collect collect:collects) {
+            if (!TextUtils.isEmpty(ids)) {
+                ids += ",";
+            }
+            ids += collect.mId;
+        }
+        Log.e("ssg", "ids = " + ids);
+        StringBuilder sb = new StringBuilder();
+        sb.append("_id in(");
+        sb.append(ids);
+        sb.append(") ");
+//        if (selection != null) {
+//            sb.append(" AND (");
+//            sb.append(selection);
+//            sb.append(')');
+//        }
+        getContentResolver().delete(Collect.CONTENT_URI, sb.toString(), null);
+        restartLoader(LOADER_ID_FILTER_DEFAULT);
     }
 
     private boolean saveCurrentCollect() {
