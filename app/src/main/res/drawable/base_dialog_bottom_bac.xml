@@ -9,7 +9,7 @@
             <!-- 这是半透明，还可以设置全透明，那就是白色边框的效果了
             <solid android:color="@color/download_text_color" />
 -->
-            <solid android:color="@color/main_green" />
+            <solid android:color="@color/transparent_color" />
         </shape>
     </item>
     <!--<item android:state_pressed="true" >-->

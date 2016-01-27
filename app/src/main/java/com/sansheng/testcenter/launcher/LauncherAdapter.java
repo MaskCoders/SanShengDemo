@@ -18,7 +18,7 @@ import com.sansheng.testcenter.base.view.ProgressDailog;
 import com.sansheng.testcenter.center.CenterActivity;
 import com.sansheng.testcenter.collecttest.CollectSingleSelectDialog;
 import com.sansheng.testcenter.datamanager.MeterDataListActivity;
-import com.sansheng.testcenter.equipmentmanager.EquipmentManagerActivity;
+import com.sansheng.testcenter.equipmentmanager.EquipmentManagerDialog;
 import com.sansheng.testcenter.location.LocationInfoActivity;
 import com.sansheng.testcenter.metertest.CollectSelectDialog;
 import com.sansheng.testcenter.metertest.MeterTestActivity;
@@ -138,8 +138,10 @@ public class LauncherAdapter extends BaseAdapter implements CollectSelectDialog.
                         case 8://档案管理
 //                            intent.setClass(mContext, MeterDataListActivity.class);
 //                            mContext.startActivity(intent);
-                            intent.setClass(mContext, EquipmentManagerActivity.class);
-                            mContext.startActivity(intent);
+//                            intent.setClass(mContext, EquipmentManagerActivity.class);
+//                            mContext.startActivity(intent);
+                            EquipmentManagerDialog dialog = new EquipmentManagerDialog();
+                            dialog.show(mContext.getFragmentManager(), "select_equipment");
                             break;
                         case 9://数据浏览
                             intent.setClass(mContext, MeterDataListActivity.class);

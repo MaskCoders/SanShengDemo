@@ -120,7 +120,7 @@
         <activity android:name=".collecttest.EventManagerActivity"
                   android:screenOrientation="sensorLandscape">
         </activity>
-        <activity android:name=".equipmentmanager.EquipmentManagerActivity"
+        <activity android:name=".demo.view.EquipmentManagerActivity"
                   android:screenOrientation="sensorLandscape">
         </activity>
         <provider

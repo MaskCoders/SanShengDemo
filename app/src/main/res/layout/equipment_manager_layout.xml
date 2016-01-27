@@ -6,32 +6,37 @@
               android:layout_height="match_parent"
               android:background="@color/transparent_color">
     <LinearLayout
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:gravity="center"
+            android:layout_weight="1"
             android:orientation="horizontal"
             android:id="@+id/collect_manager"
-            android:background="@drawable/large_btn_back_green">
+            android:background="@drawable/large_btn_back">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_white"
-                android:text="集中器管理"
+                android:text="集中器"
                 android:textSize="30sp"/>
     </LinearLayout>
     <LinearLayout
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:gravity="center"
+            android:layout_weight="1"
             android:orientation="horizontal"
             android:id="@+id/meter_manager"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/large_btn_back_green">
+            android:background="@drawable/large_btn_back1">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_white"
-                android:text="电表管理"
+                android:text="电表"
                 android:textSize="30sp"/>
     </LinearLayout>
 </LinearLayout>

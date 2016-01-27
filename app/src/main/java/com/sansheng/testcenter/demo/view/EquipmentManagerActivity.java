@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.equipmentmanager;
+package com.sansheng.testcenter.demo.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.widget.LinearLayout;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.bean.WhmBean;
+import com.sansheng.testcenter.equipmentmanager.CollectManagerActivity;
+import com.sansheng.testcenter.equipmentmanager.MeterManagerActivity;
 
 /**
  * Created by sunshaogang on 1/27/16.
@@ -19,7 +21,7 @@ public class EquipmentManagerActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.equip_manager_layout);
+        setContentView(R.layout.equipment_manager_layout);
         setActionBar(FILE_MANAGER_VIEW);
         hideBottomLog();
         collectBtn = (LinearLayout) findViewById(R.id.collect_manager);
