@@ -97,6 +97,5 @@
     <com.sansheng.testcenter.base.view.DrawableCenterTextView
             android:id="@+id/cancel" style="@style/BtnStyle1"
             android:drawableLeft="@drawable/left_icon_log"
-            android:text="取消操作"
-            android:visibility="gone"/>
+            android:text="停止检测"/>
 </LinearLayout>

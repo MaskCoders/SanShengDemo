@@ -11,16 +11,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.sansheng.testcenter.collecttest.SelectCollectActivity;
-import com.sansheng.testcenter.metertest.MeterTestActivity;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.metertest.CollectSelectDialog;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.base.MeterSelectDialog;
 import com.sansheng.testcenter.base.view.ProgressDailog;
 import com.sansheng.testcenter.center.CenterActivity;
+import com.sansheng.testcenter.collecttest.CollectSingleSelectDialog;
 import com.sansheng.testcenter.datamanager.MeterDataListActivity;
+import com.sansheng.testcenter.equipmentmanager.EquipmentManagerActivity;
 import com.sansheng.testcenter.location.LocationInfoActivity;
+import com.sansheng.testcenter.metertest.CollectSelectDialog;
+import com.sansheng.testcenter.metertest.MeterTestActivity;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Event;
 import com.sansheng.testcenter.module.Meter;
@@ -50,6 +51,7 @@ public class LauncherAdapter extends BaseAdapter implements CollectSelectDialog.
             R.drawable.tqsb,
             R.drawable.gps,
             R.drawable.gw3761,
+            R.drawable.dagl,
             R.drawable.dagl,
             R.drawable.sjbcjsc,
             R.drawable.tqsb,
@@ -110,8 +112,10 @@ public class LauncherAdapter extends BaseAdapter implements CollectSelectDialog.
                         case 2://集中器检测
 //                            CollectSelectDialog collectDialog = new CollectSelectDialog(LauncherAdapter.this);
 //                            collectDialog.show(mContext.getFragmentManager(), "select_collects");
-                            intent.setClass(mContext, SelectCollectActivity.class);
-                            mContext.startActivity(intent);
+//                            intent.setClass(mContext, CollectTestActivity.class);
+//                            mContext.startActivity(intent);
+                            CollectSingleSelectDialog collectDialog = new CollectSingleSelectDialog();
+                            collectDialog.show(mContext.getFragmentManager(), "select_collect");
                             break;
                         case 3://本地模块检测
                             intent.setClass(mContext, ComAssistantActivity.class);
@@ -132,27 +136,33 @@ public class LauncherAdapter extends BaseAdapter implements CollectSelectDialog.
                             mContext.startActivity(intent);
                             break;
                         case 8://档案管理
+//                            intent.setClass(mContext, MeterDataListActivity.class);
+//                            mContext.startActivity(intent);
+                            intent.setClass(mContext, EquipmentManagerActivity.class);
+                            mContext.startActivity(intent);
+                            break;
+                        case 9://数据浏览
                             intent.setClass(mContext, MeterDataListActivity.class);
                             mContext.startActivity(intent);
                             break;
-                        case 9://数据补抄
+                        case 10://数据补抄
                             showProgressDialog();
                             InsertDataTask task = new InsertDataTask();
                             task.executeOnExecutor(sThreadPool);
                             break;
-                        case 10://组网拓扑
+                        case 11://组网拓扑
                             intent.setClass(mContext, TestBaseActivity.class);
                             mContext.startActivity(intent);
                             break;
-                        case 11://规约解析
+                        case 12://规约解析
                             intent.setClass(mContext, TestBaseActivity.class);
                             mContext.startActivity(intent);
                             break;
-                        case 12://现场售电
+                        case 13://现场售电
                             MeterSelectDialog meterDialog = new MeterSelectDialog(LauncherAdapter.this);
                             meterDialog.show(mContext.getFragmentManager(), "select_meter");
                             break;
-                        case 13://系统设置
+                        case 14://系统设置
                             intent.setClass(mContext, SettingsActivity.class);
                             mContext.startActivity(intent);
                             break;

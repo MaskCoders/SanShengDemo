@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.demo.view;
+package com.sansheng.testcenter.equipmentmanager;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
@@ -18,18 +18,18 @@ import java.util.HashMap;
 /**
  * Created by sunshaogang on 12/9/15.
  */
-public class MeterListAdapter extends SimpleCursorAdapter {
+public class MeterManagerAdapter extends SimpleCursorAdapter {
     private Activity mActivity;
     private HashMap<String, Meter> mSelectedMeters = new HashMap<String, Meter>();
 
-    public MeterListAdapter(MeterListActivity context, Cursor cursor) {
+    public MeterManagerAdapter(MeterManagerActivity context, Cursor cursor) {
         super(context, android.R.layout.simple_list_item_1, cursor, Meter.CONTENT_PROJECTION,
                 Meter.ID_INDEX_PROJECTION, 0);
         this.mActivity = context;
         this.mSelectedMeters.clear();
     }
 
-    public MeterListAdapter(Activity context, Cursor cursor) {
+    public MeterManagerAdapter(Activity context, Cursor cursor) {
         super(context, android.R.layout.simple_list_item_1, cursor, Meter.CONTENT_PROJECTION,
                 Meter.ID_INDEX_PROJECTION, 0);
         this.mActivity = context;
@@ -88,7 +88,7 @@ public class MeterListAdapter extends SimpleCursorAdapter {
 //            holder.vip.setVisibility(View.GONE);
 //        }
 //        holder.meterName.setText(mActivity.getResources().getString(R.string.db_name) + meter.mMeterName);
-        holder.meterType.setImageResource(meter.mDa == 0 ? R.drawable.single_meter : R.drawable.three_meter);//单项 v 三项
+        holder.meterType.setImageResource(meter.mDa == 0 ? R.drawable.single_meter : R.drawable.three_meter);//单相 v 三相
         holder.meterId.setText(String.valueOf(meter.mMeterNum));
         holder.meterName.setText(String.valueOf(meter.mMeterName));
 //        String type = meter.mDataType == 1 ? mActivity.getResources().getString(R.string.db_rdj) :
@@ -132,7 +132,7 @@ public class MeterListAdapter extends SimpleCursorAdapter {
     }
 
     private void showDetailFragment(Meter meter) {
-        MeterFragment fragment = new MeterFragment();
+        MeterDetailFragment fragment = new MeterDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(MeterUtilies.PARAM_METER, meter);
         fragment.setArguments(bundle);

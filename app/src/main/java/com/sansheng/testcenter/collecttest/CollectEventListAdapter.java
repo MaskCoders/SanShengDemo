@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.sansheng.testcenter.R;
+import com.sansheng.testcenter.equipmentmanager.CollectManagerActivity;
 import com.sansheng.testcenter.module.Collect;
 
 /**
@@ -14,9 +15,9 @@ import com.sansheng.testcenter.module.Collect;
  * 时间统计界面事件列表的adapter
  */
 public class CollectEventListAdapter extends SimpleCursorAdapter {
-    private SelectCollectActivity mActivity;
+    private CollectManagerActivity mActivity;
 
-    public CollectEventListAdapter(SelectCollectActivity context, Cursor cursor) {
+    public CollectEventListAdapter(CollectManagerActivity context, Cursor cursor) {
         super(context, android.R.layout.simple_list_item_1, cursor, Collect.CONTENT_PROJECTION,
                 Collect.ID_INDEX_PROJECTION, 0);
         this.mActivity = context;
@@ -35,7 +36,7 @@ public class CollectEventListAdapter extends SimpleCursorAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         if (viewHolder == null) {
-            convertView = LayoutInflater.from(mActivity).inflate(R.layout.collect_select_item_layout, null);
+            convertView = LayoutInflater.from(mActivity).inflate(R.layout.collect_manager_item_layout, null);
             viewHolder = new ViewHolder();
             initViewHolder(viewHolder, convertView);
             convertView.setTag(viewHolder);

@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.demo.view;
+package com.sansheng.testcenter.equipmentmanager;
 
 import android.app.Fragment;
 import android.os.AsyncTask;
@@ -23,7 +23,7 @@ import java.util.concurrent.ThreadFactory;
 /**
  * Created by sunshaogang on 12/10/15.
  */
-public class MeterFragment extends Fragment implements View.OnClickListener, BaseActivity.ActionBarCallback {
+public class MeterDetailFragment extends Fragment implements View.OnClickListener, BaseActivity.ActionBarCallback {
     private Meter mMeter;
     private Meter mChangedMeter;
 
@@ -41,7 +41,7 @@ public class MeterFragment extends Fragment implements View.OnClickListener, Bas
     private static final ThreadFactory sThreadFactory = new CustomThreadPoolFactory("MeterThread");
     private ExecutorService sThreadPool = Executors.newSingleThreadExecutor(sThreadFactory);
 
-    public MeterFragment() {
+    public MeterDetailFragment() {
     }
 
     @Override
@@ -267,7 +267,7 @@ public class MeterFragment extends Fragment implements View.OnClickListener, Bas
         @Override
         protected Integer doInBackground(Void... params) {
             mChangedMeter.update(getActivity());
-            ((MeterDataListActivity)getActivity()).restartLoader();
+            ((MeterDataListActivity)getActivity()).restartLoader(MeterDataListActivity.LOADER_ID_FILTER_DEFAULT);
             return null;
         }
     }

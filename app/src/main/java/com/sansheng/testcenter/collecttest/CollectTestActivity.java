@@ -45,7 +45,6 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
     private DrawableCenterTextView read_events;
     private DrawableCenterTextView events_manager;
 
-
     private DrawableCenterTextView showLog;
 
     private Collect mCollect;
@@ -64,6 +63,8 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
 
     @Override
     protected void onDestroy() {
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
         super.onDestroy();
     }
 
@@ -96,7 +97,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
 //            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //        dateRegion.setAdapter(adapter);
 //        dateRegion.setSelection(0, true);
-        collectAddress.setText(mCollect.mCommonAddress);
+        collectAddress.setText(mCollect.mTerminalIp);
         showLog.setOnClickListener(this);
         paraCompare.setOnClickListener(this);
         readStandard.setOnClickListener(this);
@@ -379,4 +380,5 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
         intent.setClass(this, EventManagerActivity.class);
         startActivity(intent);
     }
+
 }

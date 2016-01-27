@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.collecttest;
+package com.sansheng.testcenter.equipmentmanager;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.sansheng.testcenter.R;
+import com.sansheng.testcenter.collecttest.CollectTestUtils;
 import com.sansheng.testcenter.module.Collect;
 
 import java.util.ArrayList;
@@ -14,12 +15,12 @@ import java.util.ArrayList;
 /**
  * Created by sunshaogang on 12/24/15.
  */
-public class SelectCollectAdapter extends SimpleCursorAdapter {
-    private SelectCollectActivity mActivity;
+public class CollectManagerAdapter extends SimpleCursorAdapter {
+    private CollectManagerActivity mActivity;
 //    private HashMap<String, Collect> mSelectedCollects = new HashMap<String, Collect>();
     private ArrayList<Collect> mSelectedCollects = new ArrayList<Collect>();
 
-    public SelectCollectAdapter(SelectCollectActivity context, Cursor cursor) {
+    public CollectManagerAdapter(CollectManagerActivity context, Cursor cursor) {
         super(context, android.R.layout.simple_list_item_1, cursor, Collect.CONTENT_PROJECTION,
                 Collect.ID_INDEX_PROJECTION, 0);
         this.mActivity = context;
@@ -39,7 +40,7 @@ public class SelectCollectAdapter extends SimpleCursorAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         if (viewHolder == null) {
-            convertView = LayoutInflater.from(mActivity).inflate(R.layout.collect_select_item_layout, null);
+            convertView = LayoutInflater.from(mActivity).inflate(R.layout.collect_manager_item_layout, null);
             viewHolder = new ViewHolder();
             initViewHolder(viewHolder, convertView);
             convertView.setTag(viewHolder);

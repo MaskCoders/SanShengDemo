@@ -3,75 +3,47 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="@dimen/meter_data_list_item_height"
-              android:id="@+id/meter_data_item">
-
+              android:id="@+id/meter_data_item"
+              android:paddingLeft="20dp"
+        android:paddingRight="20dp">
     <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingLeft="10dp">
-        <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-            <TextView
-                    android:layout_width="@dimen/meter_data_item1_width"
-                    android:id="@+id/meter_num"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="@dimen/list_sec_text_size"
-                    style="@style/TableText"
-                    android:text="测量点"/>
-            <TextView
-                    android:layout_width="@dimen/meter_data_item2_width"
-                    android:textSize="@dimen/list_sec_text_size"
-                    android:id="@+id/meter_address"
-                    style="@style/TableText"
-                    android:text="电表地址"/>
-        </LinearLayout>
-        <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:orientation="horizontal">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:id="@+id/meter_value"
-                    android:layout_weight="1"
-                    android:textSize="@dimen/list_main_text_size"
-                    android:textColor="@color/main_green"
-                    android:textStyle="bold"
-                    android:gravity="right"
-                    style="@style/TableText"
-                    android:text="正向有功"/>
-        </LinearLayout>
+            android:orientation="vertical">
+        <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/meter_address"
+                style="@style/TableText"
+                android:text="电表地址"/>
+        <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/meter_name"
+                style="@style/TableText"
+                android:textColor="@color/login_hint_color"
+                android:text="测量点"/>
     </LinearLayout>
-
     <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:paddingRight="30dp"
-            android:layout_gravity="right"
             >
         <TextView
-                android:layout_width="@dimen/meter_data_item3_width"
-                android:id="@+id/meter_value_time"
-                android:textSize="@dimen/list_sec_text_size"
-                android:gravity="right"
-                android:layout_gravity="right"
+                android:layout_width="match_parent"
+                android:id="@+id/meter_value"
                 style="@style/TableText"
-                android:text="数据时标"/>
+                android:textColor="@color/main_green"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:text="正向有功"/>
         <TextView
-                android:layout_width="@dimen/meter_data_item4_width"
-                android:id="@+id/meter_read_time"
-                android:gravity="right"
-                android:layout_gravity="right"
-                android:textSize="@dimen/list_sec_text_size"
+                android:layout_width="match_parent"
+                android:id="@+id/meter_value_time"
                 style="@style/TableText"
-                android:text="抄表时间"/>
+                android:textColor="@color/login_hint_color"
+                android:gravity="right"
+                android:text="数据时标"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -13,7 +13,7 @@ public class EquipmentPreference {
     //    com.sansheng.testcenter_preferences
     private static final String METER_TEST_SELECT_ITEM = "meter_test";
     private static final String COLLECT_TEST_SELECT_ITEM = "collect_test";
-    private static final String REQUEST_TIME_OUT = "request_time_out";
+    private static final String LAST_METER_TEST_ADDRESS = "last_meter_address";
     private static final String LOG_TEXT_SIZE = "log_text_size";
     private static final String AGREEMENT_SHOW_LENGTH = "protocol_show_length";
     private static final String MAX_TEST_COUNT = "max_test_count";
@@ -52,6 +52,15 @@ public class EquipmentPreference {
 
     public String getSelectedCollectTest(){
         return mSharedPreferences.getString(COLLECT_TEST_SELECT_ITEM, null);
+    }
+
+    //记录上次选择的集中器检测项目
+    public void setLastMeterAddress(String address){
+        mSharedPreferences.edit().putString(LAST_METER_TEST_ADDRESS, address).apply();
+    }
+
+    public String getLastMeterAddress(){
+        return mSharedPreferences.getString(LAST_METER_TEST_ADDRESS, null);
     }
 
     /**

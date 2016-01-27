@@ -1,10 +1,9 @@
-package com.sansheng.testcenter.collecttest;
+package com.sansheng.testcenter.equipmentmanager;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
-import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -17,6 +16,7 @@ import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.view.DrawableCenterTextView;
 import com.sansheng.testcenter.bean.WhmBean;
+import com.sansheng.testcenter.collecttest.CollectTestUtils;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.utils.MeterUtilies;
@@ -27,19 +27,19 @@ import java.util.ArrayList;
 /**
  * Created by sunshaogang on 1/20/16.
  */
-public class SelectCollectActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class CollectManagerActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private LinearLayout mHomeController;
     private LinearLayout mCollectDetailController;
 
-    private DrawableCenterTextView text1;
-    private DrawableCenterTextView text3;
-    private DrawableCenterTextView text4;
+    private DrawableCenterTextView deleteAll;
+    private DrawableCenterTextView compose;
+    private DrawableCenterTextView delete;
     private DrawableCenterTextView confirm;
     private DrawableCenterTextView cancel;
 
     private ListView mListView;
-    private SelectCollectAdapter mAdapter;
+    private CollectManagerAdapter mAdapter;
     private static final int LOADER_ID_FILTER_DEFAULT = 0;
 
 
@@ -58,12 +58,12 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
 
     @Override
     protected void initButtonList() {
-        View inflate = getLayoutInflater().inflate(R.layout.collect_select_control_layout, null);
+        View inflate = getLayoutInflater().inflate(R.layout.collect_manager_control_layout, null);
         mHomeController = (LinearLayout) inflate.findViewById(R.id.collect_test_control_home);
         mCollectDetailController = (LinearLayout) inflate.findViewById(R.id.collect_test_control_select_meter);
-        text1 = (DrawableCenterTextView) inflate.findViewById(R.id.start_test);
-        text3 = (DrawableCenterTextView) inflate.findViewById(R.id.new_collect);
-        text4 = (DrawableCenterTextView) inflate.findViewById(R.id.delete);
+        deleteAll = (DrawableCenterTextView) inflate.findViewById(R.id.delete_all);
+        compose = (DrawableCenterTextView) inflate.findViewById(R.id.new_collect);
+        delete = (DrawableCenterTextView) inflate.findViewById(R.id.delete);
         confirm = (DrawableCenterTextView) inflate.findViewById(R.id.confirm);
         cancel = (DrawableCenterTextView) inflate.findViewById(R.id.cancel);
 
@@ -72,9 +72,9 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
         confirm.setOnClickListener(this);
         cancel.setOnClickListener(this);
 
-        text1.setOnClickListener(this);
-        text3.setOnClickListener(this);
-        text4.setOnClickListener(this);
+        deleteAll.setOnClickListener(this);
+        compose.setOnClickListener(this);
+        delete.setOnClickListener(this);
         main_button_list.addView(inflate);
     }
 
@@ -85,9 +85,9 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
 
     @Override
     protected void initCenter() {
-        View inflate = getLayoutInflater().inflate(R.layout.collect_select_list_layout, null);
+        View inflate = getLayoutInflater().inflate(R.layout.collect_manager_list_layout, null);
         mListView = (ListView) inflate.findViewById(R.id.list_view);
-        mAdapter = new SelectCollectAdapter(this, null);
+        mAdapter = new CollectManagerAdapter(this, null);
         mListView.setAdapter(mAdapter);
         getLoaderManager().initLoader(LOADER_ID_FILTER_DEFAULT, null, this);
         main_info.addView(inflate);
@@ -105,7 +105,7 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
             case R.id.cancel:
                 onBackPressed();
                 break;
-            case R.id.start_test://开始按钮
+            case R.id.delete_all://删除全部
                 startTest();
                 break;
             case R.id.new_collect:
@@ -202,25 +202,9 @@ public class SelectCollectActivity extends BaseActivity implements LoaderManager
     }
 
     private void startTest() {
-        Log.e("ssg", "开始检测");
-        if (mAdapter == null) {
-            return;
-        }
-        ArrayList<Collect> collects = mAdapter.getSelectedCollects();
-        if (collects == null || collects.size() == 0) {
-            Utility.showToast(this, "未选择集中器");
-            return;
-        }
-        if (mAdapter.getSelectedCollects().size() > 1) {
-            Utility.showToast(this, "只能选择一个集中器");
-            return;
-        }
-        Intent intent = new Intent();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(CollectTestUtils.PARAM_COLLECT, collects.get(0));
-        intent.putExtras(bundle);
-        intent.setClass(this, CollectTestActivity.class);
-        startActivity(intent);
+        Log.e("ssg", "全部删除");
+        getContentResolver().delete(Collect.CONTENT_URI, null, null);
+        restartLoader(LOADER_ID_FILTER_DEFAULT);
     }
 
     private void deleteCollect() {

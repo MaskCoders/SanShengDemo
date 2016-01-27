@@ -34,7 +34,7 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
     private Button text5;
 //    private Button text6;
     private int mLastVisibleItem;
-    private static final int LOADER_ID_FILTER_DEFAULT = 0;
+    public static final int LOADER_ID_FILTER_DEFAULT = 0;
     private int mOriginLength = 10;//默认初始显示数量
     private final static int DOWNSIDE_INCREASE_COUNT = 10;//每次增加数量
 
@@ -47,7 +47,7 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getLoaderManager().initLoader(LOADER_ID_FILTER_DEFAULT, null, this);
-        setActionBar(METERDATA_LIST_VIEW);
+        setActionBar(DATA_LIST_VIEW);
         setDrawerDisable();
         hideBottomLog();
         setViewMode(mViewMode);
@@ -163,11 +163,11 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
         }
     }
 
-    public void restartLoader(){
+    public void restartLoader(final int id){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, MeterDataListActivity.this);
+                getLoaderManager().restartLoader(id, null, MeterDataListActivity.this);
             }
         });
     }
@@ -187,18 +187,29 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
             case R.id.text2://全部删除
                 break;
             case R.id.text3://删除当前数据
-                setViewMode(VIEW_MODE_LIST);
+                showHomeView();
                 removeFragment("MeterDataFragment");
                 break;
             case R.id.text4://确认
-                setViewMode(VIEW_MODE_LIST);
+                showHomeView();
                 removeFragment("MeterDataFilterFragment");
                 break;
             case R.id.text5://取消
-                setViewMode(VIEW_MODE_LIST);
+                showHomeView();
                 removeFragment("MeterDataFilterFragment");
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        showHomeView();
+        super.onBackPressed();
+    }
+
+    public void showHomeView() {
+        setViewMode(VIEW_MODE_LIST);
+        restartLoader(LOADER_ID_FILTER_DEFAULT);
     }
 
     public void setViewMode(int mode){

@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.demo.view.MeterFragment;
-import com.sansheng.testcenter.demo.view.MeterListActivity;
+import com.sansheng.testcenter.equipmentmanager.MeterDetailFragment;
+import com.sansheng.testcenter.equipmentmanager.MeterManagerActivity;
 import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.utils.MeterUtilies;
 
@@ -26,7 +26,7 @@ public class MeterListAdapter extends SimpleCursorAdapter {
     private HashMap<String, Meter> mSelectedMeters = new HashMap<String, Meter>();
     private static boolean isAllSelected = false;
 
-    public MeterListAdapter(MeterListActivity context, Cursor cursor) {
+    public MeterListAdapter(MeterManagerActivity context, Cursor cursor) {
         super(context, android.R.layout.simple_list_item_1, cursor, Meter.CONTENT_PROJECTION,
                 Meter.ID_INDEX_PROJECTION, 0);
         this.mActivity = context;
@@ -82,7 +82,7 @@ public class MeterListAdapter extends SimpleCursorAdapter {
         if (meter.mId == 0) {//无此条数据
             return;
         }
-        holder.meterType.setImageResource(meter.mType == 0 ? R.drawable.single_meter : R.drawable.three_meter);//单项 v 三项
+        holder.meterType.setImageResource(meter.mType == 0 ? R.drawable.single_meter : R.drawable.three_meter);//单相 v 三相
         holder.meterId.setText(String.valueOf(meter.mDa));
         holder.meterName.setText(String.valueOf(meter.mMeterName));
         holder.infoLayout.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +124,7 @@ public class MeterListAdapter extends SimpleCursorAdapter {
     }
 
     private void showDetailFragment(Meter meter) {
-        MeterFragment fragment = new MeterFragment();
+        MeterDetailFragment fragment = new MeterDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(MeterUtilies.PARAM_METER, meter);
         fragment.setArguments(bundle);

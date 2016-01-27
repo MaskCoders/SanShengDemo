@@ -3,7 +3,6 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -38,4 +37,8 @@
                 android:drawableLeft="@drawable/left_icon_cancel1"
                 android:text="取消"/>
     </LinearLayout>
+    <com.sansheng.testcenter.base.view.DrawableCenterTextView
+            android:id="@+id/stop" style="@style/BtnStyle1"
+            android:drawableLeft="@drawable/left_icon_cancel1"
+            android:text="停止检测"/>
 </LinearLayout>

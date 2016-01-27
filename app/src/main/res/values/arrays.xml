@@ -9,7 +9,8 @@
         <item>@string/function_check_update</item>
         <item>@string/function_gps</item>
         <item>@string/function_home</item>
-        <item>@string/function_meter_data_list</item>
+        <item>@string/function_file_manager</item>
+        <item>@string/function_data_list</item>
         <item>@string/function_data_upload</item>
         <item>@string/function_info_collection</item>
         <item>@string/function_protocol</item>

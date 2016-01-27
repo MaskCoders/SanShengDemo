@@ -35,6 +35,7 @@
                 android:textSize="@dimen/list_hint_text_size"
                 android:textColor="@color/color_white"
                 android:shadowRadius="2.0"
+                android:visibility="gone"
                 />
 
     </RelativeLayout>

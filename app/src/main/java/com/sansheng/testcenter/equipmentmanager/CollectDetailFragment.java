@@ -1,4 +1,4 @@
-package com.sansheng.testcenter.collecttest;
+package com.sansheng.testcenter.equipmentmanager;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import com.sansheng.testcenter.R;
+import com.sansheng.testcenter.collecttest.CollectTestUtils;
 import com.sansheng.testcenter.module.Collect;
 
 /**
@@ -41,7 +42,7 @@ public class CollectDetailFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.collect_select_detail_layout, container, false);
+        mRootView = inflater.inflate(R.layout.collect_detail_layout, container, false);
         mEditName = (EditText) mRootView.findViewById(R.id.collect_name);
         mEditAddress = (EditText) mRootView.findViewById(R.id.collect_address);
         mEditPassword = (EditText) mRootView.findViewById(R.id.collect_password);

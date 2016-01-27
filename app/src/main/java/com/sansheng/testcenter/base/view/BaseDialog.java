@@ -260,7 +260,8 @@ public class BaseDialog extends Dialog {
 		WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
 		wm.getDefaultDisplay().getMetrics(dm);
 		WindowManager.LayoutParams lp = getWindow().getAttributes();
-		lp.width = (Math.min(dm.widthPixels, dm.heightPixels) - margin); //设置宽度
+//		lp.width = (Math.min(dm.widthPixels, dm.heightPixels) - margin); //设置宽度
+		lp.width = (Math.min(dm.widthPixels, dm.heightPixels)); //设置宽度
 		getWindow().setAttributes(lp);
 	}
 

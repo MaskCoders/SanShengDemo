@@ -69,7 +69,7 @@
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
-        <activity android:name=".demo.view.MeterListActivity"
+        <activity android:name=".equipmentmanager.MeterManagerActivity"
                   android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -99,12 +99,6 @@
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
-        <activity android:name=".demo.view.CollectListActivity"
-                  android:screenOrientation="sensorLandscape">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-            </intent-filter>
-        </activity>
         <activity android:name=".location.ComposeLocationActivity"
                   android:screenOrientation="sensorLandscape">
         </activity>
@@ -117,13 +111,16 @@
         <activity android:name=".metertest.MeterTestActivity"
                   android:screenOrientation="sensorLandscape">
         </activity>
-        <activity android:name=".collecttest.SelectCollectActivity"
+        <activity android:name=".equipmentmanager.CollectManagerActivity"
                   android:screenOrientation="sensorLandscape">
         </activity>
         <activity android:name=".collecttest.CollectTestActivity"
                   android:screenOrientation="sensorLandscape">
         </activity>
         <activity android:name=".collecttest.EventManagerActivity"
+                  android:screenOrientation="sensorLandscape">
+        </activity>
+        <activity android:name=".equipmentmanager.EquipmentManagerActivity"
                   android:screenOrientation="sensorLandscape">
         </activity>
         <provider

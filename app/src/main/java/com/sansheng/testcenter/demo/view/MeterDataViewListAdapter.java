@@ -54,10 +54,9 @@ public class MeterDataViewListAdapter extends SimpleCursorAdapter {
 
     ViewHolder initViewHolder(final ViewHolder holder, View view) {
         holder.itemLayout = (LinearLayout) view.findViewById(R.id.meter_data_item);
-        holder.meterNum = (TextView) view.findViewById(R.id.meter_num);
+        holder.meterName = (TextView) view.findViewById(R.id.meter_name);
         holder.meterAddress = (TextView) view.findViewById(R.id.meter_address);
         holder.valueTime = (TextView) view.findViewById(R.id.meter_value_time);
-        holder.readTime = (TextView) view.findViewById(R.id.meter_read_time);
         holder.meterValue = (TextView) view.findViewById(R.id.meter_value);
 //        holder.meterNum.setWidth(mActivity.getResources().getDimensionPixelSize(R.dimen.meter_data_item1_width));
 //        holder.meterAddress.setWidth(mActivity.getResources().getDimensionPixelSize(R.dimen.meter_data_item2_width));
@@ -76,10 +75,9 @@ public class MeterDataViewListAdapter extends SimpleCursorAdapter {
         if (meterData.mId == 0) {//无此条数据
             return;
         }
-        holder.meterNum.setText(String.valueOf(meterData.mMeter.mMeterNum));
+        holder.meterName.setText(String.valueOf(meterData.mMeter.mMeterNum));
         holder.meterAddress.setText(meterData.mMeter.mMeterAddress);
         holder.valueTime.setText(MeterUtilies.getSanShengDate(meterData.mValueTime));
-        holder.readTime.setText(MeterUtilies.getSanShengDate(meterData.mReadTime));
         holder.meterValue.setText(String.valueOf(meterData.mValz));
 //        int color = position % 2 == 0 ? R.color.color_white : R.color.sky_blue;
 //        holder.itemLayout.setBackgroundColor(color);
@@ -92,10 +90,9 @@ public class MeterDataViewListAdapter extends SimpleCursorAdapter {
     }
     public static class ViewHolder {
         public LinearLayout itemLayout;
-        public TextView meterNum;
+        public TextView meterName;
         public TextView meterAddress;
         public TextView valueTime;
-        public TextView readTime;
         public TextView meterValue;
     }
 }

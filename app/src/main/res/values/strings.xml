@@ -10,9 +10,10 @@
     <string name="save">"保存"</string>
     <string name="cancel">"取消"</string>
 
-    <string name="function_socket">单项表检测</string>
+    <string name="function_socket">单相表检测</string>
     <string name="function_meter_list">三相表检测</string>
-    <string name="function_meter_data_list">档案管理</string>
+    <string name="function_file_manager">档案管理</string>
+    <string name="function_data_list">数据浏览</string>
     <string name="function_create_data">本地模块检测</string>
     <string name="function_test">远程模块检测</string>
     <string name="function_check_update">台区识别</string>

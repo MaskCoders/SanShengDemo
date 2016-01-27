@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.demo.view.CollectListActivity;
 import com.sansheng.testcenter.module.Collect;
 
 import java.util.HashMap;
@@ -22,13 +21,6 @@ import java.util.HashMap;
 public class CollectListDialogAdapter extends SimpleCursorAdapter {
     private Activity mActivity;
     private HashMap<String, Collect> mSelectedCollects = new HashMap<String, Collect>();
-
-    public CollectListDialogAdapter(CollectListActivity context, Cursor cursor) {
-        super(context, android.R.layout.simple_list_item_1, cursor, Collect.CONTENT_PROJECTION,
-                Collect.ID_INDEX_PROJECTION, 0);
-        this.mActivity = context;
-        this.mSelectedCollects.clear();
-    }
 
     public CollectListDialogAdapter(Activity context, Cursor cursor) {
         super(context, android.R.layout.simple_list_item_1, cursor, Collect.CONTENT_PROJECTION,

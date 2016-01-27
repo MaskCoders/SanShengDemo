@@ -23,7 +23,7 @@ public  abstract class BaseActivity extends Activity implements View.OnClickList
     public final static int GENERAL_VIEW = 0;//主页
     public final static int SOCKET_VIEW = 1;//通信
     public final static int METER_LIST_VIEW = 2;//电表
-    public final static int METERDATA_LIST_VIEW = 3;//电表数据
+    public final static int FILE_MANAGER_VIEW = 3;//档案管理
     public final static int INSERT_DATABASE_VIEW = 4;//插入数据库
     public final static int DETAIL_VIEW = 5;//详情
     public final static int MODIFY_DETAIL_VIEW = 6;//修改详情a
@@ -32,6 +32,7 @@ public  abstract class BaseActivity extends Activity implements View.OnClickList
     public final static int COMPOSE_LOCATION = 9;//新增现场信息
     public final static int METER_TEST = 10;//电表检测
     public final static int COLLECT_TEST = 11;//电表检测
+    public final static int DATA_LIST_VIEW = 12;//数据浏览， 查，删，不允许修改
     private ActionBarCallback mActionBarCallback;
     protected StringBuffer logBuffer = new StringBuffer();
     protected DrawerLayout mDrawerLayout;
@@ -185,54 +186,72 @@ public  abstract class BaseActivity extends Activity implements View.OnClickList
 
     public void setActionBar(final int mode, ActionBarCallback callback) {
         mActionBarCallback = callback;
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 switch (mode) {
                     case GENERAL_VIEW:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.index_page));
+                        (mActionBarView.findViewById(R.id.ab_time)).setVisibility(View.VISIBLE);
                         break;
                     case SOCKET_VIEW:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.connect_page));
+                        (mActionBarView.findViewById(R.id.ab_time)).setVisibility(View.GONE);
                         break;
                     case METER_LIST_VIEW:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_meter_list));
                         mActionBarView.findViewById(R.id.ab_modify_view).setVisibility(View.GONE);
                         mActionBarView.findViewById(R.id.ab_view).setVisibility(View.VISIBLE);
+                        (mActionBarView.findViewById(R.id.ab_time)).setVisibility(View.GONE);
                         break;
-                    case METERDATA_LIST_VIEW:
-                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_meter_data_list));
+                    case FILE_MANAGER_VIEW:
+                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_file_manager));
                         mActionBarView.findViewById(R.id.ab_modify_view).setVisibility(View.GONE);
                         mActionBarView.findViewById(R.id.ab_view).setVisibility(View.VISIBLE);
+                        (mActionBarView.findViewById(R.id.ab_time)).setVisibility(View.GONE);
                         break;
                     case INSERT_DATABASE_VIEW:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.create_db));
+                        (mActionBarView.findViewById(R.id.ab_time)).setVisibility(View.GONE);
                         break;
                     case DETAIL_VIEW:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.db_info));
+                        (mActionBarView.findViewById(R.id.ab_time)).setVisibility(View.GONE);
                         break;
                     case MODIFY_DETAIL_VIEW:
                         ((TextView) mActionBarView.findViewById(R.id.ab_modify_title)).setText(getResources().getText(R.string.change_db));
                         mActionBarView.findViewById(R.id.ab_modify_view).setVisibility(View.VISIBLE);
                         mActionBarView.findViewById(R.id.ab_view).setVisibility(View.GONE);
+                        (mActionBarView.findViewById(R.id.ab_time)).setVisibility(View.GONE);
                         break;
                     case SETTINGS_VIEW:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_settings));
+                        (mActionBarView.findViewById(R.id.ab_time)).setVisibility(View.GONE);
                         break;
                     case LOCATION_INFO:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_gps));
+                        (mActionBarView.findViewById(R.id.ab_time)).setVisibility(View.GONE);
                         break;
                     case COMPOSE_LOCATION:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_compose_location));
+                        (mActionBarView.findViewById(R.id.ab_time)).setVisibility(View.GONE);
                         break;
                     case METER_TEST:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_socket));
+                        (mActionBarView.findViewById(R.id.ab_time)).setVisibility(View.GONE);
                         break;
                     case COLLECT_TEST:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_collect));
+                        (mActionBarView.findViewById(R.id.ab_time)).setVisibility(View.GONE);
+                        break;
+                    case DATA_LIST_VIEW:
+                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_data_list));
+                        (mActionBarView.findViewById(R.id.ab_time)).setVisibility(View.GONE);
                         break;
                     default:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(R.string.company_name);
+                        (mActionBarView.findViewById(R.id.ab_time)).setVisibility(View.GONE);
                         break;
                 }
             }
