@@ -269,7 +269,7 @@ public class MeterDataFragment extends Fragment implements View.OnClickListener,
         @Override
         protected Integer doInBackground(Void... params) {
             mChangedMeter.update(getActivity());
-            ((MeterDataListActivity)getActivity()).restartLoader(MeterDataListActivity.LOADER_ID_FILTER_DEFAULT);
+            ((MeterDataListActivity)getActivity()).restartLoader(MeterDataListActivity.LOADER_ID_FILTER);
             return null;
         }
     }

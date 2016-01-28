@@ -18,6 +18,15 @@ public class MeterUtilies {
     public static final String PARAM_METER = "meter";
     public static final int METER_TEST_TYPE_SINGLE = 0;
     public static final int METER_TEST_TYPE_TRIPLE = 1;
+
+    //
+    public static final String PARAM_START_TIME = "start_time";
+    public static final String PARAM_END_TIME = "end_time";
+    public static final String PARAM_METER_ID = "meter_id";
+    public static final String PARAM_DATA_TYPE = "data_type";
+    public static final String PARAM_DATA_CONTENT = "data_content";
+
+
     public static String getDateShort(Context context, long time) {
         FormattedDateBuilder dateBuilder = new FormattedDateBuilder(context);
         return dateBuilder.formatShortDate(time).toString();

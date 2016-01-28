@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,18 +36,18 @@ public class MeterDataFilterFragment extends Fragment implements View.OnClickLis
     private View mRootView;
     private UIRevisableView mStartTimeView;
     private UIRevisableView mEndTimeView;
-    private UIRevisableView mSelectCollectView;
+//    private UIRevisableView mSelectCollectView;
     private UIRevisableView mSelectMeterView;
     private UIRevisableView mDataTypeView;
     private UIRevisableView mDataContentView;
 
     //value
-    private Long startTime;
-    private Long endTime;
+    private long startTime;
+    private long endTime;
     private ArrayList<Collect> mCollects;
     private ArrayList<Meter> mMeters;
-    private int dataType = 0;
-    private int dataContent = 0;
+    private int dataType = -1;
+    private int dataContent = -1;
 
 
     private int[] mDataContentEntries = {0, 1, 2, 3};
@@ -63,7 +64,8 @@ public class MeterDataFilterFragment extends Fragment implements View.OnClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startTime = endTime = System.currentTimeMillis();
+        startTime = 0;
+        endTime = System.currentTimeMillis();
     }
 
     @Nullable
@@ -72,21 +74,30 @@ public class MeterDataFilterFragment extends Fragment implements View.OnClickLis
         mRootView = inflater.inflate(R.layout.meter_data_filter_layout, container, false);
         mStartTimeView = (UIRevisableView) mRootView.findViewById(R.id.start_time);
         mEndTimeView = (UIRevisableView) mRootView.findViewById(R.id.end_time);
-        mSelectCollectView = (UIRevisableView) mRootView.findViewById(R.id.select_collect);
+//        mSelectCollectView = (UIRevisableView) mRootView.findViewById(R.id.select_collect);
         mSelectMeterView = (UIRevisableView) mRootView.findViewById(R.id.select_meter);
         mDataTypeView = (UIRevisableView) mRootView.findViewById(R.id.data_type);
         mDataContentView = (UIRevisableView) mRootView.findViewById(R.id.data_content);
 
         mStartTimeView.setContent(MeterUtilies.getSanShengDate(System.currentTimeMillis()));
         mEndTimeView.setContent(MeterUtilies.getSanShengDate(System.currentTimeMillis()));
-        mSelectCollectView.setContent("全选");
-        mSelectMeterView.setContent("全选");
-        mDataTypeView.setContent(mDataTypeValues[dataType]);
-        mDataContentView.setContent(mDataContentValues[dataContent]);
+//        mSelectCollectView.setContent("全选");
+        mSelectMeterView.setContent("全部");
+        if (dataType == -1) {
+            mDataTypeView.setContent("全部");
+        } else {
+            mDataTypeView.setContent(mDataTypeValues[dataType]);
+        }
+
+        if (dataContent == -1) {
+            mDataContentView.setContent("全部");
+        } else {
+            mDataContentView.setContent(mDataContentValues[dataContent]);
+        }
 
         mStartTimeView.setOnClickListener(this);
         mEndTimeView.setOnClickListener(this);
-        mSelectCollectView.setOnClickListener(this);
+//        mSelectCollectView.setOnClickListener(this);
         mSelectMeterView.setOnClickListener(this);
         mDataTypeView.setOnClickListener(this);
         mDataContentView.setOnClickListener(this);
@@ -118,9 +129,9 @@ public class MeterDataFilterFragment extends Fragment implements View.OnClickLis
             case R.id.end_time:
                 modifyEndTime();
                 break;
-            case R.id.select_collect:
-                selectCollect();
-                break;
+//            case R.id.select_collect:
+//                selectCollect();
+//                break;
             case R.id.select_meter:
                 selectMeter();
                 break;
@@ -220,9 +231,9 @@ public class MeterDataFilterFragment extends Fragment implements View.OnClickLis
         }
         this.mCollects = new ArrayList<Collect>(collects.values());
         if (collects.size() == 1) {
-            mSelectCollectView.setContent(mCollects.get(0).mCollectName);
+//            mSelectCollectView.setContent(mCollects.get(0).mCollectName);
         } else {
-            mSelectCollectView.setContent(mCollects.get(0).mCollectName + "[" + mCollects.size() + "]");
+//            mSelectCollectView.setContent(mCollects.get(0).mCollectName + "[" + mCollects.size() + "]");
         }
     }
 
@@ -237,6 +248,25 @@ public class MeterDataFilterFragment extends Fragment implements View.OnClickLis
         } else {
             mSelectMeterView.setContent(mMeters.get(0).mMeterName + "[" + mMeters.size() + "]");
         }
+    }
+
+    public Bundle getFilter(){
+        Bundle bundle = new Bundle();
+        if (mMeters != null && mMeters.size() > 0) {
+            StringBuilder ids = new StringBuilder();
+            for (Meter meter: mMeters) {
+                if (!TextUtils.isEmpty(ids)) {
+                    ids.append(",");
+                }
+                ids.append(meter.mId);
+            }
+            bundle.putString(MeterUtilies.PARAM_METER_ID, ids.toString());
+        }
+        bundle.putLong(MeterUtilies.PARAM_START_TIME, startTime);
+        bundle.putLong(MeterUtilies.PARAM_END_TIME, endTime);
+        bundle.putInt(MeterUtilies.PARAM_DATA_TYPE, dataType);
+        bundle.putInt(MeterUtilies.PARAM_DATA_CONTENT, dataContent);
+        return bundle;
     }
 
 //    private void modifyImportant() {

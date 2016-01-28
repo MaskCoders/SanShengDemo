@@ -32,9 +32,10 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
     private Button text3;
     private Button text4;
     private Button text5;
-//    private Button text6;
+    //    private Button text6;
     private int mLastVisibleItem;
-    public static final int LOADER_ID_FILTER_DEFAULT = 0;
+    public static final int LOADER_ID_DEFAULT = 0;
+    public static final int LOADER_ID_FILTER = 1;
     private int mOriginLength = 10;//默认初始显示数量
     private final static int DOWNSIDE_INCREASE_COUNT = 10;//每次增加数量
 
@@ -43,10 +44,16 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
     public static final int VIEW_MODE_FILTER = 2;
     private static int mViewMode = VIEW_MODE_LIST;
 
+    private static long startTime;
+    private static long endTime;
+    private static String ids;
+    private static int dataType = -1;
+    private static int dataContent = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getLoaderManager().initLoader(LOADER_ID_FILTER_DEFAULT, null, this);
+        getLoaderManager().initLoader(LOADER_ID_DEFAULT, null, this);
         setActionBar(DATA_LIST_VIEW);
         setDrawerDisable();
         hideBottomLog();
@@ -103,11 +110,9 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
             return;
         }
         int id = loader.getId();
-        if (id == LOADER_ID_FILTER_DEFAULT) {
-            if (data != null && data.moveToFirst()) {
-                mAdapter.swapCursor(data);
-                mListView.onCompleteLoadMore(PullListView.LOAD_MORE_STATUS_USELESS);
-            }
+        if (data != null && data.moveToFirst()) {
+            mAdapter.swapCursor(data);
+            mListView.onCompleteLoadMore(PullListView.LOAD_MORE_STATUS_USELESS);
         }
         if ((data == null || !data.moveToFirst()) && mListView != null) {
 //            mListView.setEmptyView(mEmptyView);
@@ -124,7 +129,7 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         if (mLastVisibleItem >= mListView.getCount() - DOWNSIDE_INCREASE_COUNT / 2 && scrollState == SCROLL_STATE_IDLE) {
             mOriginLength += DOWNSIDE_INCREASE_COUNT;
-            getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, MeterDataListActivity.this);
+            getLoaderManager().restartLoader(LOADER_ID_FILTER, null, MeterDataListActivity.this);
             mListView.setFooterViewStatic();
         }
     }
@@ -138,7 +143,7 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
     public void onLoadMore(PullListView refreshView) {
         refreshView.onCompleteLoadMore(PullListView.LOAD_MORE_STATUE_SUCCESS);
         mOriginLength += DOWNSIDE_INCREASE_COUNT;
-        getLoaderManager().restartLoader(LOADER_ID_FILTER_DEFAULT, null, MeterDataListActivity.this);
+        getLoaderManager().restartLoader(LOADER_ID_FILTER, null, MeterDataListActivity.this);
     }
 
     public void showDetailFragment(MeterData meter) {
@@ -149,12 +154,12 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
         MeterUtilies.showFragment(getFragmentManager(), null, fragment, R.id.meter_content, FragmentTransaction.TRANSIT_FRAGMENT_OPEN, "MeterDataFragment");
     }
 
-    public void showFilterFragment(){
+    public void showFilterFragment() {
         MeterDataFilterFragment fragment = new MeterDataFilterFragment();
         MeterUtilies.showFragment(getFragmentManager(), null, fragment, R.id.meter_content, FragmentTransaction.TRANSIT_FRAGMENT_OPEN, "MeterDataFilterFragment");
     }
 
-    public void removeFragment(String tag){
+    public void removeFragment(String tag) {
         Fragment fragment = getFragmentManager().findFragmentByTag(tag);
         if (fragment != null) {
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -163,7 +168,7 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
         }
     }
 
-    public void restartLoader(final int id){
+    public void restartLoader(final int id) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -187,6 +192,7 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
             case R.id.text2://全部删除
                 break;
             case R.id.text3://删除当前数据
+                restartQuery();
                 showHomeView();
                 removeFragment("MeterDataFragment");
                 break;
@@ -207,12 +213,30 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
         super.onBackPressed();
     }
 
-    public void showHomeView() {
-        setViewMode(VIEW_MODE_LIST);
-        restartLoader(LOADER_ID_FILTER_DEFAULT);
+    private void restartQuery() {
+        Bundle bundle = null;
+        MeterDataFilterFragment fragment = (MeterDataFilterFragment) getFragmentManager().findFragmentByTag("MeterDataFilterFragment");
+        if (fragment != null) {
+            bundle = fragment.getFilter();
+        }
+        if (bundle == null) {
+            return;
+        }
+        ids = bundle.getString(MeterUtilies.PARAM_METER_ID);
+        startTime = bundle.getLong(MeterUtilies.PARAM_START_TIME);
+        endTime = bundle.getLong(MeterUtilies.PARAM_END_TIME);
+        dataType = bundle.getInt(MeterUtilies.PARAM_DATA_TYPE);
+        dataContent = bundle.getInt(MeterUtilies.PARAM_DATA_CONTENT);
+        restartLoader(LOADER_ID_FILTER);
+
     }
 
-    public void setViewMode(int mode){
+    public void showHomeView() {
+        setViewMode(VIEW_MODE_LIST);
+        restartLoader(LOADER_ID_FILTER);
+    }
+
+    public void setViewMode(int mode) {
         switch (mode) {
             case VIEW_MODE_LIST:
                 mViewMode = mode;

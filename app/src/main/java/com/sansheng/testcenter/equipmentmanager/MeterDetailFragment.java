@@ -274,7 +274,7 @@ public class MeterDetailFragment extends Fragment implements
 
         @Override
         protected Integer doInBackground(Void... params) {
-            ((MeterDataListActivity)getActivity()).restartLoader(MeterDataListActivity.LOADER_ID_FILTER_DEFAULT);
+            ((MeterDataListActivity)getActivity()).restartLoader(MeterDataListActivity.LOADER_ID_FILTER);
             return null;
         }
     }

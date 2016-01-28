@@ -43,20 +43,20 @@
         <include android:id="@+id/account_sync_email_line"
                  layout="@layout/meter_detail_divider"/>
         <!--集中器-->
-        <com.sansheng.testcenter.base.view.UIRevisableView
-                android:id="@+id/select_collect"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                ModifyView:title="@string/meter_data_filter_select_collect"
-                ModifyView:content="@string/meter_detail_default_content"
-                android:gravity="center_vertical|right"
-                android:layout_alignParentRight="true"
-                android:minWidth="180dp"
-                android:background="@color/transparent_color"
-                android:textColor="@color/conversation_list_item_subject"
-                android:textSize="@dimen/list_body_text_size_big"/>
-        <include android:id="@+id/account_sync_email_line"
-                 layout="@layout/meter_detail_divider"/>
+        <!--<com.sansheng.testcenter.base.view.UIRevisableView-->
+                <!--android:id="@+id/select_collect"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--ModifyView:title="@string/meter_data_filter_select_collect"-->
+                <!--ModifyView:content="@string/meter_detail_default_content"-->
+                <!--android:gravity="center_vertical|right"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:minWidth="180dp"-->
+                <!--android:background="@color/transparent_color"-->
+                <!--android:textColor="@color/conversation_list_item_subject"-->
+                <!--android:textSize="@dimen/list_body_text_size_big"/>-->
+        <!--<include android:id="@+id/account_sync_email_line"-->
+                 <!--layout="@layout/meter_detail_divider"/>-->
         <!--电表-->
         <com.sansheng.testcenter.base.view.UIRevisableView
                 android:id="@+id/select_meter"
