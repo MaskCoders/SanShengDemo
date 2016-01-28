@@ -24,9 +24,9 @@ public class DBHelper extends SQLiteOpenHelper {
             "  `"+ Content.MeterColumns.METER_NAME + "` text,\n" +
             "  `"+ Content.MeterColumns.METER_NUM + "` integer not null default 0,\n" +
             "  `"+ Content.MeterColumns.METER_ADDRESS + "` text,\n" +
-            "  `"+ Content.MeterColumns.COMMON_PASSWORD + "` integer not null default 0,\n" +
+            "  `"+ Content.MeterColumns.COMMON_PASSWORD + "` text,\n" +
             "  `"+ Content.MeterColumns.BAUDRATE_ID + "` integer not null default 0,\n" +
-            "  `"+ Content.MeterColumns.COMMON_PORT_ID + "` integer not null default 0,\n" +
+            "  `"+ Content.MeterColumns.COMMON_PORT_ID + "` text,\n" +
             "  `"+ Content.MeterColumns.PROTOCOL_ID + "` integer not null default 0,\n" +
             "  `"+ Content.MeterColumns.FEILV_ID + "` integer not null default 0,\n" +
             "  `"+ Content.MeterColumns.GATHER_ADDRESS + "` text,\n" +

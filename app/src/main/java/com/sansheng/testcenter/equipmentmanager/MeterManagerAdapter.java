@@ -1,26 +1,23 @@
 package com.sansheng.testcenter.equipmentmanager;
 
 import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.module.Meter;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * Created by sunshaogang on 12/9/15.
  */
 public class MeterManagerAdapter extends SimpleCursorAdapter {
     private Activity mActivity;
-    private HashMap<String, Meter> mSelectedMeters = new HashMap<String, Meter>();
+    private ArrayList<Meter> mSelectedMeters = new ArrayList<Meter>();
 
     public MeterManagerAdapter(MeterManagerActivity context, Cursor cursor) {
         super(context, android.R.layout.simple_list_item_1, cursor, Meter.CONTENT_PROJECTION,
@@ -100,19 +97,19 @@ public class MeterManagerAdapter extends SimpleCursorAdapter {
         holder.infoLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDetailFragment(meter);
+                ((MeterManagerActivity)mActivity).showDetailFragment(meter);
             }
         });
-        holder.meterCheckBox.setChecked(mSelectedMeters.containsKey(meter.mMeterAddress));
+        holder.meterCheckBox.setChecked(mSelectedMeters.contains(meter));
         holder.meterCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //do something
 //                Log.e("ssg", "isChecked = " + isChecked);
                 if (isChecked) {
-                    mSelectedMeters.put(meter.mMeterAddress, meter);
+                    mSelectedMeters.add(meter);
                 } else {
-                    mSelectedMeters.remove(meter.mMeterAddress);
+                    mSelectedMeters.remove(meter);
                 }
 //                Log.e("ssg", "mSelectCollects size = " + mSelectCollects.size());
             }
@@ -131,15 +128,7 @@ public class MeterManagerAdapter extends SimpleCursorAdapter {
 //        public TextView meterValue;
     }
 
-    private void showDetailFragment(Meter meter) {
-        MeterDetailFragment fragment = new MeterDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(MeterUtilies.PARAM_METER, meter);
-        fragment.setArguments(bundle);
-        MeterUtilies.showFragment(mActivity.getFragmentManager(), null, fragment, R.id.meter_content, FragmentTransaction.TRANSIT_FRAGMENT_OPEN, String.valueOf(meter.mId));
-    }
-
-    public HashMap<String, Meter> getSelectedMeters() {
+    public ArrayList<Meter> getSelectedMeters() {
         return mSelectedMeters;
     }
 }

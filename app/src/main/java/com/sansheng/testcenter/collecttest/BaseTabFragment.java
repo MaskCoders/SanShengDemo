@@ -16,7 +16,7 @@ abstract class BaseTabFragment extends Fragment{
         super.onCreate(savedInstanceState);
 //        Bundle bundle = getArguments();
 //        if (bundle != null) {
-//            mCollect = bundle.getParcelable(CollectTestUtils.PARAM_COLLECT);
+//            mCollectId = bundle.getParcelable(CollectTestUtils.PARAM_COLLECT);
 //        }
         mCollect = ((CollectTestActivity)getActivity()).getCollect();
     }

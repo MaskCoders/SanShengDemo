@@ -106,7 +106,7 @@ public class CollectManagerActivity extends BaseActivity implements LoaderManage
                 onBackPressed();
                 break;
             case R.id.delete_all://删除全部
-                startTest();
+                deleteAll();
                 break;
             case R.id.new_collect:
                 //新建终端
@@ -201,7 +201,7 @@ public class CollectManagerActivity extends BaseActivity implements LoaderManage
         showDetailFragment(null);
     }
 
-    private void startTest() {
+    private void deleteAll() {
         Log.e("ssg", "全部删除");
         getContentResolver().delete(Collect.CONTENT_URI, null, null);
         restartLoader(LOADER_ID_FILTER_DEFAULT);

@@ -86,7 +86,7 @@
         <com.sansheng.testcenter.base.view.DrawableCenterTextView
                 android:id="@+id/events_manager" style="@style/BtnStyle1"
                 android:drawableLeft="@drawable/left_icon_cancel1"
-                android:text="事件管理"/>
+                android:text="事件查看"/>
 
     </LinearLayout>
 

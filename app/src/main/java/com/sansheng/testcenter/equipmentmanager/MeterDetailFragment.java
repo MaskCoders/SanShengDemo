@@ -5,16 +5,17 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
-import com.sansheng.testcenter.base.view.UIRevisableView;
-import com.sansheng.testcenter.base.view.UIUnrevisableView;
 import com.sansheng.testcenter.datamanager.MeterDataListActivity;
-import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.module.Meter;
+import com.sansheng.testcenter.utils.MeterUtilies;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,20 +24,19 @@ import java.util.concurrent.ThreadFactory;
 /**
  * Created by sunshaogang on 12/10/15.
  */
-public class MeterDetailFragment extends Fragment implements View.OnClickListener, BaseActivity.ActionBarCallback {
+public class MeterDetailFragment extends Fragment implements
+        View.OnTouchListener, View.OnClickListener, BaseActivity.ActionBarCallback {
     private Meter mMeter;
-    private Meter mChangedMeter;
 
     private View mRootView;
-    private UIUnrevisableView mMeterIdView;
-    private UIRevisableView mMeterNameView;
-    private UIRevisableView mValueTimeView;
-    private UIRevisableView mReadTimeView;
-    private UIRevisableView mDateTypeView;
-    private UIRevisableView mValzView;
-    private UIRevisableView mImportantView;
-    private String[] mImportantEntries = {"是", "否"};
-    private String[] mDataEntries = {"日冻结", "实时数据"};
+    private TextView mMeterType;
+    private TextView mCollectId;
+    private EditText mEditName;
+    private EditText mEditAddress;
+    private EditText mEditPassword;
+    private TextView mMeterDa;
+    private EditText mEditPort;
+//    private ArrayAdapter mChannelAdapter;
 
     private static final ThreadFactory sThreadFactory = new CustomThreadPoolFactory("MeterThread");
     private ExecutorService sThreadPool = Executors.newSingleThreadExecutor(sThreadFactory);
@@ -47,15 +47,10 @@ public class MeterDetailFragment extends Fragment implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mImportantEntries = new String[]{getActivity().getResources().getString(R.string.yes),
-                getActivity().getResources().getString(R.string.no)};
-        mDataEntries = new String[]{getActivity().getResources().getString(R.string.db_rdj),
-                getActivity().getResources().getString(R.string.db_realdata)};
         Bundle bundle = getArguments();
         if (bundle != null) {
             mMeter = bundle.getParcelable(MeterUtilies.PARAM_METER);
         }
-        mChangedMeter = mMeter.copy();
     }
 
     @Nullable
@@ -63,21 +58,28 @@ public class MeterDetailFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        ((BaseActivity)getActivity()).setActionBar(BaseActivity.MODIFY_DETAIL_VIEW, this);
         mRootView = inflater.inflate(R.layout.meter_detail_layout, container, false);
-        mMeterIdView = (UIUnrevisableView) mRootView.findViewById(R.id.meter_id);
-        mMeterNameView = (UIRevisableView) mRootView.findViewById(R.id.meter_name);
-        mValueTimeView = (UIRevisableView) mRootView.findViewById(R.id.meter_value_time);
-        mReadTimeView = (UIRevisableView) mRootView.findViewById(R.id.meter_read_time);
-        mDateTypeView = (UIRevisableView) mRootView.findViewById(R.id.meter_data_type);
-        mValzView = (UIRevisableView) mRootView.findViewById(R.id.meter_value);
-        mImportantView = (UIRevisableView) mRootView.findViewById(R.id.meter_important);
-
-        mMeterNameView.setOnClickListener(this);
-        mValueTimeView.setOnClickListener(this);
-        mReadTimeView.setOnClickListener(this);
-        mDateTypeView.setOnClickListener(this);
-        mValzView.setOnClickListener(this);
-        mImportantView.setOnClickListener(this);
-        refreshView(mMeter);
+        mRootView.setOnTouchListener(this);
+        mMeterType = (TextView) mRootView.findViewById(R.id.meter_type);
+        mCollectId = (TextView) mRootView.findViewById(R.id.collect_name);
+        mMeterDa = (TextView) mRootView.findViewById(R.id.meter_num);
+        mEditName = (EditText) mRootView.findViewById(R.id.meter_name);
+        mEditAddress = (EditText) mRootView.findViewById(R.id.meter_address);
+        mEditPassword = (EditText) mRootView.findViewById(R.id.meter_password);
+//        mChannel = (Spinner) mRootView.findViewById(R.id.meter_channel);
+        mEditPort = (EditText) mRootView.findViewById(R.id.meter_port);
+//        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.collect_channel_type, android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        mChannel.setAdapter(adapter);
+        mMeterType.setOnClickListener(this);
+        mEditName.setOnClickListener(this);
+        mMeterDa.setOnClickListener(this);
+        mEditAddress.setOnClickListener(this);
+        mEditPassword.setOnClickListener(this);
+        mCollectId.setOnClickListener(this);
+        mEditPort.setOnClickListener(this);
+        if (mMeter != null) {
+            refreshView(mMeter);
+        }
         return mRootView;
     }
 
@@ -95,6 +97,11 @@ public class MeterDetailFragment extends Fragment implements View.OnClickListene
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return true;
     }
 
     @Override
@@ -126,8 +133,8 @@ public class MeterDetailFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onSaveClick() {
-        DataBaseTask task = new DataBaseTask();
-        task.executeOnExecutor(sThreadPool);
+//        DataBaseTask task = new DataBaseTask();
+//        task.executeOnExecutor(sThreadPool);
         getActivity().onBackPressed();
 
     }
@@ -139,14 +146,15 @@ public class MeterDetailFragment extends Fragment implements View.OnClickListene
 
 
     private void refreshView(Meter meter) {
-//        mMeterIdView.setContent(String.valueOf(meter.mMeterID));
-//        mMeterNameView.setContent(String.valueOf(meter.mMeterName));
-//        mValueTimeView.setContent(MeterUtilies.getSanShengDate(meter.mValueTime));
-//        mReadTimeView.setContent(MeterUtilies.getSanShengDate(meter.mReadTime));
-//        mDateTypeView.setContent(mDataEntries[meter.mDataType - 1]);
-//        mValzView.setContent(String.valueOf(meter.mValz));
-//        mImportantView.setContent(mImportantEntries[meter.isImportant]);
+        mMeterType.setText(String.valueOf(meter.mType));
+        mCollectId.setText(String.valueOf(meter.mCollectId));
+        mEditName.setText(meter.mMeterName);
+        mEditAddress.setText(meter.mMeterAddress);
+        mMeterDa.setText(String.valueOf(meter.mDa));
+        mEditPassword.setText(meter.mCommPwd);
+        mEditPort.setText(meter.mCommPortId);
     }
+
 
 //    private void modifyMeterNamen() {
 //        final BaseDialog dialog = new BaseDialog(getActivity(), R.style.CustomDialog);
@@ -266,7 +274,6 @@ public class MeterDetailFragment extends Fragment implements View.OnClickListene
 
         @Override
         protected Integer doInBackground(Void... params) {
-            mChangedMeter.update(getActivity());
             ((MeterDataListActivity)getActivity()).restartLoader(MeterDataListActivity.LOADER_ID_FILTER_DEFAULT);
             return null;
         }

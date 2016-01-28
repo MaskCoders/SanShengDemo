@@ -1,0 +1,23 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+    <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/list_margin"
+            android:layout_marginRight="@dimen/list_margin"
+            android:listSelector="@android:color/transparent"
+            android:focusable="true"
+            android:scrollbars="none"
+            android:divider="@color/custom_action_bar_bg"
+            android:dividerHeight="1dp"
+            android:scrollbarStyle="insideOverlay"
+            android:clickable="false"/>
+    <FrameLayout android:id="@+id/content"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:layout_marginLeft="@dimen/list_margin"
+                 android:layout_marginRight="@dimen/list_margin">
+    </FrameLayout>
+</FrameLayout>

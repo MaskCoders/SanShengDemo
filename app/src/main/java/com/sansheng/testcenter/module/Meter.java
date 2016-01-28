@@ -13,14 +13,14 @@ import android.util.Log;
  */
 public class Meter extends Content implements Content.MeterColumns, Parcelable {
 
-    public int mConcentratorId;
+    public int mCollectId;
     public int mDa;//测量点
     public String mMeterName;//户名
     public int mMeterNum;//表号 资产号
     public String mMeterAddress;
-    public int mCommPwd;
+    public String mCommPwd;
     public int mBaudRateId;
-    public int mCommPortId;
+    public String mCommPortId;
     public int mProtocolId;
     public int FeiLvId;
     public String mGatherAddress;
@@ -78,7 +78,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
     public Meter(boolean test, int id) {
         mBaseUri = CONTENT_URI;
         if (test) {
-            mConcentratorId = id % 2;
+            mCollectId = id % 2;
             mMeterName = "电表名称" + id;
             mMeterAddress = String.format("%012d", id);
             Log.e("ssg", "mMeterAddress = " + mMeterAddress);
@@ -96,7 +96,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
         // Assign values for each row.
-        values.put(COLLECT_ID, mConcentratorId);
+        values.put(COLLECT_ID, mCollectId);
         values.put(DA, mDa);
         values.put(METER_NAME, mMeterName);
         values.put(METER_NUM, mMeterNum);
@@ -121,14 +121,14 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
     @Override
     public void restore(Cursor cursor) {
         mId = cursor.getLong(ID_INDEX);
-        mConcentratorId = cursor.getInt(COLLECT_ID_INDEX);
+        mCollectId = cursor.getInt(COLLECT_ID_INDEX);
         mDa = cursor.getInt(DA_INDEX);
         mMeterName = cursor.getString(METER_NUM_INDEX);
         mMeterNum = cursor.getInt(METER_ADDRESS_INDEX);
         mMeterAddress = cursor.getString(METER_NAME_INDEX);
-        mCommPwd = cursor.getInt(COMMON_PASSWORD_INDEX);
+        mCommPwd = cursor.getString(COMMON_PASSWORD_INDEX);
         mBaudRateId = cursor.getInt(BAUDRATE_ID_INDEX);
-        mCommPortId = cursor.getInt(COMMON_PORT_ID_INDEX);
+        mCommPortId = cursor.getString(COMMON_PORT_ID_INDEX);
         mProtocolId = cursor.getInt(PROTOCOL_ID_INDEX);
         FeiLvId = cursor.getInt(FEILV_ID_INDEX);
         mGatherAddress = cursor.getString(GATHER_ADDRESS_INDEX);
@@ -144,14 +144,14 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
 
     public void restoreWithMeterDataCursor(Cursor cursor){
         mId = cursor.getLong(MeterData.METER_ID_INDEX);
-        mConcentratorId = cursor.getInt(cursor.getColumnIndex(COLLECT_ID));
+        mCollectId = cursor.getInt(cursor.getColumnIndex(COLLECT_ID));
         mDa = cursor.getInt(cursor.getColumnIndex(DA));
         mMeterName = cursor.getString(cursor.getColumnIndex(METER_NAME));
         mMeterNum = cursor.getInt(cursor.getColumnIndex(METER_NUM));
         mMeterAddress = cursor.getString(cursor.getColumnIndex(METER_ADDRESS));
-        mCommPwd = cursor.getInt(cursor.getColumnIndex(COMMON_PASSWORD));
+        mCommPwd = cursor.getString(cursor.getColumnIndex(COMMON_PASSWORD));
         mBaudRateId = cursor.getInt(cursor.getColumnIndex(BAUDRATE_ID));
-        mCommPortId = cursor.getInt(cursor.getColumnIndex(COMMON_PORT_ID));
+        mCommPortId = cursor.getString(cursor.getColumnIndex(COMMON_PORT_ID));
         mProtocolId = cursor.getInt(cursor.getColumnIndex(PROTOCOL_ID));
         FeiLvId = cursor.getInt(cursor.getColumnIndex(FEILV_ID));
         mGatherAddress = cursor.getString(cursor.getColumnIndex(GATHER_ADDRESS));
@@ -183,14 +183,14 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(mId);
-        dest.writeInt(mConcentratorId);
+        dest.writeInt(mCollectId);
         dest.writeInt(mDa);
         dest.writeString(mMeterName);
         dest.writeInt(mMeterNum);
         dest.writeString(mMeterAddress);
-        dest.writeInt(mCommPwd);
+        dest.writeString(mCommPwd);
         dest.writeInt(mBaudRateId);
-        dest.writeInt(mCommPortId);
+        dest.writeString(mCommPortId);
         dest.writeInt(mProtocolId);
         dest.writeInt(FeiLvId);
         dest.writeString(mGatherAddress);
@@ -219,14 +219,14 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
 
     public Meter(Parcel in) {
         mId = in.readLong();
-        mConcentratorId = in.readInt();
+        mCollectId = in.readInt();
         mDa = in.readInt();
         mMeterName = in.readString();
         mMeterNum = in.readInt();
         mMeterAddress = in.readString();
-        mCommPwd = in.readInt();
+        mCommPwd = in.readString();
         mBaudRateId = in.readInt();
-        mCommPortId = in.readInt();
+        mCommPortId = in.readString();
         mProtocolId = in.readInt();
         FeiLvId = in.readInt();
         mGatherAddress = in.readString();
@@ -243,7 +243,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
     public Meter copy() {
         Meter meter = new Meter();
         meter.mId = mId;
-        meter.mConcentratorId = mConcentratorId;
+        meter.mCollectId = mCollectId;
         meter.mDa = mDa;
         meter.mMeterName = mMeterName;
         meter.mMeterNum = mMeterNum;

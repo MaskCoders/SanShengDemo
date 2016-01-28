@@ -375,7 +375,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
     }
 
     private void eventsManager() {
-        Log.e("ssg", "事件管理");
+        Log.e("ssg", "事件查看");
         Intent intent = new Intent();
         intent.setClass(this, EventManagerActivity.class);
         startActivity(intent);
