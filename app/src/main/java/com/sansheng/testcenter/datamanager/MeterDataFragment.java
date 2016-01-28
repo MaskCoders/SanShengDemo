@@ -107,19 +107,19 @@ public class MeterDataFragment extends Fragment implements View.OnClickListener,
 //                modifyMeterNamen();
                 break;
             case R.id.meter_value_time:
-                modifyValueTime();
+//                modifyValueTime();
                 break;
             case R.id.meter_read_time:
-                modifyReadTime();
+//                modifyReadTime();
                 break;
             case R.id.meter_data_type:
-                modifyDataType();
+//                modifyDataType();
                 break;
             case R.id.meter_value:
-                modifyMeterValue();
+//                modifyMeterValue();
                 break;
             case R.id.meter_important:
-                modifyImportant();
+//                modifyImportant();
                 break;
             default:
                 break;
