@@ -531,7 +531,7 @@ public class ComAssistantActivity extends BaseActivity {
 		}
     }
     //----------------------------------------------------���ڿ�����
-    public static  class SerialControl extends SerialHelper{
+    public   class SerialControl extends SerialHelper{
 
 //		public SerialControl(String sPort, String sBaudRate){
 //			super(sPort, sBaudRate);
@@ -539,11 +539,23 @@ public class ComAssistantActivity extends BaseActivity {
 		public SerialControl(){
 		}
 
-//		@Override
-//		protected void onDataReceived(final ComBean ComRecData)
-//		{
-////			DispQueue.AddQueue(ComRecData);
-//		}
+		@Override
+		public void onDataReceived(final ComBean ComRecData)
+		{
+			//Êý¾Ý½ÓÊÕÁ¿´ó»ò½ÓÊÕÊ±µ¯³öÈí¼üÅÌ£¬½çÃæ»á¿¨¶Ù,¿ÉÄÜºÍ6410µÄÏÔÊ¾ÐÔÄÜÓÐ¹Ø
+			//Ö±½ÓË¢ÐÂÏÔÊ¾£¬½ÓÊÕÊý¾ÝÁ¿´óÊ±£¬¿¨¶ÙÃ÷ÏÔ£¬µ«½ÓÊÕÓëÏÔÊ¾Í¬²½¡£
+			//ÓÃÏß³Ì¶¨Ê±Ë¢ÐÂÏÔÊ¾¿ÉÒÔ»ñµÃ½ÏÁ÷³©µÄÏÔÊ¾Ð§¹û£¬µ«ÊÇ½ÓÊÕÊý¾ÝËÙ¶È¿ìÓÚÏÔÊ¾ËÙ¶ÈÊ±£¬ÏÔÊ¾»áÖÍºó¡£
+			//×îÖÕÐ§¹û²î²»¶à-_-£¬Ïß³Ì¶¨Ê±Ë¢ÐÂÉÔºÃÒ»Ð©¡£
+			DispQueue.AddQueue(ComRecData);//Ïß³Ì¶¨Ê±Ë¢ÐÂÏÔÊ¾(ÍÆ¼ö)
+			/*
+			runOnUiThread(new Runnable()//Ö±½ÓË¢ÐÂÏÔÊ¾
+			{
+				public void run()
+				{
+					DispRecData(ComRecData);
+				}
+			});*/
+		}
     }
     //----------------------------------------------------ˢ����ʾ�߳�
     private class DispQueueThread extends Thread{

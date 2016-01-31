@@ -4,8 +4,6 @@ import com.sansheng.testcenter.bean.A;
 import com.sansheng.testcenter.bean.C;
 import com.sansheng.testcenter.bean.UserData;
 
-import java.util.Random;
-
 /**
  * Created by hua on 12/23/15.
  */
@@ -109,12 +107,4 @@ public class TerProtocolCreater {
     }
 
 
-    private String getRandom(){
-        Random random = new Random();
-        String h = Integer.toHexString(random.nextInt(256)).toUpperCase();
-        if(h.length() == 1){
-            h="0"+h;
-        }
-        return h;
-    }
 }

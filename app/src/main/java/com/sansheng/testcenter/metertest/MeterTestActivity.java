@@ -41,6 +41,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import static com.sansheng.testcenter.base.Const.CONN_ERR;
+import static com.sansheng.testcenter.base.Const.CONN_OK;
 
 /**
  * Created by sunshaogang on 1/4/16.
@@ -50,6 +51,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     private DrawableCenterTextView text1;
     private DrawableCenterTextView text3;
     private DrawableCenterTextView text4;
+    private DrawableCenterTextView stopBtn;
     private DrawableCenterTextView confirm;
     private DrawableCenterTextView cancel;
 
@@ -116,6 +118,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
 //        text2 = (DrawableCenterTextView) inflate.findViewById(R.id.text2);/
         text3 = (DrawableCenterTextView) inflate.findViewById(R.id.text3);
         text4 = (DrawableCenterTextView) inflate.findViewById(R.id.text4);
+        stopBtn = (DrawableCenterTextView) inflate.findViewById(R.id.stop);
 //        text5 = (Button) inflate.findViewById(R.id.text5);
 //        text6 = (Button) inflate.findViewById(R.id.text6);
         confirm = (DrawableCenterTextView) inflate.findViewById(R.id.confirm);
@@ -262,6 +265,15 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
             case R.id.conn:
                 mClient = mClientManager.createClient(whm_ip.getText().toString(), Integer.valueOf(whm_port.getText().toString()));
                 break;
+            case R.id.stop:
+                try{
+                    nowChannel.stopSend();
+                    nowChannel.close();
+                    mMainHandler.sendMessage(Const.CONN_CLOSE,nowChannel.getPort());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                break;
         }
         super.onClick(v);
     }
@@ -344,6 +356,10 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
                 mMainHandler.sendMessage(msg);
 //                System.out.println("by hua : " + bean.toString());
 //                mClientManager.sendMessage(mClient, ProtocolUtils.hexStringToBytes(bean.toString()));
+                if(nowChannel == null){
+                    Toast.makeText(MeterTestActivity.this, "请选择信道", 0).show();
+                    return;
+                }
                 nowChannel.sendHex(bean.toString());
             }
             private HashMap<Integer, String> getSelectProject(){
@@ -481,6 +497,9 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         msg.what = CONN_ERR;
         try {
             ComPort.open();
+            msg.what = CONN_OK;
+            msg.obj = ComPort.getPort();
+            mMainHandler.sendMessage(msg);
         } catch (SecurityException e) {
             msg.obj = "打开串口失败:没有串口读/写权限!";
             mMainHandler.sendMessage(msg);

@@ -1,11 +1,14 @@
 package com.sansheng.testcenter.tools.serial;
 
 
+import android.os.Message;
 import android_serialport_api.SerialPort;
+import com.sansheng.testcenter.base.Const;
 import com.sansheng.testcenter.bean.ComBean;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.controller.MainHandler;
+import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -244,8 +247,21 @@ public  class SerialHelper{
 	}
 	//----------------------------------------------------
 	public  void onDataReceived(ComBean ComRecData){
-		WhmBean bean = WhmBean.parse(ComRecData.bRec);
-		callback.setValue(bean);
+		WhmBean bean =null;
+		byte[] barr = ComRecData.bRec;
+		try{
+
+			bean = WhmBean.parse(barr);
+			if(bean == null)throw new NullPointerException();
+			callback.setValue(bean);
+		}catch (Exception e){
+//			e.printStackTrace();
+			Message msg = new Message();
+			msg.what= Const.RECV_MSG;
+			msg.obj = ProtocolUtils.bytes2hex(barr);
+			System.out.println("====>  "+new String(barr));
+			mainHandler.sendMessage(msg);
+		}
 	};
 
 }

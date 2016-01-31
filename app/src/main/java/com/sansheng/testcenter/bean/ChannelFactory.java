@@ -8,13 +8,17 @@ import com.sansheng.testcenter.tools.serial.SerialHelper;
  * Created by hua on 16-1-24.
  */
 public class ChannelFactory {
+    /**
+     * /dev/ttyGS3,2,1,0
+     * /dev/ttyAMA5,4,3,2,1,0
+     */
     public static SerialHelper INFRA_RED;
-    public static String INFRA_RED_DN = "/dev/xxx";
-    public static String RS485_1 = "/dev/xxx";
-    public static String RS485_2 = "/dev/xxx";
-    public static String RS232 = "/dev/xxx";
-    public static String ZB = "/dev/xxx";
-    public static String ZB2 = "/dev/xxx";
+    public static String INFRA_RED_DN = "/dev/ttyAMA5";
+    public static String RS485_1 = "/dev/ttyAMA4";
+    public static String RS485_2 = "/dev/ttyAMA3";
+    public static String RS232 = "/dev/ttyAMA2";
+    public static String ZB = "/dev/ttyAMA1";
+    public static String ZB2 = "/dev/ttyAMA0";
 
     public static SerialHelper getInstance(int index,boolean isMeter, MainHandler handler, IServiceHandlerCallback cb){
         SerialHelper tmp = null;
