@@ -124,6 +124,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         confirm = (DrawableCenterTextView) inflate.findViewById(R.id.confirm);
         cancel = (DrawableCenterTextView) inflate.findViewById(R.id.cancel);
 
+        stopBtn.setOnClickListener(this);
         mHomeController.setOnClickListener(this);
         mSelectMeterController.setOnClickListener(this);
         confirm.setOnClickListener(this);
@@ -269,7 +270,10 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
                 try{
                     nowChannel.stopSend();
                     nowChannel.close();
-                    mMainHandler.sendMessage(Const.CONN_CLOSE,nowChannel.getPort());
+                    Message msg = new Message();
+                    msg.obj = nowChannel.getPort();
+                    msg.what = Const.CONN_CLOSE;
+                    mMainHandler.sendMessage(msg);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

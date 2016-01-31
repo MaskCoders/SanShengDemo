@@ -33,6 +33,13 @@ public class MainHandler extends Handler {
                 0, content.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return sserror;
     }
+    private SpannableString getCloseSS(String content) {
+        content = content+"  服务关闭！";
+        SpannableString sserror = new SpannableString(content);
+        sserror.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.err_msg_tip)),
+                0, content.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return sserror;
+    }
 
     private SpannableString getRecvCmdSS(String content) {
         String time = ProtocolUtils.getTimeStamp() + "\t接受指令=>>";
@@ -95,6 +102,10 @@ public class MainHandler extends Handler {
                 return;
             case CONN_SER_CLS:
                 break;
+            case CONN_CLOSE:
+                SpannableString ss = getCloseSS(content);
+                mMainUI.pullWholeLog(ss);
+                return;
 //            case RECV_MSG:
 //                if (content.contains(ERRCODE)) {
 //                    content = mContext.getResources().getString(R.string.conn_ser_err2);
