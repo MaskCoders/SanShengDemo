@@ -10,6 +10,7 @@ import android.text.style.ForegroundColorSpan;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
+import com.sansheng.testcenter.tools.log.LogUtils;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 
 import static com.sansheng.testcenter.base.Const.*;
@@ -20,10 +21,11 @@ import static com.sansheng.testcenter.base.Const.*;
 public class MainHandler extends Handler {
     private Context mContext;
     private IServiceHandlerCallback mMainUI;
-
+    LogUtils logUtils;
     public MainHandler(Context ctx, IServiceHandlerCallback ui) {
         mContext = ctx;
         mMainUI = ui;
+        logUtils = new LogUtils();
     }
 
     private SpannableString getErrSS(String content) {
@@ -88,6 +90,7 @@ public class MainHandler extends Handler {
                 SpannableString sendSS =new SpannableString(getSendCmdSS(content.toString()));
                 mMainUI.pullShortLog(sendSS);
                 mMainUI.pullWholeLog(sendSS);
+                logUtils.saveLog(sendSS.toString());
                 return;
             case RECV_MSG:
                 SpannableString recvSS =new SpannableString(getRecvCmdSS(content.toString()));
@@ -99,12 +102,14 @@ public class MainHandler extends Handler {
                     double arr[] = bean.getUserDataArr(4);
                     mMainUI.setValue(bean);
                 }
+                logUtils.saveLog(recvSS.toString());
                 return;
             case CONN_SER_CLS:
                 break;
             case CONN_CLOSE:
                 SpannableString ss = getCloseSS(content);
                 mMainUI.pullWholeLog(ss);
+                logUtils.saveLog(ss.toString());
                 return;
 //            case RECV_MSG:
 //                if (content.contains(ERRCODE)) {
@@ -127,9 +132,11 @@ public class MainHandler extends Handler {
                 SpannableString sserror = getErrSS(content);
                 mMainUI.pullShortLog(sserror);
                 mMainUI.pullWholeLog(sserror);
+                logUtils.saveLog(sserror.toString());
                 return;
             default:
         }
+        logUtils.saveLog(content);
         mMainUI.pullWholeLog(content);
 
     }
