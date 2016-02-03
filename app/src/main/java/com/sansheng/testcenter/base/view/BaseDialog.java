@@ -313,4 +313,8 @@ public class BaseDialog extends Dialog {
 	public void setMargDimension(int dimension) {
 		margin = dimension;
 	}
+
+	public ViewGroup getContainer(){
+		return mContainer;
+	}
 }

@@ -318,6 +318,7 @@ public class ComposeDialogFragmentFactory {
 					};
 
 			setTitleText(R.string.select_photo_type);
+			getContainer().setBackground(context.getResources().getDrawable(R.drawable.dialog_back_down));
 			setItems(attResource, icons, new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
