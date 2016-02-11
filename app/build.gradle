@@ -42,7 +42,7 @@ android {
             signingConfig signingConfigs.myConfig
             zipAlignEnabled true
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable true
             jniDebuggable true
             renderscriptDebuggable true
@@ -52,7 +52,7 @@ android {
             minifyEnabled false
             zipAlignEnabled true
             signingConfig signingConfigs.myConfig
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+           // proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable false
             jniDebuggable false
         }

@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              tools:context=".MainActivity">
+
+    <TextView android:id="@+id/log" android:layout_width="fill_parent" android:layout_height="300dp"
+              android:maxLines="16"/>
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:orientation="vertical">
+        <Button android:id="@+id/SocketConn" android:layout_width="150dp" android:layout_height="50dp"
+                android:text="SocketConn"/>
+        <Button android:id="@+id/PortConn" android:layout_width="150dp" android:layout_height="50dp"
+                android:text="PortConn"/>
+        <Button android:id="@+id/CloseConn" android:layout_width="150dp" android:layout_height="50dp"
+                android:text="CloseConn"/>
+        <Button android:id="@+id/start" android:layout_width="150dp" android:layout_height="50dp"
+                android:text="start"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
