@@ -34,6 +34,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+task copyNativeLibs(type: Copy) {
+    from fileTree(dir: 'libs', include: '*/*.so')
+    into new File(buildDir, 'lib')
+    println "hello world "+buildDir
+}
+
+tasks.withType(JavaCompile) {
+    compileTask -> compileTask.dependsOn(copyNativeLibs)
 }
 
 dependencies {
