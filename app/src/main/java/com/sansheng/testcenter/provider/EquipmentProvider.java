@@ -133,6 +133,7 @@ public class EquipmentProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         Log.e("ssg", "query uri = " + uri);
+        Log.e("ssg", "query selection = " + selection);
         int match = findMatch(uri, "query");
         Context context = getContext();
         SQLiteDatabase db = getDatabase(context);
@@ -221,21 +222,27 @@ public class EquipmentProvider extends ContentProvider {
         SQLiteDatabase db = getDatabase(context);
         int table = match >> BASE_SHIFT;
         String tableName = TABLE_NAMES.valueAt(table);
-        String id = uri.getQueryParameter(Content.PARAMETER_IDS);
+        String id = null;
         int result = 0;
-        if (id != null) {
-            selection = whereWithId(id, selection);
-        }
         try {
             switch (match) {
                 case METER:
-                case METER_ID:
                 case METERDATA:
-                case METERDATA_ID:
                 case LOCATION:
-                case LOCATION_ID:
                 case COLLECT:
+                    id = uri.getQueryParameter(Content.PARAMETER_IDS);
+                    if (id != null) {
+                        selection = whereWithId(id, selection);
+                    }
+                    break;
+                case METER_ID:
+                case METERDATA_ID:
+                case LOCATION_ID:
                 case COLLECT_ID:
+                    id = uri.getLastPathSegment();
+                    if (id != null) {
+                        selection = whereWithId(id, selection);
+                    }
                     break;
             }
             result = db.delete(tableName, selection, selectionArgs);

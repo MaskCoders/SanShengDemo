@@ -70,6 +70,7 @@ public class MeterData extends Content implements MeterDataColumns, Parcelable {
             mValueTime = System.currentTimeMillis();
             mReadTime = mValueTime + 1;
             mDataType = id % 2 == 0 ? 1 : 2;
+            mDataId = id % 2 == 0 ? 1 : 2;
             mValz = (float) (1.234 + id);
             mUpdateTime = System.currentTimeMillis();
         }

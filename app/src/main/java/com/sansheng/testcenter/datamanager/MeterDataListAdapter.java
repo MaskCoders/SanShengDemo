@@ -84,6 +84,7 @@ public class MeterDataListAdapter extends SimpleCursorAdapter {
             public void onClick(View v) {
                 mActivity.setViewMode(MeterDataListActivity.VIEW_MODE_DETIAL);
                 mActivity.showDetailFragment(meterData);
+                mActivity.setCurrentData(meterData);
             }
         });
     }

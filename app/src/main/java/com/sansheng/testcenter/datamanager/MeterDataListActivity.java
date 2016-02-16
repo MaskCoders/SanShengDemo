@@ -6,7 +6,9 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
@@ -14,11 +16,16 @@ import android.widget.Button;
 import android.widget.ListView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
+import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.base.view.PullListView;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.module.MeterData;
 import com.sansheng.testcenter.utils.MeterUtilies;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 /**
  * Created by sunshaogang on 12/9/15.
@@ -27,6 +34,7 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
 
     private PullListView mListView;
     private MeterDataListAdapter mAdapter;
+    private MeterData mCurrentData;
     private Button text1;
     private Button text2;
     private Button text3;
@@ -47,8 +55,12 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
     private static long startTime;
     private static long endTime;
     private static String ids;
-    private static int dataType = -1;
-    private static int dataContent = -1;
+    private static int dataType = 0;
+    private static int dataContent = 0;
+
+    private static final ThreadFactory sThreadFactory = new CustomThreadPoolFactory("MeterThread");
+    private ExecutorService sThreadPool = Executors.newSingleThreadExecutor(sThreadFactory);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +70,9 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
         setDrawerDisable();
         hideBottomLog();
         setViewMode(mViewMode);
-        setTitle("档案管理");
+        startTime = 0;
+        endTime = System.currentTimeMillis();
+//        setTitle("档案管理");
     }
 
     @Override
@@ -93,27 +107,82 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
         mListView.setOnScrollListener(this);
         main_info.addView(inflate);
     }
-
+//    switch (id) {
+//        case LOADER_ID_FILTER_FUZZY://暂时支持 名称、节点、地址 三个字段的模糊查询
+//            if (!TextUtils.isEmpty(mEditTextValue)) {
+//                selection.append("(");
+//                selection.append(Meter.METER_NAME).append(" LIKE ").append("'%" + mEditTextValue + "%'").append(" OR ");
+//                selection.append(Meter.DA).append(" LIKE ").append("'%" + mEditTextValue + "%'").append(" OR ");
+//                selection.append(Meter.METER_ADDRESS).append(" LIKE ").append("'%" + mEditTextValue + "%'");
+//                selection.append(")");
+//                selection.append(" AND ");
+//                mEditTextValue = "";
+//            }
+//            break;
+//        case LOADER_ID_FILTER_DEFAULT:
+//        default:
+//
+//            break;
+//    }
+//    if (!TextUtils.isEmpty(collectIds)) {//如必要,根据选中的集中器显示相应的电表以供选择
+//        selection.append(Meter.COLLECT_ID).append(" in ").append("(").append(collectIds).append(")").append(" AND ");
+//    }
+//    selection.append(Meter.METER_TYPE).append("=").append(type);
+//    return new CursorLoader(getActivity(), Meter.CONTENT_URI, Meter.CONTENT_PROJECTION, selection.toString(),
+//            null, Meter.ID + " " + Content.DESC + " LIMIT " + mOriginLength);
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        StringBuilder selection = new StringBuilder(" 1=1 ");
+        StringBuilder selection = new StringBuilder();
+        switch (id) {
+            case LOADER_ID_DEFAULT:
+                selection.append(" 1=1 ");
+                break;
+            case LOADER_ID_FILTER:
+                if (!TextUtils.isEmpty(ids)){
+                    selection.append(MeterData.METER_ID).append(" in ").append("(").append(ids).append(")").append(" AND ");
+                }
+                if (dataType != 0) {
+                    selection.append(MeterData.DATA_TYPE).append(" = ").append("(").append(dataType).append(")").append(" AND ");
+                }
+                if (dataContent != 0) {
+                    selection.append(MeterData.DATA_ID).append(" = ").append("(").append(dataContent).append(")").append(" AND ");
+                }
+                selection.append(MeterData.VALUE_TIME).append(" > ").append(startTime).append(" AND ");
+                selection.append(MeterData.VALUE_TIME).append(" < ").append(endTime);
+                break;
+        }
         return new CursorLoader(this, MeterData.CONTENT_URI, MeterData.CONTENT_PROJECTION, selection.toString(),
                 null, MeterData.ID + " " + Content.DESC + " LIMIT " + mOriginLength);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {//加载更多。
-        Log.e("ssg", "cursor count = " + data.getCount());
+        if (data != null) {
+            Log.e("ssg", "cursor count = " + data.getCount());
+        }
         if (mAdapter.getCount() != 0 && data != null && mAdapter.getCount() == data.getCount()) {
             mListView.setNoMoreData();
             mAdapter.swapCursor(data);
             return;
         }
         int id = loader.getId();
-        if (data != null && data.moveToFirst()) {
-            mAdapter.swapCursor(data);
-            mListView.onCompleteLoadMore(PullListView.LOAD_MORE_STATUS_USELESS);
+        switch (id) {
+            case LOADER_ID_DEFAULT:
+                if (data != null && data.moveToFirst()) {
+                    mAdapter.swapCursor(data);
+                    mListView.onCompleteLoadMore(PullListView.LOAD_MORE_STATUS_USELESS);
+                }
+                break;
+            case LOADER_ID_FILTER:
+                if (data != null && data.moveToFirst()) {
+                    mAdapter.swapCursor(data);
+                    mListView.onCompleteLoadMore(PullListView.LOAD_MORE_STATUS_USELESS);
+                } else {
+                    mAdapter.swapCursor(data);
+                }
+                break;
         }
+
         if ((data == null || !data.moveToFirst()) && mListView != null) {
 //            mListView.setEmptyView(mEmptyView);
             return;
@@ -156,6 +225,12 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
 
     public void showFilterFragment() {
         MeterDataFilterFragment fragment = new MeterDataFilterFragment();
+        Bundle bundle = new Bundle();
+        bundle.putLong(MeterUtilies.PARAM_START_TIME, startTime);
+        bundle.putLong(MeterUtilies.PARAM_END_TIME, endTime);
+        bundle.putInt(MeterUtilies.PARAM_DATA_TYPE, dataType);
+        bundle.putInt(MeterUtilies.PARAM_DATA_CONTENT, dataContent);
+        fragment.setArguments(bundle);
         MeterUtilies.showFragment(getFragmentManager(), null, fragment, R.id.meter_content, FragmentTransaction.TRANSIT_FRAGMENT_OPEN, "MeterDataFilterFragment");
     }
 
@@ -190,19 +265,27 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
                 setViewMode(VIEW_MODE_FILTER);
                 break;
             case R.id.text2://全部删除
+                DeleteAllTask task = new DeleteAllTask();
+                task.executeOnExecutor(sThreadPool);
                 break;
             case R.id.text3://删除当前数据
-                restartQuery();
-                showHomeView();
-                removeFragment("MeterDataFragment");
+                DeleteCurrentTask deleteCurrentTask = new DeleteCurrentTask();
+                deleteCurrentTask.executeOnExecutor(sThreadPool);
+//                removeFragment("MeterDataFragment");
+//                showHomeView();
+                onBackPressed();
                 break;
             case R.id.text4://确认
-                showHomeView();
-                removeFragment("MeterDataFilterFragment");
+                //TODO:获取filter
+//                removeFragment("MeterDataFilterFragment");
+//                showHomeView();
+                onBackPressed();
+                restartQuery();
                 break;
             case R.id.text5://取消
-                showHomeView();
-                removeFragment("MeterDataFilterFragment");
+//                removeFragment("MeterDataFilterFragment");
+//                showHomeView();
+                onBackPressed();
                 break;
         }
     }
@@ -210,6 +293,8 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
     @Override
     public void onBackPressed() {
         showHomeView();
+        int count = getFragmentManager().getBackStackEntryCount();
+        Log.e("ssg", "count = " + count);
         super.onBackPressed();
     }
 
@@ -220,6 +305,7 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
             bundle = fragment.getFilter();
         }
         if (bundle == null) {
+            restartLoader(LOADER_ID_DEFAULT);
             return;
         }
         ids = bundle.getString(MeterUtilies.PARAM_METER_ID);
@@ -228,8 +314,46 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
         dataType = bundle.getInt(MeterUtilies.PARAM_DATA_TYPE);
         dataContent = bundle.getInt(MeterUtilies.PARAM_DATA_CONTENT);
         restartLoader(LOADER_ID_FILTER);
-
     }
+
+    private void deleteCurrentData(){
+        if (mCurrentData != null) {
+            Log.e("ssg", "delete data id = " + mCurrentData.mId);
+            getContentResolver().delete(mCurrentData.getUri(), null, null);
+        }
+    }
+
+    private void deleteAllData(){
+        getContentResolver().delete(MeterData.CONTENT_URI, null, null);
+    }
+
+    private class DeleteCurrentTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            deleteCurrentData();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void param) {
+            restartQuery();
+        }
+    }
+
+    private class DeleteAllTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            deleteAllData();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void param) {
+            restartQuery();
+        }
+    }
+
 
     public void showHomeView() {
         setViewMode(VIEW_MODE_LIST);
@@ -263,6 +387,10 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
                 text5.setVisibility(View.VISIBLE);
                 break;
         }
+    }
+
+    public void setCurrentData(MeterData data){
+        this.mCurrentData = data;
     }
 
 }

@@ -259,7 +259,7 @@ public class MeterManagerActivity extends BaseActivity implements LoaderCallback
 //            sb.append(selection);
 //            sb.append(')');
 //        }
-        getContentResolver().delete(Collect.CONTENT_URI, sb.toString(), null);
+        getContentResolver().delete(Meter.CONTENT_URI, sb.toString(), null);
         restartLoader(LOADER_ID_FILTER_DEFAULT);
     }
 
