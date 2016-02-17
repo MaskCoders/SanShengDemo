@@ -345,9 +345,12 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
                 System.out.println("data: " + data);
                 Thread.sleep(1000);
 
-                String address = "12 00 00 00 10 20".replace(" ", "");
+                String address = "06 00 00 00 10 20".replace(" ", "");
                 try {
-                    address = mEditMeterAddressView.getText().toString();
+                    if(!mEditMeterAddressView.getText().toString().equals("")){
+
+                        address = mEditMeterAddressView.getText().toString();
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -499,20 +502,22 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     private void openComPort(SerialHelper ComPort) {
         Message msg = new Message();
         msg.what = CONN_ERR;
+        String conInfo = "Port is "+ComPort.getPort()+" , Rate is "+ComPort.getBaudRate();
         try {
             ComPort.open();
+
             msg.what = CONN_OK;
-            msg.obj = ComPort.getPort();
+            msg.obj = conInfo;
             mMainHandler.sendMessage(msg);
         } catch (SecurityException e) {
-            msg.obj = "打开串口失败:没有串口读/写权限!";
+            msg.obj = "打开串口失败:没有串口读/写权限!\n"+conInfo;
             mMainHandler.sendMessage(msg);
         } catch (IOException e) {
-            msg.obj = "打开串口失败:未知错误!";
+            msg.obj = "打开串口失败:未知错误!"+conInfo;
             mMainHandler.sendMessage(msg);
             ;
         } catch (InvalidParameterException e) {
-            msg.obj = "打开串口失败:参数错误!";
+            msg.obj = "打开串口失败:参数错误!"+conInfo;
             mMainHandler.sendMessage(msg);
         }
 

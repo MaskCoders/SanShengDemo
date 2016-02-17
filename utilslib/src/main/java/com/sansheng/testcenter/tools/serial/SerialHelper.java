@@ -27,8 +27,8 @@ public  class SerialHelper{
 	private ReadThread mReadThread;
 	private SendThread mSendThread;
 	private Handler mainHandler;
-	private String sPort="/dev/s3c2410_serial0";
-	private int iBaudRate=9600;
+	public String sPort="/dev/s3c2410_serial0";
+	public int iBaudRate=9600;
 	private boolean _isOpen=false;
 	private byte[] _bLoopData=new byte[]{0x30};
 	private int iDelay=500;
@@ -37,7 +37,7 @@ public  class SerialHelper{
 	public SerialHelper(){}
 	public SerialHelper(String sPort,int iBaudRate,Handler handler,IServiceHandlerCallback cb){
 		this.sPort = sPort;
-		this.iBaudRate=iBaudRate;
+		this.iBaudRate=2400;
 		mainHandler = handler;
 		callback = cb;
 	}

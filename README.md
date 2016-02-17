@@ -10,3 +10,7 @@ https://github.com/telly/groundy
 4、图库如果需要则使用开源jar包'com.commit451:PhotoView:1.2.4'
 https://github.com/lostghoul/PhotoView
 
+
+
+1.命令要等发送并接受后再发下一条
+2.需要封装个类，国亡主站支持多个设备并发，所以要把串口和socket封装成一个发送类，调用`

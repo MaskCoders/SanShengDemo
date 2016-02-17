@@ -14,11 +14,11 @@ public class ChannelFactory {
      */
     public static SerialHelper INFRA_RED;
     public static String INFRA_RED_DN = "/dev/ttyAMA5";
-    public static String RS485_1 = "/dev/ttyAMA4";
+    public static String RS485_1 = "/dev/ttyAMA3";
     public static String RS485_2 = "/dev/ttyAMA3";
-    public static String RS232 = "/dev/ttyAMA2";
-    public static String ZB = "/dev/ttyAMA1";
-    public static String ZB2 = "/dev/ttyAMA0";
+    public static String RS232 = "/dev/ttyAMA3";
+    public static String ZB = "/dev/ttyAMA2";
+    public static String ZB2 = "/dev/ttyAMA2";
 
     public static SerialHelper getInstance(int index, boolean isMeter, Handler handler, IServiceHandlerCallback cb){
         SerialHelper tmp = null;
@@ -28,7 +28,7 @@ public class ChannelFactory {
                     tmp = new SerialHelper(INFRA_RED_DN,1200,handler,cb);
                     break;
                 case 1:
-                    tmp = new SerialHelper(RS485_1,1200,handler,cb);
+                    tmp = new SerialHelper(RS485_1,2400,handler,cb);
                     break;
                 case 2:
                     tmp = new SerialHelper(RS485_2,2400,handler,cb);
@@ -43,7 +43,7 @@ public class ChannelFactory {
         }else{
             switch (index) {
                 case 3:
-                    tmp = new SerialHelper(RS485_1,1200,handler,cb);
+                    tmp = new SerialHelper(RS485_1,2400,handler,cb);
                     break;
                 case 4:
                     tmp = new SerialHelper(INFRA_RED_DN,1200,handler,cb);
