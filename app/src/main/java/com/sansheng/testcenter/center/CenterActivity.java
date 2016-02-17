@@ -37,7 +37,7 @@ import java.util.concurrent.ThreadFactory;
  * 国网主站
  */
 public class CenterActivity extends BaseActivity implements WaySelectMeterDialog.WaySelectMeterCallback, CollectSelectDialog.CollectCallback,
-        MeterSelectDialog.MeterCallback, Dialog14to3.Dialog14to3Callback {
+        MeterSelectDialog.MeterCallback, Dialog14to3.Dialog14to3Callback, Dialog4to1.Dialog4to1Callback {
     public static final String PARAM_START_POINT = "start_point";
     public static final String PARAM_END_POINT = "end_point";
 
@@ -156,7 +156,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
                 startActivity(intent);
                 break;
             case R.id.check_event://事件查看？
-//                showFourteenToThree();
+                showFourToOne();
                 break;
             case R.id.show_log:
                 if (wholeIsShow()) {
@@ -206,8 +206,12 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     }
 
     private void showFourteenToThree() {
-        Dialog14to3 waySelectMeterDialog = new Dialog14to3(CenterActivity.this);
-        waySelectMeterDialog.show(getFragmentManager(), "14-3");
+        Dialog14to3 dialog = new Dialog14to3(CenterActivity.this);
+        dialog.show(getFragmentManager(), "14-3");
+    }
+    private void showFourToOne() {
+        Dialog4to1 dialog = new Dialog4to1(CenterActivity.this);
+        dialog.show(getFragmentManager(), "4-1");
     }
 
     private void showWaySelectMeterDialog() {
@@ -297,6 +301,15 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
         } else {
             int start = bundle.getInt(CenterActivity.PARAM_START_POINT);
             int end = bundle.getInt(CenterActivity.PARAM_START_POINT);
+            //TODO:启动检测
+        }
+    }
+
+    @Override
+    public void on4to1PositiveClick(Bundle bundle) {
+        if (bundle == null) {
+            Log.e("ssg", "bundle is null");
+        } else {
             //TODO:启动检测
         }
     }
