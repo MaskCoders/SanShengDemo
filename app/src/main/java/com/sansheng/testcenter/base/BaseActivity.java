@@ -33,6 +33,7 @@ public  abstract class BaseActivity extends Activity implements View.OnClickList
     public final static int METER_TEST = 10;//电表检测
     public final static int COLLECT_TEST = 11;//电表检测
     public final static int DATA_LIST_VIEW = 12;//数据浏览， 查，删，不允许修改
+    public final static int STATE_GRID_MASTER_SATTION = 13;//国网主站
     private ActionBarCallback mActionBarCallback;
     protected StringBuffer logBuffer = new StringBuffer();
     protected DrawerLayout mDrawerLayout;
@@ -247,6 +248,10 @@ public  abstract class BaseActivity extends Activity implements View.OnClickList
                         break;
                     case DATA_LIST_VIEW:
                         ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_data_list));
+                        (mActionBarView.findViewById(R.id.ab_time)).setVisibility(View.GONE);
+                        break;
+                    case STATE_GRID_MASTER_SATTION:
+                        ((TextView) mActionBarView.findViewById(R.id.ab_title)).setText(getResources().getText(R.string.function_home));
                         (mActionBarView.findViewById(R.id.ab_time)).setVisibility(View.GONE);
                         break;
                     default:

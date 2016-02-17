@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <com.sansheng.testcenter.base.view.DrawableCenterTextView
+            android:id="@+id/select_collect" style="@style/BtnStyle1"
+            android:drawableLeft="@drawable/left_icon_clock1"
+            android:text="选择集中器"/>
+    <com.sansheng.testcenter.base.view.DrawableCenterTextView
+            android:id="@+id/select_meter" style="@style/BtnStyle1"
+            android:drawableLeft="@drawable/left_icon_clock1"
+            android:text="选择电表"/>
+    <com.sansheng.testcenter.base.view.DrawableCenterTextView
+            android:id="@+id/data_manager" style="@style/BtnStyle1"
+            android:drawableLeft="@drawable/left_icon_clock1"
+            android:text="数据浏览"/>
+    <com.sansheng.testcenter.base.view.DrawableCenterTextView
+            android:id="@+id/check_event" style="@style/BtnStyle1"
+            android:drawableLeft="@drawable/left_icon_clock1"
+            android:text="事件查看"/>
+    <com.sansheng.testcenter.base.view.DrawableCenterTextView
+            android:id="@+id/show_log" style="@style/BtnStyle1"
+            android:drawableLeft="@drawable/left_icon_log"
+            android:text="显示报文"/>
+    <com.sansheng.testcenter.base.view.DrawableCenterTextView
+            android:id="@+id/stop" style="@style/BtnStyle1"
+            android:drawableLeft="@drawable/left_icon_cancel1"
+            android:text="停止检测"/>
+</LinearLayout>
