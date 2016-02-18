@@ -510,7 +510,7 @@ public class Utility {
      * @return if {@code original} is to the EmailProvider, add "?limit=1".  Otherwise just returns
      * {@code original}.
      *
-     * Other providers don't support the limit param.  Also, changing URI passed from other apps
+     * Other providers don't support the limit mParam.  Also, changing URI passed from other apps
      * can cause permission errors.
      */
     /* package */ static Uri buildLimitOneUri(Uri original) {

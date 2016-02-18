@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="four_three_key">
+        <item>主站IP地址</item>
+        <item>主站IP地址1段</item>
+        <item>主站IP地址2段</item>
+        <item>主站IP地址3段</item>
+        <item>主站IP地址4段</item>
+        <item>主站端口</item>
+        <item>备用IP地址</item>
+        <item>备用IP地址1段</item>
+        <item>备用IP地址2段</item>
+        <item>备用IP地址3段</item>
+        <item>备用IP地址4段</item>
+        <item>备用端口</item>
+        <item>APN</item>
+    </string-array>
+    <string-array name="four_three_value">
+        <item>10.130.124.219</item>
+        <item>10</item>
+        <item>130</item>
+        <item>124</item>
+        <item>219</item>
+        <item>6006</item>
+        <item>192.169.0.3</item>
+        <item>192</item>
+        <item>169</item>
+        <item>0</item>
+        <item>3</item>
+        <item>8001</item>
+        <item>BNDQ-DDN.BJ</item>
+    </string-array>
+    <string-array name="four_three_flag">
+        <item>0</item>
+        <item>101</item>
+        <item>101</item>
+        <item>101</item>
+        <item>101</item>
+        <item>102</item>
+        <item>101</item>
+        <item>101</item>
+        <item>101</item>
+        <item>101</item>
+        <item>101</item>
+        <item>102</item>
+        <item>50</item>
+    </string-array>
+</resources>

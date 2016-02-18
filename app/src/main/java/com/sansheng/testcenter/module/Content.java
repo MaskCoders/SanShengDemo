@@ -208,7 +208,7 @@ public abstract class Content {
         public static final String COLLECT_ID = "collectId";
         public static final String AFN = "afn";
         public static final String FN = "fn";
-        public static final String PARAM = "param";
+        public static final String PARAM = "mParam";
     }
 
 

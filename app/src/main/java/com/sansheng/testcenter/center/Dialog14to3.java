@@ -1,7 +1,6 @@
 package com.sansheng.testcenter.center;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,19 +8,20 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.view.AnswerDialog;
+import com.sansheng.testcenter.module.CollectParam;
 
 /**
  * Created by sunshaogang on 2/16/16.
  */
-public class Dialog14to3 extends DialogFragment {
+public class Dialog14to3 extends BaseDialog {
     private View mRootView;
     private EditText startContant;
     private EditText endContant;
     private AnswerDialog mDialog;
-    private Dialog14to3Callback callback;
+    private DialogCallback callback;
 
-    public Dialog14to3(Dialog14to3Callback callback) {
-        this.callback = callback;
+    public Dialog14to3(DialogCallback callback, CollectParam param) {
+        super(callback, param);
     }
 
     @Override
@@ -50,13 +50,15 @@ public class Dialog14to3 extends DialogFragment {
             @Override
             public void onClick(View v) {
                 mDialog.dismiss();
-                Bundle bundle = new Bundle();
-                bundle.putInt(CenterActivity.PARAM_START_POINT, Integer.valueOf(startContant.getText().toString()));
-                bundle.putInt(CenterActivity.PARAM_END_POINT, Integer.valueOf(endContant.getText().toString()));
-                callback.on14to3PositiveClick(bundle);
+                callback.onPositiveClick(mParam);
             }
         });
         return mDialog;
+    }
+
+    @Override
+    protected void resetParam() {
+
     }
 
     @Override
@@ -64,8 +66,5 @@ public class Dialog14to3 extends DialogFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    public interface Dialog14to3Callback {
-        void on14to3PositiveClick(Bundle bundle);
-    }
 }
 

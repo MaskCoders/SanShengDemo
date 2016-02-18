@@ -47,7 +47,7 @@ public class EquipmentProvider extends ContentProvider {
     private static final int COLLECT_BASE = 0x3000;
     private static final int COLLECT = COLLECT_BASE;
     private static final int COLLECT_ID = COLLECT_BASE + 2;
-    //collect param
+    //collect mParam
     private static final int COLLECT_PARAM_BASE = 0x4000;
     private static final int COLLECT_PARAM = COLLECT_PARAM_BASE;
     private static final int COLLECT_PARAM_ID = COLLECT_PARAM_BASE + 2;
@@ -201,6 +201,10 @@ public class EquipmentProvider extends ContentProvider {
                 case LOCATION_ID:
                 case METERDATA:
                 case METERDATA_ID:
+                    id = db.insertWithOnConflict(tableName, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+                    break;
+                case COLLECT_PARAM:
+                case COLLECT_PARAM_ID:
                     id = db.insertWithOnConflict(tableName, null, values, SQLiteDatabase.CONFLICT_REPLACE);
                     break;
                 default:

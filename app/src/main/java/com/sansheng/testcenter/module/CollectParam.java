@@ -6,6 +6,14 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+import com.sansheng.testcenter.center.ProtoParam;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sunshaogang on 12/17/15.
@@ -16,7 +24,80 @@ public class CollectParam extends Content implements Content.CollectParamColumns
     public int mCollectId;
     public int mAFn;
     public int mFn;
-    public String mParam;
+    public String mParam = "\n" +
+            "{\n" +
+            "  \"Fn\":3,\n" +
+            "  \"Paras\":[\n" +
+            "  {\"n\":\"主站IP地址\",\"v\":\"10.130.124.219\",\"f\":0,\"u\":1},\n" +
+            "  {\"n\":\"主站IP地址1段\",\"v\":\"10\",\"f\":101,\"u\":0},\n" +
+            "  {\n" +
+            "    \"n\":\"主站IP地址2段\",\n" +
+            "    \"v\":\"130\",\n" +
+            "    \"f\":101,\n" +
+            "    \"u\":0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"主站IP地址3段\",\n" +
+            "    \"v\":\"124\",\n" +
+            "    \"f\":101,\n" +
+            "    \"u\":0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"主站IP地址4段\",\n" +
+            "    \"v\":\"219\",\n" +
+            "    \"f\":101,\n" +
+            "    \"u\":0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"主站端口\",\n" +
+            "    \"v\":\"6006\",\n" +
+            "    \"f\":102,\n" +
+            "    \"u\":0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"备用IP地址\",\n" +
+            "    \"v\":\"192.169.0.3\",\n" +
+            "    \"f\":0,\n" +
+            "    \"u\":1\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"备用IP地址1段\",\n" +
+            "    \"v\":\"192\",\n" +
+            "    \"f\":101,\n" +
+            "    \"u\":0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"备用IP地址2段\",\n" +
+            "    \"v\":\"169\",\n" +
+            "    \"f\":101,\n" +
+            "    \"u\":0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"备用IP地址3段\",\n" +
+            "    \"v\":\"0\",\n" +
+            "    \"f\":101,\n" +
+            "    \"u\":0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"备用IP地址4段\",\n" +
+            "    \"v\":\"3\",\n" +
+            "    \"f\":101,\n" +
+            "    \"u\":0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"备用端口\",\n" +
+            "    \"v\":\"8001\",\n" +
+            "    \"f\":102,\n" +
+            "    \"u\":0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"APN\",\n" +
+            "    \"v\":\"BNDQ-DDN.BJ\",\n" +
+            "    \"f\":50,\n" +
+            "    \"u\":0\n" +
+            "  }]\n" +
+            "}";//json
+    private List<ProtoParam> paramList = new ArrayList<ProtoParam>();
 
     public static final int ID_INDEX = 0;
     public static final int COLLECT_ID_INDEX = ID_INDEX + 1;
@@ -42,6 +123,14 @@ public class CollectParam extends Content implements Content.CollectParamColumns
 
     public CollectParam() {
         mBaseUri = CONTENT_URI;
+    }
+
+    public CollectParam(int collectId, int afn, int fn, String param) {
+        mBaseUri = CONTENT_URI;
+        mCollectId = collectId;
+        mAFn = afn;
+        mFn = fn;
+        mParam = param;
     }
 
     public static void init() {
@@ -81,6 +170,33 @@ public class CollectParam extends Content implements Content.CollectParamColumns
         super.update(context, toContentValues());
     }
 
+    public List<ProtoParam> getParamList() {
+        if (paramList.size() == 0) {
+            try {
+                JSONObject root = new JSONObject(mParam);
+                JSONArray array = root.getJSONArray("Paras");
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    ProtoParam param = new ProtoParam(object);
+                    paramList.add(param);
+                    Log.e("ssg", param.toString());
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+//        Log.e("ssg", paramList.toString());
+        return paramList;
+    }
+
+    public void resetParamList(String[] keys, String[] values, int[] types) {
+        paramList.clear();
+        for (int i = 0; i < keys.length; i++) {
+            ProtoParam param = new ProtoParam(keys[i], values[i], types[i]);
+            paramList.add(param);
+        }
+        mParam = paramList.toString();
+    }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -112,8 +228,23 @@ public class CollectParam extends Content implements Content.CollectParamColumns
         mParam = in.readString();
     }
 
+    public void saveOrUpdate(Context context) {
+        super.saveOrUpdate(context, toContentValues());
+    }
+
+    @Override
     public String toString() {
-        return "[" + ID + " : " + mId + "]" + "\n" +
-                "[" + PARAM + " : " + mParam + "]" + "\n";
+        return toJson();
+    }
+
+    public String toJson() {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("Fn", mFn);
+            object.put("Paras", getParamList().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return object.toString();
     }
 }

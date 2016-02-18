@@ -22,7 +22,7 @@ public class LauncherActivity extends BaseActivity {
         mFunctionGridView.setAdapter(mFunctionAdapter);
         setActionBar(GENERAL_VIEW);
 //        Groundy.create(ExampleTask.class)
-//                .callback(this)        // required if you want to get notified of your task lifecycle
+//                .mCallback(this)        // required if you want to get notified of your task lifecycle
 //                .arg("arg_name", "foo")       // optional
 //                .queueUsing(this);
     }

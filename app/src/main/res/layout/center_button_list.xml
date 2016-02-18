@@ -23,6 +23,10 @@
     <com.sansheng.testcenter.base.view.DrawableCenterTextView
             android:id="@+id/show_log" style="@style/BtnStyle1"
             android:drawableLeft="@drawable/left_icon_log"
+            android:text="显示日志"/>
+    <com.sansheng.testcenter.base.view.DrawableCenterTextView
+            android:id="@+id/show_detail" style="@style/BtnStyle1"
+            android:drawableLeft="@drawable/left_icon_log"
             android:text="显示报文"/>
     <com.sansheng.testcenter.base.view.DrawableCenterTextView
             android:id="@+id/stop" style="@style/BtnStyle1"

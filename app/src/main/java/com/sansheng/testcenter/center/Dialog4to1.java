@@ -1,7 +1,6 @@
 package com.sansheng.testcenter.center;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +9,12 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.view.AnswerDialog;
+import com.sansheng.testcenter.module.CollectParam;
 
 /**
  * Created by sunshaogang on 2/17/16.
  */
-public class Dialog4to1 extends DialogFragment {
+public class Dialog4to1 extends BaseDialog {
     private View mRootView;
     private EditText delayTime;
     private EditText terminalDelayTime;
@@ -26,10 +26,9 @@ public class Dialog4to1 extends DialogFragment {
     private CheckBox twoCheckBox;
     private CheckBox threeCheckBox;
     private AnswerDialog mDialog;
-    private Dialog4to1Callback callback;
 
-    public Dialog4to1(Dialog4to1Callback callback) {
-        this.callback = callback;
+    public Dialog4to1(DialogCallback callback, CollectParam param) {
+        super(callback, param);
     }
 
     @Override
@@ -66,13 +65,15 @@ public class Dialog4to1 extends DialogFragment {
             @Override
             public void onClick(View v) {
                 mDialog.dismiss();
-                Bundle bundle = new Bundle();
-//                bundle.putInt(CenterActivity.PARAM_START_POINT, Integer.valueOf(startContant.getText().toString()));
-//                bundle.putInt(CenterActivity.PARAM_END_POINT, Integer.valueOf(endContant.getText().toString()));
-                callback.on4to1PositiveClick(bundle);
+                mCallback.onPositiveClick(mParam);
             }
         });
         return mDialog;
+    }
+
+    @Override
+    protected void resetParam() {
+
     }
 
     @Override
@@ -80,8 +81,5 @@ public class Dialog4to1 extends DialogFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    public interface Dialog4to1Callback {
-        void on4to1PositiveClick(Bundle bundle);
-    }
 }
 

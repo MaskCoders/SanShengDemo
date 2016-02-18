@@ -19,8 +19,12 @@ import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.datamanager.MeterDataListActivity;
 import com.sansheng.testcenter.metertest.CollectSelectDialog;
 import com.sansheng.testcenter.module.Collect;
+import com.sansheng.testcenter.module.CollectParam;
 import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.utils.MeterUtilies;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
@@ -37,7 +41,7 @@ import java.util.concurrent.ThreadFactory;
  * 国网主站
  */
 public class CenterActivity extends BaseActivity implements WaySelectMeterDialog.WaySelectMeterCallback, CollectSelectDialog.CollectCallback,
-        MeterSelectDialog.MeterCallback, Dialog14to3.Dialog14to3Callback, Dialog4to1.Dialog4to1Callback {
+        MeterSelectDialog.MeterCallback, BaseDialog.DialogCallback {
     public static final String PARAM_START_POINT = "start_point";
     public static final String PARAM_END_POINT = "end_point";
 
@@ -57,6 +61,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     private DrawableCenterTextView dataManager;
     private DrawableCenterTextView eventCheck;
     private DrawableCenterTextView showLog;
+    private DrawableCenterTextView showFile;
     private DrawableCenterTextView stopTest;
 
     @Override
@@ -106,6 +111,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
         dataManager = (DrawableCenterTextView) inflate.findViewById(R.id.data_manager);
         eventCheck = (DrawableCenterTextView) inflate.findViewById(R.id.check_event);
         showLog = (DrawableCenterTextView) inflate.findViewById(R.id.show_log);
+        showFile = (DrawableCenterTextView) inflate.findViewById(R.id.show_detail);
         stopTest = (DrawableCenterTextView) inflate.findViewById(R.id.stop);
 
         selectCollect.setOnClickListener(this);
@@ -113,6 +119,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
         eventCheck.setOnClickListener(this);
         dataManager.setOnClickListener(this);
         showLog.setOnClickListener(this);
+        showFile.setOnClickListener(this);
         stopTest.setOnClickListener(this);
         main_button_list.addView(inflate);
     }
@@ -156,18 +163,26 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
                 startActivity(intent);
                 break;
             case R.id.check_event://事件查看？
-                showFourToOne();
+                showFourToThree();
                 break;
             case R.id.show_log:
                 if (wholeIsShow()) {
                     showWholeLog(false);
-                    showLog.setText("显示报文");
+                    showLog.setText("显示日志");
                 } else {
                     showWholeLog(true);
+                    showLog.setText("关闭日志");
+                }
+                break;
+            case R.id.show_detail:
+                if (wholeIsShow()) {
+                    showLog.setText("显示报文");
+                } else {
                     showLog.setText("关闭报文");
                 }
                 break;
             case R.id.stop:
+                reset();
 //                try{
 //                    nowChannel.stopSend();
 //                    nowChannel.close();
@@ -181,6 +196,97 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
                 break;
         }
         super.onClick(v);
+    }
+
+    public String mParam = "\n" +
+            "{\n" +
+            "  \"Fn\":3,\n" +
+            "  \"Paras\":[\n" +
+            "  {\"n\":\"主站IP地址\",\"v\":\"10.130.124.219\",\"f\":0,\"u\":1},\n" +
+            "  {\"n\":\"主站IP地址1段\",\"v\":\"10\",\"f\":101,\"u\":0},\n" +
+            "  {\n" +
+            "    \"n\":\"主站IP地址2段\",\n" +
+            "    \"v\":\"130\",\n" +
+            "    \"f\":101,\n" +
+            "    \"u\":0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"主站IP地址3段\",\n" +
+            "    \"v\":\"124\",\n" +
+            "    \"f\":101,\n" +
+            "    \"u\":0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"主站IP地址4段\",\n" +
+            "    \"v\":\"219\",\n" +
+            "    \"f\":101,\n" +
+            "    \"u\":0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"主站端口\",\n" +
+            "    \"v\":\"6006\",\n" +
+            "    \"f\":102,\n" +
+            "    \"u\":0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"备用IP地址\",\n" +
+            "    \"v\":\"192.169.0.3\",\n" +
+            "    \"f\":0,\n" +
+            "    \"u\":1\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"备用IP地址1段\",\n" +
+            "    \"v\":\"192\",\n" +
+            "    \"f\":101,\n" +
+            "    \"u\":0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"备用IP地址2段\",\n" +
+            "    \"v\":\"169\",\n" +
+            "    \"f\":101,\n" +
+            "    \"u\":0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"备用IP地址3段\",\n" +
+            "    \"v\":\"0\",\n" +
+            "    \"f\":101,\n" +
+            "    \"u\":0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"备用IP地址4段\",\n" +
+            "    \"v\":\"3\",\n" +
+            "    \"f\":101,\n" +
+            "    \"u\":0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"备用端口\",\n" +
+            "    \"v\":\"8001\",\n" +
+            "    \"f\":102,\n" +
+            "    \"u\":0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"n\":\"APN\",\n" +
+            "    \"v\":\"BNDQ-DDN.BJ\",\n" +
+            "    \"f\":50,\n" +
+            "    \"u\":0\n" +
+            "  }]\n" +
+            "}";//json
+    private List<ProtoParam> params = new ArrayList<ProtoParam>();
+
+    private void reset() {
+        try {
+            JSONObject root = new JSONObject(mParam);
+            JSONArray array = root.getJSONArray("Paras");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject object = array.getJSONObject(i);
+                ProtoParam param = new ProtoParam(object);
+                params.add(param);
+                Log.e("ssg", param.toString());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.e("ssg", params.toString());
     }
 
     @Override
@@ -206,12 +312,25 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     }
 
     private void showFourteenToThree() {
-        Dialog14to3 dialog = new Dialog14to3(CenterActivity.this);
+        CollectParam param = new CollectParam(1,14,3,mParam);
+        Dialog14to3 dialog = new Dialog14to3(CenterActivity.this, param);
         dialog.show(getFragmentManager(), "14-3");
     }
+
     private void showFourToOne() {
-        Dialog4to1 dialog = new Dialog4to1(CenterActivity.this);
+        CollectParam param = new CollectParam(1,4,1,mParam);
+        Dialog4to1 dialog = new Dialog4to1(CenterActivity.this, param);
         dialog.show(getFragmentManager(), "4-1");
+    }
+
+    private void showFourToThree() {
+        CollectParam param = new CollectParam(1,4,3,mParam);
+//        mParam.mCollectId = 1;
+//        mParam.mAFn = 4;
+//        mParam.mFn = 3;
+//        mParam.mParam = mParam;
+        Dialog4to3 dialog = new Dialog4to3(CenterActivity.this, param);
+        dialog.show(getFragmentManager(), "4-3");
     }
 
     private void showWaySelectMeterDialog() {
@@ -295,22 +414,10 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     }
 
     @Override
-    public void on14to3PositiveClick(Bundle bundle) {
-        if (bundle == null) {
-            Log.e("ssg", "bundle is null");
-        } else {
-            int start = bundle.getInt(CenterActivity.PARAM_START_POINT);
-            int end = bundle.getInt(CenterActivity.PARAM_START_POINT);
+    public void onPositiveClick(CollectParam param) {
+        if (param != null) {
             //TODO:启动检测
-        }
-    }
-
-    @Override
-    public void on4to1PositiveClick(Bundle bundle) {
-        if (bundle == null) {
-            Log.e("ssg", "bundle is null");
-        } else {
-            //TODO:启动检测
+            Log.e("ssg", "json value = " + param.toJson());
         }
     }
 

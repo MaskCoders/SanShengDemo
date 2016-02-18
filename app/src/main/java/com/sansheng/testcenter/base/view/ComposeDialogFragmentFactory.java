@@ -29,38 +29,38 @@ public class ComposeDialogFragmentFactory {
 	}
 
 //	public DialogFragment createSaveConfirmDlg(boolean save, boolean showToast,
-//			DlgCallback callback) {
-//		return new SaveConfirmDialogFragment(save, showToast, callback);
+//			DlgCallback mCallback) {
+//		return new SaveConfirmDialogFragment(save, showToast, mCallback);
 //	}
 //
-//	public DialogFragment createDiscardConfirmDlg(DlgCallback callback) {
-//		return new DiscardConfirmDialogFragment(callback);
+//	public DialogFragment createDiscardConfirmDlg(DlgCallback mCallback) {
+//		return new DiscardConfirmDialogFragment(mCallback);
 //	}
 //
 //	public DialogFragment createRecipientErrorDlg(String message,
-//			DlgCallback callback) {
-//		return new RecipientErrorDialogFragment(message, callback);
+//			DlgCallback mCallback) {
+//		return new RecipientErrorDialogFragment(message, mCallback);
 //	}
 //
 //	public DialogFragment createSelectAccountDlg(String[] emails, int[] icons,
-//			DlgCallback callback) {
-//		return new SelectAccountDialogFragment(emails, icons, callback);
+//			DlgCallback mCallback) {
+//		return new SelectAccountDialogFragment(emails, icons, mCallback);
 //	}
 //
-//	public DialogFragment createDownloadAttConfirmDlg(DlgCallback callback) {
-//		return new DownloadAttConfirmDialogFragment(callback);
+//	public DialogFragment createDownloadAttConfirmDlg(DlgCallback mCallback) {
+//		return new DownloadAttConfirmDialogFragment(mCallback);
 //	}
 
-//	public DialogFragment createPreAttConfirmDlg(ComposeActivity.PreAttCallback callback) {
-//		return new PreAttConfirmDialogFragment(callback);
+//	public DialogFragment createPreAttConfirmDlg(ComposeActivity.PreAttCallback mCallback) {
+//		return new PreAttConfirmDialogFragment(mCallback);
 //	}
 
 	public Dialog createSelectImageDialog(Context context,DlgCallback callback){
 		return new SelectImageDialog(context,callback);
 	}
 //	public DialogFragment createComposeDownloadAttDlg(
-//			int attNumToDownload, String attSizeToDownload, DlgCallback callback) {
-//		return new ComposeDownloadAttDialogFragment(attNumToDownload, attSizeToDownload, callback);
+//			int attNumToDownload, String attSizeToDownload, DlgCallback mCallback) {
+//		return new ComposeDownloadAttDialogFragment(attNumToDownload, attSizeToDownload, mCallback);
 //	}
 
 	public interface DlgCallback {
@@ -87,13 +87,13 @@ public class ComposeDialogFragmentFactory {
 //	private class SaveConfirmDialogFragment extends DialogFragment {
 //		private boolean save;
 //		private boolean showToast;
-//		private DlgCallback callback;
+//		private DlgCallback mCallback;
 //
 //		public SaveConfirmDialogFragment(boolean save, boolean showToast,
-//				DlgCallback callback) {
+//				DlgCallback mCallback) {
 //			this.save = save;
 //			this.showToast = showToast;
-//			this.callback = callback;
+//			this.mCallback = mCallback;
 //		}
 //
 //		@Override
@@ -105,7 +105,7 @@ public class ComposeDialogFragmentFactory {
 //					new View.OnClickListener() {
 //						@Override
 //						public void onClick(View v) {
-//							callback.onNegativeCallback();
+//							mCallback.onNegativeCallback();
 //							dialog.dismiss();
 //						}
 //					});
@@ -113,7 +113,7 @@ public class ComposeDialogFragmentFactory {
 //					new View.OnClickListener() {
 //						@Override
 //						public void onClick(View v) {
-//							callback.onPositiveCallback();
+//							mCallback.onPositiveCallback();
 //							dialog.dismiss();
 //						}
 //					});
@@ -123,10 +123,10 @@ public class ComposeDialogFragmentFactory {
 //	}
 
 //	private class DiscardConfirmDialogFragment extends DialogFragment {
-//		private DlgCallback callback;
+//		private DlgCallback mCallback;
 //
-//		public DiscardConfirmDialogFragment(DlgCallback callback) {
-//			this.callback = callback;
+//		public DiscardConfirmDialogFragment(DlgCallback mCallback) {
+//			this.mCallback = mCallback;
 //		}
 //
 //		@Override
@@ -145,7 +145,7 @@ public class ComposeDialogFragmentFactory {
 //					new View.OnClickListener() {
 //						@Override
 //						public void onClick(View v) {
-//							callback.onPositiveCallback();
+//							mCallback.onPositiveCallback();
 //						}
 //					});
 //			return dialog;
@@ -154,12 +154,12 @@ public class ComposeDialogFragmentFactory {
 //
 //	private class RecipientErrorDialogFragment extends DialogFragment {
 //		private String message;
-//		private DlgCallback callback;
+//		private DlgCallback mCallback;
 //
 //		// Public no-args constructor needed for fragment re-instantiation
-//		public RecipientErrorDialogFragment(String message, DlgCallback callback) {
+//		public RecipientErrorDialogFragment(String message, DlgCallback mCallback) {
 //			this.message = message;
-//			this.callback = callback;
+//			this.mCallback = mCallback;
 //		}
 //
 //		@Override
@@ -172,7 +172,7 @@ public class ComposeDialogFragmentFactory {
 //					new View.OnClickListener() {
 //						@Override
 //						public void onClick(View v) {
-//							callback.onPositiveCallback();
+//							mCallback.onPositiveCallback();
 //							dialog.dismiss();
 //						}
 //					});
@@ -182,10 +182,10 @@ public class ComposeDialogFragmentFactory {
 //	}
 
 //	private class DownloadAttConfirmDialogFragment extends DialogFragment {
-//		private DlgCallback callback;
+//		private DlgCallback mCallback;
 //
-//		public DownloadAttConfirmDialogFragment(DlgCallback callback) {
-//			this.callback = callback;
+//		public DownloadAttConfirmDialogFragment(DlgCallback mCallback) {
+//			this.mCallback = mCallback;
 //		}
 //
 //		@Override
@@ -205,7 +205,7 @@ public class ComposeDialogFragmentFactory {
 //					new View.OnClickListener() {
 //						@Override
 //						public void onClick(View v) {
-//							callback.onPositiveCallback();
+//							mCallback.onPositiveCallback();
 //							dialog.dismiss();
 //						}
 //					});
@@ -216,13 +216,13 @@ public class ComposeDialogFragmentFactory {
 //	private class SelectAccountDialogFragment extends DialogFragment {
 //		private String[] emails;
 //		private int[] icons;
-//		private DlgCallback callback;
+//		private DlgCallback mCallback;
 //
 //		public SelectAccountDialogFragment(String[] emails, int[] icons,
-//				DlgCallback callback) {
+//				DlgCallback mCallback) {
 //			this.emails = emails;
 //			this.icons = icons;
-//			this.callback = callback;
+//			this.mCallback = mCallback;
 //		}
 //
 //		@Override
@@ -236,7 +236,7 @@ public class ComposeDialogFragmentFactory {
 //						KeyEvent event) {
 //					switch (keyCode) {
 //					case KeyEvent.KEYCODE_BACK:
-//						callback.onNegativeCallback();
+//						mCallback.onNegativeCallback();
 //						return true;
 //					}
 //					return false;
@@ -247,7 +247,7 @@ public class ComposeDialogFragmentFactory {
 //				@Override
 //				public void onItemClick(AdapterView<?> parent, View view,
 //										int position, long id) {
-//					callback.onItemSelected(position);
+//					mCallback.onItemSelected(position);
 //					dialog.dismiss();
 //				}
 //			});
@@ -257,10 +257,10 @@ public class ComposeDialogFragmentFactory {
 //	}
 
 //	private class PreAttConfirmDialogFragment extends DialogFragment {
-//		private ComposeActivity.PreAttCallback callback;
+//		private ComposeActivity.PreAttCallback mCallback;
 //
-//		public PreAttConfirmDialogFragment (ComposeActivity.PreAttCallback callback) {
-//			this.callback = callback;
+//		public PreAttConfirmDialogFragment (ComposeActivity.PreAttCallback mCallback) {
+//			this.mCallback = mCallback;
 //		}
 //
 //		@Override
@@ -276,7 +276,7 @@ public class ComposeDialogFragmentFactory {
 //				@Override
 //				public void onClick(View v) {
 //					if (cb.isChecked()) {
-//						callback.onChecked(false);
+//						mCallback.onChecked(false);
 //					}
 //					dialog.dismiss();
 //				}
@@ -285,9 +285,9 @@ public class ComposeDialogFragmentFactory {
 //				@Override
 //				public void onClick(View v) {
 //					dialog.dismiss();
-//					callback.onPositiveCallback();
+//					mCallback.onPositiveCallback();
 //					if (cb.isChecked()) {
-//						callback.onChecked(true);
+//						mCallback.onChecked(true);
 //					}
 //				}
 //			});
@@ -334,11 +334,11 @@ public class ComposeDialogFragmentFactory {
 	}
 
 //	private class ComposeDownloadAttDialogFragment extends DialogFragment {
-//		private DlgCallback callback;
+//		private DlgCallback mCallback;
 //		int mAttNumToDownload;
 //		String mAttSizeToDownload;
-//		public ComposeDownloadAttDialogFragment(int attNumToDownload, String attSizeToDownload, DlgCallback callback) {
-//			this.callback = callback;
+//		public ComposeDownloadAttDialogFragment(int attNumToDownload, String attSizeToDownload, DlgCallback mCallback) {
+//			this.mCallback = mCallback;
 //			mAttNumToDownload = attNumToDownload;
 //			mAttSizeToDownload = attSizeToDownload;
 //		}
@@ -362,7 +362,7 @@ public class ComposeDialogFragmentFactory {
 //				public void onClick(View v) {
 //					KingsoftAgent.onEventHappened(EventID.MAIL_EDIT.CLICK_DOWNLOAD);
 //					dialog.dismiss();
-//					callback.onPositiveCallback();
+//					mCallback.onPositiveCallback();
 //				}
 //			});
 //			return dialog;
