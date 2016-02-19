@@ -7,7 +7,7 @@ import com.sansheng.testcenter.bean.UserData;
 /**
  * Created by hua on 12/23/15.
  */
-public class TerProtocolCreater implements  TerProtocolCreaterInter{
+public class TerProtocolCreater{
 
     public static final String HEAD = "68";//68
     public static final byte HEAD_B = 104;//68

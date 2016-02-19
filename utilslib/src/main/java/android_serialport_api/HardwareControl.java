@@ -14,7 +14,7 @@ public class HardwareControl {
 	public native static  int CanWrite(int canId,String data);
 	public native static  CanFrame CanRead(CanFrame mcanFrame, int time);
 	public native static   void CloseCan();
-	
+
 	// UART mode setup Hi is RS485, Lo is RS232
 	public native int UartModeSetup(int uartMode);//485模式uartMode==1,232uartMode=0
 	// 1 enable power, 0 disable power
