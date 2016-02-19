@@ -163,7 +163,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
                 startActivity(intent);
                 break;
             case R.id.check_event://事件查看？
-                showFourToThree();
+                showReadDialog();
                 break;
             case R.id.show_log:
                 if (wholeIsShow()) {
@@ -333,9 +333,15 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
         dialog.show(getFragmentManager(), "4-3");
     }
 
+    private void showReadDialog() {
+        CollectParam param = new CollectParam(1,4,1,mParam);
+        DataReadDialog dialog = new DataReadDialog(CenterActivity.this, null);
+        dialog.show(getFragmentManager(), "data_read");
+    }
+
     private void showWaySelectMeterDialog() {
-        WaySelectMeterDialog waySelectMeterDialog = new WaySelectMeterDialog(CenterActivity.this);
-        waySelectMeterDialog.show(getFragmentManager(), "way_select_meter");
+        WaySelectMeterDialog dialog = new WaySelectMeterDialog(CenterActivity.this);
+        dialog.show(getFragmentManager(), "way_select_meter");
     }
 
     private void selectMeter() {
