@@ -1,6 +1,7 @@
 package com.sansheng.testcenter.bean;
 
 import android.os.Handler;
+import android_serialport_api.HardwareControl;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.tools.serial.SerialHelper;
 
@@ -28,12 +29,16 @@ public class ChannelFactory {
                     tmp = new SerialHelper(INFRA_RED_DN,1200,handler,cb);
                     break;
                 case 1:
+                    (new HardwareControl()).UartModeSetup(1); //RS485
                     tmp = new SerialHelper(RS485_1,2400,handler,cb);
                     break;
                 case 2:
+                    (new HardwareControl()).UartModeSetup(1); //RS485
                     tmp = new SerialHelper(RS485_2,2400,handler,cb);
                     break;
                 case 3:
+                    (new HardwareControl()).UartModeSetup(0); //RS232
+
                     tmp = new SerialHelper(RS232,9600,handler,cb);
                     break;
                 case 4:

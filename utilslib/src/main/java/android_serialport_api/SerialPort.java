@@ -54,4 +54,8 @@ public class SerialPort {
 	public OutputStream getOutputStream() {
 		return mFileOutputStream;
 	}
+
+	public void close() {
+			HardwareControl.CloseSerialPort();
+	}
 }

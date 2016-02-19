@@ -43,7 +43,7 @@ public  class SerialHelper{
 	}
 	//----------------------------------------------------
 	public void open() throws SecurityException, IOException,InvalidParameterException{
-		mSerialPort =  new SerialPort(new File(sPort), iBaudRate, 0);
+		mSerialPort =  new SerialPort(new File(sPort), iBaudRate, 8, 1, 'E', 0);
 		mOutputStream = mSerialPort.getOutputStream();
 		mInputStream = mSerialPort.getInputStream();
 		mReadThread = new ReadThread();

@@ -105,8 +105,9 @@ public class ProtocolUtils {
     public static final void main(String[] args){
 
 
-        byte[] tmp = bytearr2bcd(hexStringToBytes("34 33 33 50".replace(" ","")),true,0,3);
-        System.out.println(bytes2hex(tmp));
+//        byte[] tmp = bytearr2bcd(hexStringToBytes("34 33 33 50".replace(" ","")),true,0,3);
+        String tmp = null;
+        System.out.println(addSpaceInCmd(tmp));
     }
     public static int bcd2dec4byte(int b){
         int h = (((int)b)<<4)&0xff;
@@ -261,6 +262,15 @@ public class ProtocolUtils {
         SimpleDateFormat time=new SimpleDateFormat("HH:mm:ss");
         return time.format(nowTime);
     }
-
+    public static String addSpaceInCmd(String cmd){
+        if(cmd== null || !cmd.contains("68") || cmd.length()%2 !=0){
+            return  cmd;
+        }
+        StringBuffer sb = new StringBuffer();
+        for(int i=0 ; i<cmd.length();i=i+2){
+            sb.append(cmd.charAt(i)).append(cmd.charAt(i+1)).append(" ");
+        }
+        return sb.toString();
+    }
 
 }

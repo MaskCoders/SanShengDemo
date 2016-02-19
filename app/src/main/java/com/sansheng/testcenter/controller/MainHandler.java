@@ -87,13 +87,15 @@ public class MainHandler extends Handler {
         SpannableString ssContent;
         switch (msg.what) {
             case SEND_MSG:
-                SpannableString sendSS =new SpannableString(getSendCmdSS(content.toString()));
+                SpannableString sendSS =new SpannableString(
+                        getSendCmdSS(ProtocolUtils.addSpaceInCmd(content.toString())));
                 mMainUI.pullShortLog(sendSS);
                 mMainUI.pullWholeLog(sendSS);
                 logUtils.saveLog(sendSS.toString());
                 return;
             case RECV_MSG:
-                SpannableString recvSS =new SpannableString(getRecvCmdSS(content.toString()));
+                SpannableString recvSS =new SpannableString(
+                        getRecvCmdSS(ProtocolUtils.addSpaceInCmd(content.toString())));
                 mMainUI.pullShortLog(recvSS);
                 mMainUI.pullWholeLog(recvSS);
 
