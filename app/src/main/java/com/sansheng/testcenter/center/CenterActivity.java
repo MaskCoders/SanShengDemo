@@ -301,8 +301,6 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, monthOfYear, dayOfMonth);
                 mDateSpinner.setText(MeterUtilies.getSanShengDate(calendar.getTimeInMillis()));
-//                endTime = calendar.getTimeInMillis();
-//                mEndTimeView.setContent(MeterUtilies.getSanShengDate(endTime));
             }
         };
         Calendar calendar = Calendar.getInstance();
@@ -312,19 +310,19 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     }
 
     private void showFourteenToThree() {
-        CollectParam param = new CollectParam(1,14,3,mParam);
+        CollectParam param = new CollectParam(1, 14, 3, mParam);
         Dialog14to3 dialog = new Dialog14to3(CenterActivity.this, param);
         dialog.show(getFragmentManager(), "14-3");
     }
 
     private void showFourToOne() {
-        CollectParam param = new CollectParam(1,4,1,mParam);
+        CollectParam param = new CollectParam(1, 4, 1, mParam);
         Dialog4to1 dialog = new Dialog4to1(CenterActivity.this, param);
         dialog.show(getFragmentManager(), "4-1");
     }
 
     private void showFourToThree() {
-        CollectParam param = new CollectParam(1,4,3,mParam);
+        CollectParam param = new CollectParam(1, 4, 3, mParam);
 //        mParam.mCollectId = 1;
 //        mParam.mAFn = 4;
 //        mParam.mFn = 3;
@@ -334,7 +332,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     }
 
     private void showReadDialog() {
-        CollectParam param = new CollectParam(1,4,1,mParam);
+        CollectParam param = new CollectParam(1, 4, 1, mParam);
         DataReadDialog dialog = new DataReadDialog(CenterActivity.this, null);
         dialog.show(getFragmentManager(), "data_read");
     }
@@ -424,6 +422,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
         if (param != null) {
             //TODO:启动检测
             Log.e("ssg", "json value = " + param.toJson());
+            sendProtocol(param);
         }
     }
 
@@ -455,17 +454,79 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
                 //TODO:启动检测接口
                 Log.e("ssg", "the position that clicked is " + mGroupArray.get(groupPosition).mChildArray.get(childPosition).n);
                 mListView.getPackedPositionForChild(groupPosition, childPosition);
+                showParamDialog(mGroupArray.get(groupPosition).afn, mGroupArray.get(groupPosition).mChildArray.get(childPosition).fn);
                 return false;
             }
         });
     }
 
+    /**
+     * 根据指令集弹出相应的对话框
+     * @param afn
+     * @param fn
+     */
+    private void showParamDialog(char afn, int fn) {
+        Log.e("ssg", "afn = " + afn);
+        Log.e("ssg", "fn = " + fn);
+        switch (afn) {
+            case '4':
+                switch (fn) {
+                    case 1:
+                        showFourToOne();
+                        break;
+                    case 3:
+                        showFourToThree();
+                        break;
+                }
+                break;
+            case 'E':
+                switch (fn) {
+                    case 3:
+                        showFourteenToThree();
+                        break;
+                }
+                break;
+        }
+    }
+
+    /**
+     * 把所需要的参数向下传递。
+     * @param param
+     */
+    private void sendProtocol(CollectParam param) {
+        int afn = param.mAFn;
+        int fn = param.mFn;
+        switch (afn) {
+            case 4:
+                switch (fn) {
+                    case 1:
+                        break;
+                    case 3://根据数据组包
+                        break;
+                }
+                break;
+            case 'E':
+                switch (fn) {
+                    case 3:
+
+                        break;
+                }
+                break;
+        }
+    }
+
+    /**
+     * 解析协议列表
+     * @return
+     * @throws XmlPullParserException
+     * @throws IOException
+     */
     private boolean parseXml() throws XmlPullParserException, IOException {
         XmlResourceParser parser = getResources().getXml(R.xml.afn);
         List<Protocol> childArray = new ArrayList<Protocol>();
         RootProt rootProt = null;
         Protocol protocol = null;
-        String afn = null;
+        char afn = 0;
         String pn = null;
         int pt = -1, po = -1;
         int fn = -1, t = -1, o = -1;
@@ -478,7 +539,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
                     break;
                 case XmlResourceParser.START_TAG://判断当前事件是否是标签元素开始事件
                     if (TextUtils.equals("afn", parser.getName())) {//判断开始标签元素是否是
-                        afn = parser.getAttributeValue(0);
+                        afn = parser.getAttributeValue(0).charAt(0);
                         int count = parser.getAttributeCount();
                         if (count == 2) {
                             pn = parser.getAttributeValue(1);

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+import com.google.gson.Gson;
 import com.sansheng.testcenter.center.ProtoParam;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -239,9 +240,11 @@ public class CollectParam extends Content implements Content.CollectParamColumns
 
     public String toJson() {
         JSONObject object = new JSONObject();
+        Gson gson = new Gson();
         try {
+            object.put("aFn", mAFn);
             object.put("Fn", mFn);
-            object.put("Paras", getParamList().toString());
+            object.put("Paras", gson.toJson(getParamList()));
         } catch (JSONException e) {
             e.printStackTrace();
         }

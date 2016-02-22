@@ -7,7 +7,7 @@ import java.util.List;
  * Created by sunshaogang on 12/24/15.
  */
 public class RootProt {
-    public String afn;
+    public char afn;
     int t;
     int o;
     public String n;
@@ -16,14 +16,14 @@ public class RootProt {
     public RootProt() {
     }
 
-    public RootProt(String afn, String n, int t, int o) {
+    public RootProt(char afn, String n, int t, int o) {
         this.afn = afn;
         this.n = n;
         this.t = t;
         this.o = o;
     }
 
-    public RootProt(String afn, String n, int t, int o, List<Protocol> childArray) {
+    public RootProt(char afn, String n, int t, int o, List<Protocol> childArray) {
         this.afn = afn;
         this.n = n;
         this.t = t;

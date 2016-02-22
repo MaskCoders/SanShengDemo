@@ -73,8 +73,6 @@ public class DataReadDialog extends BaseDialog{
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, monthOfYear, dayOfMonth);
                 mDateSpinner.setText(MeterUtilies.getSanShengDate(calendar.getTimeInMillis()));
-//                endTime = calendar.getTimeInMillis();
-//                mEndTimeView.setContent(MeterUtilies.getSanShengDate(endTime));
             }
         };
         Calendar calendar = Calendar.getInstance();

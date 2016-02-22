@@ -4,7 +4,7 @@ package com.sansheng.testcenter.center;
  * Created by sunshaogang on 12/24/15.
  */
 public class Protocol {
-    public String afn;
+    public char afn;
     public String parentN;
     public int fn;
     public int t;
@@ -15,7 +15,7 @@ public class Protocol {
         //do nothing
     }
 
-    public Protocol(String afn, String parentDescribe, int fn, int o, int t, String describe) {
+    public Protocol(char afn, String parentDescribe, int fn, int o, int t, String describe) {
         this.afn = afn;
         this.parentN = parentDescribe;
         this.fn = fn;
