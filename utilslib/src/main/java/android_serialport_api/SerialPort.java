@@ -1,6 +1,7 @@
 package android_serialport_api;
 
 import android.util.Log;
+import realarm.hardware.HardwareControl;
 
 import java.io.*;
 

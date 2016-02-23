@@ -20,10 +20,10 @@ public class TerUserDataParseFactory {
     public TerUserDataParseInterface getInterface(int type , byte[] data){
         switch (type){
             case 1:
-                return new TerUserDataPImpl1(data);
+                return new TerUserDataPImpl1(null);
 
             case 2:
-                return new TerUserDataPImpl2(data);
+                return new TerUserDataPImpl2(null);
         }
         return null;
 

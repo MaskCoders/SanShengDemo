@@ -1,4 +1,6 @@
-package android_serialport_api;
+package realarm.hardware;
+
+import android_serialport_api.CanFrame;
 
 import java.io.FileDescriptor;
 
@@ -12,7 +14,7 @@ public class HardwareControl {
 	public native static  void InitCan(int baudrate);
 	public native static  int OpenCan();
 	public native static  int CanWrite(int canId,String data);
-	public native static  CanFrame CanRead(CanFrame mcanFrame, int time);
+	public native static CanFrame CanRead(CanFrame mcanFrame, int time);
 	public native static   void CloseCan();
 
 	// UART mode setup Hi is RS485, Lo is RS232

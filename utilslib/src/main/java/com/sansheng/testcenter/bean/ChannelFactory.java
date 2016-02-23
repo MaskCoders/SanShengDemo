@@ -1,7 +1,7 @@
 package com.sansheng.testcenter.bean;
 
 import android.os.Handler;
-import android_serialport_api.HardwareControl;
+import realarm.hardware.HardwareControl;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.tools.serial.SerialHelper;
 
