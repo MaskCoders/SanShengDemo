@@ -10,6 +10,7 @@ public interface Const {
     static final String HOST = "127.0.0.1";
 
     static final int CONN_SER_CLS = -2;
+    static final int OVER_TIME = -4;
     static final int CONN_ERR = -1;
     static final int CONN_OK = 0;
     static final int RECV_MSG = 1;

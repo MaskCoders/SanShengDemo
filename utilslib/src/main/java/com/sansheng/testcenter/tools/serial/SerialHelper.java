@@ -53,6 +53,27 @@ public  class SerialHelper{
 		mSendThread.start();
 		_isOpen=true;
 	}
+	public boolean hasreturn;
+	private Thread timer;
+	private void startTimer(){
+		timer = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(60000);//1分钟后停止线程
+					if(mReadThread != null && !hasreturn ){
+						mReadThread.interrupt();
+						Message msg = new Message();
+						msg.what= Const.OVER_TIME;
+						System.out.println("====>  serial recive over time");
+						mainHandler.sendMessage(msg);
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 	//----------------------------------------------------
 	public void close(){
 		if (mReadThread != null)
@@ -95,6 +116,7 @@ public  class SerialHelper{
 		@Override
 		public void run() {
 			super.run();
+			startTimer();//开启超时监控
 			while(!isInterrupted()) {
 				try
 				{
@@ -104,6 +126,9 @@ public  class SerialHelper{
 					if (size > 0){
 						ComBean ComRecData = new ComBean(sPort,buffer,size);
 						onDataReceived(ComRecData);
+						hasreturn = true;
+						timer.interrupt();
+
 					}
 					try
 					{

@@ -136,6 +136,11 @@ public class MainHandler extends Handler {
                 mMainUI.pullWholeLog(sserror);
                 logUtils.saveLog(sserror.toString());
                 return;
+            case OVER_TIME:
+                content = "接受超时"+ "\n";
+                SpannableString sserrot = getErrSS(content);
+                mMainUI.pullShortLog(sserrot);
+                mMainUI.pullWholeLog(sserrot);
             default:
         }
         logUtils.saveLog(content);
