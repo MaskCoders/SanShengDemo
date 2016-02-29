@@ -8,9 +8,7 @@ import com.sansheng.testcenter.tools.protocol.TerUserDataCreaterInterface;
  */
 public abstract class TerUserDataCBase implements TerUserDataCreaterInterface {
     protected String json;//这个是数据的json字符串，或者以后用别的
-    protected  BaseCommandData baseBean;
-    public TerUserDataCBase(String j, BaseCommandData bean) {
+    public TerUserDataCBase(String j) {
         this.json = j;
-        this.baseBean = bean;
     }
 }

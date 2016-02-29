@@ -8,12 +8,12 @@ import com.sansheng.testcenter.bean.BaseCommandData;
 public class TerUserDataCImpl2 extends TerUserDataCBase {
 
 
-    public TerUserDataCImpl2(String j, BaseCommandData bean) {
-        super(j, bean);
+    public TerUserDataCImpl2(String j) {
+        super(j);
     }
 
     @Override
     public BaseCommandData create() {
-        return baseBean;
+        return new BaseCommandData(new byte[]{});
     }
 }
