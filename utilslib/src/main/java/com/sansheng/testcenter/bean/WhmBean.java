@@ -16,6 +16,7 @@ public class WhmBean {
     public int len = 1;
     public byte[] originData;
     public String tempCommand = null;
+    public boolean isSumOK;
     public WhmBean() {
 
     }
@@ -62,7 +63,7 @@ public class WhmBean {
         }
         return s;
     }
-    public static boolean sumOK(byte[] data,WhmBean cmd){
+    public boolean sumOK(byte[] data,WhmBean cmd){
         int sum = 0;
         byte[] tmp = new byte[data.length-10];
         for(int i=0 ;i < data.length-2 ;i++){
@@ -79,8 +80,10 @@ public class WhmBean {
             cmd.len = (int)data[9];
             cmd.address = ProtocolUtils.getStrFromBytes(data,1,6);
             cmd.userData = ProtocolUtils.getStrFromBytes(data,10,data.length-3);
+            isSumOK = true;
             return true;
         }else{
+            isSumOK = false;
             return false;
         }
     }
@@ -104,7 +107,10 @@ public class WhmBean {
         try{
             WhmBean bean = new WhmBean();
             boolean hashead = hasHEAD(data,bean);
-            boolean sumOK = sumOK(data,bean);
+            boolean sumOK = bean.sumOK(data,bean);
+            if(!sumOK){
+                return bean;
+            }
             if(hashead && sumOK){
                 bean.originData = data;
                 return bean;

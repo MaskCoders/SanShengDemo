@@ -274,13 +274,27 @@ public  class SerialHelper{
 		}
 	}
 	//----------------------------------------------------
+	private byte[] byteBuffer = null;
+
 	public  void onDataReceived(ComBean ComRecData){
 		WhmBean bean =null;
 		byte[] barr = ComRecData.bRec;
 		try{
-
-			bean = WhmBean.parse(barr);
-			if(bean == null)throw new NullPointerException();
+			//等待调试，报文分条by hua 2016年02月29日18:00:40
+//			bean = WhmBean.parse(barr);
+//			if(!bean.isSumOK){
+//				//这里需要等待接受下一条数据
+//				if(byteBuffer == null){
+//					byteBuffer = barr;
+//					return;
+//				}else{
+//					ProtocolUtils.byteMerger(byteBuffer,barr);
+//					bean = WhmBean.parse(barr);
+//					if(bean == null && !bean.isSumOK)throw new NullPointerException();
+//				}
+//
+//			}
+			if(bean == null && !bean.isSumOK)throw new NullPointerException();
 			bean.tempCommand = tempCommand;
 			callback.setValue(bean);
 		}catch (Exception e){
