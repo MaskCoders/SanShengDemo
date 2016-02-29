@@ -73,8 +73,10 @@ public  class SerialHelper{
 			e.printStackTrace();
 		}
 	}
+	private String tempCommand = "";
 	//----------------------------------------------------
 	public void sendHex(String sHex){
+		tempCommand = sHex;
 //		String hex = "fefefefe68 12 00 00 00 10 20 68 11 04 33 32 34 33 F3 16".replace(" ","");
 		byte[] bOutArray = MyFunc.HexToByteArr(sHex);
 		send(bOutArray);
@@ -82,6 +84,7 @@ public  class SerialHelper{
 	//----------------------------------------------------
 	public void sendTxt(String sTxt){
 		byte[] bOutArray =sTxt.getBytes();
+		tempCommand = sTxt;
 //		String hex = "fefefefe68aaaaaaaaaaaa681300df16";
 //		bOutArray = ProtocolUtils.hexStringToBytes(hex);
 //		System.out.println("hua : "+hex);
@@ -253,6 +256,7 @@ public  class SerialHelper{
 
 			bean = WhmBean.parse(barr);
 			if(bean == null)throw new NullPointerException();
+			bean.tempCommand = tempCommand;
 			callback.setValue(bean);
 		}catch (Exception e){
 //			e.printStackTrace();

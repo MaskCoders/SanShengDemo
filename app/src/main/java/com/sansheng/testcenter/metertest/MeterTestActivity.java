@@ -39,6 +39,7 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import static com.sansheng.testcenter.base.Const.CONN_ERR;
 import static com.sansheng.testcenter.base.Const.CONN_OK;
@@ -232,6 +233,49 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
 //                break;
             case R.id.text3:
                 //开始按钮
+                try {
+                    HashMap<Integer, String> map = getSelectProject();
+                    Iterator it = map.keySet().iterator();
+                    while(it.hasNext()) {
+
+                        Integer index = (Integer) it.next();
+                        String data = null;
+                        System.out.println("hua : the selected num is " + index);
+                        switch (index) {
+                            case 0:
+                                data = "33 32 34 33 ".replace(" ", "");//正向有功电能s
+                                break;
+                            case 1:
+                                data = "33 32 34 35".replace(" ", ""); //三相电压
+                                break;
+                            case 2:
+                                data = "34 34 33 37".replace(" ", "");//日期: 2016-01-11 星期01
+                                break;
+                            case 3:
+                                data = "34 33 39 38".replace(" ", ""); //上次日冻结时间
+                                break;
+                            case 4:
+                                data = "33 35 C3 33".replace(" ", "");//剩余金额:
+                                break;
+                            case 5:
+                                data = "33 40 63 36".replace(" ", "");//开盖次数
+                                break;
+                            case 6:
+                                data = "33 40 63 36".replace(" ", "");//开盖次数
+                                break;
+                            case 7:
+                                data = "34 33 33 50".replace(" ", "");//跳闸次数
+                                break;
+                        }
+                        commandLists.add(data);
+
+                    }
+
+                } catch (Exception e) {
+//            Toast.makeText(this, "地址格式有误", 1).show();
+                    Utility.showToast(this, "地址格式有误");
+                    return;
+                }
                 startTest();
                 break;
             case R.id.text4:
@@ -299,7 +343,9 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
 
     @Override
     public void setValue(WhmBean bean) {
+        commandLists.remove(bean.tempCommand);
         mAdapter.setmSelectedItemsValues(bean);
+        startTest();
     }
 
     @Override
@@ -326,20 +372,22 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         ConnectTypeDialog connectTypeDialog = new ConnectTypeDialog(MeterTestActivity.this);
         connectTypeDialog.show(getFragmentManager(), "select_connect_type");
     }
+    public static List<String> commandLists = new ArrayList<String>();
 
+    private HashMap<Integer, String> getSelectProject(){
+        String result = EquipmentPreference.getPreferences(MeterTestActivity.this).getSelectedCollectTest();
+        Log.e("ssg", "result = " + result);
+        if (TextUtils.isEmpty(result)) {
+            result = "[\"0\",\"1\",\"2\"]";
+        }
+        return ModuleUtilites.jsonToMapForMeterTest(result, getResources().getStringArray(R.array.meter_test_items));
+
+    }
     private void startTest() {
         Log.e("ssg", "开始检测");
         final String address;
-        try {
-            address = mEditMeterAddressView.getText().toString();
-            ProtocolUtils.hex2bcd(address);
 
-        } catch (Exception e) {
-//            Toast.makeText(this, "地址格式有误", 1).show();
-            Utility.showToast(this, "地址格式有误");
-            return;
-        }
-        Thread command = new Thread(new Runnable() {
+        final Thread command = new Thread(new Runnable() {
             private void sendCommand(String data) throws InterruptedException {
                 data = ProtocolUtils.bytes2hex(ProtocolUtils.hexStringToBytesDecode(data));
                 System.out.println("data: " + data);
@@ -369,54 +417,15 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
                 }
                 nowChannel.sendHex(bean.toString());
             }
-            private HashMap<Integer, String> getSelectProject(){
-                String result = EquipmentPreference.getPreferences(MeterTestActivity.this).getSelectedCollectTest();
-                Log.e("ssg", "result = " + result);
-                if (TextUtils.isEmpty(result)) {
-                    result = "[\"0\",\"1\",\"2\"]";
-                }
-                return ModuleUtilites.jsonToMapForMeterTest(result, getResources().getStringArray(R.array.meter_test_items));
 
-            }
             @Override
             public void run() {
                 try {
-                    HashMap<Integer, String> map = getSelectProject();
-                    Iterator it = map.keySet().iterator();
-                    while(it.hasNext()){
 
-                        Integer index = (Integer) it.next();
-                        String data = null;
-                        System.out.println("hua : the selected num is "+index);
-                        switch(index){
-                            case 0:
-                                data = "33 32 34 33 ".replace(" ", "");//正向有功电能s
-                                break;
-                            case 1:
-                                data = "33 32 34 35".replace(" ", ""); //三相电压
-                                break;
-                            case 2:
-                                data = "34 34 33 37".replace(" ", "");//日期: 2016-01-11 星期01
-                                break;
-                            case 3:
-                                data = "34 33 39 38".replace(" ", ""); //上次日冻结时间
-                                break;
-                            case 4:
-                                data = "33 35 C3 33".replace(" ", "");//剩余金额:
-                                break;
-                            case 5:
-                                data = "33 40 63 36".replace(" ", "");//开盖次数
-                                break;
-                            case 6:
-                                data = "33 40 63 36".replace(" ", "");//开盖次数
-                                break;
-                            case 7:
-                                data = "34 33 33 50".replace(" ", "");//跳闸次数
-                                break;
+                        if(commandLists.size() > 0){
+                            sendCommand(commandLists.get(0));
                         }
 
-                        sendCommand(data);
-                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();

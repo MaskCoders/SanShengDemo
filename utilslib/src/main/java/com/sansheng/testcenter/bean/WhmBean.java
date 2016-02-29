@@ -15,6 +15,7 @@ public class WhmBean {
     public static final byte END_B  = 22;//16
     public int len = 1;
     public byte[] originData;
+    public String tempCommand = null;
     public WhmBean() {
 
     }
