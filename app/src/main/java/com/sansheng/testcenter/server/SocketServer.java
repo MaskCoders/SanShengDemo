@@ -1,7 +1,9 @@
 package com.sansheng.testcenter.server;
 
+import com.sansheng.testcenter.base.ConnInter;
 import com.sansheng.testcenter.base.Const;
 import com.sansheng.testcenter.controller.MainHandler;
+import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
 
 import java.io.*;
@@ -13,7 +15,7 @@ import java.util.List;
 /**
  * Created by hua on 12/18/15.
  */
-public class SocketServer {
+public class SocketServer implements ConnInter{
     private Socket socket = null;
     private BufferedReader in = null;
     private PrintWriter out = null;
@@ -25,7 +27,7 @@ public class SocketServer {
     public SocketServer(MainHandler handler){
         mainHandler = handler;
     }
-    public void startServer() {
+    private void startServer() {
         System.out.println(" by hua start server ... ");
 //        if(server != null && server.isBound() ){
 //            Toast.makeText(this, this.getResources().getString(R.string.start_ser_tip3), 0).show();
@@ -66,6 +68,32 @@ public class SocketServer {
             }
         }
     }
+
+    @Override
+    public void open() throws IOException {
+        startServer();
+    }
+
+    @Override
+    public void close() {
+
+    }
+
+    @Override
+    public void sendMessage(String hex) {
+        sendmsg(null,hex,true);
+    }
+
+    @Override
+    public void sendMessage(byte[] arr) {
+
+    }
+
+    @Override
+    public String getConnInfo() {
+        return "";
+    }
+
     public static class ConnClient implements Runnable{
         public String clientName;
         public String clientIP;

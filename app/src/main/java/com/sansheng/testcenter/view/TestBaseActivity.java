@@ -11,7 +11,6 @@ import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.controller.ConnectionService;
 import com.sansheng.testcenter.controller.MainHandler;
-import com.sansheng.testcenter.server.ClientManager;
 import com.sansheng.testcenter.server.MSocketServer;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
 
@@ -29,14 +28,12 @@ public class TestBaseActivity extends BaseActivity  {
     Button conn3;
     private MainHandler mMainHandler;
     private MSocketServer myService;  //我们自己的service
-    private ClientManager mClientManager;
     private TerProtocolCreater cmdCreater;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         mMainHandler = new MainHandler(this, this);
-        mClientManager = ClientManager.getInstance(this, mMainHandler);
         cmdCreater = new TerProtocolCreater();
         initData();
         setTitle("电表检测");
@@ -109,10 +106,10 @@ public class TestBaseActivity extends BaseActivity  {
                 bindService(intent, connSer, Context.BIND_AUTO_CREATE);
                 break;
             case R.id.conn3:
-                mClientManager.createClient(null,-100);
+//                mClientManager.createClient(null,-100);
                 break;
             case R.id.conn4:
-                mClientManager.sendMessage(null, cmdCreater.makeCommand(null,null,null));
+//                mClientManager.sendMessage(null, cmdCreater.makeCommand(null,null,null));
                 break;
         }
         super.onClick(v);

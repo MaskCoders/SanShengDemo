@@ -1,6 +1,5 @@
 package realarm.hardware;
 
-import android_serialport_api.CanFrame;
 
 import java.io.FileDescriptor;
 

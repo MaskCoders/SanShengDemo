@@ -77,6 +77,7 @@ public  class SerialHelper implements ConnInter{
 	}
 	//----------------------------------------------------
 	public void close(){
+		stopSend();
 		if (mReadThread != null)
 			mReadThread.interrupt();
 		if (mSerialPort != null) {
@@ -85,6 +86,8 @@ public  class SerialHelper implements ConnInter{
 		}
 		_isOpen=false;
 	}
+
+
 	//----------------------------------------------------
 	private void send(byte[] bOutArray){
 		try
@@ -103,6 +106,24 @@ public  class SerialHelper implements ConnInter{
 		byte[] bOutArray = MyFunc.HexToByteArr(sHex);
 		send(bOutArray);
 	}
+	@Override
+	public void sendMessage(String hex) {
+		tempCommand = hex;
+//		String hex = "fefefefe68 12 00 00 00 10 20 68 11 04 33 32 34 33 F3 16".replace(" ","");
+		byte[] bOutArray = MyFunc.HexToByteArr(hex);
+		sendMessage(bOutArray);
+	}
+
+	@Override
+	public void sendMessage(byte[] arr) {
+		send(arr);
+	}
+
+	@Override
+	public String getConnInfo() {
+		return "Port is "+getPort()+" , Rate is "+getBaudRate();
+	}
+
 	//----------------------------------------------------
 //	public void sendTxt(String sTxt){
 //		byte[] bOutArray =sTxt.getBytes();

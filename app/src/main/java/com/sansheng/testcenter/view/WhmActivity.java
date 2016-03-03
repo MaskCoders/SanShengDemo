@@ -11,7 +11,6 @@ import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.Const;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.controller.MainHandler;
-import com.sansheng.testcenter.server.ClientManager;
 import com.sansheng.testcenter.server.MSocketServer;
 import com.sansheng.testcenter.server.SocketClient;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
@@ -31,7 +30,7 @@ public class WhmActivity extends BaseActivity  {
     EditText whm_port;
     private MainHandler mMainHandler;
     private MSocketServer myService;  //我们自己的service
-    private ClientManager mClientManager;
+//    private ClientManager mClientManager;
     private SocketClient mClient;
     private TerProtocolCreater cmdCreater;
     @Override
@@ -39,7 +38,7 @@ public class WhmActivity extends BaseActivity  {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         mMainHandler = new MainHandler(this, this);
-        mClientManager = ClientManager.getInstance(this, mMainHandler);
+//        mClientManager = ClientManager.getInstance(this, mMainHandler);
         cmdCreater = new TerProtocolCreater();
         initData();
         setTitle("电表检测");
@@ -113,7 +112,7 @@ public class WhmActivity extends BaseActivity  {
                 msg.what = Const.SEND_MSG;
                 mMainHandler.sendMessage(msg);
                 System.out.println("by hua : "+bean.toString());
-                mClientManager.sendMessage(mClient,ProtocolUtils.hexStringToBytes(bean.toString()));
+//                mClientManager.sendMessage(mClient,ProtocolUtils.hexStringToBytes(bean.toString()));
                 break;
             case R.id.whm_bl_choose_db:
                 break;
@@ -131,7 +130,7 @@ public class WhmActivity extends BaseActivity  {
                 }
                 break;
             case R.id.conn:
-                mClient = mClientManager.createClient(whm_ip.getText().toString(),Integer.valueOf(whm_port.getText().toString()));
+//                mClient = mClientManager.createClient(whm_ip.getText().toString(),Integer.valueOf(whm_port.getText().toString()));
                 break;
         }
         super.onClick(v);

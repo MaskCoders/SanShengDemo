@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.*;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
+import com.sansheng.testcenter.base.ConnInter;
 import com.sansheng.testcenter.base.Const;
 import com.sansheng.testcenter.base.view.ConnectTypeDialog;
 import com.sansheng.testcenter.base.view.DrawableCenterTextView;
@@ -25,7 +26,7 @@ import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.module.ModuleUtilites;
 import com.sansheng.testcenter.provider.EquipmentPreference;
-import com.sansheng.testcenter.server.ClientManager;
+import com.sansheng.testcenter.server.ConnFactory;
 import com.sansheng.testcenter.server.MSocketServer;
 import com.sansheng.testcenter.server.SocketClient;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
@@ -66,7 +67,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     private EditText mEditMeterAddressView;
     private LinearLayout mSelectChanel;
     private TextView mChanelValue;
-    private SerialHelper nowChannel;
+    private ConnInter nowChannel;
     private LinearLayout mSelectItem;
     private TextView mSelectItemValue;
     private ImageView mSelectMeter;
@@ -74,9 +75,8 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     private ListView mListView;
     private MeterTestCenterListAdapter mAdapter;
     private MainHandler mMainHandler;
-    private SocketClient mClient;
+    private ConnInter mClient;
     private MSocketServer myService;  //我们自己的service
-    private ClientManager mClientManager;
     private TerProtocolCreater cmdCreater;
     private Meter mMeter;
 //    private HashMap<String, Meter> mSelectMeters;
@@ -92,7 +92,6 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
             Log.e("ssg", "mMeterType = " + mMeterType);
         }
         mMainHandler = new MainHandler(this, this);
-        mClientManager = ClientManager.getInstance(this, mMainHandler);
         cmdCreater = new TerProtocolCreater();
 //        initData();
         hideBottomLog();
@@ -301,21 +300,21 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
                 break;
             case R.id.read_address:
 //                mClientManager.clearClients();
-                mClientManager.createClient(null, -100);
+//                mClientManager.createClient(null, -100);
                 break;
             case R.id.select_meter:
 //                mClientManager.clearClients();
-                mClientManager.createClient(null, -100);
+//                mClientManager.createClient(null, -100);
                 break;
             case R.id.conn:
-                mClient = mClientManager.createClient(whm_ip.getText().toString(), Integer.valueOf(whm_port.getText().toString()));
+                mClient = ConnFactory.getInstance(6,mMainHandler,this,whm_ip.getText().toString(),
+                        Integer.valueOf(whm_port.getText().toString()));
                 break;
             case R.id.stop:
                 try{
-                    nowChannel.stopSend();
                     nowChannel.close();
                     Message msg = new Message();
-                    msg.obj = nowChannel.getPort();
+                    msg.obj = nowChannel.getConnInfo();
                     msg.what = Const.CONN_CLOSE;
                     mMainHandler.sendMessage(msg);
                 }catch (Exception e){
@@ -415,7 +414,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
                     Toast.makeText(MeterTestActivity.this, "请选择信道", 0).show();
                     return;
                 }
-                nowChannel.sendHex(bean.toString());
+                nowChannel.sendMessage(bean.toString());
             }
 
             @Override
@@ -503,15 +502,15 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         Log.e("ssg", "选择的通讯类型 ＝ " + name);
         Log.e("ssg", "选择的通讯类型 ＝ " + position);
         mChanelValue.setText(name);
-        nowChannel = ChannelFactory.getInstance(position, true,mMainHandler,this);
+        nowChannel = ConnFactory.getInstance(position,mMainHandler,this,null,0);
         openComPort(nowChannel);
     }
 
 
-    private void openComPort(SerialHelper ComPort) {
+    private void openComPort(ConnInter ComPort) {
         Message msg = new Message();
         msg.what = CONN_ERR;
-        String conInfo = "Port is "+ComPort.getPort()+" , Rate is "+ComPort.getBaudRate();
+        String conInfo = ComPort.getConnInfo();
         try {
             ComPort.open();
 

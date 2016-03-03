@@ -1,9 +1,11 @@
 package com.sansheng.testcenter.server;
 
 import android.content.Context;
+import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import com.sansheng.testcenter.base.ConnInter;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
@@ -17,13 +19,13 @@ import java.util.ArrayList;
 /**
  * Created by hua on 12/18/15.
  */
-public class SocketClient {
+public class SocketClient implements ConnInter{
     private Socket socket = null;
     private BufferedInputStream in = null;
 //    private PrintWriter out = null;
     private DataOutputStream out = null;
     private Context mContext;
-    private MainHandler mMainHandler;
+    private Handler mMainHandler;
 
     private int PORT = 8001;
     static final String ERRCODE = "ERRCODE";
@@ -36,15 +38,9 @@ public class SocketClient {
     static final int RECV_MSG = 1;
     static final int INPUT_ERR = -3;
     private boolean running=false;
-    private ClientManager manager;
     private long lastSendTime;
-    SocketClient(Context ctx , MainHandler handler,ClientManager cm){
-        this(ctx,handler,null,-100,cm);
-    }
-    SocketClient(Context ctx , MainHandler handler,String ip,int port,ClientManager cm) {
-        mContext = ctx;
+    public SocketClient(Handler handler, String ip, int port) {
         mMainHandler = handler;
-        this.manager = cm;
         if (!TextUtils.isEmpty(ip)) {
             HOST = ip;
         }
@@ -105,7 +101,29 @@ public class SocketClient {
 
         }
     }
-    void sendMessage(byte[] data) {
+
+    @Override
+    public void open() throws IOException {
+        startClient();
+    }
+
+    @Override
+    public void close() {
+        if(socket != null && socket.isConnected()){
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void sendMessage(String hex) {
+        sendMessage(ProtocolUtils.hexStringToBytes(hex));
+    }
+
+    public void sendMessage(byte[] data) {
         if (socket != null && socket.isConnected()) {
             if (!socket.isOutputShutdown()) {
                 try {
@@ -122,6 +140,11 @@ public class SocketClient {
         }
     }
 
+    @Override
+    public String getConnInfo() {
+        return "ip is "+HOST+" == > port"+PORT;
+    }
+
 
     private Message getMessageStr(String content, int type) {
         Message msg = new Message();
@@ -135,21 +158,10 @@ public class SocketClient {
         msg.what = type;
         return msg;
     }
-    void stopClient(){
-        if(socket != null && socket.isConnected()){
-            try {
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
     class  ReceiveWatchDog implements Runnable{
         @Override
         public void run() {
             try {
-
-
                 while (true) {
                     if (!socket.isClosed()) {
                         if (socket.isConnected()) {

@@ -8,6 +8,8 @@ import android.os.Message;
 import com.sansheng.testcenter.callback.ServiceCallback;
 import com.sansheng.testcenter.controller.MainHandler;
 
+import java.io.IOException;
+
 /**
  * Created by hua on 12/17/15.
  */
@@ -29,7 +31,11 @@ public class MSocketServer extends Service implements ServiceCallback {
     @Override
     public void onStart(Intent intent, int startId) {
         if(mSocketServer != null) {
-            mSocketServer.startServer();
+            try {
+                mSocketServer.open();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         super.onStart(intent, startId);
     }

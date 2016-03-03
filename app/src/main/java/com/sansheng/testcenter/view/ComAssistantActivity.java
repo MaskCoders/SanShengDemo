@@ -556,7 +556,12 @@ public class ComAssistantActivity extends BaseActivity {
 				}
 			});*/
 		}
-    }
+
+		@Override
+		public String getConnInfo() {
+			return "";
+		}
+	}
     //----------------------------------------------------ˢ����ʾ�߳�
     private class DispQueueThread extends Thread{
 		private Queue<ComBean> QueueList = new LinkedList<ComBean>(); 
@@ -750,7 +755,7 @@ public class ComAssistantActivity extends BaseActivity {
 		{
     		if (radioButtonTxt.isChecked())
 			{
-				ComPort.sendTxt(sOut);
+				ComPort.sendMessage(sOut);
 			}else if (radioButtonHex.isChecked()) {
 				ComPort.sendHex(sOut);
 			}
