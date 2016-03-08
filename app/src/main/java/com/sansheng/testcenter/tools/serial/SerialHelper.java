@@ -68,6 +68,7 @@ public  class SerialHelper implements ConnInter{
 						msg.what= Const.OVER_TIME;
 						System.out.println("====>  serial recive over time");
 						mainHandler.sendMessage(msg);
+						callback.setValue(null);//为了结束activiey一些锁死的状态
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();

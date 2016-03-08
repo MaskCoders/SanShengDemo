@@ -10,14 +10,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
+import com.sansheng.testcenter.base.ConnInter;
 import com.sansheng.testcenter.base.view.DrawableCenterTextView;
 import com.sansheng.testcenter.bean.WhmBean;
+import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.ModuleUtilites;
 import com.sansheng.testcenter.provider.EquipmentPreference;
+import com.sansheng.testcenter.server.ConnFactory;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by sunshaogang on 1/20/16.
@@ -32,7 +37,8 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
     private LinearLayout mButtonList2;
     private LinearLayout mButtonList3;
     private LinearLayout mButtonList4;
-
+    private MainHandler mMainHandler;
+    private ConnInter mClient;
     private TextView collectAddress;
     private DrawableCenterTextView paraCompare;
     private DrawableCenterTextView readStandard;
@@ -44,8 +50,10 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
     private DrawableCenterTextView analysis;
     private DrawableCenterTextView read_events;
     private DrawableCenterTextView events_manager;
-
+    private ArrayList<TextView> tabList = new ArrayList<TextView>();
+    private ArrayList<DrawableCenterTextView> btnList = new ArrayList<DrawableCenterTextView>();
     private DrawableCenterTextView showLog;
+    private DrawableCenterTextView closeConn;
 
     private Collect mCollect;
 
@@ -59,6 +67,10 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
             onBackPressed();
         }
         super.onCreate(savedInstanceState);
+        mMainHandler = new MainHandler(this, this);
+        String ip = "192.168.134.1";
+        int port = 8001;
+        mClient = ConnFactory.getInstance(6,mMainHandler,this,ip,8001);
     }
 
     @Override
@@ -78,6 +90,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
         //whole
         collectAddress = (TextView) inflate.findViewById(R.id.collect_address);
         showLog = (DrawableCenterTextView) inflate.findViewById(R.id.show_log);
+        closeConn = (DrawableCenterTextView) inflate.findViewById(R.id.cancel);
         //mButtonList1
         paraCompare = (DrawableCenterTextView) inflate.findViewById(R.id.para_compare);
         readStandard = (DrawableCenterTextView) inflate.findViewById(R.id.read_standard);
@@ -92,13 +105,22 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
         //mButtonList4
         read_events = (DrawableCenterTextView) inflate.findViewById(R.id.read_events);
         events_manager = (DrawableCenterTextView) inflate.findViewById(R.id.events_manager);
-
+        tabList.add(collectAddress);
+        tabList.add(paraCompare);
+        tabList.add(readStandard);
+        tabList.add(selectItem);
+        tabList.add(eventsCompare);
+        tabList.add(deleteAll);
+        tabList.add(readMeters);
+        tabList.add(analysis);
+        tabList.add(read_events);
 //        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.collect_time_range, android.R.layout.simple_spinner_item);
 //            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //        dateRegion.setAdapter(adapter);
 //        dateRegion.setSelection(0, true);
         collectAddress.setText(mCollect.mTerminalIp);
         showLog.setOnClickListener(this);
+        closeConn.setOnClickListener(this);
         paraCompare.setOnClickListener(this);
         readStandard.setOnClickListener(this);
         selectItem.setOnClickListener(this);
@@ -127,6 +149,10 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
         tab2Layout.setOnClickListener(this);
         tab3Layout.setOnClickListener(this);
         tab4Layout.setOnClickListener(this);
+        tabList.add(tab1Layout);
+        tabList.add(tab2Layout);
+        tabList.add(tab3Layout);
+        tabList.add(tab4Layout);
         setDefaultFragment();
         main_info.addView(inflate);
     }
@@ -138,9 +164,29 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
 
     @Override
     public void setValue(WhmBean bean) {
-
+        //在这里处理回传数据
+        resumeAllButton();
     }
-
+    public void stopAllButton(){
+        for(TextView tv:tabList){
+                tv.setClickable(false);
+        }
+        for(TextView tv:btnList){
+            tv.setClickable(false);
+        }
+    }
+    public void resumeAllButton(){
+        for(TextView tv:tabList){
+            if(tv.getTag()!=null){
+                tv.setClickable(false);
+            }else {
+                tv.setClickable(true);
+            }
+        }
+        for(TextView tv:btnList){
+            tv.setClickable(true);
+        }
+    }
     @Override
     public void onClick(View v) {
 
@@ -151,6 +197,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
                 }
                 replaceFragment(tab1Fragment);
                 tab1Layout.setClickable(false);
+                tab1Layout.setTag("1");
                 tab1Layout.setBackground(getResources().getDrawable(R.drawable.btn_background_green));
                 currentIndex = 1;
                 showControllView(currentIndex);
@@ -161,6 +208,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
                 }
                 replaceFragment(tab2Fragment);
                 tab2Layout.setClickable(false);
+                tab2Layout.setTag("1");
                 tab2Layout.setBackground(getResources().getDrawable(R.drawable.btn_background_green));
                 currentIndex = 2;
                 showControllView(currentIndex);
@@ -171,6 +219,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
                 }
                 replaceFragment(tab3Fragment);
                 tab3Layout.setClickable(false);
+                tab3Layout.setTag("1");
                 tab3Layout.setBackground(getResources().getDrawable(R.drawable.btn_background_green));
                 currentIndex = 3;
                 showControllView(currentIndex);
@@ -181,6 +230,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
                 }
                 replaceFragment(tab4Fragment);
                 tab4Layout.setClickable(false);
+                tab4Layout.setTag("1");
                 tab4Layout.setBackground(getResources().getDrawable(R.drawable.btn_background_green));
                 currentIndex = 4;
                 showControllView(currentIndex);
@@ -189,7 +239,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
                 showOrHideLog();
                 break;
             //1
-            case R.id.para_compare:
+            case R.id.para_compare://参数对比
                 comparePara();
                 break;
             case R.id.read_standard:
@@ -222,6 +272,14 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
             case R.id.events_manager:
                 eventsManager();
                 break;
+            case R.id.cancel:
+                try{
+                    mClient.close();
+                }catch (Exception e){
+
+                    e.printStackTrace();
+                }
+                break;
         }
     }
 
@@ -252,6 +310,10 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
         tab2Layout.setClickable(true);
         tab3Layout.setClickable(true);
         tab4Layout.setClickable(true);
+        tab1Layout.setTag(null);
+        tab2Layout.setTag(null);
+        tab3Layout.setTag(null);
+        tab4Layout.setTag(null);
 
         if (currentIndex == 1) {
             tab1Layout.setBackground(getResources().getDrawable(R.drawable.btn_background_orange_to_green));
@@ -344,14 +406,35 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
 
     private void comparePara() {
         Log.e("ssg", "参数对比");
+        try {
+            mClient.open();
+            mClient.sendMessage("68 32 00 32 00 68 4B 00 50 02 00 02 09 70 00 00 01 00 19 16".replace(" ",""));
+            stopAllButton();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void readStandard() {
         Log.e("ssg", "读标准值");
+        try {
+            mClient.open();
+            mClient.sendMessage("68 32 00 32 00 68 4A 00 50 02 00 02 0C 70 00 00 02 00 1C 16".replace(" ",""));
+            stopAllButton();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void eventsCompare() {
         Log.e("ssg", "档案对比");
+        try {
+            mClient.open();
+            mClient.sendMessage("68 8A 00 8A 00 68 4B 00 50 02 00 02 0A 70 00 00 02 01 0a 00 01 00 02 00 03 00 04 00 05 00 06 00 07 00 08 00 09 00 0a 00 5d FF 1E 16".replace(" ",""));
+            stopAllButton();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void deleteAll() {
@@ -360,6 +443,13 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
 
     private void readMeters() {
         Log.e("ssg", "抄读表码");
+        try {
+            mClient.open();
+            mClient.sendMessage("68 8A 00 8A 00 68 4B 00 50 02 00 02 0A 70 00 00 02 01 0a 00 01 00 02 00 03 00 04 00 05 00 06 00 07 00 08 00 09 00 0a 00 5d FF 1E 16".replace(" ",""));
+            stopAllButton();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void dateRegion() {
@@ -372,6 +462,13 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
 
     private void readEvents() {
         Log.e("ssg", "读取事件");
+        try {
+            mClient.open();
+            mClient.sendMessage("68 3A 00 3A 00 68 4B 00 50 02 00 02 0E 70 00 00 02 00 00 FF 1E 16".replace(" ",""));
+            stopAllButton();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void eventsManager() {
