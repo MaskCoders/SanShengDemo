@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
+import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.equipmentmanager.CollectManagerActivity;
 import com.sansheng.testcenter.equipmentmanager.MeterManagerActivity;
@@ -60,7 +61,7 @@ public class EquipmentManagerActivity extends BaseActivity {
     }
 
     @Override
-    public void setValue(WhmBean bean) {
+    public void setValue(BeanMark bean) {
 
     }
 }

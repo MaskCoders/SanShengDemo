@@ -6,10 +6,13 @@ import android.os.Message;
 import android_serialport_api.SerialPort;
 import com.sansheng.testcenter.base.ConnInter;
 import com.sansheng.testcenter.base.Const;
+import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.bean.ComBean;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
+import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
+import com.sansheng.testcenter.tools.protocol.TerProtocolParse;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,13 +37,16 @@ public  class SerialHelper implements ConnInter{
 	private byte[] _bLoopData=new byte[]{0x30};
 	private int iDelay=500;
 	private IServiceHandlerCallback callback;
+	private int protocol_type = BeanMark.METER_PROTOCOL;
 	//----------------------------------------------------
 	public SerialHelper(){}
-	public SerialHelper(String sPort,int iBaudRate,Handler handler,IServiceHandlerCallback cb){
+	public SerialHelper(String sPort,int iBaudRate,Handler handler,IServiceHandlerCallback cb,int type){
 		this.sPort = sPort;
 		this.iBaudRate=2400;
 		mainHandler = handler;
 		callback = cb;
+		protocol_type = type;
+
 	}
 	//----------------------------------------------------
 	public void open() throws SecurityException, IOException,InvalidParameterException{
@@ -300,11 +306,10 @@ public  class SerialHelper implements ConnInter{
 	private byte[] byteBuffer = null;
 
 	public  void onDataReceived(ComBean ComRecData){
-		WhmBean bean =null;
+		BeanMark bean =null;
 		byte[] barr = ComRecData.bRec;
 		try{
 			//等待调试，报文分条by hua 2016年02月29日18:00:40
-//			bean = WhmBean.parse(barr);
 //			if(!bean.isSumOK){
 //				//这里需要等待接受下一条数据
 //				if(byteBuffer == null){
@@ -317,8 +322,23 @@ public  class SerialHelper implements ConnInter{
 //				}
 //
 //			}
-			if(bean == null && !bean.isSumOK)throw new NullPointerException();
-			bean.tempCommand = tempCommand;
+
+
+			switch (protocol_type){
+			case BeanMark.METER_PROTOCOL:
+				bean = WhmBean.parse(barr);
+				if(bean == null && !((WhmBean)bean).isSumOK)throw new NullPointerException();
+				((WhmBean)bean).tempCommand = tempCommand;
+			break;
+
+			case BeanMark.GW_PROTOCOL:
+				TerProtocolParse  terparse = new TerProtocolParse();
+
+				bean = terparse.checkCommand(barr);
+			break;
+		}
+
+
 			callback.setValue(bean);
 		}catch (Exception e){
 //			e.printStackTrace();

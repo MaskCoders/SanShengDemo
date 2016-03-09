@@ -1,6 +1,7 @@
 package com.sansheng.testcenter.callback;
 
 import android.text.SpannableString;
+import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.bean.WhmBean;
 
 /**
@@ -10,7 +11,7 @@ public interface IServiceHandlerCallback {
     void pullShortLog(String info);
     void pullShortLog(SpannableString info);
     void pullWholeLog(String info);
-    void setValue(WhmBean bean);
+    void setValue(BeanMark bean);
     void pullWholeLog(SpannableString info);
     void pullStatus(String info);
 

@@ -18,7 +18,7 @@ import com.sansheng.testcenter.base.Const;
 import com.sansheng.testcenter.base.view.ConnectTypeDialog;
 import com.sansheng.testcenter.base.view.DrawableCenterTextView;
 import com.sansheng.testcenter.base.view.WaySelectMeterDialog;
-import com.sansheng.testcenter.bean.ChannelFactory;
+import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.controller.ConnectionService;
@@ -28,10 +28,8 @@ import com.sansheng.testcenter.module.ModuleUtilites;
 import com.sansheng.testcenter.provider.EquipmentPreference;
 import com.sansheng.testcenter.server.ConnFactory;
 import com.sansheng.testcenter.server.MSocketServer;
-import com.sansheng.testcenter.server.SocketClient;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
-import com.sansheng.testcenter.tools.serial.SerialHelper;
 import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.utils.Utility;
 
@@ -308,7 +306,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
                 break;
             case R.id.conn:
                 mClient = ConnFactory.getInstance(6,mMainHandler,this,whm_ip.getText().toString(),
-                        Integer.valueOf(whm_port.getText().toString()));
+                        Integer.valueOf(whm_port.getText().toString()), BeanMark.METER_PROTOCOL);
                 break;
             case R.id.stop:
                 try{
@@ -341,10 +339,12 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     }
 
     @Override
-    public void setValue(WhmBean bean) {
-        commandLists.remove(bean.tempCommand);
-        mAdapter.setmSelectedItemsValues(bean);
-        startTest();
+    public void setValue(BeanMark bean) {
+        if(bean instanceof  WhmBean){
+            commandLists.remove(((WhmBean)bean).tempCommand);
+            mAdapter.setmSelectedItemsValues((WhmBean)bean);
+            startTest();
+        }
     }
 
     @Override
@@ -502,7 +502,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         Log.e("ssg", "选择的通讯类型 ＝ " + name);
         Log.e("ssg", "选择的通讯类型 ＝ " + position);
         mChanelValue.setText(name);
-        nowChannel = ConnFactory.getInstance(position,mMainHandler,this,null,0);
+        nowChannel = ConnFactory.getInstance(position,mMainHandler,this,null,0,BeanMark.METER_PROTOCOL);
         openComPort(nowChannel);
     }
 

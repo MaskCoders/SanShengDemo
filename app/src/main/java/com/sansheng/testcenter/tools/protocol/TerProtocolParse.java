@@ -15,7 +15,9 @@ public class TerProtocolParse {
     public StringBuffer commandBufferCenter = new StringBuffer();
     int sum = 0;
     BaseCommandData cmd;
-
+    public TerProtocolParse(){
+        
+    }
     public  final static void main(String[] args){
         com.sansheng.testcenter.tools.protocol.TerProtocolParse clazz = new com.sansheng.testcenter.tools.protocol.TerProtocolParse();
         TerProtocolCreater creater = new TerProtocolCreater();
@@ -32,13 +34,13 @@ public class TerProtocolParse {
         boolean hashead = hasHEAD(data,cmd);
         boolean sumOK = sumOK(data,cmd);
         if(hashead && sumOK){
-            parseCommand(data);
+            parse(data);
             return cmd;
         }else{
             return null;
         }
     }
-    public void parseCommand(byte[] data){
+    public void parse(byte[] data){
         System.out.println(" parseCommand !!");
         cmd.a.parse(data);
         cmd.data.parse(data);

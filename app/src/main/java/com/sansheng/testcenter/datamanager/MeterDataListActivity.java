@@ -18,6 +18,7 @@ import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.base.view.PullListView;
+import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.module.MeterData;
@@ -253,7 +254,7 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
     }
 
     @Override
-    public void setValue(WhmBean bean) {
+    public void setValue(BeanMark bean) {
 
     }
 

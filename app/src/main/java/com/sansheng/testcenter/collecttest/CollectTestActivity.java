@@ -12,6 +12,7 @@ import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.ConnInter;
 import com.sansheng.testcenter.base.view.DrawableCenterTextView;
+import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.module.Collect;
@@ -70,7 +71,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
         mMainHandler = new MainHandler(this, this);
         String ip = "192.168.134.1";
         int port = 8001;
-        mClient = ConnFactory.getInstance(6,mMainHandler,this,ip,8001);
+        mClient = ConnFactory.getInstance(6,mMainHandler,this,ip,8001,BeanMark.GW_PROTOCOL);
     }
 
     @Override
@@ -163,7 +164,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
     }
 
     @Override
-    public void setValue(WhmBean bean) {
+    public void setValue(BeanMark bean) {
         //在这里处理回传数据
         resumeAllButton();
     }

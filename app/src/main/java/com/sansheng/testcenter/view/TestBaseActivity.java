@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
+import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.controller.ConnectionService;
 import com.sansheng.testcenter.controller.MainHandler;
@@ -136,7 +137,7 @@ public class TestBaseActivity extends BaseActivity  {
     }
 
     @Override
-    public void setValue(WhmBean bean) {
+    public void setValue(BeanMark bean) {
 
     }
 

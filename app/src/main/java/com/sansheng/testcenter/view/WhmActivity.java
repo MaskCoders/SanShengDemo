@@ -9,6 +9,7 @@ import android.widget.EditText;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.Const;
+import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.server.MSocketServer;
@@ -157,7 +158,7 @@ public class WhmActivity extends BaseActivity  {
     }
 
     @Override
-    public void setValue(WhmBean bean) {
+    public void setValue(BeanMark bean) {
 
     }
 

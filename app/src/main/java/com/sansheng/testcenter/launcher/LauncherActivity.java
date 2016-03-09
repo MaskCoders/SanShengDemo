@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.widget.GridView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
+import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.bean.WhmBean;
 
 
@@ -58,7 +59,7 @@ public class LauncherActivity extends BaseActivity {
     }
 
     @Override
-    public void setValue(WhmBean bean) {
+    public void setValue(BeanMark bean) {
 
     }
 }

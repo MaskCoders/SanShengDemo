@@ -15,6 +15,7 @@ import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.base.MeterSelectDialog;
 import com.sansheng.testcenter.base.view.DrawableCenterTextView;
 import com.sansheng.testcenter.base.view.WaySelectMeterDialog;
+import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.datamanager.MeterDataListActivity;
 import com.sansheng.testcenter.metertest.CollectSelectDialog;
@@ -290,7 +291,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     }
 
     @Override
-    public void setValue(WhmBean bean) {
+   public void setValue(BeanMark bean) {
 
     }
 

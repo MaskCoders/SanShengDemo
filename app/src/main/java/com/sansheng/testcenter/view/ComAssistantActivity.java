@@ -20,6 +20,7 @@ import android_serialport_api.SerialPortFinder;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.bean.AssistBean;
+import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.bean.ComBean;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.tools.serial.MyFunc;
@@ -239,7 +240,7 @@ public class ComAssistantActivity extends BaseActivity {
 	}
 
 	@Override
-	public void setValue(WhmBean bean) {
+	public void setValue(BeanMark bean) {
 
 	}
 

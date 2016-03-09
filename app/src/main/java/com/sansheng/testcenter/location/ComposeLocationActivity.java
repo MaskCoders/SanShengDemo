@@ -25,6 +25,7 @@ import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.base.view.ComposeDialogFragmentFactory;
 import com.sansheng.testcenter.base.view.DialogFragmentCallback;
 import com.sansheng.testcenter.base.view.PoiSelectDialog;
+import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.module.LocationInfo;
 import com.sansheng.testcenter.utils.Utilities;
@@ -367,7 +368,7 @@ public class ComposeLocationActivity extends BaseActivity implements PoiSelectDi
     }
 
     @Override
-    public void setValue(WhmBean bean) {
+    public void setValue(BeanMark bean) {
 
     }
 

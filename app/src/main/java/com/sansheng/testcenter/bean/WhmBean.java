@@ -6,7 +6,7 @@ import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 /**
  * Created by hua on data.length()/26-data.length()/2-3.
  */
-public class WhmBean {
+public class WhmBean implements  BeanMark{
 
     public Const.WhmConst.C type;
     public String address;

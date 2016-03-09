@@ -16,6 +16,7 @@ import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.ConnInter;
 import com.sansheng.testcenter.base.view.DrawableCenterTextView;
+import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.collecttest.CollectTestUtils;
@@ -57,7 +58,7 @@ public class CollectManagerActivity extends BaseActivity implements LoaderManage
         mMainHandler = new MainHandler(this, this);
         String ip = "192.168.134.1";
         int port = 8001;
-        mClient = ConnFactory.getInstance(6,mMainHandler,this,ip,8001);
+        mClient = ConnFactory.getInstance(6,mMainHandler,this,ip,8001,BeanMark.GW_PROTOCOL);
     }
 
     @Override
@@ -132,7 +133,7 @@ public class CollectManagerActivity extends BaseActivity implements LoaderManage
     }
 
     @Override
-    public void setValue(WhmBean bean) {
+    public void setValue(BeanMark bean) {
 
     }
 
