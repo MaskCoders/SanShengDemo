@@ -45,4 +45,7 @@
     <dimen name="compose_thumbnail_width">96dp</dimen>
     <dimen name="compose_thumbnail_height">96dp</dimen>
     <dimen name="compose_thumbnail_margin">8dp</dimen>
+
+    <dimen name="standard_padding">8dip</dimen>
+    <dimen name="half_padding">4dip</dimen>
 </resources>

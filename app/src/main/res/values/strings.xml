@@ -143,4 +143,42 @@
     <string name="meter_data_filter_select_meter">电表</string>
     <string name="meter_data_filter_data_type">数据类型</string>
     <string name="meter_data_filter_data_content">数据项</string>
+
+
+    <!-- for scanning module by hua-->
+    <string name="app_picker_name">应用</string>
+    <string name="button_ok">确定</string>
+    <string name="menu_settings">设置</string>
+    <string name="msg_camera_framework_bug">抱歉，Android相机出现问题。您可能需要重启设备。</string>
+    <string name="msg_default_status">请将条码置于取景框内扫描。  </string>
+    <string name="msg_intent_failed">抱歉，无法打开所需软件。 条码内容可能无效。</string>
+    <string name="msg_redirect">重定向</string>
+    <string name="msg_sbc_book_not_searchable">抱歉，无法找到此图书。</string>
+    <string name="msg_sbc_failed">抱歉，搜索时遇到错误。</string>
+    <string name="preferences_actions_title">找到条码时</string>
+    <string name="preferences_bulk_mode_summary">连续扫描并保存多个条形码</string>
+    <string name="preferences_bulk_mode_title">批量扫描模式</string>
+    <string name="msg_bulk_mode_scanned">批量扫描：找到条码，已保存</string>
+    <string name="preferences_copy_to_clipboard_title">复制到剪切板</string>
+    <string name="preferences_decode_1D_title">扫描 一维条码</string>
+    <string name="preferences_decode_Data_Matrix_title">扫描 DM码</string>
+    <string name="preferences_decode_QR_title">扫描 QR码</string>
+    <string name="preferences_front_light_auto">自动</string>
+    <string name="preferences_front_light_off">待用</string>
+    <string name="preferences_front_light_on">活跃</string>
+    <string name="preferences_front_light_summary">闪光灯打开方式</string>
+    <string name="preferences_front_light_title">闪光灯</string>
+    <string name="preferences_general_title">一般设置</string>
+    <string name="preferences_invert_scan_summary">黑色背景上的白色条形码扫描。在某些设备上。</string>
+    <string name="preferences_invert_scan_title">反向扫描</string>
+    <string name="preferences_name">设置</string>
+    <string name="preferences_play_beep_title">提示音</string>
+    <string name="preferences_remember_duplicates_summary">在历史记录中保存重复记录</string>
+    <string name="preferences_remember_duplicates_title">记住重复</string>
+    <string name="preferences_scanning_title">条码类型选择</string>
+    <string name="preferences_supplemental_summary">尝试检索关于条码内容的更多信息</string>
+    <string name="preferences_supplemental_title">检索更多信息</string>
+    <string name="preferences_try_bsplus">尝试条码扫描器+</string>
+    <string name="preferences_try_bsplus_summary">增强新的功能和接口</string>
+    <string name="preferences_vibrate_title">振动</string>
 </resources>

@@ -26,6 +26,7 @@ import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Event;
 import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.module.MeterData;
+import com.sansheng.testcenter.scann.ScannTestActivity;
 import com.sansheng.testcenter.settings.SettingsActivity;
 import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.utils.Utility;
@@ -160,9 +161,11 @@ public class LauncherAdapter extends BaseAdapter implements CollectSelectDialog.
                             intent.setClass(mContext, TestBaseActivity.class);
                             mContext.startActivity(intent);
                             break;
-                        case 13://现场售电
-                            MeterSelectDialog meterDialog = new MeterSelectDialog(LauncherAdapter.this);
-                            meterDialog.show(mContext.getFragmentManager(), "select_meter");
+                        case 13://现场售电 --  暂时当做扫描测试
+                            intent.setClass(mContext, ScannTestActivity.class);
+                            mContext.startActivity(intent);
+//                            MeterSelectDialog meterDialog = new MeterSelectDialog(LauncherAdapter.this);
+//                            meterDialog.show(mContext.getFragmentManager(), "select_meter");
                             break;
                         case 14://系统设置
                             intent.setClass(mContext, SettingsActivity.class);
