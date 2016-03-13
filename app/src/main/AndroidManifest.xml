@@ -159,10 +159,11 @@
                   android:screenOrientation="sensorLandscape">
         </activity>
         <activity android:name="com.sansheng.testcenter.scann.CaptureActivity"
+                  android:screenOrientation="sensorLandscape"
                  >
         </activity>
         <activity android:name="com.sansheng.testcenter.scann.ScannTestActivity"
-                  android:screenOrientation="sensorPortrait">
+                  android:screenOrientation="landscape">
         </activity>
         <provider
                 android:name=".provider.EquipmentProvider"

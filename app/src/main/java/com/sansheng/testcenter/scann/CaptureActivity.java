@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -161,6 +162,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
         // 在扫描功能开启后，保持屏幕处于点亮状态
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.capture);
 
         // 这里仅仅是对各个组件进行简单的创建动作，真正的初始化动作放在onResume中
