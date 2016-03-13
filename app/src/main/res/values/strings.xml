@@ -181,4 +181,7 @@
     <string name="preferences_try_bsplus">尝试条码扫描器+</string>
     <string name="preferences_try_bsplus_summary">增强新的功能和接口</string>
     <string name="preferences_vibrate_title">振动</string>
+    <string name="msg_error">错误</string>
+    <string name="msg_invalid_value">值无效</string>
+
 </resources>
