@@ -23,7 +23,6 @@ public class ScannTestActivity extends Activity{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ScannTestActivity.this,CaptureActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivityForResult(intent,0);
             }
         });
@@ -32,7 +31,8 @@ public class ScannTestActivity extends Activity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode!=RESULT_OK)return;
+        System.out.print("\nss");
+        if(resultCode!=-1)return;
         String backStr = "scan code error";
         try{
             tv.setText(data.getStringExtra("code"));

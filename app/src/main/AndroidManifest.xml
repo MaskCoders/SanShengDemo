@@ -162,7 +162,7 @@
                  >
         </activity>
         <activity android:name="com.sansheng.testcenter.scann.ScannTestActivity"
-                  android:screenOrientation="sensorLandscape">
+                  android:screenOrientation="sensorPortrait">
         </activity>
         <provider
                 android:name=".provider.EquipmentProvider"
