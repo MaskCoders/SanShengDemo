@@ -1,1 +1,1 @@
-include ':app', ':utilslib', ':testapp'
+include ':app', ':utilslib', ':testapp', ':poitest'
