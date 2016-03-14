@@ -18,6 +18,7 @@ import com.sansheng.testcenter.TestCenterApplication;
 import com.telly.groundy.GroundyTask;
 import com.telly.groundy.TaskResult;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -26,6 +27,7 @@ import java.util.List;
 public class Utilities {
 
     public static String TAG = "Utilities";
+    public final static String HSTT_FOLDER = "hstt";
 
     public class ExampleTask extends GroundyTask {
         @Override
@@ -204,4 +206,26 @@ public class Utilities {
     public static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
+
+    public static File getAppPath() {
+        File sdcard = Environment.getExternalStorageDirectory();
+        File hstt = new File(sdcard, HSTT_FOLDER);
+        if (hstt.exists()) {
+            return hstt;
+        }else if (hstt.mkdirs()) {
+            return hstt;
+        } else {
+            return null;
+        }
+    }
+
+    public static String getOutDBPath(){
+        File outPath = new File(Utilities.getAppPath(), "db");
+        if (!outPath.exists()) {
+            outPath.mkdir();
+        }
+        return outPath.getAbsolutePath();
+    }
+
+
 }

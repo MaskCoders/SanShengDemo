@@ -26,6 +26,7 @@ import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Event;
 import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.module.MeterData;
+import com.sansheng.testcenter.provider.DataBaseHelper;
 import com.sansheng.testcenter.scann.ScannTestActivity;
 import com.sansheng.testcenter.settings.SettingsActivity;
 import com.sansheng.testcenter.utils.MeterUtilies;
@@ -33,6 +34,7 @@ import com.sansheng.testcenter.utils.Utility;
 import com.sansheng.testcenter.view.ComAssistantActivity;
 import com.sansheng.testcenter.view.TestBaseActivity;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -127,6 +129,12 @@ public class LauncherAdapter extends BaseAdapter implements CollectSelectDialog.
                             mContext.startActivity(intent);
                             break;
                         case 5://台区识别
+                            DataBaseHelper helper = new DataBaseHelper(mContext);
+                            try {
+                                helper.backup();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 6://GPS定位
                             intent.setClass(mContext, LocationInfoActivity.class);

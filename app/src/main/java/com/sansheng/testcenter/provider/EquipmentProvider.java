@@ -26,7 +26,7 @@ public class EquipmentProvider extends ContentProvider {
     private static final String NOTIFICATION_OP_UPDATE = "update";
 
     private static Context mContext;
-    private static String DATABASE_NAME = "Equipment.db";
+    public static String DATABASE_NAME = "Equipment.db";
     private static final Object sDatabaseLock = new Object();
     private static SQLiteDatabase mDatabase;
     private static UriMatcher mURIMatcher;

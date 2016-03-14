@@ -15,7 +15,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private Context mContext;
     private final static String TAG = "DBHelper";
 
-    public static final int DB_VERSION = 1;
+    //1:初始化
+    public static final int DB_VERSION = 2;
 
     private String createMeterTable = "CREATE TABLE IF NOT EXISTS `" + Meter.TABLE_NAME +"` (\n" +
             "  `"+ Content.MeterColumns.ID + "` integer primary key autoincrement,\n" +
@@ -103,6 +104,12 @@ public class DBHelper extends SQLiteOpenHelper {
             "  `"+ Content.LocationInfoColumns.URI_LIST + "` text\n" +
             ")";
 
+    private static final String UPDATE_TEST_TABLE_NAME = "update_test";
+    private String updateTest = "CREATE TABLE IF NOT EXISTS `" + UPDATE_TEST_TABLE_NAME +"` (\n" +
+            "  `"+ Content.LocationInfoColumns.ID + "` integer primary key autoincrement,\n" +
+            "  `"+ Content.LocationInfoColumns.URI_LIST + "` text\n" +
+            ")";
+
     public DBHelper(Context context, String name) {
         super(context, name, null, DB_VERSION);
         mContext = context;
@@ -121,6 +128,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion < 2) {
+            Log.e("ssg", " onUpgrade oldVersion = " + oldVersion);
+            db.execSQL(updateTest);
+        }
     }
 
     @Override
