@@ -90,6 +90,18 @@
                 android:id="@+id/meter_value"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                ModifyView:title="@string/meter_value_title"
+                ModifyView:content="@string/meter_detail_default_content"
+                android:gravity="center_vertical|right"
+                android:layout_alignParentRight="true"
+                android:background="@color/transparent_color"
+                android:textColor="@color/conversation_list_item_subject"
+                android:textSize="@dimen/list_body_text_size_big"/>
+        <!--值-->
+        <com.sansheng.testcenter.base.view.UIRevisableView
+                android:id="@+id/meter_value_detail"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
                 ModifyView:title="@string/meter_detail_value_title"
                 ModifyView:content="@string/meter_detail_default_content"
                 android:gravity="center_vertical|right"
@@ -111,6 +123,7 @@
                 android:background="@color/transparent_color"
                 android:textColor="@color/conversation_list_item_subject"
                 android:textSize="@dimen/list_body_text_size_big"/>
+
         <include android:id="@+id/account_sync_email_line"
                  layout="@layout/meter_detail_divider"/>
     </LinearLayout>

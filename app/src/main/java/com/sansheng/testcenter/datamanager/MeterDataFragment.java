@@ -36,6 +36,7 @@ public class MeterDataFragment extends Fragment implements View.OnClickListener,
     private UIRevisableView mReadTimeView;
     private UIRevisableView mDateTypeView;
     private UIRevisableView mValzView;
+    private UIRevisableView mValueView;
     private UIRevisableView mImportantView;
     private String[] mImportantEntries = {"是", "否"};
     private String[] mDataEntries = {"日冻结", "实时数据"};
@@ -71,6 +72,7 @@ public class MeterDataFragment extends Fragment implements View.OnClickListener,
         mReadTimeView = (UIRevisableView) mRootView.findViewById(R.id.meter_read_time);
         mDateTypeView = (UIRevisableView) mRootView.findViewById(R.id.meter_data_type);
         mValzView = (UIRevisableView) mRootView.findViewById(R.id.meter_value);
+        mValueView = (UIRevisableView) mRootView.findViewById(R.id.meter_value_detail);
         mImportantView = (UIRevisableView) mRootView.findViewById(R.id.meter_important);
 
         mMeterNameView.setOnClickListener(this);
@@ -147,6 +149,8 @@ public class MeterDataFragment extends Fragment implements View.OnClickListener,
         mReadTimeView.setContent(MeterUtilies.getSanShengDate(meterData.mReadTime));
         mDateTypeView.setContent(mDataEntries[meterData.mDataType - 1]);
         mValzView.setContent(String.valueOf(meterData.mValz));
+        String value = meterData.mVal1 + ", " + meterData.mVal2 + ", " + meterData.mVal3 + ", " + meterData.mVal4;
+        mValueView.setContent(value);
         mImportantView.setContent(mImportantEntries[meterData.mImportant]);
     }
 

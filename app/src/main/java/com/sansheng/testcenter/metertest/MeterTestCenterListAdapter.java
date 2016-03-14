@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 /**
  * Created by sunshaogang on 2016/1/5.
+ * TODO:优化选中的测试项目的显示逻辑
  */
 public class MeterTestCenterListAdapter extends BaseAdapter {
     private HashMap<Integer, String> mSelectedItems = new HashMap<Integer, String>();
