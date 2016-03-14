@@ -1,1 +1,1 @@
-include ':app', ':utilslib', ':testapp', ':poitest',':mina', ':minatest'
+include ':app', ':utilslib', ':testapp', ':poitest', ':minatest'
