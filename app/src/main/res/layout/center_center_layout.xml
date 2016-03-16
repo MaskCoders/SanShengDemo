@@ -5,37 +5,37 @@
               android:layout_height="match_parent">
     <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             >
         <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/NomalTextStyleTitle"
-                    android:text="时标"/>
-            <TextView
+                    style="@style/NomalTextStyle"
+                    android:text="AFN"/>
+            <Spinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:id="@+id/date_flag"
-                    style="@style/NomalTextStyleTitle"
                     android:layout_alignParentRight="true"/>
         </LinearLayout>
         <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_marginLeft="150dp">
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/NomalTextStyleTitle"
-                    android:text="曲线间隔"/>
+                    style="@style/NomalTextStyle"
+                    android:text="FN"/>
             <Spinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -49,8 +49,23 @@
             android:layout_width="match_parent"
             android:clickable="true"
             android:layout_height="3dp"/>
-    <ExpandableListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/center_list"/>
+    <EditText android:id="@+id/gw_log"
+              android:layout_height="300dp"
+              android:layout_width="match_parent"
+              android:background="@drawable/chip_back2"
+              android:textColor="@color/main_green"
+              android:singleLine="false"
+              android:textSize="25sp"
+              android:editable="false"
+              android:gravity="center|top|left"
+              android:paddingLeft="12dp"
+              android:paddingRight="12dp"
+              android:paddingTop="12dp"
+              android:paddingBottom="12dp"
+              android:scrollbars="vertical"
+            />
+    <!--<ExpandableListView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/center_list"/>-->
 </LinearLayout>

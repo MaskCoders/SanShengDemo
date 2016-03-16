@@ -4,6 +4,9 @@ package com.sansheng.testcenter.center;
  * Created by sunshaogang on 12/24/15.
  */
 public class Protocol {
+    private String AFN = "afn";
+    private String FN = "fn";
+
     public char afn;
     public String parentN;
     public int fn;
@@ -24,5 +27,9 @@ public class Protocol {
         this.t = t;
     }
 
+    public String toString() {
+        return "[" + AFN + " : " + afn + "]" + "\n" +
+                "[" + FN + " : " + fn + "]" + "\n";
+    }
 
 }

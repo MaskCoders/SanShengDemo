@@ -16,13 +16,11 @@ import com.sansheng.testcenter.base.MeterSelectDialog;
 import com.sansheng.testcenter.base.view.DrawableCenterTextView;
 import com.sansheng.testcenter.base.view.WaySelectMeterDialog;
 import com.sansheng.testcenter.bean.BeanMark;
-import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.datamanager.MeterDataListActivity;
 import com.sansheng.testcenter.metertest.CollectSelectDialog;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.CollectParam;
 import com.sansheng.testcenter.module.Meter;
-import com.sansheng.testcenter.utils.MeterUtilies;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,13 +48,17 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     private ExecutorService sThreadPool = Executors.newSingleThreadExecutor(sThreadFactory);
 
     private ExpandableListView mListView;
-    private TextView mDateSpinner;
+    private Spinner mDateSpinner;
     private Spinner mTimeSpinner;
+    private ArrayAdapter mDateAdapter;
+    private ArrayAdapter mTimeAdapter;
+    private EditText mGWLog;
     private CenterAdapter mAdapter;
     private List<RootProt> mGroupArray = new ArrayList<RootProt>();//组列表
     private ArrayList<Collect> mCollects;
     private ArrayList<Meter> mMeters;
 
+    private DrawableCenterTextView startTest;
     private DrawableCenterTextView selectCollect;
     private DrawableCenterTextView selectMeter;
     private DrawableCenterTextView dataManager;
@@ -64,6 +66,9 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     private DrawableCenterTextView showLog;
     private DrawableCenterTextView showFile;
     private DrawableCenterTextView stopTest;
+
+    private RootProt mCurrentRootProt;
+    private Protocol mCurrentProtocol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +112,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     @Override
     protected void initButtonList() {
         View inflate = getLayoutInflater().inflate(R.layout.center_button_list, null);
+        startTest = (DrawableCenterTextView) inflate.findViewById(R.id.start_test);
         selectCollect = (DrawableCenterTextView) inflate.findViewById(R.id.select_collect);
         selectMeter = (DrawableCenterTextView) inflate.findViewById(R.id.select_meter);
         dataManager = (DrawableCenterTextView) inflate.findViewById(R.id.data_manager);
@@ -115,6 +121,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
         showFile = (DrawableCenterTextView) inflate.findViewById(R.id.show_detail);
         stopTest = (DrawableCenterTextView) inflate.findViewById(R.id.stop);
 
+        startTest.setOnClickListener(this);
         selectCollect.setOnClickListener(this);
         selectMeter.setOnClickListener(this);
         eventCheck.setOnClickListener(this);
@@ -128,15 +135,36 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     @Override
     protected void initCenter() {
         View inflate = getLayoutInflater().inflate(R.layout.center_center_layout, null);
-        mListView = (ExpandableListView) inflate.findViewById(R.id.center_list);
-        mDateSpinner = (TextView) inflate.findViewById(R.id.date_flag);
+//        mListView = (ExpandableListView) inflate.findViewById(R.id.center_list);
+        mGWLog = (EditText) inflate.findViewById(R.id.gw_log);
+        mDateSpinner = (Spinner) inflate.findViewById(R.id.date_flag);
         mTimeSpinner = (Spinner) inflate.findViewById(R.id.time_range);
-        mDateSpinner.setText(MeterUtilies.getSanShengDate(System.currentTimeMillis()));
-        mDateSpinner.setOnClickListener(this);
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.center_time_range, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mTimeSpinner.setAdapter(adapter);
-        mTimeSpinner.setSelection(2, true);
+        mDateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mCurrentRootProt = mGroupArray.get(position);
+                renderList(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        mTimeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (mCurrentRootProt != null) {
+                    mCurrentProtocol = mCurrentRootProt.mChildArray.get(position);
+                    Log.e("ssg", "mCurrentProtocol = " + mCurrentProtocol.toString());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         ParseTask task = new ParseTask();
         task.executeOnExecutor(sThreadPool);
         main_info.addView(inflate);
@@ -149,8 +177,8 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.date_flag:
-                modifyDate();
+            case R.id.start_test:
+                startTest();
                 break;
             case R.id.select_collect:
                 selectCollect();
@@ -291,7 +319,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     }
 
     @Override
-   public void setValue(BeanMark bean) {
+    public void setValue(BeanMark bean) {
 
     }
 
@@ -301,7 +329,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, monthOfYear, dayOfMonth);
-                mDateSpinner.setText(MeterUtilies.getSanShengDate(calendar.getTimeInMillis()));
+//                mDateSpinner.setText(MeterUtilies.getSanShengDate(calendar.getTimeInMillis()));
             }
         };
         Calendar calendar = Calendar.getInstance();
@@ -442,27 +470,39 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
 
         @Override
         protected void onPostExecute(Boolean param) {
-            initView();
+            renderList(0);
         }
     }
 
-    private void initView() {
-        mAdapter = new CenterAdapter(this, mGroupArray);
-        mListView.setAdapter(mAdapter);
-        mListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                //TODO:启动检测接口
-                Log.e("ssg", "the position that clicked is " + mGroupArray.get(groupPosition).mChildArray.get(childPosition).n);
-                mListView.getPackedPositionForChild(groupPosition, childPosition);
-                showParamDialog(mGroupArray.get(groupPosition).afn, mGroupArray.get(groupPosition).mChildArray.get(childPosition).fn);
-                return false;
+    private void renderList(int parent) {
+        if (mGroupArray == null) return;
+        if (mDateAdapter == null) {
+            //simple_spinner_item small type
+            mDateAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item/*, R.id.date_flag*/, buildParentList(mGroupArray));
+            mDateSpinner.setAdapter(mDateAdapter);
+            mDateSpinner.setSelection(parent);
+            if (parent < mGroupArray.size()) {
+                mTimeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item/*, R.id.time_range*/, buildProtocolList(mGroupArray.get(parent).mChildArray));
+                mTimeSpinner.setAdapter(mTimeAdapter);
+                mTimeSpinner.setSelection(0, true);
             }
-        });
+        } else {
+            mTimeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item/*, R.id.time_range*/, buildProtocolList(mGroupArray.get(parent).mChildArray));
+            mTimeSpinner.setAdapter(mTimeAdapter);
+            mTimeSpinner.setSelection(0, true);
+        }
+
+    }
+
+    private void startTest() {
+        //TODO:启动检测接口
+        Log.e("ssg", "the position that clicked is " + mCurrentProtocol.n);
+        showParamDialog(mCurrentProtocol.afn, mCurrentProtocol.fn);
     }
 
     /**
      * 根据指令集弹出相应的对话框
+     *
      * @param afn
      * @param fn
      */
@@ -492,6 +532,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
 
     /**
      * 把所需要的参数向下传递。
+     *
      * @param param
      */
     private void sendProtocol(CollectParam param) {
@@ -518,6 +559,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
 
     /**
      * 解析协议列表
+     *
      * @return
      * @throws XmlPullParserException
      * @throws IOException
@@ -550,24 +592,24 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
                             pn = parser.getAttributeValue(3);
                         }
                         rootProt = new RootProt(afn, pn, pt, po);
-                        Log.e("ssg", "start afn = " + afn);
+//                        Log.e("ssg", "start afn = " + afn);
                     } else if (TextUtils.equals("fn", parser.getName())) {
                         fn = Integer.parseInt(parser.getAttributeValue(0));
                         t = Integer.parseInt(parser.getAttributeValue(1));
                         o = Integer.parseInt(parser.getAttributeValue(2));
                         n = parser.getAttributeValue(3);
-                        Log.e("ssg", "start fn = " + fn);
+//                        Log.e("ssg", "start fn = " + fn);
                     }
                     protocol = new Protocol(afn, pn, fn, t, o, n);
                     break;
                 case XmlResourceParser.END_TAG://判断当前事件是否是标签元素结束事件
                     if (TextUtils.equals("afn", parser.getName())) {//判断开始标签元素是否是
-                        Log.e("ssg", "end afn");
+//                        Log.e("ssg", "end afn");
                         rootProt.setChildArray(childArray);
                         childArray = new ArrayList<Protocol>();
                         mGroupArray.add(rootProt);
                     } else if (TextUtils.equals("fn", parser.getName())) {
-                        Log.e("ssg", "end fn");
+//                        Log.e("ssg", "end fn");
                         childArray.add(protocol);
                     }
                     break;
@@ -581,5 +623,21 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
             return true;
         }
         return false;
+    }
+
+    private ArrayList<String> buildParentList(List<RootProt> objects) {
+        ArrayList<String> list = new ArrayList<String>();
+        for (RootProt object : objects) {
+            list.add(object.n);
+        }
+        return list;
+    }
+
+    private ArrayList<String> buildProtocolList(List<Protocol> objects) {
+        ArrayList<String> list = new ArrayList<String>();
+        for (Protocol object : objects) {
+            list.add(object.n);
+        }
+        return list;
     }
 }
