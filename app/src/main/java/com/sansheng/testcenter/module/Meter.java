@@ -32,6 +32,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
     public int mGroupId;//电表漏抄选择
     public String mNote;
     public int mType;//0 = 单项表|| 1 = 三项表
+    public int mImportant;//0=false||1=true
 
     public static final int ID_INDEX = 0;
     public static final int COLLECT_ID_INDEX = ID_INDEX + 1;
@@ -53,18 +54,19 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
     public static final int GROUP_ID_INDEX = ID_INDEX + 17;
     public static final int NOTE_INDEX = ID_INDEX + 18;
     public static final int METER_TYPE_INDEX = ID_INDEX + 19;
+    public static final int IMPORTANT_INDEX = ID_INDEX + 20;
 
 
     public static final String[] CONTENT_PROJECTION = {
             ID, COLLECT_ID, DA, METER_NAME, METER_NUM, METER_ADDRESS,COMMON_PASSWORD, BAUDRATE_ID,COMMON_PORT_ID,
             PROTOCOL_ID, FEILV_ID, GATHER_ADDRESS, WEISHU_ID, USER_SMALL_TYPE_ID, USER_TYPE_ID, USER_NUM,
-            USER_ADDRESS, GROUP_ID, NOTE, METER_TYPE};
+            USER_ADDRESS, GROUP_ID, NOTE, METER_TYPE, IMPORTANT};
 
     public static final int[] ID_INDEX_PROJECTION = {
             ID_INDEX, COLLECT_ID_INDEX, DA_INDEX, METER_NUM_INDEX, METER_ADDRESS_INDEX, METER_NAME_INDEX,
             COMMON_PASSWORD_INDEX, BAUDRATE_ID_INDEX, COMMON_PORT_ID_INDEX, PROTOCOL_ID_INDEX, FEILV_ID_INDEX,
             GATHER_ADDRESS_INDEX, WEISHU_ID_INDEX, USER_SMALL_TYPE_ID_INDEX, USER_TYPE_ID_INDEX,
-            USER_NUM_INDEX, USER_ADDRESS_INDEX, GROUP_ID_INDEX, NOTE_INDEX, METER_TYPE_INDEX};
+            USER_NUM_INDEX, USER_ADDRESS_INDEX, GROUP_ID_INDEX, NOTE_INDEX, METER_TYPE_INDEX, IMPORTANT_INDEX};
 
 
     public static final String TABLE_NAME = "meter";
@@ -115,6 +117,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         values.put(GROUP_ID, mGroupId);
         values.put(NOTE, mNote);
         values.put(METER_TYPE, mType);
+        values.put(IMPORTANT, mImportant);
         return values;
     }
 
@@ -140,6 +143,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         mGroupId = cursor.getInt(GROUP_ID_INDEX);
         mNote = cursor.getString(NOTE_INDEX);
         mType = cursor.getInt(METER_TYPE_INDEX);
+        mImportant = cursor.getInt(IMPORTANT_INDEX);
     }
 
     public void restoreWithMeterDataCursor(Cursor cursor){
@@ -163,6 +167,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         mGroupId = cursor.getInt(cursor.getColumnIndex(GROUP_ID));
         mNote = cursor.getString(cursor.getColumnIndex(NOTE));
         mType = cursor.getInt(cursor.getColumnIndex(METER_TYPE));
+        mImportant = cursor.getInt(cursor.getColumnIndex(IMPORTANT));
     }
 
     @Override
@@ -202,6 +207,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         dest.writeInt(mGroupId);
         dest.writeString(mNote);
         dest.writeInt(mType);
+        dest.writeInt(mImportant);
     }
 
     public static final Parcelable.Creator<Meter> CREATOR
@@ -238,6 +244,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         mGroupId = in.readInt();
         mNote = in.readString();
         mType = in.readInt();
+        mImportant = in.readInt();
     }
 
     public Meter copy() {
@@ -262,6 +269,7 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
         meter.mGroupId = mGroupId;
         meter.mNote = mNote;
         meter.mType = mType;
+        meter.mImportant = mImportant;
         return meter;
     }
     public String toString() {

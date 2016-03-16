@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -26,6 +27,7 @@ public class CollectDetailFragment extends Fragment {
     private EditText mEditPassword;
     private Spinner mChannel;
     private EditText mEditPort;
+    private EditText mEditIp;
 
     public CollectDetailFragment() {
     }
@@ -48,15 +50,46 @@ public class CollectDetailFragment extends Fragment {
         mEditPassword = (EditText) mRootView.findViewById(R.id.collect_password);
         mChannel = (Spinner) mRootView.findViewById(R.id.collect_channel);
         mEditPort = (EditText) mRootView.findViewById(R.id.collect_port);
+        mEditIp = (EditText) mRootView.findViewById(R.id.collect_ip);
         ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.collect_channel_type, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mChannel.setAdapter(adapter);
+        mChannel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {//客户端
+                    mRootView.findViewById(R.id.collect_port_layout).setVisibility(View.GONE);
+                    mRootView.findViewById(R.id.collect_ip_layout).setVisibility(View.VISIBLE);
+                    mEditIp.setText("192.168.0.1");
+                } else if (position == 1) {//服务端
+                    mRootView.findViewById(R.id.collect_port_layout).setVisibility(View.VISIBLE);
+                    mRootView.findViewById(R.id.collect_ip_layout).setVisibility(View.GONE);
+                    mEditPort.setText(mCollect.mTerminalPort);
+                } else {
+                    mRootView.findViewById(R.id.collect_port_layout).setVisibility(View.GONE);
+                    mRootView.findViewById(R.id.collect_ip_layout).setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                mRootView.findViewById(R.id.collect_port_layout).setVisibility(View.GONE);
+                mRootView.findViewById(R.id.collect_ip_layout).setVisibility(View.GONE);
+            }
+
+        });
         if (mCollect != null) {
             mEditName.setText(mCollect.mCollectName);
             mEditAddress.setText(mCollect.mTerminalIp);
             mEditPassword.setText(mCollect.mPassword);
             mChannel.setSelection(mCollect.mChannelType, true);
-            mEditPort.setText(mCollect.mTerminalPort);
+            if (mCollect.mChannelType == 1) {
+                mRootView.findViewById(R.id.collect_port_layout).setVisibility(View.VISIBLE);
+                mEditPort.setText(mCollect.mTerminalPort);
+            } else if (mCollect.mChannelType == 0) {
+                mRootView.findViewById(R.id.collect_ip_layout).setVisibility(View.VISIBLE);
+                mEditIp.setText("192.168.0.1");
+            }
         } else {
             mCollect = new Collect();
         }

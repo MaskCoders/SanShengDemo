@@ -8,8 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.*;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
@@ -36,7 +35,9 @@ public class MeterDetailFragment extends Fragment implements
     private EditText mEditPassword;
     private TextView mMeterDa;
     private EditText mEditPort;
-//    private ArrayAdapter mChannelAdapter;
+    private CheckBox mImportant;
+    private Spinner mSpinner;
+    private ArrayAdapter mChannelAdapter;
 
     private static final ThreadFactory sThreadFactory = new CustomThreadPoolFactory("MeterThread");
     private ExecutorService sThreadPool = Executors.newSingleThreadExecutor(sThreadFactory);
@@ -67,9 +68,11 @@ public class MeterDetailFragment extends Fragment implements
         mEditPassword = (EditText) mRootView.findViewById(R.id.meter_password);
 //        mChannel = (Spinner) mRootView.findViewById(R.id.meter_channel);
         mEditPort = (EditText) mRootView.findViewById(R.id.meter_port);
-//        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.collect_channel_type, android.R.layout.simple_spinner_item);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        mChannel.setAdapter(adapter);
+        mImportant = (CheckBox) mRootView.findViewById(R.id.meter_important);
+        mSpinner = (Spinner) mRootView.findViewById(R.id.meter_example);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.collect_channel_type, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner.setAdapter(adapter);
         mMeterType.setOnClickListener(this);
         mEditName.setOnClickListener(this);
         mMeterDa.setOnClickListener(this);
@@ -77,6 +80,7 @@ public class MeterDetailFragment extends Fragment implements
         mEditPassword.setOnClickListener(this);
         mCollectId.setOnClickListener(this);
         mEditPort.setOnClickListener(this);
+        mImportant.setOnClickListener(this);
         if (mMeter != null) {
             refreshView(mMeter);
         }
@@ -125,6 +129,7 @@ public class MeterDetailFragment extends Fragment implements
                 break;
             case R.id.meter_important:
 //                modifyImportant();
+
                 break;
             default:
                 break;
@@ -153,6 +158,7 @@ public class MeterDetailFragment extends Fragment implements
         mMeterDa.setText(String.valueOf(meter.mDa));
         mEditPassword.setText(meter.mCommPwd);
         mEditPort.setText(meter.mCommPortId);
+        mImportant.setChecked(meter.mImportant == 1);
     }
 
 

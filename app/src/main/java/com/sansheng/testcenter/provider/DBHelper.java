@@ -38,7 +38,8 @@ public class DBHelper extends SQLiteOpenHelper {
             "  `"+ Content.MeterColumns.USER_ADDRESS + "` text,\n" +
             "  `"+ Content.MeterColumns.GROUP_ID + "` integer not null default 0,\n" +
             "  `"+ Content.MeterColumns.NOTE + "` text,\n" +
-            "  `"+ Content.MeterColumns.METER_TYPE + "` integer not null default 0\n" +
+            "  `"+ Content.MeterColumns.METER_TYPE + "` integer not null default 0,\n" +
+            "  `"+ Content.MeterColumns.IMPORTANT + "` integer not null default 0\n" +
             ")";
 
     private String createMeterDataTable = "CREATE TABLE IF NOT EXISTS `" + MeterData.TABLE_NAME +"` (\n" +
@@ -54,7 +55,6 @@ public class DBHelper extends SQLiteOpenHelper {
             "  `"+ Content.MeterDataColumns.VAL2 + "` text not null default 0,\n" +
             "  `"+ Content.MeterDataColumns.VAL3 + "` text not null default 0,\n" +
             "  `"+ Content.MeterDataColumns.VAL4 + "` text not null default 0,\n" +
-            "  `"+ Content.MeterDataColumns.IMPORTANT + "` integer not null default 0,\n" +
             "  `"+ Content.MeterDataColumns.UPDATE_TIME + "` integer not null default 0\n" +
             ")";
 

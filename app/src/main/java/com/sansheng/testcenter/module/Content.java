@@ -168,6 +168,7 @@ public abstract class Content {
         public static final String GROUP_ID = "groupId";
         public static final String NOTE = "note";
         public static final String METER_TYPE = "type";
+        public static final String IMPORTANT = "important";
     }
 
     public static interface MeterDataColumns {
@@ -183,7 +184,6 @@ public abstract class Content {
         public static final String VAL2 = "val2";
         public static final String VAL3 = "val3";
         public static final String VAL4 = "val4";
-        public static final String IMPORTANT = "important";
         public static final String UPDATE_TIME = "updateTime";
     }
     public static interface ConcentratorColumns {

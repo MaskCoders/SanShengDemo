@@ -4,7 +4,7 @@
         xmlns:ModifyView="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
+        android:background="@color/color_white"
         >
     <LinearLayout
             android:orientation="vertical"
@@ -112,19 +112,19 @@
         <include android:id="@+id/account_sync_email_line"
                  layout="@layout/meter_detail_divider"/>
         <!--重要-->
-        <com.sansheng.testcenter.base.view.UIRevisableView
-                android:id="@+id/meter_important"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                ModifyView:title="@string/meter_detail_important_title"
-                ModifyView:content="@string/meter_detail_default_content"
-                android:gravity="center_vertical|right"
-                android:layout_alignParentRight="true"
-                android:background="@color/transparent_color"
-                android:textColor="@color/conversation_list_item_subject"
-                android:textSize="@dimen/list_body_text_size_big"/>
+        <!--<com.sansheng.testcenter.base.view.UIRevisableView-->
+                <!--android:id="@+id/meter_important"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--ModifyView:title="@string/meter_detail_important_title"-->
+                <!--ModifyView:content="@string/meter_detail_default_content"-->
+                <!--android:gravity="center_vertical|right"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:background="@color/transparent_color"-->
+                <!--android:textColor="@color/conversation_list_item_subject"-->
+                <!--android:textSize="@dimen/list_body_text_size_big"/>-->
 
-        <include android:id="@+id/account_sync_email_line"
-                 layout="@layout/meter_detail_divider"/>
+        <!--<include android:id="@+id/account_sync_email_line"-->
+                 <!--layout="@layout/meter_detail_divider"/>-->
     </LinearLayout>
 </ScrollView>

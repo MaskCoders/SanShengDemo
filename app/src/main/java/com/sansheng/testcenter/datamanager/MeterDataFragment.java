@@ -37,8 +37,8 @@ public class MeterDataFragment extends Fragment implements View.OnClickListener,
     private UIRevisableView mDateTypeView;
     private UIRevisableView mValzView;
     private UIRevisableView mValueView;
-    private UIRevisableView mImportantView;
-    private String[] mImportantEntries = {"是", "否"};
+//    private UIRevisableView mImportantView;
+//    private String[] mImportantEntries = {"是", "否"};
     private String[] mDataEntries = {"日冻结", "实时数据"};
 
     private static final ThreadFactory sThreadFactory = new CustomThreadPoolFactory("MeterThread");
@@ -50,8 +50,8 @@ public class MeterDataFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mImportantEntries = new String[]{getActivity().getResources().getString(R.string.yes),
-                getActivity().getResources().getString(R.string.no)};
+//        mImportantEntries = new String[]{getActivity().getResources().getString(R.string.yes),
+//                getActivity().getResources().getString(R.string.no)};
         mDataEntries = new String[]{getActivity().getResources().getString(R.string.db_rdj),
                 getActivity().getResources().getString(R.string.db_realdata)};
         Bundle bundle = getArguments();
@@ -73,14 +73,14 @@ public class MeterDataFragment extends Fragment implements View.OnClickListener,
         mDateTypeView = (UIRevisableView) mRootView.findViewById(R.id.meter_data_type);
         mValzView = (UIRevisableView) mRootView.findViewById(R.id.meter_value);
         mValueView = (UIRevisableView) mRootView.findViewById(R.id.meter_value_detail);
-        mImportantView = (UIRevisableView) mRootView.findViewById(R.id.meter_important);
+//        mImportantView = (UIRevisableView) mRootView.findViewById(R.id.meter_important);
 
         mMeterNameView.setOnClickListener(this);
         mValueTimeView.setOnClickListener(this);
         mReadTimeView.setOnClickListener(this);
         mDateTypeView.setOnClickListener(this);
         mValzView.setOnClickListener(this);
-        mImportantView.setOnClickListener(this);
+//        mImportantView.setOnClickListener(this);
         refreshView(mMeter);
         return mRootView;
     }
@@ -151,7 +151,7 @@ public class MeterDataFragment extends Fragment implements View.OnClickListener,
         mValzView.setContent(String.valueOf(meterData.mValz));
         String value = meterData.mVal1 + ", " + meterData.mVal2 + ", " + meterData.mVal3 + ", " + meterData.mVal4;
         mValueView.setContent(value);
-        mImportantView.setContent(mImportantEntries[meterData.mImportant]);
+//        mImportantView.setContent(mImportantEntries[meterData.mImportant]);
     }
 
 //    private void modifyMeterNamen() {
@@ -252,21 +252,21 @@ public class MeterDataFragment extends Fragment implements View.OnClickListener,
         dialog.show();
     }
 
-    private void modifyImportant() {
-        final SettingsRadioDialog dialog = new SettingsRadioDialog(getActivity(), R.style.CustomDialog);
-        dialog.setTitleText(R.string.meter_detail_important_title);
-
-        dialog.setSingleChoiceItems(mImportantEntries, mChangedMeter.mImportant, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                if (which != mChangedMeter.mImportant) {
-                    mChangedMeter.mImportant = which;
-                    refreshView(mChangedMeter);
-                }
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
+//    private void modifyImportant() {
+//        final SettingsRadioDialog dialog = new SettingsRadioDialog(getActivity(), R.style.CustomDialog);
+//        dialog.setTitleText(R.string.meter_detail_important_title);
+//
+//        dialog.setSingleChoiceItems(mImportantEntries, mChangedMeter.mImportant, new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int which) {
+//                if (which != mChangedMeter.mImportant) {
+//                    mChangedMeter.mImportant = which;
+//                    refreshView(mChangedMeter);
+//                }
+//                dialog.dismiss();
+//            }
+//        });
+//        dialog.show();
+//    }
 
     private class DataBaseTask extends AsyncTask<Void, Void, Integer> {
 
