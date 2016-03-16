@@ -39,10 +39,10 @@
         <item>"跳闸次数"</item>
     </string-array>
     <string-array name="collect_test_select_items">
-        <item>"a"</item>
-        <item>"b"</item>
-        <item>"c"</item>
-        <item>"d"</item>
+        <item>"终端时间"</item>
+        <item>"主站参数"</item>
+        <item>"终端版本"</item>
+        <item>"心跳周期"</item>
     </string-array>
 
     <string-array name="way_select_meter">

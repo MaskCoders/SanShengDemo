@@ -13,7 +13,6 @@ import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.ConnInter;
 import com.sansheng.testcenter.base.view.DrawableCenterTextView;
 import com.sansheng.testcenter.bean.BeanMark;
-import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.ModuleUtilites;
@@ -23,7 +22,6 @@ import com.sansheng.testcenter.server.ConnFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by sunshaogang on 1/20/16.
@@ -382,7 +380,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
     }
 
     @Override
-    public void onCollectItemPositiveClick(HashMap<Integer, String> collects) {
+    public void onCollectItemPositiveClick(HashMap<Integer, String> collects) {//此处为选定测试项的回调函数
         if (collects != null) {
             Log.e("ssg", "选择测试项目的数量 ＝ " + collects.size());
             Fragment1 fragment = (Fragment1) getFragmentManager().findFragmentByTag(Fragment1.TAG);
