@@ -25,6 +25,7 @@
     <string name="function_protocol">规约解析</string>
     <string name="function_meter_test">现场售电</string>
     <string name="function_settings">系统设置</string>
+    <string name="function_generate_data">生成数据</string>
     <string name="function_compose_location">新增现场信息</string>
 
 

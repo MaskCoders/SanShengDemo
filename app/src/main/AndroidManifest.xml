@@ -165,6 +165,9 @@
         <activity android:name="com.sansheng.testcenter.scann.ScannTestActivity"
                   android:screenOrientation="landscape">
         </activity>
+        <activity android:name="com.sansheng.testcenter.metertest.SupplementReadMeter"
+                  android:screenOrientation="landscape">
+        </activity>
         <provider
                 android:name=".provider.EquipmentProvider"
                 android:authorities="${applicationId}.provider.Equipment"

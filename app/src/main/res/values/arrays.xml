@@ -16,6 +16,7 @@
         <item>@string/function_protocol</item>
         <item>@string/function_meter_test</item>
         <item>@string/function_settings</item>
+        <item>@string/function_generate_data</item>
     </string-array>
     <string-array name="meter_test_items">
         <item>"当前表码"</item>

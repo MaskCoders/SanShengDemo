@@ -20,6 +20,7 @@ import com.sansheng.testcenter.collecttest.CollectSingleSelectDialog;
 import com.sansheng.testcenter.datamanager.MeterDataListActivity;
 import com.sansheng.testcenter.equipmentmanager.EquipmentManagerDialog;
 import com.sansheng.testcenter.location.LocationInfoActivity;
+import com.sansheng.testcenter.metertest.SupplementReadMeter;
 import com.sansheng.testcenter.metertest.CollectSelectDialog;
 import com.sansheng.testcenter.metertest.MeterTestActivity;
 import com.sansheng.testcenter.module.Collect;
@@ -60,6 +61,7 @@ public class LauncherAdapter extends BaseAdapter implements CollectSelectDialog.
             R.drawable.tqsb,
             R.drawable.gyjx,
             R.drawable.xcsd,
+            R.drawable.settings,
             R.drawable.settings,
     };
     private ProgressDailog mProgressDailog;
@@ -157,9 +159,8 @@ public class LauncherAdapter extends BaseAdapter implements CollectSelectDialog.
                             mContext.startActivity(intent);
                             break;
                         case 10://数据补抄
-                            showProgressDialog();
-                            InsertDataTask task = new InsertDataTask();
-                            task.executeOnExecutor(sThreadPool);
+                            intent.setClass(mContext, SupplementReadMeter.class);
+                            mContext.startActivity(intent);
                             break;
                         case 11://组网拓扑
                             intent.setClass(mContext, TestBaseActivity.class);
@@ -178,6 +179,11 @@ public class LauncherAdapter extends BaseAdapter implements CollectSelectDialog.
                         case 14://系统设置
                             intent.setClass(mContext, SettingsActivity.class);
                             mContext.startActivity(intent);
+                            break;
+                        case 15://生成数据
+                            showProgressDialog();
+                            InsertDataTask task = new InsertDataTask();
+                            task.executeOnExecutor(sThreadPool);
                             break;
                         default:
                             break;
