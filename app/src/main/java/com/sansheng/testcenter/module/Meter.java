@@ -87,6 +87,8 @@ public class Meter extends Content implements Content.MeterColumns, Parcelable {
             mMeterNum = id;
             mDa = id;
             mType = id % 2;
+            mUserAddress = "北京市海淀区";
+            mNote = "电表说明";
         }
     }
 
