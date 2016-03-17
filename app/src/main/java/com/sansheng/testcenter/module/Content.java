@@ -220,6 +220,7 @@ public abstract class Content {
         public static final String PM = "pm";
         public static final String FLAG = "flag";
         public static final String NOTE = "note";
+        public static final String COUNT = "count";
     }
 
 

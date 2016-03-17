@@ -10,17 +10,18 @@ import android.widget.ListView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.bean.BeanMark;
-import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.module.Event;
 
 /**
  * Created by sunshaogang on 1/21/16.
  */
-public class EventManagerActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class EventManagerActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>, EventManagerAdapter.EventManagerCallback
+{
 
     private ListView mListView;
     private EventManagerAdapter mAdapter;
+    private int mCurrentType = -1;
     private static final int LOADER_ID_FILTER_DEFAULT = 0;
     private static final int LOADER_ID_FILTER_COLLECT = 1;
     private static final int LOADER_ID_FILTER_EVENT_TYPE = 2;
@@ -30,7 +31,7 @@ public class EventManagerActivity extends BaseActivity implements LoaderManager.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_manager_activity_layout);
         mListView = (ListView) findViewById(R.id.list_view);
-        mAdapter = new EventManagerAdapter(this, null);
+        mAdapter = new EventManagerAdapter(this, null, this);
         mListView.setAdapter(mAdapter);
         getLoaderManager().initLoader(LOADER_ID_FILTER_DEFAULT, null, this);
     }
@@ -62,7 +63,16 @@ public class EventManagerActivity extends BaseActivity implements LoaderManager.
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        StringBuilder selection = new StringBuilder(" 1=1 ");
+        StringBuilder selection = new StringBuilder();
+        switch (id) {
+            case LOADER_ID_FILTER_DEFAULT:
+                selection.append(" 1=1 ");
+                break;
+            case LOADER_ID_FILTER_EVENT_TYPE:
+                selection.append(Content.EventColumns.TYPE).append(" = ").append(mCurrentType);
+                break;
+        }
+        Log.e("ssg", " event selection = " + selection);
         return new CursorLoader(this, Event.CONTENT_URI, Event.CONTENT_PROJECTION, selection.toString(),
                 null, Event.ID + " " + Content.DESC);
     }
@@ -82,5 +92,12 @@ public class EventManagerActivity extends BaseActivity implements LoaderManager.
 
     public void restartLoader(int id) {
         getLoaderManager().restartLoader(id, null, this);
+    }
+
+    @Override
+    public void onEventClick(int type) {
+        //显示当前类别
+        mCurrentType = type;
+        restartLoader(LOADER_ID_FILTER_EVENT_TYPE);
     }
 }

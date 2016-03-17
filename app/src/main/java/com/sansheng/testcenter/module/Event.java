@@ -20,6 +20,7 @@ public class Event extends Content implements Content.EventColumns, Parcelable {
     public int mPm;
     public int mFlag;
     public String mNote;
+    public int mCount;
 
     public static final int ID_INDEX = 0;
     public static final int COLLECT_ID_INDEX = ID_INDEX + 1;
@@ -50,9 +51,9 @@ public class Event extends Content implements Content.EventColumns, Parcelable {
     public Event(boolean test, int id) {
         mBaseUri = CONTENT_URI;
         if (test) {
-            mCollectId = 0;
+            mCollectId = id % 10;
             mHappenTime = MeterUtilies.getSanShengTime(System.currentTimeMillis());
-            mType = 0;
+            mType = id % 3;
             mPm = id;
             mNote = " this is an example == " + id;
             Log.e("ssg", "mCollectId = " + mCollectId);
@@ -80,6 +81,9 @@ public class Event extends Content implements Content.EventColumns, Parcelable {
         mPm = cursor.getInt(PM_INDEX);
         mFlag = cursor.getInt(FLAG_INDEX);
         mNote = cursor.getString(NOTE_INDEX);
+        if (cursor.getColumnIndex(EventColumns.COUNT) > -1) {
+            mCount = cursor.getInt(cursor.getColumnIndex(EventColumns.COUNT));
+        }
     }
 
     @Override

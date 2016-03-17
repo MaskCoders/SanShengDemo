@@ -66,6 +66,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
             onBackPressed();
         }
         super.onCreate(savedInstanceState);
+        hideBottomLog();
         mMainHandler = new MainHandler(this, this);
         String ip = "192.168.134.1";
         int port = 8001;

@@ -250,7 +250,7 @@ public class LauncherAdapter extends BaseAdapter implements CollectSelectDialog.
                 Collect collect = new Collect(true, i);
                 collect.save(mContext);
             }
-            for (int i = 1; i < 11; i++) {
+            for (int i = 1; i < 50; i++) {
                 Event collect = new Event(true, i);
                 collect.save(mContext);
             }

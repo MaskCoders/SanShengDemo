@@ -167,6 +167,13 @@ public class EquipmentProvider extends ContentProvider {
                     break;
                 case LOCATION:
                 case LOCATION_ID:
+                    break;
+                case EVENT:
+                case EVENT_ID:
+                    sql = buildEventQuery(tableName, projection, selection, sortOrder);
+                    Log.e("ssg", "event sql = " + sql);
+                    cursor = db.rawQuery(sql, selectionArgs);
+                    break;
                 default:
                     cursor = db.query(tableName, projection, selection, selectionArgs, null, null, sortOrder, limit);
                     break;
@@ -327,6 +334,25 @@ public class EquipmentProvider extends ContentProvider {
             default:
                 return null;
         }
+    }
+
+    private String buildEventQuery(String table, String[] projection, String selection, String sortOrder) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("SELECT ");
+        for (String filed : projection) {
+            builder.append(filed).append(",");
+        }
+        if (!selection.contains("GROUP")) {
+            builder.deleteCharAt(builder.length() - 1);
+        } else {
+            builder.append(" count(*)").append(" AS ").append(Content.EventColumns.COUNT);
+        }
+        builder.append(" FROM ").append(table).append(" WHERE ").append(selection);
+        if (!TextUtils.isEmpty(sortOrder)) {
+            builder.append(" ORDER BY ");
+            builder.append(sortOrder);
+        }
+        return builder.toString();
     }
 
     //query
