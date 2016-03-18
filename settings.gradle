@@ -1,1 +1,1 @@
-include ':app', ':poitest', ':minatest'
+include ':app', ':poitest', ':minatest', ':core'
