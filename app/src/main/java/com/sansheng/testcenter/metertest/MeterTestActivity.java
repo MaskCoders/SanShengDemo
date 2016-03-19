@@ -32,7 +32,6 @@ import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
 import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.utils.Utility;
-import hstt.data.ref;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -415,7 +414,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
                     Toast.makeText(MeterTestActivity.this, "请选择信道", 0).show();
                     return;
                 }
-                nowChannel.sendMessage(bean.toString(),new ref<String>(address));
+                nowChannel.sendMessage(bean.toString());
             }
 
             @Override

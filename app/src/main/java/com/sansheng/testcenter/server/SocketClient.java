@@ -9,7 +9,6 @@ import com.sansheng.testcenter.base.ConnInter;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
-import hstt.data.ref;
 
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
@@ -78,7 +77,7 @@ public class SocketClient implements ConnInter{
                     if(System.currentTimeMillis()-lastSendTime>keepAliveDelay){
                         try {
 //                        sendMessage((new KeepAlive()).toString().getBytes());
-                            sendMessage("keepalive".getBytes(),address);
+                            sendMessage("keepalive".getBytes());
                             System.out.println("--- by hua --- KeepAliveWatchDog");
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -118,14 +117,13 @@ public class SocketClient implements ConnInter{
             }
         }
     }
-    private ref<String> address;
+
     @Override
-    public void sendMessage(String hex,ref<String> addr) {
-        sendMessage(ProtocolUtils.hexStringToBytes(hex),addr);
+    public void sendMessage(String hex) {
+        sendMessage(ProtocolUtils.hexStringToBytes(hex));
     }
 
-    public void sendMessage(byte[] data,ref<String> addr) {
-        address = addr;
+    public void sendMessage(byte[] data) {
         if (socket != null && socket.isConnected()) {
             if (!socket.isOutputShutdown()) {
                 try {

@@ -32,7 +32,6 @@ import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
 import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.utils.Utility;
-import hstt.data.ref;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -417,7 +416,7 @@ public class SupplementReadMeter extends BaseActivity implements IServiceHandler
                     Utility.showToast(SupplementReadMeter.this, "请选择信道");
                     return;
                 }
-                nowChannel.sendMessage(bean.toString(),new ref(address));
+                nowChannel.sendMessage(bean.toString());
             }
 
             @Override
