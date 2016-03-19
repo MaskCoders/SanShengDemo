@@ -14,26 +14,19 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
-import com.sansheng.testcenter.base.ConnInter;
 import com.sansheng.testcenter.base.view.DrawableCenterTextView;
-import com.sansheng.testcenter.bean.BeanMark;
-import com.sansheng.testcenter.bean.WhmBean;
-import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.collecttest.CollectTestUtils;
-import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.Content;
-import com.sansheng.testcenter.server.ConnFactory;
 import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.utils.Utility;
 import hstt.data.DataItem;
-import hstt.data.ref;
 
 import java.util.ArrayList;
 
 /**
  * Created by sunshaogang on 1/20/16.
- * 集中器检测
+ * 管理集中器
  */
 public class CollectManagerActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -45,8 +38,6 @@ public class CollectManagerActivity extends BaseActivity implements LoaderManage
     private DrawableCenterTextView delete;
     private DrawableCenterTextView confirm;
     private DrawableCenterTextView cancel;
-    private MainHandler mMainHandler;
-    private ConnInter mClient;
     private ListView mListView;
     private CollectManagerAdapter mAdapter;
     private static final int LOADER_ID_FILTER_DEFAULT = 0;
@@ -57,11 +48,6 @@ public class CollectManagerActivity extends BaseActivity implements LoaderManage
         super.onCreate(savedInstanceState);
         setActionBar(COLLECT_TEST);
         hideBottomLog();
-        mMainHandler = new MainHandler(this, this);
-        String ip = "192.168.134.1";
-        int port = 8001;
-        collectAddress = new String();
-        mClient = ConnFactory.getInstance(6,mMainHandler,ip,8001,BeanMark.GW_PROTOCOL);
     }
 
     @Override

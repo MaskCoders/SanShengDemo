@@ -5,13 +5,15 @@ import android.content.Intent;
 import android.content.res.XmlResourceParser;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.base.*;
+import com.sansheng.testcenter.base.BaseActivity;
+import com.sansheng.testcenter.base.ConnInter;
+import com.sansheng.testcenter.base.CustomThreadPoolFactory;
+import com.sansheng.testcenter.base.MeterSelectDialog;
 import com.sansheng.testcenter.base.view.DrawableCenterTextView;
 import com.sansheng.testcenter.base.view.WaySelectMeterDialog;
 import com.sansheng.testcenter.bean.BeanMark;
@@ -25,11 +27,9 @@ import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.server.ConnFactory;
 import com.sansheng.testcenter.utils.Utilities;
 import com.sansheng.testcenter.utils.Utility;
-import hstt.data.ref;
 import hstt.data.DataItem;
 import hstt.proto.upgw.GwTask;
 import hstt.proto.upgw.UpGw;
-import hstt.util.Util;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -563,9 +563,6 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
         final int afn = param.mAFn;
         final int fn = param.mFn;
         mMainHandler = new MainHandler(this, this);
-        //这里需要根据集中器的配置设置client的配置
-        mClient = ConnFactory.getInstance(ConnFactory.RS485_1_TYPE, mMainHandler, null,
-                9001, BeanMark.GW_PROTOCOL);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -573,15 +570,15 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
                     UpGw p = new UpGw();
                     GwTask task = new GwTask(collect.mCommonAddress, afn, fn,
                             Utilities.list2Array(param.getDataList()), null);
-                    byte[] buffer = p.BuildPacket(task);
+//                    byte[] buffer = p.BuildPacket(task);
                     //这里需要根据集中器的配置设置client的配置
                     mClient = ConnFactory.getInstance(ConnFactory.RS485_1_TYPE, mMainHandler,
                             collect.mTerminalIp, Integer.valueOf(collect.mTerminalPort), BeanMark.GW_PROTOCOL);
-//                    mClient.sendMessage(buffer);//TODO:crush
-                    Message msg = new Message();
-                    msg.obj = Util.ByteArrayToString(buffer);
-                    msg.what = Const.SEND_MSG;
-                    mMainHandler.sendMessage(msg);
+                    mClient.sendMessage(task);//TODO:crush msg 放到client方法中实现.
+//                    Message msg = new Message();
+//                    msg.obj = Util.ByteArrayToString(buffer);
+//                    msg.what = Const.SEND_MSG;
+//                    mMainHandler.sendMessage(msg);
                 }
             }
         }).start();
