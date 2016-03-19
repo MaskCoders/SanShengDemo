@@ -5,22 +5,28 @@ import android.content.Intent;
 import android.content.res.XmlResourceParser;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.base.BaseActivity;
-import com.sansheng.testcenter.base.CustomThreadPoolFactory;
-import com.sansheng.testcenter.base.MeterSelectDialog;
+import com.sansheng.testcenter.base.*;
 import com.sansheng.testcenter.base.view.DrawableCenterTextView;
 import com.sansheng.testcenter.base.view.WaySelectMeterDialog;
 import com.sansheng.testcenter.bean.BeanMark;
+import com.sansheng.testcenter.callback.IServiceHandlerCallback;
+import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.datamanager.MeterDataListActivity;
 import com.sansheng.testcenter.metertest.CollectSelectDialog;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.CollectParam;
 import com.sansheng.testcenter.module.Meter;
+import com.sansheng.testcenter.server.ConnFactory;
+import com.sansheng.testcenter.utils.Utilities;
+import hstt.proto.upgw.GwTask;
+import hstt.proto.upgw.UpGw;
+import hstt.util.Util;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,9 +44,10 @@ import java.util.concurrent.ThreadFactory;
 /**
  * Created by sunshaogang on 12/24/15.
  * 国网主站
+ * //TODO:在选择集中器的时候应该增加进入集中器编辑界面的入口。
  */
 public class CenterActivity extends BaseActivity implements WaySelectMeterDialog.WaySelectMeterCallback, CollectSelectDialog.CollectCallback,
-        MeterSelectDialog.MeterCallback, BaseDialog.DialogCallback {
+        MeterSelectDialog.MeterCallback, BaseDialog.DialogCallback, IServiceHandlerCallback {
     public static final String PARAM_START_POINT = "start_point";
     public static final String PARAM_END_POINT = "end_point";
 
@@ -69,6 +76,8 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
 
     private RootProt mCurrentRootProt;
     private Protocol mCurrentProtocol;
+    private MainHandler mMainHandler;
+    private ConnInter mClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +187,9 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.start_test:
+                if (mCollects == null || mCollects.isEmpty()) {
+                    return;
+                }
                 startTest();
                 break;
             case R.id.select_collect:
@@ -535,26 +547,60 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
      *
      * @param param
      */
-    private void sendProtocol(CollectParam param) {
-        int afn = param.mAFn;
-        int fn = param.mFn;
-        switch (afn) {
-            case 4:
-                switch (fn) {
-                    case 1:
-                        break;
-                    case 3://根据数据组包
-                        break;
+    private void sendProtocol(final CollectParam param) {
+        final int afn = param.mAFn;
+        final int fn = param.mFn;
+        mMainHandler = new MainHandler(this, this);
+        //这里需要根据集中器的配置设置client的配置
+        mClient = ConnFactory.getInstance(ConnFactory.RS485_1_TYPE, mMainHandler, this, null,
+                9001, BeanMark.GW_PROTOCOL);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (Collect collect : mCollects) {
+                    final String collectIp = collect.mTerminalIp;
+                    UpGw p = new UpGw();
+                    GwTask task = new GwTask("00000001", afn, fn,
+                            Utilities.list2Array(param.getDataList()), null);
+                    byte[] buffer = p.BuildPacket(task);
+                    mClient.sendMessage(buffer);
+                    Message msg = new Message();
+                    msg.obj = Util.ByteArrayToString(buffer);
+                    msg.what = Const.SEND_MSG;
+                    mMainHandler.sendMessage(msg);
                 }
-                break;
-            case 'E':
-                switch (fn) {
-                    case 3:
+            }
+        }).start();
 
-                        break;
-                }
-                break;
-        }
+//        Logger.d("发送组包：" + Util.ByteArrayToString(buffer));
+//        buffer = Util.StringToByteArray("11 22 68 4A 00 4A 00 68 88 00 00 01 00 02 0C 60 00 00 02 00 49 48 11 15 52 15 17 16 33 44");
+//        byte[][] validPackets = p.SearchValid(buffer, buffer.length);
+//        Logger.d("validPackets length= " + validPackets.length);
+//        Logger.d("validPackets[0] length= " + validPackets[0].length);
+//        Logger.d("返回数组：" + Util.ByteArrayToString(validPackets[0]));
+//        List<DataItem> results = p.ParsePacket(task, validPackets[0]);
+//
+//        for (DataItem di : results) {
+//            Logger.d("解析结果：" + di);
+//        }
+//        switch (afn) {
+//            case 4:
+//                switch (fn) {
+//                    case 1:
+//                        break;
+//                    case 3://根据数据组包
+//
+//                        break;
+//                }
+//                break;
+//            case 14:
+//                switch (fn) {
+//                    case 3:
+//
+//                        break;
+//                }
+//                break;
+//        }
     }
 
     /**

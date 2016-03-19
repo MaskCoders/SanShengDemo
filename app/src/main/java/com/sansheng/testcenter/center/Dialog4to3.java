@@ -73,7 +73,7 @@ public class Dialog4to3 extends BaseDialog {
             values[10] = hostArrayBac[3];
             values[11] = editText4.getText().toString();
             values[12] = editText5.getText().toString();
-            mParam.resetParamList(keys, values, flags);
+            mParam.resetDataList(keys, values, flags);
             mParam.saveOrUpdate(context);
         }
     }

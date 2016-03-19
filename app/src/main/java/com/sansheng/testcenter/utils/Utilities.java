@@ -17,6 +17,7 @@ import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.TestCenterApplication;
 import com.telly.groundy.GroundyTask;
 import com.telly.groundy.TaskResult;
+import hstt.data.DataItem;
 
 import java.io.File;
 import java.util.List;
@@ -105,7 +106,7 @@ public class Utilities {
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         // DocumentProvider
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-        // ExternalStorageProvider
+            // ExternalStorageProvider
             if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
@@ -212,14 +213,14 @@ public class Utilities {
         File hstt = new File(sdcard, HSTT_FOLDER);
         if (hstt.exists()) {
             return hstt;
-        }else if (hstt.mkdirs()) {
+        } else if (hstt.mkdirs()) {
             return hstt;
         } else {
             return null;
         }
     }
 
-    public static String getOutDBPath(){
+    public static String getOutDBPath() {
         File outPath = new File(Utilities.getAppPath(), "db");
         if (!outPath.exists()) {
             outPath.mkdir();
@@ -227,5 +228,13 @@ public class Utilities {
         return outPath.getAbsolutePath();
     }
 
+    public static DataItem[] list2Array(List<DataItem> list) {
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        int size = list.size();
+        DataItem[] array = list.toArray(new DataItem[size]);
+        return array;
+    }
 
 }

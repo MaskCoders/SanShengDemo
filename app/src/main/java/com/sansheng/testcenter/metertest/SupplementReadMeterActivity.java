@@ -344,7 +344,6 @@ public class SupplementReadMeterActivity extends BaseActivity implements IServic
         String conInfo = ComPort.getConnInfo();
         try {
             ComPort.open();
-
             msg.what = CONN_OK;
             msg.obj = conInfo;
             mMainHandler.sendMessage(msg);
@@ -354,7 +353,6 @@ public class SupplementReadMeterActivity extends BaseActivity implements IServic
         } catch (IOException e) {
             msg.obj = "打开串口失败:未知错误!" + conInfo;
             mMainHandler.sendMessage(msg);
-            ;
         } catch (InvalidParameterException e) {
             msg.obj = "打开串口失败:参数错误!" + conInfo;
             mMainHandler.sendMessage(msg);

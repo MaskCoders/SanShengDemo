@@ -9,6 +9,7 @@ import android.os.Parcelable;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.sansheng.testcenter.center.ProtoParam;
+import hstt.data.DataItem;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +26,7 @@ public class CollectParam extends Content implements Content.CollectParamColumns
     public int mCollectId;
     public int mAFn;
     public int mFn;
+    DataItem[] pParams;
     public String mParam = "\n" +
             "{\n" +
             "  \"Fn\":3,\n" +
@@ -99,6 +101,7 @@ public class CollectParam extends Content implements Content.CollectParamColumns
             "  }]\n" +
             "}";//json
     private List<ProtoParam> paramList = new ArrayList<ProtoParam>();
+    private List<DataItem> dataList = new ArrayList<DataItem>();
 
     public static final int ID_INDEX = 0;
     public static final int COLLECT_ID_INDEX = ID_INDEX + 1;
@@ -190,6 +193,25 @@ public class CollectParam extends Content implements Content.CollectParamColumns
         return paramList;
     }
 
+    public List<DataItem> getDataList() {
+        if (dataList.size() == 0) {
+            try {
+                JSONObject root = new JSONObject(mParam);
+                JSONArray array = root.getJSONArray("Paras");
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    ProtoParam param = new ProtoParam(object);
+                    dataList.add(getDataItemFromJsonObject(object));
+                    Log.e("ssg", param.toString());
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+//        Log.e("ssg", paramList.toString());
+        return dataList;
+    }
+
     public void resetParamList(String[] keys, String[] values, int[] types) {
         paramList.clear();
         for (int i = 0; i < keys.length; i++) {
@@ -197,6 +219,15 @@ public class CollectParam extends Content implements Content.CollectParamColumns
             paramList.add(param);
         }
         mParam = paramList.toString();
+    }
+
+    public void resetDataList(String[] keys, String[] values, int[] types) {
+        dataList.clear();
+        for (int i = 0; i < keys.length; i++) {
+            DataItem dataItem = new DataItem(keys[i], types[i], values[i]);
+            dataList.add(dataItem);
+        }
+        mParam = dataList.toString();
     }
 
     @Override
@@ -244,10 +275,18 @@ public class CollectParam extends Content implements Content.CollectParamColumns
         try {
             object.put("aFn", mAFn);
             object.put("Fn", mFn);
-            object.put("Paras", gson.toJson(getParamList()));
+            object.put("Paras", gson.toJson(getDataList()));
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return object.toString();
+    }
+
+    private DataItem getDataItemFromJsonObject(JSONObject object) throws JSONException {
+        DataItem data = new DataItem();
+        data.f = object.getInt("f");
+        data.n = object.getString("n");
+        data.v = object.getString("v");
+        return data;
     }
 }
