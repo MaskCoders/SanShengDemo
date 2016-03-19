@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/meter_test_control_home">
+        <com.sansheng.testcenter.base.view.DrawableCenterTextView
+                android:id="@+id/analysis" style="@style/BtnStyle1"
+                android:drawableLeft="@drawable/left_icon_start1"
+                android:text="分析漏抄"/>
+        <com.sansheng.testcenter.base.view.DrawableCenterTextView
+                android:id="@+id/read" style="@style/BtnStyle1"
+                android:drawableLeft="@drawable/left_icon_clock1"
+                android:text="抄电表"/>
+        <com.sansheng.testcenter.base.view.DrawableCenterTextView
+                android:id="@+id/delete_all" style="@style/BtnStyle1"
+                android:drawableLeft="@drawable/left_icon_clock1"
+                android:text="全部删除"/>
+        <com.sansheng.testcenter.base.view.DrawableCenterTextView
+                android:id="@+id/show_log" style="@style/BtnStyle1"
+                android:drawableLeft="@drawable/left_icon_log"
+                android:text="显示日志"/>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/meter_test_control_select_meter"
+            android:orientation="vertical"
+            android:visibility="gone">
+        <com.sansheng.testcenter.base.view.DrawableCenterTextView
+                android:id="@+id/confirm" style="@style/BtnStyle1"
+                android:drawableLeft="@drawable/left_icon_confirm1"
+                android:text="确定"/>
+        <com.sansheng.testcenter.base.view.DrawableCenterTextView
+                android:id="@+id/cancel" style="@style/BtnStyle1"
+                android:drawableLeft="@drawable/left_icon_cancel1"
+                android:text="取消"/>
+    </LinearLayout>
+
+    <com.sansheng.testcenter.base.view.DrawableCenterTextView
+            android:id="@+id/stop" style="@style/BtnStyle1"
+            android:drawableLeft="@drawable/left_icon_cancel1"
+            android:text="停止抄表"/>
+</LinearLayout>

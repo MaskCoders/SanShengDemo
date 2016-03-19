@@ -107,7 +107,11 @@ public class MeterSelectFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        int type = ((MeterTestActivity) getActivity()).getTestMeterType();
+        int type = -1;
+        if (getActivity() instanceof  MeterTestActivity) {
+            type = ((MeterTestActivity) getActivity()).getTestMeterType();
+        }
+
         Log.e("ssg", "type = " + type);
         StringBuilder selection = new StringBuilder();
 
@@ -129,9 +133,14 @@ public class MeterSelectFragment extends Fragment implements LoaderManager.Loade
                 break;
         }
         if (!TextUtils.isEmpty(collectIds)) {//如必要,根据选中的集中器显示相应的电表以供选择
-            selection.append(Meter.COLLECT_ID).append(" in ").append("(").append(collectIds).append(")").append(" AND ");
+            selection.append(Meter.COLLECT_ID).append(" in ").append("(").append(collectIds).append(")");
         }
-        selection.append(Meter.METER_TYPE).append("=").append(type);
+        if (type != -1) {
+            selection.append(" AND ").append(Meter.METER_TYPE).append("=").append(type);
+        }
+        if (TextUtils.isEmpty(selection)) {
+            selection.append(" 1=1 ");
+        }
         return new CursorLoader(getActivity(), Meter.CONTENT_URI, Meter.CONTENT_PROJECTION, selection.toString(),
                 null, Meter.ID + " " + Content.DESC + " LIMIT " + mOriginLength);
     }

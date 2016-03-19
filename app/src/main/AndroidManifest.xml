@@ -165,7 +165,7 @@
         <activity android:name="com.sansheng.testcenter.scann.ScannTestActivity"
                   android:screenOrientation="landscape">
         </activity>
-        <activity android:name="com.sansheng.testcenter.metertest.SupplementReadMeter"
+        <activity android:name=".metertest.SupplementReadMeterActivity"
                   android:screenOrientation="landscape">
         </activity>
         <provider
