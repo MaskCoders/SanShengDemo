@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/meter_data_list_item_height"
+              android:id="@+id/meter_data_item"
+              android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+        <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/meter_name"
+                style="@style/TableText"
+                android:textColor="@color/login_hint_color"
+                android:text="测量点"/>
+        <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/meter_num"
+                style="@style/TableText"
+                android:text="电表地址"/>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+        <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/meter_value"
+                style="@style/TableText"
+                android:textColor="@color/main_green"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:text="正向有功"/>
+        <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/meter_values"
+                style="@style/TableText"
+                android:textColor="@color/login_hint_color"
+                android:gravity="right"
+                android:text="数据时标"/>
+    </LinearLayout>
+
+</LinearLayout>

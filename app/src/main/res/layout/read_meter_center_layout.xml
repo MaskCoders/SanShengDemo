@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal"
+                android:id="@+id/meter_test_edit_panel">
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/meter_test_select_channel"
+                    android:layout_gravity="center_vertical">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/meter_test_channel"
+                        style="@style/NomalTextStyle"
+                        android:text="选择信道"/>
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/meter_test_channel_btn"
+                        android:src="@drawable/btn_chanle_selector"/>
+            </LinearLayout>
+            <EditText
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/meter_test_edit_text"
+                    android:layout_marginLeft="50dp"
+                    android:maxLength="12"
+                    android:hint="输入电表地址"
+                    style="@style/NomalTextStyle"
+                    android:numeric="integer"
+                    />
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/meter_test_other_input"
+                    android:src="@drawable/btn_add_selector"/>
+
+        </LinearLayout>
+
+        <View
+                android:background="@color/spinner_selected_color"
+                android:layout_width="match_parent"
+                android:clickable="true"
+                android:layout_height="3dp"/>
+        <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/list_view"
+                android:layout_marginBottom="10dp"
+                android:scrollbars="none"
+                />
+
+    </LinearLayout>
+    <FrameLayout android:id="@+id/meter_content"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+    </FrameLayout>
+</FrameLayout>

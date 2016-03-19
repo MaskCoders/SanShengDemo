@@ -19,7 +19,6 @@ import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.base.view.PullListView;
 import com.sansheng.testcenter.bean.BeanMark;
-import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.module.MeterData;
 import com.sansheng.testcenter.utils.MeterUtilies;
@@ -31,7 +30,9 @@ import java.util.concurrent.ThreadFactory;
 /**
  * Created by sunshaogang on 12/9/15.
  */
-public class MeterDataListActivity extends BaseActivity implements LoaderCallbacks<Cursor>, ListView.OnScrollListener, PullListView.OnLoadMoreListener {
+public class MeterDataListActivity extends BaseActivity implements
+        LoaderCallbacks<Cursor>, ListView.OnScrollListener, PullListView.OnLoadMoreListener,
+        MeterDataListAdapter.MeterDataCallback {
 
     private PullListView mListView;
     private MeterDataListAdapter mAdapter;
@@ -103,7 +104,7 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
     protected void initCenter() {
         View inflate = getLayoutInflater().inflate(R.layout.meter_data_center_list_layout, null);
         mListView = (PullListView) inflate.findViewById(R.id.list_view);
-        mAdapter = new MeterDataListAdapter(this, null);
+        mAdapter = new MeterDataListAdapter(this, null, this);
         mListView.setAdapter(mAdapter);
         mListView.setOnScrollListener(this);
         main_info.addView(inflate);
@@ -216,6 +217,7 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
         getLoaderManager().restartLoader(LOADER_ID_FILTER, null, MeterDataListActivity.this);
     }
 
+    @Override
     public void showDetailFragment(MeterData meter) {
         MeterDataFragment fragment = new MeterDataFragment();
         Bundle bundle = new Bundle();
@@ -361,6 +363,7 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
         restartLoader(LOADER_ID_FILTER);
     }
 
+    @Override
     public void setViewMode(int mode) {
         switch (mode) {
             case VIEW_MODE_LIST:
@@ -390,6 +393,7 @@ public class MeterDataListActivity extends BaseActivity implements LoaderCallbac
         }
     }
 
+    @Override
     public void setCurrentData(MeterData data){
         this.mCurrentData = data;
     }

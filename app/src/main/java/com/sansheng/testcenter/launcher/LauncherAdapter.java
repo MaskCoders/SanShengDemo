@@ -20,7 +20,7 @@ import com.sansheng.testcenter.collecttest.CollectSingleSelectDialog;
 import com.sansheng.testcenter.datamanager.MeterDataListActivity;
 import com.sansheng.testcenter.equipmentmanager.EquipmentManagerDialog;
 import com.sansheng.testcenter.location.LocationInfoActivity;
-import com.sansheng.testcenter.metertest.SupplementReadMeter;
+import com.sansheng.testcenter.metertest.SupplementReadMeterActivity;
 import com.sansheng.testcenter.metertest.CollectSelectDialog;
 import com.sansheng.testcenter.metertest.MeterTestActivity;
 import com.sansheng.testcenter.module.Collect;
@@ -159,7 +159,7 @@ public class LauncherAdapter extends BaseAdapter implements CollectSelectDialog.
                             mContext.startActivity(intent);
                             break;
                         case 10://数据补抄
-                            intent.setClass(mContext, SupplementReadMeter.class);
+                            intent.setClass(mContext, SupplementReadMeterActivity.class);
                             mContext.startActivity(intent);
                             break;
                         case 11://组网拓扑

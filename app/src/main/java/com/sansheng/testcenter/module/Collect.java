@@ -125,7 +125,7 @@ public class Collect extends Content implements Content.CollectColumns, Parcelab
             mCollectName = "名称" + id;
             mPassword = "00000000";
             mChannelType = id % 5;
-            mTerminalIp = "ip:" + id;
+            mTerminalIp = String.format("%08d", id);
             mTerminalPort = "9001";
             mBaudRateId = id;
         }
