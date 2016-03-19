@@ -5,6 +5,7 @@ import com.sansheng.testcenter.base.ConnInter;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.tools.serial.SerialHelper;
+import hstt.data.ref;
 import realarm.hardware.HardwareControl;
 
 /**
@@ -31,33 +32,33 @@ public class ConnFactory {
     public void setSocketInfo(MainHandler handler){
 
     }
-    public static ConnInter getInstance(int type, Handler handler, IServiceHandlerCallback cb, String ip, int port,int protocol_type) {
+    public static ConnInter getInstance(int type, ref<String> address, Handler handler, String ip, int port, int protocol_type) {
         ConnInter tmp = null;
         switch (type) {
             case INFRA_RED_DN_TYPE:
-                tmp = new SerialHelper(INFRA_RED_DN, 1200, handler, cb, protocol_type);
+                tmp = new SerialHelper(INFRA_RED_DN, 1200, handler, protocol_type,address);
                 break;
             case RS485_1_TYPE:
                 (new HardwareControl()).UartModeSetup(1); //RS485
-                tmp = new SerialHelper(RS485_1, 2400, handler, cb, protocol_type);
+                tmp = new SerialHelper(RS485_1, 2400, handler, protocol_type,address);
                 break;
             case RS485_2_TYPE:
                 (new HardwareControl()).UartModeSetup(1); //RS485
-                tmp = new SerialHelper(RS485_2, 2400, handler, cb, protocol_type);
+                tmp = new SerialHelper(RS485_2, 2400, handler, protocol_type,address);
                 break;
             case RS232_TYPE:
                 (new HardwareControl()).UartModeSetup(0); //RS232
 
-                tmp = new SerialHelper(RS232, 9600, handler, cb, protocol_type);
+                tmp = new SerialHelper(RS232, 9600, handler, protocol_type,address);
                 break;
             case ZB_TYPE:
-                tmp = new SocketClient(handler,ip,port);
+                tmp = new SerialHelper(RS232, 9600, handler, protocol_type,address);
                 break;
             case SOCKET_CLIENT_TYPE://client
-                tmp = new SerialHelper(ZB2, 115200, handler, cb, protocol_type);
+                tmp = new SocketClient(handler,ip,port,address,protocol_type);
                 break;
             case SOCKET_SERVER_TYPE://server
-//                tmp = new SerialHelper(ZB2, 115200, handler, cb);
+//                tmp = new SerialHelper(ZB2, 115200, handler);
                 //服务的还没弄
                 break;
         }

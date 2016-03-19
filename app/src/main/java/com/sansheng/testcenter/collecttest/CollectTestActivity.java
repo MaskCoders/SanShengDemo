@@ -18,6 +18,7 @@ import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.ModuleUtilites;
 import com.sansheng.testcenter.provider.EquipmentPreference;
 import com.sansheng.testcenter.server.ConnFactory;
+import hstt.data.ref;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
     private ArrayList<DrawableCenterTextView> btnList = new ArrayList<DrawableCenterTextView>();
     private DrawableCenterTextView showLog;
     private DrawableCenterTextView closeConn;
-
+    private String collectAdd;
     private Collect mCollect;
 
     @Override
@@ -70,7 +71,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
         mMainHandler = new MainHandler(this, this);
         String ip = "192.168.134.1";
         int port = 8001;
-        mClient = ConnFactory.getInstance(6,mMainHandler,this,ip,8001,BeanMark.GW_PROTOCOL);
+        mClient = ConnFactory.getInstance(6,new ref<String>(collectAdd),mMainHandler,ip,8001,BeanMark.GW_PROTOCOL);
     }
 
     @Override

@@ -13,6 +13,7 @@ import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
 import com.sansheng.testcenter.tools.protocol.TerProtocolParse;
+import hstt.data.ref;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,16 +37,16 @@ public  class SerialHelper implements ConnInter{
 	private boolean _isOpen=false;
 	private byte[] _bLoopData=new byte[]{0x30};
 	private int iDelay=500;
-	private IServiceHandlerCallback callback;
 	private int protocol_type = BeanMark.METER_PROTOCOL;
+	ref<String> address;
 	//----------------------------------------------------
 	public SerialHelper(){}
-	public SerialHelper(String sPort,int iBaudRate,Handler handler,IServiceHandlerCallback cb,int type){
+	public SerialHelper(String sPort,int iBaudRate,Handler handler,int type,ref<String> address){
 		this.sPort = sPort;
 		this.iBaudRate=2400;
 		mainHandler = handler;
-		callback = cb;
 		protocol_type = type;
+		this.address = address;
 
 	}
 	//----------------------------------------------------
@@ -74,7 +75,7 @@ public  class SerialHelper implements ConnInter{
 						msg.what= Const.OVER_TIME;
 						System.out.println("====>  serial recive over time");
 						mainHandler.sendMessage(msg);
-						callback.setValue(null);//为了结束activiey一些锁死的状态
+//						callback.setValue(null);//为了结束activiey一些锁死的状态
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -339,7 +340,7 @@ public  class SerialHelper implements ConnInter{
 		}
 
 
-			callback.setValue(bean);
+//			callback.setValue(bean);
 		}catch (Exception e){
 //			e.printStackTrace();
 			Message msg = new Message();

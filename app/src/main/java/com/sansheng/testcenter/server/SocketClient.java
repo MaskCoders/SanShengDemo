@@ -9,6 +9,7 @@ import com.sansheng.testcenter.base.ConnInter;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
+import hstt.data.ref;
 
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
@@ -39,8 +40,12 @@ public class SocketClient implements ConnInter{
     static final int INPUT_ERR = -3;
     private boolean running=false;
     private long lastSendTime;
-    public SocketClient(Handler handler, String ip, int port) {
+    ref<String> address;
+    int protocol_type;
+    public SocketClient(Handler handler, String ip, int port,ref<String> address, int type) {
         mMainHandler = handler;
+        protocol_type = type;
+        this.address = address;
         if (!TextUtils.isEmpty(ip)) {
             HOST = ip;
         }

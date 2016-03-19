@@ -26,6 +26,7 @@ import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.server.ConnFactory;
 import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.utils.Utility;
+import hstt.data.ref;
 
 import java.util.ArrayList;
 
@@ -48,7 +49,7 @@ public class CollectManagerActivity extends BaseActivity implements LoaderManage
     private ListView mListView;
     private CollectManagerAdapter mAdapter;
     private static final int LOADER_ID_FILTER_DEFAULT = 0;
-
+    private String collectAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,8 @@ public class CollectManagerActivity extends BaseActivity implements LoaderManage
         mMainHandler = new MainHandler(this, this);
         String ip = "192.168.134.1";
         int port = 8001;
-        mClient = ConnFactory.getInstance(6,mMainHandler,this,ip,8001,BeanMark.GW_PROTOCOL);
+        collectAddress = new String();
+        mClient = ConnFactory.getInstance(6,new ref<String>(collectAddress),mMainHandler,ip,8001,BeanMark.GW_PROTOCOL);
     }
 
     @Override
