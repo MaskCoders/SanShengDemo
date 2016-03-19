@@ -71,7 +71,7 @@ public class CollectListDialogAdapter extends SimpleCursorAdapter {
             return;
         }
         holder.collectName.setText(String.valueOf(collect.mCollectName));
-        holder.collectAddress.setText(collect.mCommonAddress);
+        holder.collectAddress.setText(collect.mTerminalIp);
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

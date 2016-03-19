@@ -24,6 +24,7 @@ import com.sansheng.testcenter.module.CollectParam;
 import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.server.ConnFactory;
 import com.sansheng.testcenter.utils.Utilities;
+import com.sansheng.testcenter.utils.Utility;
 import hstt.proto.upgw.GwTask;
 import hstt.proto.upgw.UpGw;
 import hstt.util.Util;
@@ -188,6 +189,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
         switch (v.getId()) {
             case R.id.start_test:
                 if (mCollects == null || mCollects.isEmpty()) {
+                    Utility.showToast(CenterActivity.this, "请先选择集中器");
                     return;
                 }
                 startTest();
@@ -459,9 +461,8 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     }
 
     @Override
-    public void onPositiveClick(CollectParam param) {
+    public void onPositiveClick(CollectParam param) {//click confirm button on dialog
         if (param != null) {
-            //TODO:启动检测
             Log.e("ssg", "json value = " + param.toJson());
             sendProtocol(param);
         }
@@ -507,7 +508,6 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     }
 
     private void startTest() {
-        //TODO:启动检测接口
         Log.e("ssg", "the position that clicked is " + mCurrentProtocol.n);
         showParamDialog(mCurrentProtocol.afn, mCurrentProtocol.fn);
     }
@@ -526,20 +526,29 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
                 switch (fn) {
                     case 1:
                         showFourToOne();
-                        break;
+                        return;
                     case 3:
                         showFourToThree();
-                        break;
+                        return;
                 }
                 break;
             case 'E':
                 switch (fn) {
                     case 3:
                         showFourteenToThree();
-                        break;
+                        return;
                 }
                 break;
+
         }
+        sendProtocolWithoutParam(afn, fn);
+    }
+
+    private void sendProtocolWithoutParam(int afn, int fn) {
+        CollectParam param = new CollectParam();
+        param.mAFn = afn;
+        param.mFn = fn;
+        sendProtocol(param);
     }
 
     /**
@@ -551,19 +560,21 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
         final int afn = param.mAFn;
         final int fn = param.mFn;
         mMainHandler = new MainHandler(this, this);
-        //这里需要根据集中器的配置设置client的配置
-        mClient = ConnFactory.getInstance(ConnFactory.RS485_1_TYPE, mMainHandler, this, null,
-                9001, BeanMark.GW_PROTOCOL);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 for (Collect collect : mCollects) {
                     final String collectIp = collect.mTerminalIp;
                     UpGw p = new UpGw();
-                    GwTask task = new GwTask("00000001", afn, fn,
+                    GwTask task = new GwTask(collectIp, afn, fn,
                             Utilities.list2Array(param.getDataList()), null);
                     byte[] buffer = p.BuildPacket(task);
-                    mClient.sendMessage(buffer);
+                    //这里需要根据集中器的配置设置client的配置
+                    mClient = ConnFactory.getInstance(ConnFactory.RS485_1_TYPE, mMainHandler,
+                            CenterActivity.this, null, Integer.valueOf(collect.mTerminalPort),
+                            BeanMark.GW_PROTOCOL);
+//                    mClient.sendMessage(buffer);//TODO:crush
                     Message msg = new Message();
                     msg.obj = Util.ByteArrayToString(buffer);
                     msg.what = Const.SEND_MSG;
@@ -582,24 +593,6 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
 //
 //        for (DataItem di : results) {
 //            Logger.d("解析结果：" + di);
-//        }
-//        switch (afn) {
-//            case 4:
-//                switch (fn) {
-//                    case 1:
-//                        break;
-//                    case 3://根据数据组包
-//
-//                        break;
-//                }
-//                break;
-//            case 14:
-//                switch (fn) {
-//                    case 3:
-//
-//                        break;
-//                }
-//                break;
 //        }
     }
 
@@ -674,7 +667,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     private ArrayList<String> buildParentList(List<RootProt> objects) {
         ArrayList<String> list = new ArrayList<String>();
         for (RootProt object : objects) {
-            list.add(object.n);
+            list.add(object.afn + ". " + object.n);
         }
         return list;
     }
@@ -682,7 +675,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     private ArrayList<String> buildProtocolList(List<Protocol> objects) {
         ArrayList<String> list = new ArrayList<String>();
         for (Protocol object : objects) {
-            list.add(object.n);
+            list.add(object.fn + ". " + object.n);
         }
         return list;
     }
