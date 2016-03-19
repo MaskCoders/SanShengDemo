@@ -26,6 +26,7 @@ import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.server.ConnFactory;
 import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.utils.Utility;
+import hstt.data.DataItem;
 import hstt.data.ref;
 
 import java.util.ArrayList;
@@ -60,7 +61,7 @@ public class CollectManagerActivity extends BaseActivity implements LoaderManage
         String ip = "192.168.134.1";
         int port = 8001;
         collectAddress = new String();
-        mClient = ConnFactory.getInstance(6,new ref<String>(collectAddress),mMainHandler,ip,8001,BeanMark.GW_PROTOCOL);
+        mClient = ConnFactory.getInstance(6,mMainHandler,ip,8001,BeanMark.GW_PROTOCOL);
     }
 
     @Override
@@ -135,7 +136,7 @@ public class CollectManagerActivity extends BaseActivity implements LoaderManage
     }
 
     @Override
-    public void setValue(BeanMark bean) {
+    public void setValue(DataItem bean) {
 
     }
 

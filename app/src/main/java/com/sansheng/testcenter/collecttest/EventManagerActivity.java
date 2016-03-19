@@ -12,6 +12,7 @@ import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.module.Event;
+import hstt.data.DataItem;
 
 /**
  * Created by sunshaogang on 1/21/16.
@@ -57,7 +58,7 @@ public class EventManagerActivity extends BaseActivity implements LoaderManager.
     }
 
     @Override
-    public void setValue(BeanMark bean) {
+    public void setValue(DataItem bean) {
 
     }
 

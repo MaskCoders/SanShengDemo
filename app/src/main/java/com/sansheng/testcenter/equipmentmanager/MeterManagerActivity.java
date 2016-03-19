@@ -23,6 +23,7 @@ import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.utils.Utility;
+import hstt.data.DataItem;
 
 import java.util.ArrayList;
 
@@ -171,7 +172,7 @@ public class MeterManagerActivity extends BaseActivity implements LoaderCallback
     }
 
     @Override
-    public void setValue(BeanMark bean) {
+    public void setValue(DataItem bean) {
 
     }
 

@@ -25,6 +25,7 @@ import com.sansheng.testcenter.bean.ComBean;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.tools.serial.MyFunc;
 import com.sansheng.testcenter.tools.serial.SerialHelper;
+import hstt.data.DataItem;
 
 import java.io.*;
 import java.security.InvalidParameterException;
@@ -240,7 +241,7 @@ public class ComAssistantActivity extends BaseActivity {
 	}
 
 	@Override
-	public void setValue(BeanMark bean) {
+	public void setValue(DataItem bean) {
 
 	}
 

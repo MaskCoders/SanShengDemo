@@ -10,6 +10,7 @@ import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.equipmentmanager.CollectManagerActivity;
 import com.sansheng.testcenter.equipmentmanager.MeterManagerActivity;
+import hstt.data.DataItem;
 
 /**
  * Created by sunshaogang on 1/27/16.
@@ -61,7 +62,7 @@ public class EquipmentManagerActivity extends BaseActivity {
     }
 
     @Override
-    public void setValue(BeanMark bean) {
+    public void setValue(DataItem bean) {
 
     }
 }

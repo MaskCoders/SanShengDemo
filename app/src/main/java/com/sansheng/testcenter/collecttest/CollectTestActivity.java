@@ -18,6 +18,7 @@ import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.ModuleUtilites;
 import com.sansheng.testcenter.provider.EquipmentPreference;
 import com.sansheng.testcenter.server.ConnFactory;
+import hstt.data.DataItem;
 import hstt.data.ref;
 
 import java.io.IOException;
@@ -71,7 +72,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
         mMainHandler = new MainHandler(this, this);
         String ip = "192.168.134.1";
         int port = 8001;
-        mClient = ConnFactory.getInstance(6,new ref<String>(collectAdd),mMainHandler,ip,8001,BeanMark.GW_PROTOCOL);
+        mClient = ConnFactory.getInstance(6,mMainHandler,ip,8001,BeanMark.GW_PROTOCOL);
     }
 
     @Override
@@ -164,7 +165,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
     }
 
     @Override
-    public void setValue(BeanMark bean) {
+    public void setValue(DataItem bean) {
         //在这里处理回传数据
         resumeAllButton();
     }

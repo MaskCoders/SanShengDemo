@@ -16,6 +16,7 @@ import com.sansheng.testcenter.server.MSocketServer;
 import com.sansheng.testcenter.server.SocketClient;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
+import hstt.data.DataItem;
 
 /**
  * Created by hua on 12/17/15.
@@ -158,7 +159,7 @@ public class WhmActivity extends BaseActivity  {
     }
 
     @Override
-    public void setValue(BeanMark bean) {
+    public void setValue(DataItem bean) {
 
     }
 

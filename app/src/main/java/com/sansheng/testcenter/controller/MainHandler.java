@@ -8,10 +8,12 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import com.sansheng.testcenter.R;
+import com.sansheng.testcenter.base.Const;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.tools.log.LogUtils;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
+import hstt.data.DataItem;
 
 import static com.sansheng.testcenter.base.Const.*;
 
@@ -99,9 +101,8 @@ public class MainHandler extends Handler {
                 mMainUI.pullShortLog(recvSS);
                 mMainUI.pullWholeLog(recvSS);
 
-                if(msg.obj instanceof WhmBean){
-                    WhmBean bean = (WhmBean) msg.obj;
-                    double arr[] = bean.getUserDataArr(4);
+                if(msg.obj instanceof DataItem){
+                    DataItem bean = (DataItem) msg.obj;
                     mMainUI.setValue(bean);
                 }
                 logUtils.saveLog(recvSS.toString());
@@ -141,10 +142,22 @@ public class MainHandler extends Handler {
                 SpannableString sserrot = getErrSS(content);
                 mMainUI.pullShortLog(sserrot);
                 mMainUI.pullWholeLog(sserrot);
+            case RECV_MSG_PARSE_ERR:
+                content = "解析错误 "+ content+"\n";
+                sserrot = getErrSS(content);
+                mMainUI.pullShortLog(sserrot);
+                mMainUI.pullWholeLog(sserrot);
             default:
         }
         logUtils.saveLog(content);
         mMainUI.pullWholeLog(content);
+
+    }
+    public static void sendMessage(Handler handler,int what,Object obj){
+        Message msg = new Message();
+        msg.what =what;
+        msg.obj = obj;
+        handler.sendMessage(msg);
 
     }
 }

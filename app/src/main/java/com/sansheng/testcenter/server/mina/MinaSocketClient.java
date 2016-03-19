@@ -2,6 +2,8 @@ package com.sansheng.testcenter.server.mina;
 
 import android.os.Handler;
 import com.sansheng.testcenter.base.ConnInter;
+import hstt.data.ref;
+import hstt.proto.mp07.TaskInterface;
 import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
@@ -18,6 +20,7 @@ public class MinaSocketClient  implements ConnInter {
     int port;
     String ip;
     Handler mHandler;
+
     public void MinaSocketClient(Handler handler , String ip ,int port){
         this.port = port;
         this.ip = ip;
@@ -79,6 +82,16 @@ public class MinaSocketClient  implements ConnInter {
         if(connectFuture != null) {
             connectFuture.getSession().write(arr);
         }
+    }
+
+    @Override
+    public void sendMessage(TaskInterface task) {
+
+    }
+    ref<String> address;
+    @Override
+    public void setAddress(ref<String> address) {
+        this.address = address;
     }
 
     @Override

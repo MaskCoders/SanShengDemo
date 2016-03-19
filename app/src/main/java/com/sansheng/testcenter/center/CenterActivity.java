@@ -26,6 +26,7 @@ import com.sansheng.testcenter.server.ConnFactory;
 import com.sansheng.testcenter.utils.Utilities;
 import com.sansheng.testcenter.utils.Utility;
 import hstt.data.ref;
+import hstt.data.DataItem;
 import hstt.proto.upgw.GwTask;
 import hstt.proto.upgw.UpGw;
 import hstt.util.Util;
@@ -334,7 +335,8 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     }
 
     @Override
-    public void setValue(BeanMark bean) {
+    public void setValue(DataItem
+                                     bean) {
 
     }
 
@@ -561,7 +563,9 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
         final int afn = param.mAFn;
         final int fn = param.mFn;
         mMainHandler = new MainHandler(this, this);
-
+        //这里需要根据集中器的配置设置client的配置
+        mClient = ConnFactory.getInstance(ConnFactory.RS485_1_TYPE, mMainHandler, null,
+                9001, BeanMark.GW_PROTOCOL);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -571,7 +575,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
                             Utilities.list2Array(param.getDataList()), null);
                     byte[] buffer = p.BuildPacket(task);
                     //这里需要根据集中器的配置设置client的配置
-                    mClient = ConnFactory.getInstance(ConnFactory.RS485_1_TYPE, new ref<String>(collect.mCommonAddress), mMainHandler,
+                    mClient = ConnFactory.getInstance(ConnFactory.RS485_1_TYPE, mMainHandler,
                             collect.mTerminalIp, Integer.valueOf(collect.mTerminalPort), BeanMark.GW_PROTOCOL);
 //                    mClient.sendMessage(buffer);//TODO:crush
                     Message msg = new Message();

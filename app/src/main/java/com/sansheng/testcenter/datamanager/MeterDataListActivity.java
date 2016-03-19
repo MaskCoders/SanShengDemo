@@ -22,6 +22,7 @@ import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.module.MeterData;
 import com.sansheng.testcenter.utils.MeterUtilies;
+import hstt.data.DataItem;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -256,7 +257,7 @@ public class MeterDataListActivity extends BaseActivity implements
     }
 
     @Override
-    public void setValue(BeanMark bean) {
+    public void setValue(DataItem bean) {
 
     }
 

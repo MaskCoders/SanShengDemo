@@ -32,30 +32,30 @@ public class ConnFactory {
     public void setSocketInfo(MainHandler handler){
 
     }
-    public static ConnInter getInstance(int type, ref<String> address, Handler handler, String ip, int port, int protocol_type) {
+    public static ConnInter getInstance(int type, Handler handler, String ip, int port, int protocol_type) {
         ConnInter tmp = null;
         switch (type) {
             case INFRA_RED_DN_TYPE:
-                tmp = new SerialHelper(INFRA_RED_DN, 1200, handler, protocol_type,address);
+                tmp = new SerialHelper(INFRA_RED_DN, 1200, handler, protocol_type);
                 break;
             case RS485_1_TYPE:
                 (new HardwareControl()).UartModeSetup(1); //RS485
-                tmp = new SerialHelper(RS485_1, 2400, handler, protocol_type,address);
+                tmp = new SerialHelper(RS485_1, 2400, handler, protocol_type);
                 break;
             case RS485_2_TYPE:
                 (new HardwareControl()).UartModeSetup(1); //RS485
-                tmp = new SerialHelper(RS485_2, 2400, handler, protocol_type,address);
+                tmp = new SerialHelper(RS485_2, 2400, handler, protocol_type);
                 break;
             case RS232_TYPE:
                 (new HardwareControl()).UartModeSetup(0); //RS232
 
-                tmp = new SerialHelper(RS232, 9600, handler, protocol_type,address);
+                tmp = new SerialHelper(RS232, 9600, handler, protocol_type);
                 break;
             case ZB_TYPE:
-                tmp = new SerialHelper(RS232, 9600, handler, protocol_type,address);
+                tmp = new SerialHelper(RS232, 9600, handler, protocol_type);
                 break;
             case SOCKET_CLIENT_TYPE://client
-                tmp = new SocketClient(handler,ip,port,address,protocol_type);
+                tmp = new SocketClient(handler,ip,port,protocol_type);
                 break;
             case SOCKET_SERVER_TYPE://server
 //                tmp = new SerialHelper(ZB2, 115200, handler);

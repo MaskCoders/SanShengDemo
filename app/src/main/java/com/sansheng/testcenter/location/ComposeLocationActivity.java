@@ -30,6 +30,7 @@ import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.module.LocationInfo;
 import com.sansheng.testcenter.utils.Utilities;
 import com.sansheng.testcenter.utils.Utility;
+import hstt.data.DataItem;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -368,7 +369,7 @@ public class ComposeLocationActivity extends BaseActivity implements PoiSelectDi
     }
 
     @Override
-    public void setValue(BeanMark bean) {
+    public void setValue(DataItem bean) {
 
     }
 

@@ -14,6 +14,7 @@ import com.sansheng.testcenter.controller.ConnectionService;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.server.MSocketServer;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
+import hstt.data.DataItem;
 
 /**
  * Created by hua on 12/17/15.
@@ -137,7 +138,7 @@ public class TestBaseActivity extends BaseActivity  {
     }
 
     @Override
-    public void setValue(BeanMark bean) {
+    public void setValue(DataItem bean) {
 
     }
 

@@ -1,6 +1,8 @@
 package com.sansheng.testcenter.server.mina;
 
 import com.sansheng.testcenter.base.ConnInter;
+import hstt.data.ref;
+import hstt.proto.mp07.TaskInterface;
 import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
@@ -77,6 +79,16 @@ public class MinaSocketServer  implements ConnInter {
         for(IoSession session :  map.values()){
             session.write(arr);
         }
+    }
+
+    @Override
+    public void sendMessage(TaskInterface task) {
+
+    }
+
+    @Override
+    public void setAddress(ref<String> address) {
+
     }
 
     @Override

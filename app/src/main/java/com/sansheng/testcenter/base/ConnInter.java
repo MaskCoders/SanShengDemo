@@ -1,5 +1,8 @@
 package com.sansheng.testcenter.base;
 
+import hstt.data.ref;
+import hstt.proto.mp07.TaskInterface;
+
 import java.io.IOException;
 
 /**
@@ -10,6 +13,8 @@ public interface ConnInter {
     public void close();
     public void sendMessage(String hex);
     public void sendMessage(byte[] arr);
+    public void sendMessage(TaskInterface task);
+    void setAddress(ref<String> address);
     public String getConnInfo();
 
 

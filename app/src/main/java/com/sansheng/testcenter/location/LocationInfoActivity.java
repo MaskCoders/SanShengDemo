@@ -23,6 +23,7 @@ import com.sansheng.testcenter.module.Content;
 import com.sansheng.testcenter.module.LocationInfo;
 import com.sansheng.testcenter.module.MeterData;
 import com.sansheng.testcenter.utils.MeterUtilies;
+import hstt.data.DataItem;
 
 /**
  * Created by sunshaogang on 1/7/16.
@@ -169,7 +170,7 @@ public class LocationInfoActivity extends BaseActivity implements LoaderManager.
 
 
     @Override
-    public void setValue(BeanMark bean) {
+    public void setValue(DataItem bean) {
 
     }
 }

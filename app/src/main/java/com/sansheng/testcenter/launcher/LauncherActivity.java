@@ -8,6 +8,7 @@ import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.bean.WhmBean;
+import hstt.data.DataItem;
 
 
 public class LauncherActivity extends BaseActivity {
@@ -59,7 +60,7 @@ public class LauncherActivity extends BaseActivity {
     }
 
     @Override
-    public void setValue(BeanMark bean) {
+    public void setValue(DataItem bean) {
 
     }
 }

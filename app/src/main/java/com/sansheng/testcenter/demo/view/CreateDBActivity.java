@@ -10,6 +10,7 @@ import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.module.MeterData;
+import hstt.data.DataItem;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -83,7 +84,7 @@ public class CreateDBActivity extends BaseActivity {
     }
 
     @Override
-    public void setValue(BeanMark bean) {
+    public void setValue(DataItem bean) {
 
     }
 

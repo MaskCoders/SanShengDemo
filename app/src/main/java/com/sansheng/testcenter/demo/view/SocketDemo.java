@@ -17,6 +17,7 @@ import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.bean.WhmBean;
+import hstt.data.DataItem;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -286,7 +287,7 @@ public class SocketDemo extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
-    public void setValue(BeanMark bean) {
+    public void setValue(DataItem bean) {
 
     }
 }

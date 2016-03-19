@@ -10,6 +10,7 @@ import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 import hstt.data.ref;
+import hstt.proto.mp07.TaskInterface;
 
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
@@ -42,10 +43,9 @@ public class SocketClient implements ConnInter{
     private long lastSendTime;
     ref<String> address;
     int protocol_type;
-    public SocketClient(Handler handler, String ip, int port,ref<String> address, int type) {
+    public SocketClient(Handler handler, String ip, int port,int type) {
         mMainHandler = handler;
         protocol_type = type;
-        this.address = address;
         if (!TextUtils.isEmpty(ip)) {
             HOST = ip;
         }
@@ -143,6 +143,16 @@ public class SocketClient implements ConnInter{
 //                out.flush();
             }
         }
+    }
+
+    @Override
+    public void sendMessage(TaskInterface task) {
+
+    }
+
+    @Override
+    public void setAddress(ref<String> address) {
+        this.address = address;
     }
 
     @Override

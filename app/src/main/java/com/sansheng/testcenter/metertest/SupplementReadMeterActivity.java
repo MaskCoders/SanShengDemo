@@ -31,6 +31,7 @@ import com.sansheng.testcenter.server.MSocketServer;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
 import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.utils.Utility;
+import hstt.data.DataItem;
 import hstt.data.ref;
 
 import java.io.IOException;
@@ -261,10 +262,10 @@ public class SupplementReadMeterActivity extends BaseActivity implements IServic
     }
 
     @Override
-    public void setValue(BeanMark bean) {
-        if (bean instanceof WhmBean) {
-            commandLists.remove(((WhmBean) bean).tempCommand);
-//            mAdapter.setmSelectedItemsValues((WhmBean) bean);
+    public void setValue(DataItem bean) {
+        if (bean instanceof DataItem) {
+//            commandLists.remove(((DataItem) bean).tempCommand);
+//            mAdapter.setmSelectedItemsValues((DataItem) bean);
 //            startTest();
         }
     }
@@ -334,7 +335,7 @@ public class SupplementReadMeterActivity extends BaseActivity implements IServic
         Log.e("ssg", "选择的通讯类型 ＝ " + name);
         Log.e("ssg", "选择的通讯类型 ＝ " + position);
         mChanelValue.setText(name);
-        nowChannel = ConnFactory.getInstance(position, new ref<String>(mEditMeterAddressView.getText().toString()),mMainHandler, null, 0, BeanMark.METER_PROTOCOL);
+        nowChannel = ConnFactory.getInstance(position, mMainHandler, null, 0, BeanMark.METER_PROTOCOL);
         openComPort(nowChannel);
     }
 
