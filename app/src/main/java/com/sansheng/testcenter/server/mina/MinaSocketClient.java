@@ -2,6 +2,7 @@ package com.sansheng.testcenter.server.mina;
 
 import android.os.Handler;
 import com.sansheng.testcenter.base.ConnInter;
+import hstt.data.ref;
 import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
@@ -66,16 +67,18 @@ public class MinaSocketClient  implements ConnInter {
             connector.dispose();
         }
     }
-
+    ref<String> address;
     @Override
-    public void sendMessage(String hex) {
+    public void sendMessage(String hex,ref<String> addr) {
+        address = addr;
         if(connectFuture != null) {
             connectFuture.getSession().write(hex.getBytes());
         }
     }
 
     @Override
-    public void sendMessage(byte[] arr) {
+    public void sendMessage(byte[] arr,ref<String> addr) {
+        address = addr;
         if(connectFuture != null) {
             connectFuture.getSession().write(arr);
         }

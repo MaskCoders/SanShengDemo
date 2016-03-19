@@ -5,6 +5,7 @@ import com.sansheng.testcenter.base.Const;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
+import hstt.data.ref;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -78,15 +79,15 @@ public class SocketServer implements ConnInter{
     public void close() {
 
     }
-
+    ref<String> address;
     @Override
-    public void sendMessage(String hex) {
+    public void sendMessage(String hex,ref<String> addr) {
         sendmsg(null,hex,true);
     }
 
     @Override
-    public void sendMessage(byte[] arr) {
-
+    public void sendMessage(byte[] arr,ref<String> addr) {
+        address = addr;
     }
 
     @Override

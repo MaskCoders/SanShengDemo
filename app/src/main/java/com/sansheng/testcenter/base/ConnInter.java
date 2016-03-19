@@ -1,5 +1,7 @@
 package com.sansheng.testcenter.base;
 
+import hstt.data.ref;
+
 import java.io.IOException;
 
 /**
@@ -8,8 +10,8 @@ import java.io.IOException;
 public interface ConnInter {
     public void open() throws IOException;
     public void close();
-    public void sendMessage(String hex);
-    public void sendMessage(byte[] arr);
+    public void sendMessage(String hex,ref<String> addr);
+    public void sendMessage(byte[] arr,ref<String> addr);
     public String getConnInfo();
 
 

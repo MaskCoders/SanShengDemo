@@ -63,6 +63,8 @@ public class ProtoTest {
     //68 32 00 32 00 68 4A 00 00 01 00 02 0C 60 00 00 02 00 BB 16
     //68 4A 00 4A 00 68 88 00 00 01 00 02 0C 60 00 00 02 00 49 48 11 15 52 15 17 16
     UpGw p = new UpGw();
+    ref<String> tt = new ref<String>("");
+    p.IsXinTiaoPacket(null,tt);
     GwTask task = new GwTask("00000001", AFN.GetData1.val, 2, null, null);
     byte[] buffer = p.BuildPacket(task);
     Logger.d("发送组包：" + Util.ByteArrayToString(buffer));

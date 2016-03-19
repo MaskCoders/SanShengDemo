@@ -1,6 +1,7 @@
 package com.sansheng.testcenter.server.mina;
 
 import com.sansheng.testcenter.base.ConnInter;
+import hstt.data.ref;
 import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
@@ -60,9 +61,10 @@ public class MinaSocketServer  implements ConnInter {
             acceptor.unbind();
         }
     }
-
+    ref<String> address;
     @Override
-    public void sendMessage(String hex) {
+    public void sendMessage(String hex,ref<String> addr) {
+        address = addr;
         Map<Long, IoSession> map =  acceptor.getManagedSessions();
 
         for(IoSession session :  map.values()){
@@ -71,7 +73,8 @@ public class MinaSocketServer  implements ConnInter {
     }
 
     @Override
-    public void sendMessage(byte[] arr) {
+    public void sendMessage(byte[] arr,ref<String> addr) {
+        address = addr;
         Map<Long, IoSession> map =  acceptor.getManagedSessions();
 
         for(IoSession session :  map.values()){

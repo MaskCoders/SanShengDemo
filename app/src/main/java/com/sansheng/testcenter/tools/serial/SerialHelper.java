@@ -13,6 +13,7 @@ import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
 import com.sansheng.testcenter.tools.protocol.TerProtocolParse;
+import hstt.data.ref;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,6 +39,8 @@ public  class SerialHelper implements ConnInter{
 	private int iDelay=500;
 	private IServiceHandlerCallback callback;
 	private int protocol_type = BeanMark.METER_PROTOCOL;
+	ref<String> address;
+
 	//----------------------------------------------------
 	public SerialHelper(){}
 	public SerialHelper(String sPort,int iBaudRate,Handler handler,IServiceHandlerCallback cb,int type){
@@ -114,15 +117,16 @@ public  class SerialHelper implements ConnInter{
 		send(bOutArray);
 	}
 	@Override
-	public void sendMessage(String hex) {
+	public void sendMessage(String hex,ref<String> addr) {
 		tempCommand = hex;
 //		String hex = "fefefefe68 12 00 00 00 10 20 68 11 04 33 32 34 33 F3 16".replace(" ","");
 		byte[] bOutArray = MyFunc.HexToByteArr(hex);
-		sendMessage(bOutArray);
+		sendMessage(bOutArray,addr);
 	}
 
 	@Override
-	public void sendMessage(byte[] arr) {
+	public void sendMessage(byte[] arr,ref<String> addr) {
+		address = addr;
 		send(arr);
 	}
 

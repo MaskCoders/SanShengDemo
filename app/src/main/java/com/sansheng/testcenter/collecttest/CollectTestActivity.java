@@ -18,6 +18,7 @@ import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.ModuleUtilites;
 import com.sansheng.testcenter.provider.EquipmentPreference;
 import com.sansheng.testcenter.server.ConnFactory;
+import hstt.data.ref;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -408,7 +409,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
         Log.e("ssg", "参数对比");
         try {
             mClient.open();
-            mClient.sendMessage("68 32 00 32 00 68 4B 00 50 02 00 02 09 70 00 00 01 00 19 16".replace(" ",""));
+            mClient.sendMessage("68 32 00 32 00 68 4B 00 50 02 00 02 09 70 00 00 01 00 19 16".replace(" ",""),new ref<String>(collectAddress.getText().toString()));
             stopAllButton();
         } catch (IOException e) {
             e.printStackTrace();
@@ -419,7 +420,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
         Log.e("ssg", "读标准值");
         try {
             mClient.open();
-            mClient.sendMessage("68 32 00 32 00 68 4A 00 50 02 00 02 0C 70 00 00 02 00 1C 16".replace(" ",""));
+            mClient.sendMessage("68 32 00 32 00 68 4A 00 50 02 00 02 0C 70 00 00 02 00 1C 16".replace(" ",""),new ref<String>(collectAddress.getText().toString()));
             stopAllButton();
         } catch (IOException e) {
             e.printStackTrace();
@@ -430,7 +431,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
         Log.e("ssg", "档案对比");
         try {
             mClient.open();
-            mClient.sendMessage("68 8A 00 8A 00 68 4B 00 50 02 00 02 0A 70 00 00 02 01 0a 00 01 00 02 00 03 00 04 00 05 00 06 00 07 00 08 00 09 00 0a 00 5d FF 1E 16".replace(" ",""));
+            mClient.sendMessage("68 8A 00 8A 00 68 4B 00 50 02 00 02 0A 70 00 00 02 01 0a 00 01 00 02 00 03 00 04 00 05 00 06 00 07 00 08 00 09 00 0a 00 5d FF 1E 16".replace(" ",""),new ref<String>(collectAddress.getText().toString()));
             stopAllButton();
         } catch (IOException e) {
             e.printStackTrace();
@@ -445,7 +446,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
         Log.e("ssg", "抄读表码");
         try {
             mClient.open();
-            mClient.sendMessage("68 8A 00 8A 00 68 4B 00 50 02 00 02 0A 70 00 00 02 01 0a 00 01 00 02 00 03 00 04 00 05 00 06 00 07 00 08 00 09 00 0a 00 5d FF 1E 16".replace(" ",""));
+            mClient.sendMessage("68 8A 00 8A 00 68 4B 00 50 02 00 02 0A 70 00 00 02 01 0a 00 01 00 02 00 03 00 04 00 05 00 06 00 07 00 08 00 09 00 0a 00 5d FF 1E 16".replace(" ",""),new ref<String>(collectAddress.getText().toString()));
             stopAllButton();
         } catch (IOException e) {
             e.printStackTrace();
@@ -464,7 +465,7 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
         Log.e("ssg", "读取事件");
         try {
             mClient.open();
-            mClient.sendMessage("68 3A 00 3A 00 68 4B 00 50 02 00 02 0E 70 00 00 02 00 00 FF 1E 16".replace(" ",""));
+            mClient.sendMessage("68 3A 00 3A 00 68 4B 00 50 02 00 02 0E 70 00 00 02 00 00 FF 1E 16".replace(" ",""),new ref<String>(collectAddress.getText().toString()));
             stopAllButton();
         } catch (IOException e) {
             e.printStackTrace();

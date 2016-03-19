@@ -756,7 +756,7 @@ public class ComAssistantActivity extends BaseActivity {
 		{
     		if (radioButtonTxt.isChecked())
 			{
-				ComPort.sendMessage(sOut);
+				ComPort.sendMessage(sOut,null);
 			}else if (radioButtonHex.isChecked()) {
 				ComPort.sendHex(sOut);
 			}
