@@ -25,6 +25,7 @@ import com.sansheng.testcenter.module.Meter;
 import com.sansheng.testcenter.server.ConnFactory;
 import com.sansheng.testcenter.utils.Utilities;
 import com.sansheng.testcenter.utils.Utility;
+import hstt.data.ref;
 import hstt.proto.upgw.GwTask;
 import hstt.proto.upgw.UpGw;
 import hstt.util.Util;
@@ -565,15 +566,13 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
             @Override
             public void run() {
                 for (Collect collect : mCollects) {
-                    final String collectIp = collect.mTerminalIp;
                     UpGw p = new UpGw();
-                    GwTask task = new GwTask(collectIp, afn, fn,
+                    GwTask task = new GwTask(collect.mCommonAddress, afn, fn,
                             Utilities.list2Array(param.getDataList()), null);
                     byte[] buffer = p.BuildPacket(task);
                     //这里需要根据集中器的配置设置client的配置
-                    mClient = ConnFactory.getInstance(ConnFactory.RS485_1_TYPE, mMainHandler,
-                            CenterActivity.this, null, Integer.valueOf(collect.mTerminalPort),
-                            BeanMark.GW_PROTOCOL);
+                    mClient = ConnFactory.getInstance(ConnFactory.RS485_1_TYPE, new ref<String>(collect.mCommonAddress), mMainHandler,
+                            collect.mTerminalIp, Integer.valueOf(collect.mTerminalPort), BeanMark.GW_PROTOCOL);
 //                    mClient.sendMessage(buffer);//TODO:crush
                     Message msg = new Message();
                     msg.obj = Util.ByteArrayToString(buffer);
