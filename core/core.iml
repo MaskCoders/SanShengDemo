@@ -27,8 +27,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="android" level="project" />
-<<<<<<< HEAD
-=======
   </component>
   <component name="org.twodividedbyzero.idea.findbugs">
     <option name="_basePreferences">
@@ -234,6 +232,5 @@
         <entry key="STYLE" value="true" />
       </map>
     </option>
->>>>>>> 修改国网主站参数传入逻辑，不完整，需要根据宝华的新代码重新修改
   </component>
 </module>
