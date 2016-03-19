@@ -3,7 +3,7 @@ package hstt.proto.mp07;
 /**
  * Created by nboy on 2016-03-11.
  */
-public class MpTask {
+public class MpTask implements TaskInterface{
   public String MeterAddr;
   public ControlCode ControlCode;
   public long Di;
