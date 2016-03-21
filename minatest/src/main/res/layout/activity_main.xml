@@ -14,5 +14,7 @@
             android:text="stopserver"/>
     <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/stopclient"
             android:text="stopclient"/>
+    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/clientsend"
+            android:text="clientsend"/>
 
 </LinearLayout>

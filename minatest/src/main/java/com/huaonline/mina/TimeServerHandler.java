@@ -1,4 +1,6 @@
 package com.huaonline.mina;
+import org.apache.mina.core.buffer.IoBuffer;
+import org.apache.mina.core.future.WriteFuture;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
@@ -27,17 +29,30 @@ public class TimeServerHandler extends IoHandlerAdapter {
      */
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
-        String strMsg = message.toString();
-        if (strMsg.trim().equalsIgnoreCase("quit")) {
-            session.close(true);
-            return;
-        }
-        // 返回消息字符串
-        session.write("Hi Client!");
-        // 打印客户端传来的消息内容
-        System.out.println("Message written : " + strMsg);
-    }
+        IoBuffer ioBuffer = (IoBuffer)message;
+        int limit = ioBuffer.limit();
+        System.out.println("limit = "+ limit);
+        byte[] b = new byte[limit];
+        ioBuffer.get(b);
+        System.out.println("收到客户端发来的消息为: [" + ProtocolUtils.bytes2hex(b)+"]");
 
+        brodcast(session);
+    }
+    private void brodcast(IoSession session) {
+        System.out.println("回复客户端");
+        byte[] returnStr = "收到".getBytes();
+        //将测试消息会送给客户端
+        IoBuffer returnMsg = IoBuffer.wrap(returnStr);
+
+        WriteFuture wfutrue =session.write(returnMsg);
+
+        wfutrue.awaitUninterruptibly();
+        if(wfutrue.isWritten()){
+            System.out.println("服务端回复完毕");
+        }else{
+            System.out.println("服务端回复失败");
+        }
+    }
     @Override
     public void sessionIdle(IoSession session, IdleStatus status) throws Exception {
         System.out.println("IDLE" + session.getIdleCount(status));
