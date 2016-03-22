@@ -4,6 +4,8 @@ import android.os.Handler;
 import com.sansheng.testcenter.base.ConnInter;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.controller.MainHandler;
+import com.sansheng.testcenter.server.mina.MinaSocketClient;
+import com.sansheng.testcenter.server.mina.MinaSocketServer;
 import com.sansheng.testcenter.tools.serial.SerialHelper;
 import hstt.data.ref;
 import realarm.hardware.HardwareControl;
@@ -55,10 +57,10 @@ public class ConnFactory {
                 tmp = new SerialHelper(RS232, 9600, handler, protocol_type);
                 break;
             case SOCKET_CLIENT_TYPE://client
-                tmp = new SocketClient(handler,ip,port,protocol_type);
+                tmp = new MinaSocketClient(handler,ip,port,protocol_type);
                 break;
             case SOCKET_SERVER_TYPE://server
-//                tmp = new SerialHelper(ZB2, 115200, handler);
+                tmp = new MinaSocketServer(handler,ip,port,protocol_type);
                 //服务的还没弄
                 break;
         }
