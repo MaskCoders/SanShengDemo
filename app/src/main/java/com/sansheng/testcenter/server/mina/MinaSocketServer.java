@@ -86,10 +86,24 @@ public class MinaSocketServer  implements ConnInter {
     }
     @Override
     public void close() {
-        if(acceptor != null){
+        if(acceptor != null && !acceptor.isDisposed() && acceptor.isActive() ){
             acceptor.unbind();
         }
     }
+
+    @Override
+    public void cancel() {
+        if(acceptor != null && !acceptor.isDisposed() && acceptor.isActive() ){
+            Map<Long, IoSession> map =  acceptor.getManagedSessions();
+
+            for(IoSession session :  map.values()){
+                if(session!=null && session.isActive() && session.isConnected() && session.isClosing()){
+                    session.closeNow();
+                }
+            }
+        }
+    }
+
     private void getClientList(){
     }
 

@@ -94,6 +94,14 @@ public class MinaSocketClient  implements ConnInter {
     }
 
     @Override
+    public void cancel() {
+        if(connector != null && !connector.isDisposed() && !connector.isDisposing()
+                && !connectFuture.isCanceled()){
+            connectFuture.cancel();
+        }
+    }
+
+    @Override
     public void sendMessage(String hex) {
         if(connectFuture != null) {
             connectFuture.getSession().write(hex.getBytes());

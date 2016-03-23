@@ -11,6 +11,7 @@ import java.io.IOException;
 public interface ConnInter {
     public void open() throws IOException;
     public void close();
+    public void cancel();
     public void sendMessage(String hex);
     public void sendMessage(byte[] arr);
     public void sendMessage(TaskInterface task);

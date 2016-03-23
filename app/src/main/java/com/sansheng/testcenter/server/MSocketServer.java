@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Message;
+import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.callback.ServiceCallback;
 import com.sansheng.testcenter.controller.MainHandler;
+import com.sansheng.testcenter.server.mina.MinaSocketServer;
 
 import java.io.IOException;
 
@@ -15,7 +17,7 @@ import java.io.IOException;
  */
 public class MSocketServer extends Service implements ServiceCallback {
     MainHandler mHandler;
-    SocketServer mSocketServer;
+    MinaSocketServer mSocketServer;
     @Override
     public IBinder onBind(Intent intent) {
         //*return mMessenger.getBinder();*/
@@ -64,7 +66,7 @@ public class MSocketServer extends Service implements ServiceCallback {
     @Override
     public void setHandler(MainHandler handler) {
         mHandler = handler;
-        mSocketServer = new SocketServer(mHandler);
+        mSocketServer = new MinaSocketServer(mHandler,null,-1, BeanMark.GW_PROTOCOL);
     }
 //    static final int MSG_SAY_HELLO = 1;
     /**

@@ -107,6 +107,11 @@ public class SerialHelper implements ConnInter {
         _isOpen = false;
     }
 
+    @Override
+    public void cancel() {
+        stopSend();
+    }
+
 
     //----------------------------------------------------
     private void send(byte[] bOutArray) {

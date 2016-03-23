@@ -9,12 +9,9 @@ import android.widget.EditText;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.Const;
-import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.bean.WhmBean;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.server.MSocketServer;
-import com.sansheng.testcenter.server.SocketClient;
-import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
 import hstt.data.DataItem;
 
@@ -33,7 +30,6 @@ public class WhmActivity extends BaseActivity  {
     private MainHandler mMainHandler;
     private MSocketServer myService;  //我们自己的service
 //    private ClientManager mClientManager;
-    private SocketClient mClient;
     private TerProtocolCreater cmdCreater;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
