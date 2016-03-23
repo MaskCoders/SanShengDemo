@@ -36,7 +36,7 @@ public class MinaSocketServer  implements ConnInter {
     int protocol_type;
     private TaskInterface task;
     private byte[] byteBuffer = null;
-    private ref<String> address;
+    private ref<String> address =new ref<String>("");
 
     public  MinaSocketServer(Handler handler , String ip ,int port, int type){
         this.port = port;
@@ -82,7 +82,8 @@ public class MinaSocketServer  implements ConnInter {
 
     @Override
     public void open() throws IOException {
-        runServer();
+        if(acceptor==null)
+            runServer();
     }
     @Override
     public void close() {
@@ -237,6 +238,7 @@ public class MinaSocketServer  implements ConnInter {
 
 //			callback.setValue(bean);
             } catch (Exception e) {
+                e.printStackTrace();
                 MainHandler.sendMessage(mainHandler,Const.RECV_MSG_PARSE_ERR,ProtocolUtils.bytes2hex(buffer));
             }
             System.out.println("收到客户端发来的消息为: [" + ProtocolUtils.bytes2hex(b) + "]");

@@ -60,12 +60,12 @@ public  abstract class BaseActivity extends Activity implements View.OnClickList
 
     @Override
     public void pullWholeLog(String info) {
-
+        main_whole_log.append(info);
     }
 
     @Override
     public void pullWholeLog(SpannableString info) {
-
+        main_whole_log.append(info);
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.ConnInter;
+import com.sansheng.testcenter.base.Const;
 import com.sansheng.testcenter.base.view.DrawableCenterTextView;
 import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.controller.MainHandler;
@@ -18,8 +20,15 @@ import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.ModuleUtilites;
 import com.sansheng.testcenter.provider.EquipmentPreference;
 import com.sansheng.testcenter.server.ConnFactory;
+import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
 import hstt.data.DataItem;
 import hstt.data.ref;
+import hstt.proto.IProto;
+import hstt.proto.ProtoFactory;
+import hstt.proto.ProtoType;
+import hstt.proto.mp07.TaskInterface;
+import hstt.proto.upgw.AFN;
+import hstt.proto.upgw.GwTask;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,9 +79,14 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
         super.onCreate(savedInstanceState);
         hideBottomLog();
         mMainHandler = new MainHandler(this, this);
-        String ip = "192.168.134.1";
-        int port = 8001;
-        mClient = ConnFactory.getInstance(6,mMainHandler,ip,8001,BeanMark.GW_PROTOCOL);
+        String ip = "192.168.0.30";
+        int port = 9010;
+        mClient = ConnFactory.getInstance(ConnFactory.SOCKET_SERVER_TYPE,mMainHandler,ip,port,BeanMark.GW_PROTOCOL);
+        try {
+            mClient.open();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -410,8 +424,16 @@ public class CollectTestActivity extends BaseActivity implements CollectTestItem
         Log.e("ssg", "参数对比");
         try {
             mClient.open();
-            mClient.sendMessage("68 32 00 32 00 68 4B 00 50 02 00 02 09 70 00 00 01 00 19 16".replace(" ",""));
-            stopAllButton();
+//            String command = "68 4a 00 4a 00 68 88 00 00 01 00 02 0c 60 00 00 02 00 49 48 11 15 52 17 16".replace(" ","");
+            IProto p = ProtoFactory.Create(ProtoType.UpGw);
+            TaskInterface task = new GwTask("00000001", AFN.GetData1.val, 2, null, null);
+            byte[] buffer = p.Build(task);
+            Message msg = new Message();
+            msg.obj = ProtocolUtils.bytes2hex(buffer);
+            msg.what = Const.SEND_MSG;
+            mMainHandler.sendMessage(msg);
+            mClient.sendMessage(task);
+//            stopAllButton();
         } catch (IOException e) {
             e.printStackTrace();
         }
