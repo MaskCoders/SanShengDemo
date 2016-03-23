@@ -4,12 +4,19 @@ import org.apache.mina.core.future.WriteFuture;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
+import org.apache.mina.transport.socket.nio.NioSession;
+import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
+
+import java.util.Iterator;
 
 /**
  * 服务器端业务逻辑
  */
 public class TimeServerHandler extends IoHandlerAdapter {
-
+    private NioSocketAcceptor mNioSocketAcceptor;
+    public TimeServerHandler( NioSocketAcceptor acceptor){
+        mNioSocketAcceptor = acceptor;
+    }
     /**
      * 连接创建事件
      */
@@ -29,6 +36,15 @@ public class TimeServerHandler extends IoHandlerAdapter {
      */
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
+        System.out.println("client count is "+mNioSocketAcceptor.getManagedSessionCount());
+        Iterator it =  mNioSocketAcceptor.getManagedSessions().keySet().iterator();
+        while(it.hasNext()){
+            NioSession obj = (NioSession) mNioSocketAcceptor.getManagedSessions().get(it.next());
+            if(obj != null){
+                ;
+                System.out.println("client ip is  "+obj.getRemoteAddress());
+            }
+        }
         IoBuffer ioBuffer = (IoBuffer)message;
         int limit = ioBuffer.limit();
         System.out.println("limit = "+ limit);

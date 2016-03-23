@@ -14,6 +14,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     Button stopserver;
     Button stopclient;
     Button clientsend;
+    Button serversend;
     MinaTimeClient client;
     MinaTimeServer server;
     @Override
@@ -27,9 +28,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
         stopserver = (Button) findViewById(R.id.stopserver);
         stopclient = (Button) findViewById(R.id.stopclient);
         clientsend = (Button) findViewById(R.id.clientsend);
+        serversend = (Button) findViewById(R.id.serversend);
         stopserver.setOnClickListener(this);
         stopclient.setOnClickListener(this);
         clientsend.setOnClickListener(this);
+        serversend.setOnClickListener(this);
         client = new MinaTimeClient();
         server = new MinaTimeServer();
     }
@@ -51,6 +54,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.clientsend:
                 client.sendMessage();
+                break;
+            case R.id.serversend:
+                server.sendMessage("xxxx");
                 break;
         }
 

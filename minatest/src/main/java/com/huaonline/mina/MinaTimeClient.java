@@ -24,9 +24,9 @@ public class MinaTimeClient {
 
                 connector.getFilterChain().addLast("logger", new LoggingFilter());
 
-                connector.getFilterChain().addLast("exceutor", new ExecutorFilter());
-                connector.getFilterChain().addLast("codec",
-                        new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
+//                connector.getFilterChain().addLast("exceutor", new ExecutorFilter());
+//                connector.getFilterChain().addLast("codec",
+//                        new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
                 connector.getSessionConfig().setTcpNoDelay(true);
                 // 设置连接超时检查时间
 //                connector.setConnectTimeoutCheckInterval(30);
@@ -66,7 +66,7 @@ public class MinaTimeClient {
     public static void main(String[] args){
         // 创建客户端连接器.
         NioSocketConnector connector = new NioSocketConnector();
-        connector.getFilterChain().addLast("logger", new LoggingFilter());
+//        connector.getFilterChain().addLast("logger", new LoggingFilter());
         connector.getFilterChain().addLast("codec",
                 new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
 
@@ -75,7 +75,7 @@ public class MinaTimeClient {
         connector.setHandler(new TimeClientHandler());
 
         // 建立连接
-        ConnectFuture cf = connector.connect(new InetSocketAddress("localhost", 6488));
+        ConnectFuture cf = connector.connect(new InetSocketAddress("192.168.115.37", 6488));
         // 等待连接创建完成
         cf.awaitUninterruptibly();
         byte[] tmp = new byte[]{11,22,33,44};

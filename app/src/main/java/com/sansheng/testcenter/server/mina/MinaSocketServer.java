@@ -13,6 +13,7 @@ import hstt.proto.ProtoFactory;
 import hstt.proto.ProtoType;
 import hstt.proto.mp07.TaskInterface;
 import hstt.proto.upgw.GwTask;
+import hstt.proto.upgw.UpGw;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.future.WriteFuture;
 import org.apache.mina.core.service.IoHandlerAdapter;
@@ -35,7 +36,7 @@ public class MinaSocketServer  implements ConnInter {
     int protocol_type;
     private TaskInterface task;
     private byte[] byteBuffer = null;
-
+    private ref<String> address;
 
     public  MinaSocketServer(Handler handler , String ip ,int port, int type){
         this.port = port;
@@ -83,12 +84,13 @@ public class MinaSocketServer  implements ConnInter {
     public void open() throws IOException {
         runServer();
     }
-
     @Override
     public void close() {
         if(acceptor != null){
             acceptor.unbind();
         }
+    }
+    private void getClientList(){
     }
 
     @Override
@@ -124,7 +126,7 @@ public class MinaSocketServer  implements ConnInter {
 
     @Override
     public void setAddress(ref<String> address) {
-
+        this.address = address;
     }
 
     @Override
@@ -167,6 +169,7 @@ public class MinaSocketServer  implements ConnInter {
             byte[] b = new byte[limit];
             ioBuffer.get(b);
             byte[] buffer = b;
+            UpGw upGw = new UpGw();
             try {
 
                 IProto mp = null;
@@ -193,11 +196,17 @@ public class MinaSocketServer  implements ConnInter {
                     case BeanMark.GW_PROTOCOL:
                         mp = ProtoFactory.Create(ProtoType.UpGw);
                         validPackets = mp.SearchValid(buffer, buffer.length);
-                        if(validPackets[0].length == 0){
+                        byte[] data = validPackets[0];
+                        if(data.length == 0){
                             // == 0 is inValid
                             byteBuffer =  ProtocolUtils.byteMerger(byteBuffer,buffer);
-                        }else if(task != null){
-                            DataItem dataItem = (DataItem) mp.Parse(task, validPackets[0]);
+                        }else if(upGw.IsXinTiaoPacket(buffer,address))/*处理心跳 应答*/{
+                            //// TODO: 3/23/16  get the right params
+                            byte[] answer = upGw.XinTiaoAnswer(address.v,buffer);
+                            sendMessage(answer);
+                        }
+                        else if(task != null){
+                            DataItem dataItem = (DataItem) mp.Parse(task, data);
                             MainHandler.sendMessage(mainHandler,Const.RECV_MSG,dataItem);
                             byteBuffer = null;
                         }else{
