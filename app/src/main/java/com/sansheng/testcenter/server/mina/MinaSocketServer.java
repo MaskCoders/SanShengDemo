@@ -98,7 +98,9 @@ public class MinaSocketServer  implements ConnInter {
         Map<Long, IoSession> map =  acceptor.getManagedSessions();
 
         for(IoSession session :  map.values()){
-            session.write(hex.getBytes());
+            if(session!=null && session.isActive() && session.isConnected()){
+                session.write(IoBuffer.wrap(hex.getBytes()));
+            }
         }
     }
 
