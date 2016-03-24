@@ -20,6 +20,7 @@ import com.sansheng.testcenter.bean.BeanMark;
 import com.sansheng.testcenter.callback.IServiceHandlerCallback;
 import com.sansheng.testcenter.controller.MainHandler;
 import com.sansheng.testcenter.datamanager.MeterDataListActivity;
+import com.sansheng.testcenter.equipmentmanager.CenterDataAdapter;
 import com.sansheng.testcenter.metertest.CollectSelectDialog;
 import com.sansheng.testcenter.module.Collect;
 import com.sansheng.testcenter.module.CollectParam;
@@ -62,11 +63,13 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     private Spinner mTimeSpinner;
     private ArrayAdapter mDateAdapter;
     private ArrayAdapter mTimeAdapter;
+    private CenterDataAdapter mAdapter;
     private EditText mGWLog;
-    private CenterAdapter mAdapter;
+//    private CenterAdapter mAdapter;
     private List<RootProt> mGroupArray = new ArrayList<RootProt>();//组列表
     private ArrayList<Collect> mCollects;
     private ArrayList<Meter> mMeters;
+    private CollectParam mCurrentCollectParam;
 
     private DrawableCenterTextView startTest;
     private DrawableCenterTextView selectCollect;
@@ -88,6 +91,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
         hideBottomLog();
         setActionBar(DATA_LIST_VIEW);
         setDrawerDisable();
+        mMainHandler = new MainHandler(this, this);
 //        setContentView(R.layout.center_center_layout);
 //        mListView = (ExpandableListView) findViewById(R.id.center_list);
 //        ParseTask task = new ParseTask();
@@ -335,9 +339,27 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     }
 
     @Override
-    public void setValue(DataItem
-                                     bean) {
+    public void setValue(DataItem dataItem) {
+        //TODO:继续执行.
+        mAdapter.addItemsValues(dataItem);
+        if (mCollects.size() > 0) {
+            mCollects.remove(0);
+            sendProtocol();
+        }
+    }
 
+    private class TestTask extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            sendProtocol();
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean param) {
+
+        }
     }
 
     private void modifyDate() {
@@ -466,8 +488,10 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
     @Override
     public void onPositiveClick(CollectParam param) {//click confirm button on dialog
         if (param != null) {
+            mCurrentCollectParam = param;
             Log.e("ssg", "json value = " + param.toJson());
-            sendProtocol(param);
+            TestTask task = new TestTask();
+            task.executeOnExecutor(sThreadPool);
         }
     }
 
@@ -494,7 +518,8 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
         if (mGroupArray == null) return;
         if (mDateAdapter == null) {
             //simple_spinner_item small type
-            mDateAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item/*, R.id.date_flag*/, buildParentList(mGroupArray));
+            mDateAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item/*, R.id.date_flag*/, buildParentList(mGroupArray));
+            mDateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             mDateSpinner.setAdapter(mDateAdapter);
             mDateSpinner.setSelection(parent);
             if (parent < mGroupArray.size()) {
@@ -551,25 +576,29 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
         CollectParam param = new CollectParam();
         param.mAFn = afn;
         param.mFn = fn;
-        sendProtocol(param);
+        mCurrentCollectParam = param;
+        TestTask task = new TestTask();
+        task.executeOnExecutor(sThreadPool);
     }
 
     /**
      * 把所需要的参数向下传递。
-     *
-     * @param param
      */
-    private void sendProtocol(final CollectParam param) {
-        final int afn = param.mAFn;
-        final int fn = param.mFn;
-        mMainHandler = new MainHandler(this, this);
+    private void sendProtocol() {
+        final int afn = mCurrentCollectParam.mAFn;
+        final int fn = mCurrentCollectParam.mFn;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (Collect collect : mCollects) {
+//                for (Collect collect : mCollects) {
+                Collect collect = mCollects.get(0);
+                if (mCollects.size() > 0) {
+                    collect = mCollects.get(0);
+                }
+                if (collect == null) return;
                     UpGw p = new UpGw();
                     GwTask task = new GwTask(collect.mCommonAddress, afn, fn,
-                            Utilities.list2Array(param.getDataList()), null);
+                            Utilities.list2Array(mCurrentCollectParam.getDataList()), null);
 //                    byte[] buffer = p.BuildPacket(task);
                     //这里需要根据集中器的配置设置client的配置
                     mClient = ConnFactory.getInstance(ConnFactory.RS485_1_TYPE, mMainHandler,
@@ -579,7 +608,7 @@ public class CenterActivity extends BaseActivity implements WaySelectMeterDialog
 //                    msg.obj = Util.ByteArrayToString(buffer);
 //                    msg.what = Const.SEND_MSG;
 //                    mMainHandler.sendMessage(msg);
-                }
+//                }
             }
         }).start();
 

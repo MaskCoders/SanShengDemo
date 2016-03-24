@@ -9,11 +9,11 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.sansheng.testcenter.R;
-import com.sansheng.testcenter.bean.WhmBean;
-import com.sansheng.testcenter.tools.protocol.ProtocolUtils;
+import hstt.data.DataItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by sunshaogang on 2016/1/5.
@@ -22,7 +22,9 @@ import java.util.HashMap;
 public class MeterTestCenterListAdapter extends BaseAdapter {
     private HashMap<Integer, String> mSelectedItems = new HashMap<Integer, String>();
     private ArrayList<Integer> testItemList = new ArrayList<Integer>();
-    private WhmBean bean;
+    private DataItem bean;
+    private ArrayList<DataItem> dataList = new ArrayList<DataItem>();
+    private Map<String, DataItem> dataMap = new HashMap<String, DataItem>();
     private String[] allItems;
     private Context mContext;
 
@@ -88,115 +90,124 @@ public class MeterTestCenterListAdapter extends BaseAdapter {
             return;
         }
         holder.describeView.setText(allItems[testItemList.get(position)]);
-        try {
-            /**
-             <item>"当前表码"</item>
-             <item>"三相电压"</item>
-             <item>"电表时间"</item>
-             <item>"冻结时间"</item>
-             <item>"剩余金额"</item>
-             <item>"失压情况"</item>
-             <item>"开盖次数"</item>
-             <item>"跳闸次数"</item>
-             */
-            String values = "";
-            String secType = bean.getSecType();
-            System.out.println("secType is " + secType + "   by hua");
-            switch (position) {
-                case 0://当前表码
-                    if (!secType.trim().equalsIgnoreCase("0001ff00")) break;
-                    byte[] decodeData = bean.getUserData();
-                    int len = (decodeData.length - bean.type.getLen()) / 4;
-                    if (len <= 0) return;
-                    int j = 0;
-                    for (int i = bean.type.getLen(); i < decodeData.length; i = i + 4) {
-                        double x = ProtocolUtils.getbcdDec4bytes2(decodeData[i], decodeData[i + 1]);
-//                        if(!values.equals(""))
-                        values = values + " ," + x;
-                    }
-                    break;
-                case 1://三相电压
-                    if (!secType.trim().equalsIgnoreCase("0201ff00")) break;
-                    decodeData = bean.getUserData();
-                    len = (decodeData.length - bean.type.getLen()) / 2;
-                    if (len <= 0) return;
-                    j = 0;
-                    for (int i = bean.type.getLen(); i < decodeData.length; i = i + 2) {
-                        double x = ProtocolUtils.getbcdDec4bytes2(decodeData[i], decodeData[i + 1]);
-//                        if(values.length()>1)
-                        values = values + " ," + x;
-                    }
-                    break;
-                case 2://电表时间
-                    if (!secType.trim().equalsIgnoreCase("04000101")) break;
-                    decodeData = bean.getUserData();
-                    for (int i = decodeData.length - 1; i > bean.type.getLen(); i--) {
-                        System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
-//                         if(!values.equals(""))
-                        values = values + "-" + ProtocolUtils.byte2hex(decodeData[i]);
-                    }
-                    break;
-                case 3://冻结时间
-                    if (!secType.trim().equalsIgnoreCase("05060001")) break;
-                    decodeData = bean.getUserData();
-                    for (int i = decodeData.length - 1; i >= bean.type.getLen(); i--) {
-                        System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
-//                         if(!values.equals(""))
-                        values = values + ":" + ProtocolUtils.byte2hex(decodeData[i]);
-                    }
-                    /* 时间需要2贞才可以，需要区别userdata前的数据
-                    decodeData = bean.getUserData();
-                    for(int i = decodeData.length-1;i >=bean.type.getLen();i--){
-                        System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
-                         if(!values.equals(""))
-                            values = values+":"+ProtocolUtils.byte2hex(decodeData[i]);
-                    }
-                    */
-                    break;
-                case 4://剩余金额
-                    if (!secType.trim().equalsIgnoreCase("00900200")) break;
-                    decodeData = bean.getUserData();
-                    for (int i = decodeData.length - 1; i >= bean.type.getLen(); i--) {
-                        //// 2015-10-9 0:00:00
-                        values = values + ProtocolUtils.byte2hex(decodeData[i]);
-                        System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
-                    }
-                    values = String.valueOf(Double.valueOf(values) / 100);
-                    System.out.println(values);
-                    break;
-                case 5://失压情况
-                    if (!secType.trim().equalsIgnoreCase("0001ff00")) break;
-                    break;
-                case 6://开盖次数
-                    if (!secType.trim().equalsIgnoreCase("03300d00")) break;
-                    decodeData = bean.getUserData();
-                    for (int i = decodeData.length - 1; i >= bean.type.getLen(); i--) {
-                        //// 2015-10-9 0:00:00
-                        values = values + ProtocolUtils.byte2hex(decodeData[i]);
-                        System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
-                    }
-                    values = String.valueOf(Double.valueOf(values));
-                    System.out.println(values);
-                    //break;  开盖和跳闸逻辑相同
-                case 7://跳闸次数
-                    if (!secType.trim().equalsIgnoreCase("1d000001")) break;
-                    decodeData = bean.getUserData();
-                    for (int i = decodeData.length - 1; i >= bean.type.getLen(); i--) {
-                        //// 2015-10-9 0:00:00
-                        values = values + ProtocolUtils.byte2hex(decodeData[i]);
-                        System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
-                    }
-                    values = String.valueOf(Double.valueOf(values));
-                    System.out.println(values);
-                    break;
-            }
-            if (holder.explainView.getText().toString().trim().equals(""))
-                holder.explainView.setText(values);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (dataMap.containsKey(holder.describeView.getText())) {
+            holder.explainView.setText(dataMap.get(holder.describeView.getText()).v);
         }
-
     }
+//    private void fillDataToViewHolder(final int position, final ViewHolder holder) {
+//        if (getTestItems() == null || testItemList.size() == 0) {
+//            return;
+//        }
+//        holder.describeView.setText(allItems[testItemList.get(position)]);
+//        try {
+//            /**
+//             <item>"当前表码"</item>
+//             <item>"三相电压"</item>
+//             <item>"电表时间"</item>
+//             <item>"冻结时间"</item>
+//             <item>"剩余金额"</item>
+//             <item>"失压情况"</item>
+//             <item>"开盖次数"</item>
+//             <item>"跳闸次数"</item>
+//             */
+//            String values = "";
+//            String secType = bean.n;
+//            System.out.println("secType is " + secType + "   by hua");
+//            switch (position) {
+//                case 0://当前表码
+//                    if (!secType.trim().equalsIgnoreCase("0001ff00")) break;
+//                    byte[] decodeData = bean.getUserData();
+//                    int len = (decodeData.length - bean.type.getLen()) / 4;
+//                    if (len <= 0) return;
+//                    int j = 0;
+//                    for (int i = bean.type.getLen(); i < decodeData.length; i = i + 4) {
+//                        double x = ProtocolUtils.getbcdDec4bytes2(decodeData[i], decodeData[i + 1]);
+////                        if(!values.equals(""))
+//                        values = values + " ," + x;
+//                    }
+//                    break;
+//                case 1://三相电压
+//                    if (!secType.trim().equalsIgnoreCase("0201ff00")) break;
+//                    decodeData = bean.getUserData();
+//                    len = (decodeData.length - bean.type.getLen()) / 2;
+//                    if (len <= 0) return;
+//                    j = 0;
+//                    for (int i = bean.type.getLen(); i < decodeData.length; i = i + 2) {
+//                        double x = ProtocolUtils.getbcdDec4bytes2(decodeData[i], decodeData[i + 1]);
+////                        if(values.length()>1)
+//                        values = values + " ," + x;
+//                    }
+//                    break;
+//                case 2://电表时间
+//                    if (!secType.trim().equalsIgnoreCase("04000101")) break;
+//                    decodeData = bean.getUserData();
+//                    for (int i = decodeData.length - 1; i > bean.type.getLen(); i--) {
+//                        System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
+////                         if(!values.equals(""))
+//                        values = values + "-" + ProtocolUtils.byte2hex(decodeData[i]);
+//                    }
+//                    break;
+//                case 3://冻结时间
+//                    if (!secType.trim().equalsIgnoreCase("05060001")) break;
+//                    decodeData = bean.getUserData();
+//                    for (int i = decodeData.length - 1; i >= bean.type.getLen(); i--) {
+//                        System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
+////                         if(!values.equals(""))
+//                        values = values + ":" + ProtocolUtils.byte2hex(decodeData[i]);
+//                    }
+//                    /* 时间需要2贞才可以，需要区别userdata前的数据
+//                    decodeData = bean.getUserData();
+//                    for(int i = decodeData.length-1;i >=bean.type.getLen();i--){
+//                        System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
+//                         if(!values.equals(""))
+//                            values = values+":"+ProtocolUtils.byte2hex(decodeData[i]);
+//                    }
+//                    */
+//                    break;
+//                case 4://剩余金额
+//                    if (!secType.trim().equalsIgnoreCase("00900200")) break;
+//                    decodeData = bean.getUserData();
+//                    for (int i = decodeData.length - 1; i >= bean.type.getLen(); i--) {
+//                        //// 2015-10-9 0:00:00
+//                        values = values + ProtocolUtils.byte2hex(decodeData[i]);
+//                        System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
+//                    }
+//                    values = String.valueOf(Double.valueOf(values) / 100);
+//                    System.out.println(values);
+//                    break;
+//                case 5://失压情况
+//                    if (!secType.trim().equalsIgnoreCase("0001ff00")) break;
+//                    break;
+//                case 6://开盖次数
+//                    if (!secType.trim().equalsIgnoreCase("03300d00")) break;
+//                    decodeData = bean.getUserData();
+//                    for (int i = decodeData.length - 1; i >= bean.type.getLen(); i--) {
+//                        //// 2015-10-9 0:00:00
+//                        values = values + ProtocolUtils.byte2hex(decodeData[i]);
+//                        System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
+//                    }
+//                    values = String.valueOf(Double.valueOf(values));
+//                    System.out.println(values);
+//                    //break;  开盖和跳闸逻辑相同
+//                case 7://跳闸次数
+//                    if (!secType.trim().equalsIgnoreCase("1d000001")) break;
+//                    decodeData = bean.getUserData();
+//                    for (int i = decodeData.length - 1; i >= bean.type.getLen(); i--) {
+//                        //// 2015-10-9 0:00:00
+//                        values = values + ProtocolUtils.byte2hex(decodeData[i]);
+//                        System.out.println(ProtocolUtils.byte2hex(decodeData[i]));
+//                    }
+//                    values = String.valueOf(Double.valueOf(values));
+//                    System.out.println(values);
+//                    break;
+//            }
+//            if (holder.explainView.getText().toString().trim().equals(""))
+//                holder.explainView.setText(values);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
     public HashMap<Integer, String> getSelectedItems() {
         return mSelectedItems;
@@ -213,8 +224,8 @@ public class MeterTestCenterListAdapter extends BaseAdapter {
         }
     }
 
-    public void setmSelectedItemsValues(WhmBean bean) {
-        this.bean = bean;
+    public void addItemsValues(DataItem bean) {
+        dataMap.put(bean.n, bean);
         notifyDataSetChanged();
     }
 

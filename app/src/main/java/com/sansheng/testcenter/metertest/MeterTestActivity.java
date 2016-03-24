@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.SpannableString;
@@ -15,6 +16,7 @@ import com.sansheng.testcenter.R;
 import com.sansheng.testcenter.base.BaseActivity;
 import com.sansheng.testcenter.base.ConnInter;
 import com.sansheng.testcenter.base.Const;
+import com.sansheng.testcenter.base.CustomThreadPoolFactory;
 import com.sansheng.testcenter.base.view.ConnectTypeDialog;
 import com.sansheng.testcenter.base.view.DrawableCenterTextView;
 import com.sansheng.testcenter.base.view.WaySelectMeterDialog;
@@ -33,7 +35,6 @@ import com.sansheng.testcenter.tools.protocol.TerProtocolCreater;
 import com.sansheng.testcenter.utils.MeterUtilies;
 import com.sansheng.testcenter.utils.Utility;
 import hstt.data.DataItem;
-import hstt.data.ref;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -41,6 +42,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 import static com.sansheng.testcenter.base.Const.CONN_ERR;
 import static com.sansheng.testcenter.base.Const.CONN_OK;
@@ -63,6 +67,8 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
 
     private LinearLayout mHomeController;
     private LinearLayout mSelectMeterController;
+    private static final ThreadFactory sThreadFactory = new CustomThreadPoolFactory("MeterTestActivity");
+    private ExecutorService sThreadPool = Executors.newSingleThreadExecutor(sThreadFactory);
 
     private EditText mEditMeterAddressView;
     private LinearLayout mSelectChanel;
@@ -79,6 +85,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
     private MSocketServer myService;  //我们自己的service
     private TerProtocolCreater cmdCreater;
     private Meter mMeter;
+    private boolean cancled = false;
 //    private HashMap<String, Meter> mSelectMeters;
 
 
@@ -232,50 +239,8 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
 //                break;
             case R.id.text3:
                 //开始按钮
-                try {
-                    HashMap<Integer, String> map = getSelectProject();
-                    Iterator it = map.keySet().iterator();
-                    while(it.hasNext()) {
-
-                        Integer index = (Integer) it.next();
-                        String data = null;
-                        System.out.println("hua : the selected num is " + index);
-                        switch (index) {
-                            case 0:
-                                data = "33 32 34 33 ".replace(" ", "");//正向有功电能s
-                                break;
-                            case 1:
-                                data = "33 32 34 35".replace(" ", ""); //三相电压
-                                break;
-                            case 2:
-                                data = "34 34 33 37".replace(" ", "");//日期: 2016-01-11 星期01
-                                break;
-                            case 3:
-                                data = "34 33 39 38".replace(" ", ""); //上次日冻结时间
-                                break;
-                            case 4:
-                                data = "33 35 C3 33".replace(" ", "");//剩余金额:
-                                break;
-                            case 5:
-                                data = "33 40 63 36".replace(" ", "");//开盖次数
-                                break;
-                            case 6:
-                                data = "33 40 63 36".replace(" ", "");//开盖次数
-                                break;
-                            case 7:
-                                data = "34 33 33 50".replace(" ", "");//跳闸次数
-                                break;
-                        }
-                        commandLists.add(data);
-
-                    }
-
-                } catch (Exception e) {
-//            Toast.makeText(this, "地址格式有误", 1).show();
-                    Utility.showToast(this, "地址格式有误");
-                    return;
-                }
-                startTest();
+                TestTask task = new TestTask();
+                task.executeOnExecutor(sThreadPool);
                 break;
             case R.id.text4:
                 //设置时钟
@@ -311,15 +276,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
                         Integer.valueOf(whm_port.getText().toString()), BeanMark.METER_PROTOCOL);
                 break;
             case R.id.stop:
-                try{
-                    nowChannel.close();
-                    Message msg = new Message();
-                    msg.obj = nowChannel.getConnInfo();
-                    msg.what = Const.CONN_CLOSE;
-                    mMainHandler.sendMessage(msg);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+                cancleTest();
                 break;
         }
         super.onClick(v);
@@ -342,10 +299,10 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
 
     @Override
     public void setValue(DataItem bean) {
-        if(bean instanceof  DataItem){
-//            commandLists.remove(((WhmBean)bean).tempCommand);
-//            mAdapter.setmSelectedItemsValues((WhmBean)bean);
-//            startTest();
+        if(cancled && bean instanceof  DataItem){
+            mAdapter.addItemsValues(bean);
+            commandLists.remove(currentCommand);
+            startTest();
         }
     }
 
@@ -374,6 +331,7 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         connectTypeDialog.show(getFragmentManager(), "select_connect_type");
     }
     public static List<String> commandLists = new ArrayList<String>();
+    private static String currentCommand = "";
 
     private HashMap<Integer, String> getSelectProject(){
         String result = EquipmentPreference.getPreferences(MeterTestActivity.this).getSelectedCollectTest();
@@ -384,58 +342,8 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
         return ModuleUtilites.jsonToMapForMeterTest(result, getResources().getStringArray(R.array.meter_test_items));
 
     }
-    private void startTest() {
-        Log.e("ssg", "开始检测");
-        final String address;
-
-        final Thread command = new Thread(new Runnable() {
-            private void sendCommand(String data) throws InterruptedException {
-                data = ProtocolUtils.bytes2hex(ProtocolUtils.hexStringToBytesDecode(data));
-                System.out.println("data: " + data);
-                Thread.sleep(1000);
-
-                String address = "06 00 00 00 10 20".replace(" ", "");
-                try {
-                    if(!mEditMeterAddressView.getText().toString().equals("")){
-
-                        address = mEditMeterAddressView.getText().toString();
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                Const.WhmConst.C type = Const.WhmConst.C.MAIN_REQUEST_READ_DATA;
-                WhmBean bean = WhmBean.create(type, data, address);
-                Message msg = new Message();
-                msg.obj = bean.toString();
-                msg.what = Const.SEND_MSG;
-                mMainHandler.sendMessage(msg);
-//                System.out.println("by hua : " + bean.toString());
-//                mClientManager.sendMessage(mClient, ProtocolUtils.hexStringToBytes(bean.toString()));
-                if(nowChannel == null){
-                    Toast.makeText(MeterTestActivity.this, "请选择信道", 0).show();
-                    return;
-                }
-                nowChannel.sendMessage(bean.toString());
-            }
-
-            @Override
-            public void run() {
-                try {
-
-                        if(commandLists.size() > 0){
-                            sendCommand(commandLists.get(0));
-                        }
 
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        command.start();
-
-    }
 
     private void setMeterTime() {
         Log.e("ssg", "设置电表时间");
@@ -563,6 +471,126 @@ public class MeterTestActivity extends BaseActivity implements IServiceHandlerCa
 
     public int getTestMeterType() {
         return mMeterType;
+    }
+
+
+    private class TestTask extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            buildComm();
+            startTest();
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean param) {
+
+        }
+        private void buildComm(){
+            try {
+                HashMap<Integer, String> map = getSelectProject();
+                Iterator it = map.keySet().iterator();
+                while(it.hasNext()) {
+                    Integer index = (Integer) it.next();
+                    String data = null;
+                    System.out.println("hua : the selected num is " + index);
+                    switch (index) {
+                        case 0:
+                            data = "33 32 34 33 ".replace(" ", "");//正向有功电能s
+                            break;
+                        case 1:
+                            data = "33 32 34 35".replace(" ", ""); //三相电压
+                            break;
+                        case 2:
+                            data = "34 34 33 37".replace(" ", "");//日期: 2016-01-11 星期01
+                            break;
+                        case 3:
+                            data = "34 33 39 38".replace(" ", ""); //上次日冻结时间
+                            break;
+                        case 4:
+                            data = "33 35 C3 33".replace(" ", "");//剩余金额:
+                            break;
+                        case 5:
+                            data = "33 40 63 36".replace(" ", "");//开盖次数
+                            break;
+                        case 6:
+                            data = "33 40 63 36".replace(" ", "");//开盖次数
+                            break;
+                        case 7:
+                            data = "34 33 33 50".replace(" ", "");//跳闸次数
+                            break;
+                    }
+                    commandLists.add(data);
+                }
+
+            } catch (Exception e) {
+                Utility.showToast(MeterTestActivity.this, "地址格式有误");
+                return;
+            }
+        }
+    }
+
+    private void startTest() {
+        Log.e("ssg", "开始检测");
+        cancled = false;
+        final String address;
+
+        final Thread command = new Thread(new Runnable() {
+            private void sendCommand(String data) throws InterruptedException {
+                data = ProtocolUtils.bytes2hex(ProtocolUtils.hexStringToBytesDecode(data));
+                System.out.println("data: " + data);
+                Thread.sleep(1000);
+
+                String address = "06 00 00 00 10 20".replace(" ", "");
+                try {
+                    if(!mEditMeterAddressView.getText().toString().equals("")){
+
+                        address = mEditMeterAddressView.getText().toString();
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Const.WhmConst.C type = Const.WhmConst.C.MAIN_REQUEST_READ_DATA;
+                WhmBean bean = WhmBean.create(type, data, address);
+                Message msg = new Message();
+                msg.obj = bean.toString();
+                msg.what = Const.SEND_MSG;
+                mMainHandler.sendMessage(msg);
+//                System.out.println("by hua : " + bean.toString());
+//                mClientManager.sendMessage(mClient, ProtocolUtils.hexStringToBytes(bean.toString()));
+                if(nowChannel == null){
+                    Utility.showToast(MeterTestActivity.this, "请选择信道");
+                    return;
+                }
+                nowChannel.sendMessage(bean.toString());
+            }
+
+            @Override
+            public void run() {
+                try {
+                    if(commandLists.size() > 0){
+                        sendCommand(commandLists.get(0));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        command.start();
+    }
+
+    private void cancleTest(){
+        cancled = true;
+        try{
+            nowChannel.close();
+            Message msg = new Message();
+            msg.obj = nowChannel.getConnInfo();
+            msg.what = Const.CONN_CLOSE;
+            mMainHandler.sendMessage(msg);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 }
